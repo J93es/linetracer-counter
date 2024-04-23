@@ -17,9 +17,6 @@ const app: Application = express();
 import indexRouter from "./routes/index";
 import partipantRouter from "./routes/participant";
 
-import { uri } from "./config";
-import mongoose from "mongoose";
-
 app.set("port", process.env.PORT || 8000);
 
 // // view engine setup
@@ -52,18 +49,6 @@ app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
   res.render("error");
 });
 
-// app.listen(app.get("port"), () => {
-//   console.log(app.get("port"), "번에서 대기중");
-// });
-
-mongoose
-  .connect(uri)
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(app.get("port"), () => {
-      console.log(app.get("port"), "번에서 대기중");
-    });
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+app.listen(app.get("port"), () => {
+  console.log(app.get("port"), "번에서 대기중");
+});

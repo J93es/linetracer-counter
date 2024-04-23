@@ -1,9 +1,11 @@
-import { ParticipantType } from "../model/Participant/Participant";
-import { ParticipantIdTitleType } from "../model/Participant/ParticipantIdTitle";
+import { ParticipantType } from "../model/index/Participant";
 
 export interface ParticipantRepository {
-  isParticipantExist(id: string): boolean;
-  readParticipantIndex(): Array<ParticipantIdTitleType>;
-  readParticipant(id: string): Partial<ParticipantType>;
-  writeParticipant(srcData: ParticipantType): ParticipantType;
+  createParticipant(srcData: ParticipantType): Promise<ParticipantType>;
+  readParticipant(id: string): Promise<ParticipantType>;
+  updateParticipant(
+    srcData: Partial<ParticipantType>
+  ): Promise<ParticipantType>;
+  replaceParticipant(srcData: ParticipantType): Promise<ParticipantType>;
+  deleteParticipant(id: string): Promise<ParticipantType>;
 }
