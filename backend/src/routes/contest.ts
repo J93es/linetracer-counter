@@ -6,12 +6,12 @@ import express, {
   Errback,
 } from "express";
 
-import { ParticipantType } from "../model/Participant";
+import { ContestType } from "../model/Contest";
 
-import { ParticipantRepository } from "../core/repository/participant";
-import { ParticipantMongoRepo } from "../repository/mongo/participant";
+import { ContestRepository } from "../core/repository/contest";
+import { ContestMongoRepo } from "../repository/mongo/contest";
 
-const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
+const contestRepository: ContestRepository = new ContestMongoRepo();
 
 const router: Router = express.Router();
 
@@ -19,16 +19,18 @@ router.get("/", async (req, res) => {
   res.send("hello get").status(200);
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:year", async (req, res, next) => {
   try {
-    const id: string = req.params.id;
-    const participant: Partial<ParticipantType> =
-      await participantRepository.readParticipant({ _id: id });
+    const year: string = req.params.year;
+    const contest: Partial<ContestType> =
+      await contestRepository.readContestWithParticipant({
+        idYear: year,
+      });
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(contest).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
@@ -38,36 +40,38 @@ router.post("/", async (req, res, next) => {
   try {
     const data = req.body;
 
-    const participant: Partial<ParticipantType> =
-      await participantRepository.createParticipant(data);
+    const contest: Partial<ContestType> = await contestRepository.createContest(
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(contest).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
 });
 
-router.post("/:id", async (req: any, res, next) => {
+router.post("/:year", async (req: any, res, next) => {
   try {
     const data = req.body;
-    const id: string = req.params.id;
-    if (!data.id) {
-      data.id = id;
+    const year: string = req.params.year;
+    if (!data.year) {
+      data.year = year;
     }
-    if (id !== data.id) {
+    if (year !== data.year) {
       throw new Error("id is not matched : query id and body id is different");
     }
 
-    const participant: Partial<ParticipantType> =
-      await participantRepository.createParticipant(data);
+    const contest: Partial<ContestType> = await contestRepository.createContest(
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(contest).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
@@ -77,25 +81,28 @@ router.patch("/", async (req, res, next) => {
   res.send("hello patch");
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:year", async (req, res, next) => {
   try {
     const data = req.body;
-    const id: string = req.params.id;
-    if (!data.id) {
-      data.id = id;
+    const year: string = req.params.year;
+    if (!data.year) {
+      data.year = year;
     }
-    if (id !== data.id) {
-      throw new Error("id is not matched : query id and body id is different");
+    if (year !== String(data.year)) {
+      throw new Error(
+        "year is not matched : query year and body year is different"
+      );
     }
 
-    const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant({ _id: id }, data);
+    const Contest: Partial<ContestType> = await contestRepository.updateContest(
+      { contestYear: year },
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.status(200);
-    res.send(participant);
+    res.send(Contest).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(404);
     res.send({ message: err.toString() });
@@ -106,16 +113,17 @@ router.delete("/", async (req, res, next) => {
   res.send("hello delete");
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:year", async (req, res, next) => {
   try {
-    const id: string = req.params.id;
+    const year: string = req.params.year;
 
-    const participant: Partial<ParticipantType> =
-      await participantRepository.deleteParticipant({ _id: id });
+    const contest: Partial<ContestType> = await contestRepository.deleteContest(
+      { year: year }
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
-    res.send(participant);
+    res.send(contest);
   } catch (err: any) {
     console.log(err);
     res.header("Content-Type", "application/json; charset=utf-8");

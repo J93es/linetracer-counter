@@ -16,6 +16,8 @@ const app: Application = express();
 
 import indexRouter from "./routes/index";
 import partipantRouter from "./routes/participant";
+import contestRouter from "./routes/contest";
+import userRouter from "./routes/user";
 
 import { uri } from "./config";
 import mongoose from "mongoose";
@@ -35,6 +37,8 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/participant", partipantRouter);
+app.use("/contest", contestRouter);
+app.use("/user", userRouter);
 
 // // catch 404 and forward to error handler
 // app.use((req: Request, res: Response, next: NextFunction) => {
