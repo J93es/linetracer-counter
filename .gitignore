@@ -1,9 +1,5 @@
 node_modules/
 config.ts/
-.vscode/
-
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react,expressionengine,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,node,react,expressionengine,macos
 
 ### ExpressionEngine ###
 .DS_Store
