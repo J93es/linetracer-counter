@@ -16,8 +16,6 @@ export class UserMongoService implements UserService {
         idYear: year,
       });
 
-      console.log(contest);
-
       const participantList = contest.participantList.map(
         (participant: UserParticipantType) => {
           const driveRecordList = participant.driveRecord.map(
@@ -25,9 +23,11 @@ export class UserMongoService implements UserService {
               return new UserDriveRecord(driveRecord);
             }
           );
-          participant.driveRecord = driveRecordList as any;
 
-          return new UserParticipant(participant);
+          const newParticipant = JSON.parse(JSON.stringify(participant));
+          newParticipant.driveRecord = driveRecordList;
+
+          return new UserParticipant(newParticipant);
         }
       );
 

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const driveRecordSchema = new Schema({
-  state: { type: String, required: true },
+  type: { type: String, required: true },
   isPreliminary: { type: Boolean, required: true },
   recordTime: { type: Number, required: true },
 });
