@@ -10,19 +10,19 @@ import express, {
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
-import corsOptions from "./cors/index";
-
-const app: Application = express();
+import corsOptions from "./utils/cors/index";
 
 import indexRouter from "./routes/index";
 import partipantRouter from "./routes/participant";
 import contestRouter from "./routes/contest";
 import userRouter from "./routes/user";
 
-import { uri } from "./config";
+import { uri, PORT } from "./config";
 import mongoose from "mongoose";
 
-app.set("port", process.env.PORT || 8000);
+const app: Application = express();
+
+app.set("port", process.env.PORT || PORT || 8000);
 
 // // view engine setup
 // app.set("views", path.join(__dirname, "views"));

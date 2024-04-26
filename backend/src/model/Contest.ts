@@ -1,40 +1,40 @@
 export type ContestType = {
   _id: any;
-  idYear: string;
+  id: string;
   title: string;
 
   curContestingSection: string;
-  curParticipantId: any;
-  nextParticipantId: any;
+  curParticipant: any;
+  nextParticipant: any;
 
   contestTimerStartTime: number;
   driveStartTime: number;
 
-  participantList: any[];
+  participantList: object[];
 };
 
 export default class Contest {
   _id: any;
-  idYear: string;
+  id: string;
   title: string;
 
   curContestingSection: string;
-  curParticipantId: any;
-  nextParticipantId: any;
+  curParticipant: any;
+  nextParticipant: any;
 
   contestTimerStartTime: number;
   driveStartTime: number;
 
-  participantList: any[];
+  participantList: object[];
 
   constructor(data: ContestType) {
     this._id = data._id;
-    this.idYear = data.idYear;
+    this.id = data.id;
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
-    this.curParticipantId = data.curParticipantId;
-    this.nextParticipantId = data.nextParticipantId;
+    this.curParticipant = data.curParticipant;
+    this.nextParticipant = data.nextParticipant;
 
     this.contestTimerStartTime = data.contestTimerStartTime;
     this.driveStartTime = data.driveStartTime;

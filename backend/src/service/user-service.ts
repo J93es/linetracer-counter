@@ -1,45 +1,53 @@
-import UserContest, { UserContestType } from "./model/UserContest";
-import UserParticipant, { UserParticipantType } from "./model/UserParticipant";
-import UserDriveRecord, { UserDriveRecordType } from "./model/UserDriveRecord";
+import UserContest, { UserContestType } from "../model/service/UserContest";
+import UserParticipant, {
+  UserParticipantType,
+} from "../model/service/UserParticipant";
+import UserDriveRecord, {
+  UserDriveRecordType,
+} from "../model/service/UserDriveRecord";
 
 import { ContestRepository } from "../core/repository/contest";
 import { ContestMongoRepo } from "../repository/mongo/contest";
 
-import { UserService } from "../core/service/user-service";
+import { UserService } from "../core/service/user";
 
 const contestRepository: ContestRepository = new ContestMongoRepo();
+
+function userDriveRecordFilter(driveRecord: UserDriveRecordType[]) {
+  return driveRecord.map((driveRecord: UserDriveRecordType) => {
+    return new UserDriveRecord(driveRecord);
+  });
+}
+
+function userParticipantFilter(participant: UserParticipantType) {
+  const newParticipant = new UserParticipant(participant);
+  const driveRecord = userDriveRecordFilter(newParticipant.driveRecord);
+  newParticipant.driveRecord = driveRecord;
+
+  return newParticipant;
+}
 
 export class UserMongoService implements UserService {
   async getData(year: string): Promise<UserContestType> {
     try {
-      const contest = await contestRepository.readContestWithParticipant({
-        idYear: year,
-      });
+      const data = await contestRepository.readContestWithParticipant(year);
+      const contest = new UserContest(data);
 
-      const participantList = contest.participantList.map(
-        (participant: UserParticipantType) => {
-          const driveRecordList = participant.driveRecord.map(
-            (driveRecord: UserDriveRecordType) => {
-              return new UserDriveRecord(driveRecord);
-            }
-          );
-
-          const newParticipant = JSON.parse(JSON.stringify(participant));
-          newParticipant.driveRecord = driveRecordList;
-
-          return new UserParticipant(newParticipant);
+      if (contest.curParticipant) {
+        contest.curParticipant = userParticipantFilter(contest.curParticipant);
+      }
+      if (contest.nextParticipant) {
+        contest.nextParticipant = userParticipantFilter(
+          contest.nextParticipant
+        );
+      }
+      contest.participantList = contest.participantList.map(
+        (participant: any) => {
+          return userParticipantFilter(participant);
         }
       );
 
-      const userContest = new UserContest({
-        title: contest.title,
-        curContestingSection: contest.curContestingSection,
-        curParticipantId: contest.curParticipantId,
-        nextParticipantId: contest.nextParticipantId,
-        participantList: participantList,
-      });
-
-      return userContest;
+      return contest;
     } catch (e) {
       throw e;
     }

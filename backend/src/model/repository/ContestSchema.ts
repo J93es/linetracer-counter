@@ -1,14 +1,15 @@
+import { read } from "fs";
 import mongoose, { Mongoose } from "mongoose";
 
 const { Schema } = mongoose;
 
 const contestSchema = new Schema({
-  idYear: { type: String, required: true },
+  id: { type: String, unique: true, required: true, readonly: true },
   title: { type: String, required: true },
 
   curContestingSection: { type: String },
-  curParticipantId: { type: Schema.Types.ObjectId },
-  nextParticipantId: { type: Schema.Types.ObjectId },
+  curParticipant: { type: Schema.Types.ObjectId, ref: "ParticipantSchema" },
+  nextParticipant: { type: Schema.Types.ObjectId, ref: "ParticipantSchema" },
 
   contestTimerStartTime: { type: Number },
   driveStartTime: { type: Number },

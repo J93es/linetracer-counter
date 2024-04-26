@@ -1,25 +1,9 @@
-export type DriveRecordType = {
-  _id: any;
-  type: string;
-  isPreliminary: boolean;
-  recordTime: number;
-};
-
-export type RobotType = {
-  _id: any;
-  name: string;
-  cpu: string;
-  rom: string;
-  ram: string;
-  motorDriver: string;
-  motor: string;
-  adc: string;
-  sensor: string;
-};
+import { RobotType } from "./Robot";
+import { DriveRecordType } from "./DriveRecord";
 
 export type ParticipantType = {
   _id: any;
-  idYear: string;
+  hostId: any;
 
   name: string;
   association: string;
@@ -33,12 +17,12 @@ export type ParticipantType = {
 
   robot: RobotType;
 
-  driveRecord: object[];
+  driveRecord: DriveRecordType[];
 };
 
 export default class Participant {
   _id: any;
-  idYear: string;
+  hostId: any;
 
   name: string;
   association: string;
@@ -52,11 +36,11 @@ export default class Participant {
 
   robot: RobotType;
 
-  driveRecord: object[];
+  driveRecord: DriveRecordType[];
 
   constructor(data: ParticipantType) {
     this._id = data._id;
-    this.idYear = data.idYear;
+    this.hostId = data.hostId;
 
     this.name = data.name;
     this.association = data.association;

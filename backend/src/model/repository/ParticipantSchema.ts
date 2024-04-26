@@ -20,7 +20,7 @@ const robotSchema = new Schema({
 });
 
 const participantSchema = new Schema({
-  idYear: { type: String, required: true },
+  hostId: { type: String, required: true, readonly: true },
 
   name: { type: String, required: true },
   association: { type: String },
@@ -36,6 +36,7 @@ const participantSchema = new Schema({
 
   driveRecord: {
     type: [driveRecordSchema],
+    required: true,
   },
 });
 
