@@ -1,7 +1,9 @@
-import { ContestType } from "../../model/Contest";
+import { ContestType } from "../../model/index/Contest";
 
 import { ContestRepository } from "../../core/repository/contest";
 import { ContestSchema } from "../../model/repository/ContestSchema";
+
+import { UserParticipantType } from "../..//model/service/UserParticipant";
 
 export class ContestMongoRepo implements ContestRepository {
   readonlyFilter(data: any) {
@@ -32,8 +34,21 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContest(id: string): Promise<any> {
-    const contest = await ContestSchema.findOne({ id: id }).lean();
+  async readContestWithPopulate(
+    id: string,
+    selectParticipantField: object,
+    selectParticipantRecordField: object
+  ): Promise<any> {
+    const contest = await ContestSchema.findOne({ id: id })
+      .populate({
+        path: "curParticipant nextParticipant participantList",
+        select: selectParticipantField,
+        populate: {
+          path: "participantRecordList",
+          select: selectParticipantRecordField,
+        },
+      })
+      .lean();
     if (!contest) {
       throw new Error("Contest not found");
     }
@@ -41,10 +56,8 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContestWithParticipant(id: string): Promise<any> {
-    const contest = await ContestSchema.findOne({ id: id })
-      .populate(["curParticipant", "nextParticipant", "participantList"])
-      .lean();
+  async readContest(id: string): Promise<any> {
+    const contest = await ContestSchema.findOne({ id: id }).lean();
     if (!contest) {
       throw new Error("Contest not found");
     }

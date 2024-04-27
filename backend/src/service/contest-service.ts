@@ -1,4 +1,4 @@
-import Contest, { ContestType } from "../model/Contest";
+import Contest, { ContestType } from "../model/index/Contest";
 
 import { ContestRepository } from "../core/repository/contest";
 import { ContestMongoRepo } from "../repository/mongo/contest";

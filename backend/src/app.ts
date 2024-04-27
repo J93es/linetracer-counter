@@ -14,6 +14,7 @@ import corsOptions from "./utils/cors/index";
 
 import indexRouter from "./routes/index";
 import partipantRouter from "./routes/participant";
+import partipantRecordRouter from "./routes/participantRecord";
 import contestRouter from "./routes/contest";
 import userRouter from "./routes/user";
 
@@ -37,6 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/participant", partipantRouter);
+app.use("/participantRecord", partipantRecordRouter);
 app.use("/contest", contestRouter);
 app.use("/user", userRouter);
 

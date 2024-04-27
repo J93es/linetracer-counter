@@ -1,6 +1,6 @@
 import { ParticipantServiceInterface } from "../core/service/participant";
 
-import Participant, { ParticipantType } from "../model/Participant";
+import Participant, { ParticipantType } from "../model/index/Participant";
 
 import { ParticipantRepository } from "../core/repository/participant";
 import { ParticipantMongoRepo } from "../repository/mongo/participant";
@@ -8,7 +8,7 @@ import { ParticipantMongoRepo } from "../repository/mongo/participant";
 const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
 
 export class ParticipantService implements ParticipantServiceInterface {
-  private _idFileter(_id: any, srcData: Partial<ParticipantType>): void {
+  private _idFilter(_id: any, srcData: Partial<ParticipantType>): void {
     if (!srcData._id) {
       throw new Error("_id is required");
     }
@@ -54,12 +54,12 @@ export class ParticipantService implements ParticipantServiceInterface {
       data as ParticipantType
     );
 
-    this._idFileter(_id, srcParticipant);
+    this._idFilter(_id, srcParticipant);
 
     srcParticipant = this.patchReadonlyFilter(srcParticipant);
 
     const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant(_id, srcParticipant, false);
+      await participantRepository.updateParticipant(_id, srcParticipant);
 
     return new Participant(participant as ParticipantType);
   }
@@ -72,15 +72,10 @@ export class ParticipantService implements ParticipantServiceInterface {
       data as ParticipantType
     );
 
-    if (!srcParticipant._id) {
-      throw new Error("_id is required");
-    }
-    if (_id !== srcParticipant._id) {
-      throw new Error("id is not matched : query id and body _id is different");
-    }
+    this._idFilter(_id, srcParticipant);
 
     const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant(_id, srcParticipant, true);
+      await participantRepository.updateParticipant(_id, srcParticipant);
 
     return new Participant(participant as ParticipantType);
   }

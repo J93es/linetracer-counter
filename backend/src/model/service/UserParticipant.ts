@@ -1,40 +1,25 @@
-import { UserDriveRecordType } from "./UserDriveRecord";
+import { UserParticipantRecordType } from "./UserParticipantRecord";
 
 export type UserParticipantType = {
   name: string;
   association: string;
+  speech: string;
 
-  contestYear: number;
-  contestSector: string;
-
-  preliminaryOrder: number;
-  mainOrder: number;
-
-  driveRecord: UserDriveRecordType[];
+  participantRecordList: UserParticipantRecordType[];
 };
 
 export default class UserParticipant {
   name: string;
   association: string;
+  speech: string;
 
-  contestYear: number;
-  contestSector: string;
-
-  preliminaryOrder: number;
-  mainOrder: number;
-
-  driveRecord: UserDriveRecordType[];
+  participantRecordList: UserParticipantRecordType[];
 
   constructor(data: UserParticipantType) {
     this.name = data.name;
     this.association = data.association;
+    this.speech = data.speech;
 
-    this.contestYear = data.contestYear;
-    this.contestSector = data.contestSector;
-
-    this.preliminaryOrder = data.preliminaryOrder;
-    this.mainOrder = data.mainOrder;
-
-    this.driveRecord = data.driveRecord;
+    this.participantRecordList = data.participantRecordList;
   }
 }

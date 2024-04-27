@@ -6,14 +6,14 @@ import express, {
   Errback,
 } from "express";
 
-import { ParticipantType } from "../model/index/Participant";
+import { ParticipantRecordType } from "../model/index/ParticipantRecord";
 
-import { ParticipantServiceInterface } from "../core/service/participant";
-import { ParticipantService } from "../service/participant-service";
+import { ParticipantRecordServiceInterface } from "../core/service/participantRecord";
+import { ParticipantRecordService } from "../service/participantRecord-service";
 
 const router: Router = express.Router();
-const participantService: ParticipantServiceInterface =
-  new ParticipantService();
+const participantRecordService: ParticipantRecordServiceInterface =
+  new ParticipantRecordService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello get").status(200);
@@ -22,11 +22,11 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id: string = req.params._id;
-    const participant: Partial<ParticipantType> =
-      await participantService.getParticipant(_id);
+    const participantRecord: Partial<ParticipantRecordType> =
+      await participantRecordService.getParticipantRecord(_id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(participantRecord).status(200);
   } catch (err: any) {
     console.log(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -38,11 +38,11 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
 
-    const participant: Partial<ParticipantType> =
-      await participantService.postParticipant(data);
+    const participantRecord: Partial<ParticipantRecordType> =
+      await participantRecordService.postParticipantRecord(data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(participantRecord).status(200);
   } catch (err: any) {
     console.log(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -69,12 +69,12 @@ router.patch(
         );
       }
 
-      const participant: Partial<ParticipantType> =
-        await participantService.patchParticipant(id, data);
+      const participantRecord: Partial<ParticipantRecordType> =
+        await participantRecordService.patchParticipantRecord(id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
-      res.send(participant);
+      res.send(participantRecord);
     } catch (err: any) {
       console.log(err);
       res.header("Content-Type", "application/json; charset=utf-8");
@@ -99,12 +99,12 @@ router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
       throw new Error("id is not matched : query id and body id is different");
     }
 
-    const participant: Partial<ParticipantType> =
-      await participantService.putParticipant(id, data);
+    const participantRecord: Partial<ParticipantRecordType> =
+      await participantRecordService.putParticipantRecord(id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
-    res.send(participant);
+    res.send(participantRecord);
   } catch (err: any) {
     console.log(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -123,12 +123,12 @@ router.delete(
     try {
       const id: string = req.params.id;
 
-      const participant: Partial<ParticipantType> =
-        await participantService.removeParticipant(id);
+      const participantRecord: Partial<ParticipantRecordType> =
+        await participantRecordService.removeParticipantRecord(id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
-      res.send(participant);
+      res.send(participantRecord);
     } catch (err: any) {
       console.log(err);
       res.header("Content-Type", "application/json; charset=utf-8");

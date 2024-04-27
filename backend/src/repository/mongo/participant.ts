@@ -1,5 +1,4 @@
-import { ParticipantType } from "../../model/Participant";
-import { DriveRecordType } from "../../model/DriveRecord";
+import { ParticipantType } from "../../model/index/Participant";
 
 import { ParticipantRepository } from "../../core/repository/participant";
 import { ParticipantSchema } from "../../model/repository/ParticipantSchema";
@@ -15,6 +14,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
 
     delete filteredData._id;
     delete filteredData.hostId;
+    delete filteredData.participantRecordList;
 
     return filteredData;
   }
@@ -62,20 +62,25 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
+  async readParticipantWithPopulate(
+    id: string,
+    selectField: object
+  ): Promise<any> {
+    const contest = await ParticipantSchema.findOne({ id: id })
+      .populate("participantRecordList", selectField)
+      .lean();
+    if (!contest) {
+      throw new Error("Contest not found");
+    }
+
+    return contest;
+  }
+
   async updateParticipant(
     _id: any,
-    data: Partial<ParticipantType>,
-    replace: boolean = false
+    data: Partial<ParticipantType>
   ): Promise<any> {
     const filteredData = this.readonlyFilter(data);
-    const originParticipant: ParticipantType = await this.readParticipant(_id);
-
-    if (!replace && filteredData.driveRecord !== undefined) {
-      filteredData.driveRecord = await this.updateDriveRecord(
-        originParticipant.driveRecord,
-        filteredData.driveRecord
-      );
-    }
 
     const participant = await ParticipantSchema.findOneAndUpdate(
       { _id: _id },
@@ -111,31 +116,43 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  private async updateDriveRecord(
-    originDriveRecord: Partial<DriveRecordType>[],
-    srcDriveRecord: Partial<DriveRecordType>[]
+  async appendParticipantRecordList(
+    _id: any,
+    participantRecordId: any
   ): Promise<any> {
-    const targetDriveRecord = JSON.parse(JSON.stringify(originDriveRecord));
-
-    for (let i = 0; i < srcDriveRecord.length; i++) {
-      let isExist = false;
-      for (let j = 0; j < targetDriveRecord.length; j++) {
-        if (
-          String(srcDriveRecord[i]._id) === String(targetDriveRecord[j]._id)
-        ) {
-          targetDriveRecord[j] = {
-            ...targetDriveRecord[j],
-            ...srcDriveRecord[i],
-          };
-          isExist = true;
-          break;
-        }
+    const contest = await ParticipantSchema.findOneAndUpdate(
+      { _id: _id },
+      {
+        $addToSet: { participantRecordList: participantRecordId },
+      },
+      {
+        returnDocument: "after",
       }
-      if (!isExist) {
-        targetDriveRecord.push(srcDriveRecord[i]);
-      }
+    ).lean();
+    if (!contest) {
+      throw new Error("Failed to append participant list");
     }
 
-    return targetDriveRecord;
+    return participantRecordId;
+  }
+
+  async popParticipantRecordList(
+    _id: any,
+    _participantRecordId: any
+  ): Promise<any> {
+    const contest = await ParticipantSchema.findOneAndUpdate(
+      { _id: _id },
+      {
+        $pull: { participantRecordList: _participantRecordId },
+      },
+      {
+        returnDocument: "after",
+      }
+    ).lean();
+    if (!contest) {
+      throw new Error("Failed to remove participant list");
+    }
+
+    return _participantRecordId;
   }
 }

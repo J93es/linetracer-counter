@@ -6,7 +6,7 @@ import express, {
   Errback,
 } from "express";
 
-import { ContestType } from "../model/Contest";
+import { ContestType } from "../model/index/Contest";
 
 import { ContestServiceInterface } from "../core/service/contest";
 import { ContestService } from "../service/contest-service";
