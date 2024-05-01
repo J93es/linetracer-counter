@@ -1,5 +1,7 @@
 node_modules/
 config.ts
+.vscode/
+.backup/
 
 ### ExpressionEngine ###
 .DS_Store

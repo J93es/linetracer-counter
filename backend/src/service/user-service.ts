@@ -42,10 +42,16 @@ const contestRepository: ContestRepository = new ContestMongoRepo();
 //   return newParticipant;
 // }
 
+let instance: UserMongoService | null = null;
 export class UserMongoService implements UserService {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
   async getData(year: string): Promise<UserContestType> {
     try {
-      const data = await contestRepository.readContestWithPopulate(
+      const data = await contestRepository.readContestWithJoinByYear(
         year,
         {
           _id: 0,

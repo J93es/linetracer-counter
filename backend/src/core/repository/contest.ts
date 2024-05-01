@@ -4,8 +4,14 @@ export interface ContestRepository {
   isExistContest(id: string): Promise<Boolean>;
   createContest(data: ContestType): Promise<any>;
   readContest(id: string): Promise<any>;
-  readContestWithPopulate(
+  readContestList(): Promise<any>;
+  readContestWithJoin(
     id: string,
+    selectParticipantField: object,
+    selectParticipantRecordField: object
+  ): Promise<any>;
+  readContestWithJoinByYear(
+    year: string,
     selectParticipantField: object,
     selectParticipantRecordField: object
   ): Promise<any>;

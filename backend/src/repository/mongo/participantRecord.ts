@@ -10,7 +10,13 @@ import { ParticipantRecordRepository } from "../../core/repository/participantRe
 
 const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
 
+let instance: ParticipantRecordMongoRepo | null = null;
 export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
   private readonlyFilter(data: any) {
     const filteredData = JSON.parse(JSON.stringify(data));
 
@@ -56,6 +62,10 @@ export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
     }
 
     return participantRecord;
+  }
+
+  async readParticipantRecordList(participant_Id: any): Promise<any> {
+    return ParticipantRecordSchema.find({ hostId: participant_Id }).lean();
   }
 
   async readParticipantRecord(_id: any): Promise<any> {

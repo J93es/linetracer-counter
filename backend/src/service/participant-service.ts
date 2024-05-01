@@ -7,8 +7,14 @@ import { ParticipantMongoRepo } from "../repository/mongo/participant";
 
 const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
 
+let instance: ParticipantService | null = null;
 export class ParticipantService implements ParticipantServiceInterface {
-  private _idFilter(_id: any, srcData: Partial<ParticipantType>): void {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
+  private _idFilter(_id: string, srcData: Partial<ParticipantType>): void {
     if (!srcData._id) {
       throw new Error("_id is required");
     }
@@ -82,9 +88,18 @@ export class ParticipantService implements ParticipantServiceInterface {
 
   async getParticipant(_id: string): Promise<ParticipantType> {
     const participant: Partial<ParticipantType> =
-      await participantRepository.readParticipant(_id);
+      await participantRepository.readParticipantWithJoin(_id, {});
 
     return new Participant(participant as ParticipantType);
+  }
+
+  async getParticipantList(contest_Id: string): Promise<ParticipantType[]> {
+    const participantList: Partial<ParticipantType>[] =
+      await participantRepository.readParticipantList(contest_Id);
+
+    return participantList.map(
+      (participant) => new Participant(participant as ParticipantType)
+    );
   }
 
   async removeParticipant(_id: string): Promise<ParticipantType> {

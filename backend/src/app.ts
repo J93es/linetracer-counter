@@ -38,7 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/participant", partipantRouter);
-app.use("/participantRecord", partipantRecordRouter);
+app.use("/participant-record", partipantRecordRouter);
 app.use("/contest", contestRouter);
 app.use("/user", userRouter);
 

@@ -7,12 +7,18 @@ import { ContestServiceInterface } from "../core/service/contest";
 
 const contestRepository: ContestRepository = new ContestMongoRepo();
 
+let instance: ContestService | null = null;
 export class ContestService implements ContestServiceInterface {
-  private idFilter(id: string, srcData: Partial<ContestType>): void {
-    if (!srcData.id) {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
+  private idFilter(_id: string, srcData: Partial<ContestType>): void {
+    if (!srcData._id) {
       throw new Error("id is required");
     }
-    if (String(id) !== String(srcData.id)) {
+    if (String(_id) !== String(srcData._id)) {
       throw new Error("id is not matched : query id and body id is different");
     }
   }
@@ -38,16 +44,16 @@ export class ContestService implements ContestServiceInterface {
   }
 
   async patchContest(
-    year: string,
+    _id: string,
     data: Partial<ContestType>
   ): Promise<ContestType> {
     let srcContest: Partial<ContestType> = new Contest(data as ContestType);
 
-    this.idFilter(year, srcContest);
+    this.idFilter(_id, srcContest);
     srcContest = this.patchReadonlyFilter(srcContest);
 
     const contest: Partial<ContestType> = await contestRepository.updateContest(
-      year,
+      _id,
       srcContest
     );
 
@@ -55,32 +61,38 @@ export class ContestService implements ContestServiceInterface {
   }
 
   async putContest(
-    year: string,
+    _id: string,
     data: Partial<ContestType>
   ): Promise<ContestType> {
     const srcContest: Partial<ContestType> = new Contest(data as ContestType);
 
-    this.idFilter(year, srcContest);
+    this.idFilter(_id, srcContest);
 
     const contest: Partial<ContestType> = await contestRepository.updateContest(
-      year,
+      _id,
       srcContest
     );
 
     return new Contest(contest as ContestType);
   }
 
-  async getContest(year: string): Promise<ContestType> {
-    const contest: Partial<ContestType> = await contestRepository.readContest(
-      year
-    );
+  async getContest(_id: string): Promise<ContestType> {
+    const contest: Partial<ContestType> =
+      await contestRepository.readContestWithJoin(_id, {}, {});
 
     return new Contest(contest as ContestType);
   }
 
-  async removeContest(year: string): Promise<ContestType> {
+  async getContestList(): Promise<ContestType[]> {
+    const contests: Partial<ContestType>[] =
+      await contestRepository.readContestList();
+
+    return contests.map((contest) => new Contest(contest as ContestType));
+  }
+
+  async removeContest(_id: string): Promise<ContestType> {
     const contest: Partial<ContestType> = await contestRepository.deleteContest(
-      year
+      _id
     );
 
     return new Contest(contest as ContestType);

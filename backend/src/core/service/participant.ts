@@ -10,6 +10,7 @@ export interface ParticipantServiceInterface {
     _id: string,
     data: Partial<ParticipantType>
   ): Promise<ParticipantType>;
+  getParticipantList(contest_Id: string): Promise<ParticipantType[]>;
   getParticipant(_id: string): Promise<ParticipantType>;
   removeParticipant(_id: string): Promise<ParticipantType>;
 }

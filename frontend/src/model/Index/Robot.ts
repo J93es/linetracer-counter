@@ -1,4 +1,5 @@
 export type RobotType = {
+  _id: any;
   name: string;
   cpu: string;
   rom: string;
@@ -10,6 +11,7 @@ export type RobotType = {
 };
 
 export default class Robot {
+  _id: any;
   name: string;
   cpu: string;
   rom: string;
@@ -20,6 +22,7 @@ export default class Robot {
   sensor: string;
 
   constructor(data: RobotType) {
+    this._id = data._id;
     this.name = data.name;
     this.cpu = data.cpu;
     this.rom = data.rom;
@@ -30,3 +33,15 @@ export default class Robot {
     this.sensor = data.sensor;
   }
 }
+
+export const robotTamplate: RobotType = {
+  _id: "",
+  name: "",
+  cpu: "",
+  rom: "",
+  ram: "",
+  motorDriver: "",
+  motor: "",
+  adc: "",
+  sensor: "",
+};

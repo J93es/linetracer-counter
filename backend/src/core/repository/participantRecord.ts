@@ -3,6 +3,7 @@ import { ParticipantRecordType } from "../../model/index/ParticipantRecord";
 export interface ParticipantRecordRepository {
   isExistParticipantRecord(_id: any): Promise<Boolean>;
   createParticipantRecord(data: ParticipantRecordType): Promise<any>;
+  readParticipantRecordList(participant_Id: any): Promise<any>;
   readParticipantRecord(_id: any): Promise<any>;
   updateParticipantRecord(
     _id: any,

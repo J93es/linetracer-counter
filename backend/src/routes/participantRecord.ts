@@ -16,7 +16,18 @@ const participantRecordService: ParticipantRecordServiceInterface =
   new ParticipantRecordService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello get").status(200);
+  try {
+    const participant_Id: string = req.query.participant_Id as string;
+    const participantRecordList: Partial<ParticipantRecordType[]> =
+      await participantRecordService.getParticipantRecordList(participant_Id);
+
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(participantRecordList).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
+  }
 });
 
 router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +39,7 @@ router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participantRecord).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
@@ -44,7 +55,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participantRecord).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
@@ -76,7 +87,7 @@ router.patch(
       res.status(200);
       res.send(participantRecord);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(404);
       res.send({ message: err.toString() });
@@ -106,7 +117,7 @@ router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
     res.status(200);
     res.send(participantRecord);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(404);
     res.send({ message: err.toString() });
@@ -130,7 +141,7 @@ router.delete(
       res.status(200);
       res.send(participantRecord);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(404);
       res.send({ message: err.toString() });

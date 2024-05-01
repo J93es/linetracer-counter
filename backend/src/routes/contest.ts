@@ -15,7 +15,17 @@ const router: Router = express.Router();
 const contestService: ContestServiceInterface = new ContestService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello get").status(200);
+  try {
+    const contest: Partial<ContestType[]> =
+      await contestService.getContestList();
+
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(contest).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
+  }
 });
 
 router.get(
@@ -156,7 +166,7 @@ router.delete(
       res.status(200);
       res.send(contest);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(404);
       res.send({ message: err.toString() });

@@ -10,10 +10,19 @@ import { ParticipantRecordMongoRepo } from "../repository/mongo/participantRecor
 const participantRecordRepository: ParticipantRecordRepository =
   new ParticipantRecordMongoRepo();
 
+let instance: ParticipantRecordService | null = null;
 export class ParticipantRecordService
   implements ParticipantRecordServiceInterface
 {
-  private _idFilter(_id: any, srcData: Partial<ParticipantRecordType>): void {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
+  private _idFilter(
+    _id: string,
+    srcData: Partial<ParticipantRecordType>
+  ): void {
     if (!srcData._id) {
       throw new Error("_id is required");
     }
@@ -87,6 +96,20 @@ export class ParticipantRecordService
       );
 
     return new ParticipantRecord(participantRecord as ParticipantRecordType);
+  }
+
+  async getParticipantRecordList(
+    participant_Id: string
+  ): Promise<ParticipantRecordType[]> {
+    const participantRecordList: Partial<ParticipantRecordType>[] =
+      await participantRecordRepository.readParticipantRecordList(
+        participant_Id
+      );
+
+    return participantRecordList.map(
+      (participantRecord) =>
+        new ParticipantRecord(participantRecord as ParticipantRecordType)
+    );
   }
 
   async getParticipantRecord(_id: string): Promise<ParticipantRecordType> {

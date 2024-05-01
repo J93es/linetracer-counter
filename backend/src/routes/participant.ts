@@ -16,19 +16,30 @@ const participantService: ParticipantServiceInterface =
   new ParticipantService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello get").status(200);
-});
-
-router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const _id: string = req.params._id;
-    const participant: Partial<ParticipantType> =
-      await participantService.getParticipant(_id);
+    const contest_Id: string = req.query.contest_Id as string;
+    const participant: Partial<ParticipantType[]> =
+      await participantService.getParticipantList(contest_Id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participant).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id: string = req.params.id;
+    const participant: Partial<ParticipantType> =
+      await participantService.getParticipant(id);
+
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(participant).status(200);
+  } catch (err: any) {
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
@@ -44,7 +55,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participant).status(200);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
@@ -76,7 +87,7 @@ router.patch(
       res.status(200);
       res.send(participant);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(404);
       res.send({ message: err.toString() });
@@ -106,7 +117,7 @@ router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
     res.status(200);
     res.send(participant);
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(404);
     res.send({ message: err.toString() });
@@ -130,7 +141,7 @@ router.delete(
       res.status(200);
       res.send(participant);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(404);
       res.send({ message: err.toString() });

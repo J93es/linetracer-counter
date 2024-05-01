@@ -10,7 +10,7 @@ export type RobotType = {
   sensor: string;
 };
 
-export class Robot {
+export default class Robot {
   _id: any;
   name: string;
   cpu: string;

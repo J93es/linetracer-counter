@@ -8,7 +8,13 @@ import { ContestMongoRepo } from "../../repository/mongo/contest";
 
 const contestRepository: ContestRepository = new ContestMongoRepo();
 
+let instance: ParticipantMongoRepo | null = null;
 export class ParticipantMongoRepo implements ParticipantRepository {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
   private readonlyFilter(data: any) {
     const filteredData = JSON.parse(JSON.stringify(data));
 
@@ -53,6 +59,11 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
+  async readParticipantList(contest_Id: any): Promise<any> {
+    const list = await ParticipantSchema.find({ hostId: contest_Id }).lean();
+    return list;
+  }
+
   async readParticipant(_id: any): Promise<any> {
     const participant = await ParticipantSchema.findOne({ _id: _id }).lean();
     if (!participant) {
@@ -62,15 +73,12 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async readParticipantWithPopulate(
-    id: string,
-    selectField: object
-  ): Promise<any> {
-    const contest = await ParticipantSchema.findOne({ id: id })
+  async readParticipantWithJoin(_id: any, selectField: object): Promise<any> {
+    const contest = await ParticipantSchema.findOne({ _id: _id })
       .populate("participantRecordList", selectField)
       .lean();
     if (!contest) {
-      throw new Error("Contest not found");
+      throw new Error("Participant not found");
     }
 
     return contest;
@@ -104,6 +112,11 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       throw new Error("Failed to delete participant, check participant _id");
     }
 
+    if (JSON.stringify(participant.participantRecordList) !== "[]") {
+      throw new Error(
+        "Failed to delete participant, participantRecordList is not empty"
+      );
+    }
     try {
       await contestRepository.popParticipantList(
         participant.hostId,
