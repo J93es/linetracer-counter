@@ -1,9 +1,9 @@
-import { ParticipantType } from "../../model/index/Participant";
+import { ParticipantType } from "../../model/Participant";
 
 export interface ParticipantRepository {
   isExistParticipant(_id: any): Promise<Boolean>;
   createParticipant(data: ParticipantType): Promise<any>;
-  readParticipantList(contest_Id: any): Promise<any>;
+  readParticipantIndex(contest_Id: any): Promise<any>;
   readParticipant(_id: any): Promise<any>;
   readParticipantWithJoin(_id: any, selectField: object): Promise<any>;
   updateParticipant(_id: any, data: Partial<ParticipantType>): Promise<any>;

@@ -1,4 +1,4 @@
-import { DriveRecordType } from "./DriveRecord";
+import { DriveRecordType, driveRecordTamplate } from "model/DriveRecord";
 
 export type ParticipantRecordType = {
   _id: any;
@@ -33,3 +33,13 @@ export default class ParticipantRecord {
     this.driveRecordList = data.driveRecordList;
   }
 }
+
+export const participantRecordTamplate: ParticipantRecordType =
+  new ParticipantRecord({
+    _id: "",
+    hostId: "",
+    contestSector: "",
+    order: 0,
+    remainingContestTime: 0,
+    driveRecordList: [driveRecordTamplate],
+  });

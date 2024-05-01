@@ -6,7 +6,7 @@ import express, {
   Errback,
 } from "express";
 
-import { ContestType } from "../model/index/Contest";
+import { ContestType } from "../model/Contest";
 
 import { ContestServiceInterface } from "../core/service/contest";
 import { ContestService } from "../service/contest-service";
@@ -17,7 +17,7 @@ const contestService: ContestServiceInterface = new ContestService();
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const contest: Partial<ContestType[]> =
-      await contestService.getContestList();
+      await contestService.getContestIndex();
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);

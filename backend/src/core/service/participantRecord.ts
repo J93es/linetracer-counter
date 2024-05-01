@@ -1,4 +1,4 @@
-import { ParticipantRecordType } from "../model/participantRecord";
+import { ParticipantRecordType } from "../../model/ParticipantRecord";
 
 export interface ParticipantRecordServiceInterface {
   postParticipantRecord(
@@ -12,7 +12,7 @@ export interface ParticipantRecordServiceInterface {
     _id: string,
     data: Partial<ParticipantRecordType>
   ): Promise<ParticipantRecordType>;
-  getParticipantRecordList(
+  getParticipantRecordIndex(
     participant_Id: string
   ): Promise<ParticipantRecordType[]>;
   getParticipantRecord(_id: string): Promise<ParticipantRecordType>;

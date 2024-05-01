@@ -1,4 +1,4 @@
-import { ContestType } from "../../model/index/Contest";
+import { ContestType } from "../../model/Contest";
 
 import { ContestRepository } from "../../core/repository/contest";
 import { ContestSchema } from "../../model/repository/ContestSchema";
@@ -40,7 +40,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContestList(): Promise<any> {
+  async readContestIndex(): Promise<any> {
     return ContestSchema.find().lean();
   }
 

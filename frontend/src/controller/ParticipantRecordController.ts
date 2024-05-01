@@ -1,10 +1,10 @@
 import ParticipantRecord, {
   ParticipantRecordType,
-} from "model/Index/ParticipantRecord";
+} from "model/ParticipantRecord";
 import { uri } from "../config";
 
 export class ParticipantRecordController {
-  async getParticipantRecordList(
+  async getParticipantRecordIndex(
     participantId: string
   ): Promise<ParticipantRecordType[]> {
     try {

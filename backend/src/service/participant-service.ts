@@ -1,6 +1,6 @@
 import { ParticipantServiceInterface } from "../core/service/participant";
 
-import Participant, { ParticipantType } from "../model/index/Participant";
+import Participant, { ParticipantType } from "../model/Participant";
 
 import { ParticipantRepository } from "../core/repository/participant";
 import { ParticipantMongoRepo } from "../repository/mongo/participant";
@@ -93,9 +93,9 @@ export class ParticipantService implements ParticipantServiceInterface {
     return new Participant(participant as ParticipantType);
   }
 
-  async getParticipantList(contest_Id: string): Promise<ParticipantType[]> {
+  async getParticipantIndex(contest_Id: string): Promise<ParticipantType[]> {
     const participantList: Partial<ParticipantType>[] =
-      await participantRepository.readParticipantList(contest_Id);
+      await participantRepository.readParticipantIndex(contest_Id);
 
     return participantList.map(
       (participant) => new Participant(participant as ParticipantType)

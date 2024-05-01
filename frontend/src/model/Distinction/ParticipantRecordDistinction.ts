@@ -1,4 +1,4 @@
-import { DriveRecordType, driveRecordTamplate } from "model/Index/DriveRecord";
+import { DriveRecordType, driveRecordTamplate } from "model/DriveRecord";
 
 export type ParticipantRecordDistinctionType = {
   _id: string;

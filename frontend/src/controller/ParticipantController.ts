@@ -1,8 +1,8 @@
-import Participant, { ParticipantType } from "model/Index/Participant";
+import Participant, { ParticipantType } from "model/Participant";
 import { uri } from "../config";
 
 export class ParticipantController {
-  async getParticipantList(hostId: string): Promise<ParticipantType[]> {
+  async getParticipantIndex(hostId: string): Promise<ParticipantType[]> {
     try {
       const response = await fetch(`${uri}/participant/?contest_Id=${hostId}`, {
         method: "GET",

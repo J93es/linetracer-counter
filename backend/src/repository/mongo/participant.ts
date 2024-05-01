@@ -1,4 +1,4 @@
-import { ParticipantType } from "../../model/index/Participant";
+import { ParticipantType } from "../../model/Participant";
 
 import { ParticipantRepository } from "../../core/repository/participant";
 import { ParticipantSchema } from "../../model/repository/ParticipantSchema";
@@ -59,7 +59,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async readParticipantList(contest_Id: any): Promise<any> {
+  async readParticipantIndex(contest_Id: any): Promise<any> {
     const list = await ParticipantSchema.find({ hostId: contest_Id }).lean();
     return list;
   }

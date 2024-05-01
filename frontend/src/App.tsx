@@ -4,11 +4,11 @@ import "./App.css";
 
 import { useState, useEffect } from "react";
 
-import Contest, { ContestType, contestTamplate } from "model/Index/Contest";
+import Contest, { ContestType, contestTamplate } from "model/Contest";
 import ParticipantRecord, {
   ParticipantRecordType,
-} from "model/Index/ParticipantRecord";
-import DriveRecord, { DriveRecordType } from "model/Index/DriveRecord";
+} from "model/ParticipantRecord";
+import DriveRecord, { DriveRecordType } from "model/DriveRecord";
 
 import ContestDistintion from "model/Distinction/ContestDistinction";
 import ParticipantDistinction from "model/Distinction/ParticipantDistinction";
@@ -20,7 +20,7 @@ import { ParticipantController } from "controller/ParticipantController";
 import { ParticipantRecordController } from "controller/ParticipantRecordController";
 
 import SelectId from "component/SelectId/SelectId";
-import { ParticipantType } from "model/Index/Participant";
+import { ParticipantType } from "model/Participant";
 
 const contestController = new ContestController();
 const participantController = new ParticipantController();
@@ -28,113 +28,124 @@ const participantRecordController = new ParticipantRecordController();
 
 function App() {
   const [contestList, setContestList] = useState<ContestType[]>([]);
-  const [curContestId, setCurContestId] = useState<string>("");
-  const [curContest, setCurContest] = useState({});
+  const [targetContestId, setTargetContestId] = useState<string>("");
+  const [targetContest, setTargetContest] = useState<Partial<ContestType>>({});
 
-  const [participantList, setParticipantList] = useState([]);
-  const [curParticipantId, setCurParticipantId] = useState("");
-  const [curParticipant, setCurParticipant] = useState({});
+  const [participantList, setParticipantList] = useState<ParticipantType[]>([]);
+  const [targetParticipantId, setTargetParticipantId] = useState<string>("");
+  const [targetParticipant, setTargetParticipant] = useState<
+    Partial<ParticipantType>
+  >({});
 
-  const [participantRecordList, setParticipantRecordList] = useState([]);
-  const [curParticipantRecordId, setCurParticipantRecordId] = useState("");
-  const [curParticipantRecord, setCurParticipantRecord] = useState({});
+  const [participantRecordList, setParticipantRecordList] = useState<
+    ParticipantRecordType[]
+  >([]);
+  const [targetParticipantRecordId, setTargetParticipantRecordId] =
+    useState<string>("");
+  const [targetParticipantRecord, setTargetParticipantRecord] = useState<
+    Partial<ParticipantRecordType>
+  >({});
 
-  const [driveRecordList, setDriveRecordList] = useState([]);
-  const [curDriveRecordId, setCurDriveRecordId] = useState("");
-  const [curDriveRecord, setCurDriveRecord] = useState({});
+  const [driveRecordList, setDriveRecordList] = useState<DriveRecordType[]>([]);
+  const [targetDriveRecordId, setTargetDriveRecordId] = useState<string>("");
+  const [targetDriveRecord, setTargetDriveRecord] = useState<
+    Partial<DriveRecordType>
+  >({});
 
   useEffect(() => {
-    setCurContestId("");
+    setTargetContestId("");
   }, [contestList]);
 
   useEffect(() => {
-    if (!curContestId) {
-      setCurContest({});
+    if (!targetContestId) {
+      setTargetContest({});
       setParticipantList([]);
-      setCurParticipantId("");
+      setTargetParticipantId("");
       return;
     }
     const func = async () => {
-      const contest = await contestController.getContest(curContestId);
-      setCurContest(contest);
+      const contest = await contestController.getContest(targetContestId);
+      setTargetContest(contest);
 
-      console.log(contest);
-
-      const participantList = await participantController.getParticipantList(
-        curContestId
+      const participantList = await participantController.getParticipantIndex(
+        targetContestId
       );
       setParticipantList(participantList as any);
-      setCurParticipantId((participantList[0] && participantList[0]._id) || "");
+      setTargetParticipantId(
+        (participantList[0] && participantList[0]._id) || ""
+      );
     };
     func();
-  }, [curContestId]);
+  }, [targetContestId]);
 
   useEffect(() => {
-    if (!curParticipantId) {
-      setCurParticipant({});
+    if (!targetParticipantId) {
+      setTargetParticipant({});
       setParticipantRecordList([]);
-      setCurParticipantRecordId("");
+      setTargetParticipantRecordId("");
       return;
     }
     const func = async () => {
       const participant = await participantController.getParticipant(
-        curParticipantId
+        targetParticipantId
       );
-      setCurParticipant(participant);
+      setTargetParticipant(participant);
 
       const participantRecordList =
-        await participantRecordController.getParticipantRecordList(
-          curParticipantId
+        await participantRecordController.getParticipantRecordIndex(
+          targetParticipantId
         );
       setParticipantRecordList(participantRecordList as any);
-      setCurParticipantRecordId(
+      setTargetParticipantRecordId(
         (participantRecordList[0] && participantRecordList[0]._id) || ""
       );
     };
     func();
-  }, [curParticipantId]);
+  }, [targetParticipantId]);
 
   useEffect(() => {
-    if (!curParticipantRecordId) {
-      setCurParticipantRecord({});
+    if (!targetParticipantRecordId) {
+      setTargetParticipantRecord({});
       setDriveRecordList([]);
-      setCurDriveRecordId("");
+      setTargetDriveRecordId("");
       return;
     }
 
     const func = async () => {
       const participantRecord =
         await participantRecordController.getParticipantRecord(
-          curParticipantRecordId
+          targetParticipantRecordId
         );
-      setCurParticipantRecord(participantRecord);
+      setTargetParticipantRecord(participantRecord);
 
       const driveRecordList = participantRecord.driveRecordList;
       setDriveRecordList(driveRecordList as any);
-      setCurDriveRecordId((driveRecordList[0] && driveRecordList[0]._id) || "");
+      setTargetDriveRecordId(
+        (driveRecordList[0] && driveRecordList[0]._id) || ""
+      );
     };
     func();
-  }, [curParticipantRecordId]);
+  }, [targetParticipantRecordId]);
 
   useEffect(() => {
-    if (!curDriveRecordId) {
-      setCurDriveRecord({});
+    if (!targetDriveRecordId) {
+      setTargetDriveRecord({});
       return;
     }
 
     const func = async () => {
       const driveRecord = driveRecordList.find(
         (driverecord: DriveRecordType) => {
-          if (driverecord._id === curDriveRecordId) return true;
+          if (driverecord._id === targetDriveRecordId) return true;
           else return false;
         }
       );
-      setCurDriveRecord(driveRecord as any);
+      setTargetDriveRecord(driveRecord as any);
     };
     func();
-  }, [curDriveRecordId]);
+  }, [targetDriveRecordId]);
 
-  // console.log(curContest, curParticipant, participantRecordList);
+  // console.log(targetContest, targetParticipant, participantRecordList);
 
   return (
     <div className="App">
@@ -142,7 +153,7 @@ function App() {
         <button
           onClick={() => {
             const func = async () => {
-              const contest = await contestController.getContestList();
+              const contest = await contestController.getContestIndex();
               setContestList(contest);
             };
             func();
@@ -152,29 +163,29 @@ function App() {
         </button>
 
         <SelectId
-          targetId={curContestId}
-          setTargetId={setCurContestId}
+          targetId={targetContestId}
+          setTargetId={setTargetContestId}
           listOfObject={contestList}
           DistintionClass={ContestDistintion}
         />
 
         <SelectId
-          targetId={curParticipantId}
-          setTargetId={setCurParticipantId}
+          targetId={targetParticipantId}
+          setTargetId={setTargetParticipantId}
           listOfObject={participantList}
           DistintionClass={ParticipantDistinction}
         />
 
         <SelectId
-          targetId={curParticipantRecordId}
-          setTargetId={setCurParticipantRecordId}
+          targetId={targetParticipantRecordId}
+          setTargetId={setTargetParticipantRecordId}
           listOfObject={participantRecordList}
           DistintionClass={ParticipantRecordDistinction}
         />
 
         <SelectId
-          targetId={curDriveRecordId}
-          setTargetId={setCurDriveRecordId}
+          targetId={targetDriveRecordId}
+          setTargetId={setTargetDriveRecordId}
           listOfObject={driveRecordList}
           DistintionClass={DriveRecordDistinction}
         />

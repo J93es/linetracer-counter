@@ -2,7 +2,7 @@ import { ParticipantRecordServiceInterface } from "../core/service/participantRe
 
 import ParticipantRecord, {
   ParticipantRecordType,
-} from "../model/index/ParticipantRecord";
+} from "../model/ParticipantRecord";
 
 import { ParticipantRecordRepository } from "../core/repository/participantRecord";
 import { ParticipantRecordMongoRepo } from "../repository/mongo/participantRecord";
@@ -98,11 +98,11 @@ export class ParticipantRecordService
     return new ParticipantRecord(participantRecord as ParticipantRecordType);
   }
 
-  async getParticipantRecordList(
+  async getParticipantRecordIndex(
     participant_Id: string
   ): Promise<ParticipantRecordType[]> {
     const participantRecordList: Partial<ParticipantRecordType>[] =
-      await participantRecordRepository.readParticipantRecordList(
+      await participantRecordRepository.readParticipantRecordIndex(
         participant_Id
       );
 

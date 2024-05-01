@@ -1,4 +1,4 @@
-import Contest, { ContestType } from "../model/index/Contest";
+import Contest, { ContestType } from "../model/Contest";
 
 import { ContestRepository } from "../core/repository/contest";
 import { ContestMongoRepo } from "../repository/mongo/contest";
@@ -83,9 +83,9 @@ export class ContestService implements ContestServiceInterface {
     return new Contest(contest as ContestType);
   }
 
-  async getContestList(): Promise<ContestType[]> {
+  async getContestIndex(): Promise<ContestType[]> {
     const contests: Partial<ContestType>[] =
-      await contestRepository.readContestList();
+      await contestRepository.readContestIndex();
 
     return contests.map((contest) => new Contest(contest as ContestType));
   }

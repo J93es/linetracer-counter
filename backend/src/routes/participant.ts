@@ -6,7 +6,7 @@ import express, {
   Errback,
 } from "express";
 
-import { ParticipantType } from "../model/index/Participant";
+import { ParticipantType } from "../model/Participant";
 
 import { ParticipantServiceInterface } from "../core/service/participant";
 import { ParticipantService } from "../service/participant-service";
@@ -19,7 +19,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const contest_Id: string = req.query.contest_Id as string;
     const participant: Partial<ParticipantType[]> =
-      await participantService.getParticipantList(contest_Id);
+      await participantService.getParticipantIndex(contest_Id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participant).status(200);

@@ -1,10 +1,10 @@
-import { ContestType } from "../../model/index/Contest";
+import { ContestType } from "../../model/Contest";
 
 export interface ContestRepository {
   isExistContest(id: string): Promise<Boolean>;
   createContest(data: ContestType): Promise<any>;
+  readContestIndex(): Promise<any>;
   readContest(id: string): Promise<any>;
-  readContestList(): Promise<any>;
   readContestWithJoin(
     id: string,
     selectParticipantField: object,

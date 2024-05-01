@@ -1,4 +1,4 @@
-import Contest, { ContestType } from "model/Index/Contest";
+import Contest, { ContestType } from "model/Contest";
 import { uri } from "../config";
 
 let instance: ContestController | null = null;
@@ -10,7 +10,7 @@ export class ContestController {
     return instance;
   }
 
-  async getContestList(): Promise<any> {
+  async getContestIndex(): Promise<any> {
     try {
       const response = await fetch(`${uri}/contest`, {
         method: "GET",

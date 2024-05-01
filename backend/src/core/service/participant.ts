@@ -1,4 +1,4 @@
-import { ParticipantType } from "../../model/index/Participant";
+import { ParticipantType } from "../../model/Participant";
 
 export interface ParticipantServiceInterface {
   postParticipant(data: Partial<ParticipantType>): Promise<ParticipantType>;
@@ -10,7 +10,7 @@ export interface ParticipantServiceInterface {
     _id: string,
     data: Partial<ParticipantType>
   ): Promise<ParticipantType>;
-  getParticipantList(contest_Id: string): Promise<ParticipantType[]>;
+  getParticipantIndex(contest_Id: string): Promise<ParticipantType[]>;
   getParticipant(_id: string): Promise<ParticipantType>;
   removeParticipant(_id: string): Promise<ParticipantType>;
 }

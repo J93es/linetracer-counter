@@ -1,5 +1,5 @@
-import { ParticipantRecordType } from "../../model/index/ParticipantRecord";
-import { DriveRecordType } from "../../model/index/DriveRecord";
+import { ParticipantRecordType } from "../../model/ParticipantRecord";
+import { DriveRecordType } from "../../model/DriveRecord";
 
 import { ParticipantRecordSchema } from "../../model/repository/ParticipantRecordSchema";
 
@@ -64,7 +64,7 @@ export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
     return participantRecord;
   }
 
-  async readParticipantRecordList(participant_Id: any): Promise<any> {
+  async readParticipantRecordIndex(participant_Id: any): Promise<any> {
     return ParticipantRecordSchema.find({ hostId: participant_Id }).lean();
   }
 
