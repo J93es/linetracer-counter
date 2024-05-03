@@ -1,5 +1,3 @@
-import { DriveRecordType, driveRecordTamplate } from "model/DriveRecord";
-
 export type ParticipantRecordDistinctionType = {
   _id: string;
   // hostId: string;

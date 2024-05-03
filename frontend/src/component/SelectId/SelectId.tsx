@@ -22,27 +22,35 @@ export default function SelectId({
     Math.trunc(targetIndex / viewLengthPerPage + 1)
   );
 
+  if (listOfObject.length === 0) {
+    return <div />;
+  }
+
   return (
     <div>
-      <SetViewLength
-        viewLengthPerPage={viewLengthPerPage}
-        setViewLengthPerPage={setViewLengthPerPage}
-      />
-      <ListGroup
-        listOfObject={listOfObject}
-        targetId={targetId}
-        setTargetId={setTargetId}
-        viewLengthPerPage={viewLengthPerPage}
-        currentPageIndex={currentPageIndex}
-        DistintionClass={DistintionClass}
-      />
-      <PaginationBar
-        currentPageIndex={currentPageIndex}
-        setPageIndex={setPageIndex}
-        viewLengthPerPage={viewLengthPerPage}
-        listLength={listOfObject.length}
-        targetIndex={targetIndex}
-      />
+      {listOfObject.length === 0 ? null : (
+        <div>
+          <SetViewLength
+            viewLengthPerPage={viewLengthPerPage}
+            setViewLengthPerPage={setViewLengthPerPage}
+          />
+          <ListGroup
+            listOfObject={listOfObject}
+            targetId={targetId}
+            setTargetId={setTargetId}
+            viewLengthPerPage={viewLengthPerPage}
+            currentPageIndex={currentPageIndex}
+            DistintionClass={DistintionClass}
+          />
+          <PaginationBar
+            currentPageIndex={currentPageIndex}
+            setPageIndex={setPageIndex}
+            viewLengthPerPage={viewLengthPerPage}
+            listLength={listOfObject.length}
+            targetIndex={targetIndex}
+          />
+        </div>
+      )}
     </div>
   );
 }

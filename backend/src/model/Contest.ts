@@ -4,8 +4,6 @@ export type ContestType = {
   title: string;
 
   curContestingSection: string;
-  curParticipant: any;
-  nextParticipant: any;
 
   contestTimerStartTime: number;
   driveStartTime: number;
@@ -19,8 +17,6 @@ export default class Contest {
   title: string;
 
   curContestingSection: string;
-  curParticipant: any;
-  nextParticipant: any;
 
   contestTimerStartTime: number;
   driveStartTime: number;
@@ -33,8 +29,6 @@ export default class Contest {
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
-    this.curParticipant = data.curParticipant;
-    this.nextParticipant = data.nextParticipant;
 
     this.contestTimerStartTime = data.contestTimerStartTime;
     this.driveStartTime = data.driveStartTime;

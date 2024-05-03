@@ -5,6 +5,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 import Contest, { ContestType, contestTamplate } from "model/Contest";
+import Participant, { ParticipantType } from "model/Participant";
 import ParticipantRecord, {
   ParticipantRecordType,
 } from "model/ParticipantRecord";
@@ -20,23 +21,31 @@ import { ParticipantController } from "controller/ParticipantController";
 import { ParticipantRecordController } from "controller/ParticipantRecordController";
 
 import SelectId from "component/SelectId/SelectId";
-import { ParticipantType } from "model/Participant";
+import ContestManage from "component/ContestManage";
+import ParticipantManage from "component/ParticipantManage";
+import ParticipantRecordManage from "component/ParticipantRecordManage";
+import DriveRecordManage from "component/DriveRecordManage";
 
 const contestController = new ContestController();
 const participantController = new ParticipantController();
 const participantRecordController = new ParticipantRecordController();
 
 function App() {
+  const [contestListGetSignal, setContestListGetSignal] = useState<number>(0);
   const [contestList, setContestList] = useState<ContestType[]>([]);
   const [targetContestId, setTargetContestId] = useState<string>("");
   const [targetContest, setTargetContest] = useState<Partial<ContestType>>({});
 
+  const [participantListGetSignal, setParticipantListGetSignal] =
+    useState<number>(0);
   const [participantList, setParticipantList] = useState<ParticipantType[]>([]);
   const [targetParticipantId, setTargetParticipantId] = useState<string>("");
   const [targetParticipant, setTargetParticipant] = useState<
     Partial<ParticipantType>
   >({});
 
+  const [participantRecordListGetSignal, setParticipantRecordListGetSignal] =
+    useState<number>(0);
   const [participantRecordList, setParticipantRecordList] = useState<
     ParticipantRecordType[]
   >([]);
@@ -46,68 +55,137 @@ function App() {
     Partial<ParticipantRecordType>
   >({});
 
+  const [driveRecordListGetSignal, setDriveRecordListGetSignal] =
+    useState<number>(0);
   const [driveRecordList, setDriveRecordList] = useState<DriveRecordType[]>([]);
   const [targetDriveRecordId, setTargetDriveRecordId] = useState<string>("");
   const [targetDriveRecord, setTargetDriveRecord] = useState<
     Partial<DriveRecordType>
   >({});
 
+  // drive record list is imbedded in participant record
   useEffect(() => {
-    setTargetContestId("");
+    setParticipantRecordListGetSignal((prev) => (prev + 1) % 1000);
+  }, [driveRecordListGetSignal]);
+
+  // get contest index
+  useEffect(() => {
+    const func = async () => {
+      const contest = await contestController.getContestIndex();
+      setContestList(contest);
+    };
+    func();
+  }, [contestListGetSignal]);
+
+  // set target contest id
+  useEffect(() => {
+    if (
+      !(contestList?.length > 0) ||
+      !contestList[contestList.length - 1]._id
+    ) {
+      setTargetContestId("");
+      return;
+    }
+
+    setTargetContestId(contestList[contestList.length - 1]._id);
   }, [contestList]);
 
+  // get target contest
   useEffect(() => {
     if (!targetContestId) {
       setTargetContest({});
-      setParticipantList([]);
-      setTargetParticipantId("");
       return;
     }
+
     const func = async () => {
       const contest = await contestController.getContest(targetContestId);
-      setTargetContest(contest);
 
-      const participantList = await participantController.getParticipantIndex(
-        targetContestId
-      );
-      setParticipantList(participantList as any);
-      setTargetParticipantId(
-        (participantList[0] && participantList[0]._id) || ""
-      );
+      setTargetContest(contest);
     };
     func();
   }, [targetContestId]);
 
+  // get participant index
+  useEffect(() => {
+    if (!targetContest?._id) {
+      setParticipantList([]);
+      return;
+    }
+
+    const func = async () => {
+      const participantList = await participantController.getParticipantIndex(
+        targetContest._id
+      );
+
+      setParticipantList(participantList as any);
+    };
+    func();
+  }, [targetContest, participantListGetSignal]);
+
+  // set target participant id
+  useEffect(() => {
+    if (!(participantList?.length > 0) || !participantList[0]._id) {
+      setTargetParticipantId("");
+      return;
+    }
+
+    setTargetParticipantId(participantList[0]._id);
+  }, [participantList]);
+
+  // get target participant
   useEffect(() => {
     if (!targetParticipantId) {
       setTargetParticipant({});
-      setParticipantRecordList([]);
-      setTargetParticipantRecordId("");
       return;
     }
+
     const func = async () => {
       const participant = await participantController.getParticipant(
         targetParticipantId
       );
-      setTargetParticipant(participant);
 
-      const participantRecordList =
-        await participantRecordController.getParticipantRecordIndex(
-          targetParticipantId
-        );
-      setParticipantRecordList(participantRecordList as any);
-      setTargetParticipantRecordId(
-        (participantRecordList[0] && participantRecordList[0]._id) || ""
-      );
+      setTargetParticipant(participant);
     };
     func();
   }, [targetParticipantId]);
 
+  // get participant record index
+  useEffect(() => {
+    if (!targetParticipant?._id) {
+      setParticipantRecordList([]);
+      return;
+    }
+
+    const func = async () => {
+      const participantRecordList =
+        await participantRecordController.getParticipantRecordIndex(
+          targetParticipant._id
+        );
+
+      setParticipantRecordList(participantRecordList as any);
+    };
+    func();
+  }, [targetParticipant, participantRecordListGetSignal]);
+
+  // set target participant record id
+  useEffect(() => {
+    if (
+      !(participantRecordList?.length > 0) ||
+      !participantRecordList[participantRecordList.length - 1]._id
+    ) {
+      setTargetParticipantRecordId("");
+      return;
+    }
+
+    setTargetParticipantRecordId(
+      participantRecordList[participantRecordList.length - 1]._id
+    );
+  }, [participantRecordList]);
+
+  // get target participant record
   useEffect(() => {
     if (!targetParticipantRecordId) {
       setTargetParticipantRecord({});
-      setDriveRecordList([]);
-      setTargetDriveRecordId("");
       return;
     }
 
@@ -116,78 +194,78 @@ function App() {
         await participantRecordController.getParticipantRecord(
           targetParticipantRecordId
         );
-      setTargetParticipantRecord(participantRecord);
 
-      const driveRecordList = participantRecord.driveRecordList;
-      setDriveRecordList(driveRecordList as any);
-      setTargetDriveRecordId(
-        (driveRecordList[0] && driveRecordList[0]._id) || ""
-      );
+      setTargetParticipantRecord(participantRecord as any);
     };
     func();
   }, [targetParticipantRecordId]);
 
+  // get drive record index
+  useEffect(() => {
+    if (!targetParticipantRecord?._id) {
+      setDriveRecordList([]);
+      return;
+    }
+
+    setDriveRecordList(targetParticipantRecord.driveRecordList as any);
+  }, [targetParticipantRecord]);
+
+  // set target drive record id
+  useEffect(() => {
+    if (
+      !(driveRecordList?.length > 0) ||
+      !driveRecordList[driveRecordList.length - 1]._id
+    ) {
+      setTargetDriveRecordId("");
+      return;
+    }
+
+    setTargetDriveRecordId(driveRecordList[driveRecordList.length - 1]._id);
+  }, [driveRecordList]);
+
+  // get target drive record
   useEffect(() => {
     if (!targetDriveRecordId) {
       setTargetDriveRecord({});
       return;
     }
 
-    const func = async () => {
-      const driveRecord = driveRecordList.find(
-        (driverecord: DriveRecordType) => {
-          if (driverecord._id === targetDriveRecordId) return true;
-          else return false;
-        }
-      );
-      setTargetDriveRecord(driveRecord as any);
-    };
-    func();
+    const driveRecord = driveRecordList.find((driverecord: DriveRecordType) => {
+      if (driverecord._id === targetDriveRecordId) return true;
+      else return false;
+    });
+    setTargetDriveRecord(driveRecord as any);
   }, [targetDriveRecordId]);
-
-  // console.log(targetContest, targetParticipant, participantRecordList);
 
   return (
     <div className="App">
       <header className="App-header">
-        <button
-          onClick={() => {
-            const func = async () => {
-              const contest = await contestController.getContestIndex();
-              setContestList(contest);
-            };
-            func();
-          }}
-        >
-          get contest list
-        </button>
-
-        <SelectId
-          targetId={targetContestId}
-          setTargetId={setTargetContestId}
-          listOfObject={contestList}
-          DistintionClass={ContestDistintion}
+        <ContestManage
+          setContestListGetSignal={setContestListGetSignal}
+          targetContestId={targetContestId}
+          setTargetContestId={setTargetContestId}
+          contestList={contestList}
         />
 
-        <SelectId
-          targetId={targetParticipantId}
-          setTargetId={setTargetParticipantId}
-          listOfObject={participantList}
-          DistintionClass={ParticipantDistinction}
+        <ParticipantManage
+          setParticipantListGetSignal={setParticipantListGetSignal}
+          targetParticipantId={targetParticipantId}
+          setTargetParticipantId={setTargetParticipantId}
+          participantList={participantList}
         />
 
-        <SelectId
-          targetId={targetParticipantRecordId}
-          setTargetId={setTargetParticipantRecordId}
-          listOfObject={participantRecordList}
-          DistintionClass={ParticipantRecordDistinction}
+        <ParticipantRecordManage
+          setParticipantRecordListGetSignal={setParticipantRecordListGetSignal}
+          targetParticipantRecordId={targetParticipantRecordId}
+          setTargetParticipantRecordId={setTargetParticipantRecordId}
+          participantRecordList={participantRecordList}
         />
 
-        <SelectId
-          targetId={targetDriveRecordId}
-          setTargetId={setTargetDriveRecordId}
-          listOfObject={driveRecordList}
-          DistintionClass={DriveRecordDistinction}
+        <DriveRecordManage
+          setDriveRecordListGetSignal={setDriveRecordListGetSignal}
+          targetDriveRecordId={targetDriveRecordId}
+          setTargetDriveRecordId={setTargetDriveRecordId}
+          driveRecordList={driveRecordList}
         />
 
         {/* <button

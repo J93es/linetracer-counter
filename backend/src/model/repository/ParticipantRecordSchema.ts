@@ -29,6 +29,11 @@ const participantRecordSchema = new Schema({
   },
   order: { type: Number, required: true },
   remainingContestTime: { type: Number, required: true },
+  sectorState: {
+    type: String,
+    required: true,
+    enum: ["ready", "running", "next", "end"],
+  },
 
   driveRecordList: {
     type: [driveRecordSchema],

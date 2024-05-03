@@ -5,8 +5,6 @@ export type UserContestType = {
   title: string;
 
   curContestingSection: string;
-  curParticipant: any;
-  nextParticipant: any;
 
   participantList: UserParticipantType[];
 };
@@ -16,8 +14,6 @@ export default class UserContest {
   title: string;
 
   curContestingSection: string;
-  curParticipant: any;
-  nextParticipant: any;
 
   participantList: UserParticipantType[];
 
@@ -26,8 +22,6 @@ export default class UserContest {
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
-    this.curParticipant = data.curParticipant;
-    this.nextParticipant = data.nextParticipant;
 
     this.participantList = data.participantList;
   }

@@ -1,5 +1,4 @@
 let instance: SerialPortControler | null = null;
-
 export default class SerialPortControler {
   devicePort: any;
   value: any;

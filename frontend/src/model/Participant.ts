@@ -1,6 +1,6 @@
-import { RobotType } from "./Robot";
-import { ParticipantRecordType } from "./ParticipantRecord";
-import { robotTamplate } from "./Robot";
+import { RobotType } from "model/Robot";
+import { ParticipantRecordType } from "model/ParticipantRecord";
+import { robotTamplate } from "model/Robot";
 
 export type ParticipantType = {
   _id: any;

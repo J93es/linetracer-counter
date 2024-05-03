@@ -1,7 +1,15 @@
 import Participant, { ParticipantType } from "model/Participant";
 import { uri } from "../config";
 
+let instance: ParticipantController | null = null;
 export class ParticipantController {
+  constructor() {
+    if (!instance) {
+      instance = this;
+    }
+    return instance;
+  }
+
   async getParticipantIndex(hostId: string): Promise<ParticipantType[]> {
     try {
       const response = await fetch(`${uri}/participant/?contest_Id=${hostId}`, {

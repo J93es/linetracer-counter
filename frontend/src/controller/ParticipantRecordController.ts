@@ -3,7 +3,15 @@ import ParticipantRecord, {
 } from "model/ParticipantRecord";
 import { uri } from "../config";
 
+let instance: ParticipantRecordController | null = null;
 export class ParticipantRecordController {
+  constructor() {
+    if (!instance) {
+      instance = this;
+    }
+    return instance;
+  }
+
   async getParticipantRecordIndex(
     participantId: string
   ): Promise<ParticipantRecordType[]> {

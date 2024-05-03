@@ -7,6 +7,7 @@ export type ParticipantRecordType = {
   contestSector: string;
   order: number;
   remainingContestTime: number;
+  sectorState: string;
 
   driveRecordList: DriveRecordType[];
 };
@@ -18,6 +19,7 @@ export default class ParticipantRecord {
   contestSector: string;
   order: number;
   remainingContestTime: number;
+  sectorState: string;
 
   driveRecordList: DriveRecordType[];
 
@@ -28,6 +30,7 @@ export default class ParticipantRecord {
     this.contestSector = data.contestSector;
     this.remainingContestTime = data.remainingContestTime;
     this.order = data.order;
+    this.sectorState = data.sectorState;
 
     this.driveRecordList = data.driveRecordList;
   }

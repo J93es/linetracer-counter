@@ -20,8 +20,6 @@ const contestSchema = new Schema({
       "end",
     ],
   },
-  curParticipant: { type: Schema.Types.ObjectId, ref: "ParticipantSchema" },
-  nextParticipant: { type: Schema.Types.ObjectId, ref: "ParticipantSchema" },
 
   contestTimerStartTime: { type: Number },
   driveStartTime: { type: Number },
