@@ -32,7 +32,7 @@ const participantRecordSchema = new Schema({
   sectorState: {
     type: String,
     required: true,
-    enum: ["ready", "running", "next", "end"],
+    enum: ["ready", "running", "end"],
   },
 
   driveRecordList: {

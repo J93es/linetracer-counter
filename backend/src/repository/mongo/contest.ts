@@ -41,7 +41,12 @@ export class ContestMongoRepo implements ContestRepository {
   }
 
   async readContestIndex(): Promise<any> {
-    return ContestSchema.find().lean();
+    const contestIndex = await ContestSchema.find().lean();
+    if (!contestIndex) {
+      throw new Error("Contest not found");
+    }
+
+    return contestIndex;
   }
 
   async readContest(_id: string): Promise<any> {
@@ -60,7 +65,7 @@ export class ContestMongoRepo implements ContestRepository {
   ): Promise<any> {
     const contest = await ContestSchema.findOne({ _id: _id })
       .populate({
-        path: "curParticipant nextParticipant participantList",
+        path: "participantList",
         select: selectParticipantField,
         populate: {
           path: "participantRecordList",

@@ -1,5 +1,5 @@
 export type ParticipantDistinctionType = {
-  _id: string;
+  // _id: string;
   // hostId: string;
 
   name: string;
@@ -7,14 +7,14 @@ export type ParticipantDistinctionType = {
 };
 
 export default class ParticipantDistinction {
-  _id: string;
+  // _id: string;
   // hostId: string;
 
   name: string;
   association: string;
 
   constructor(data: ParticipantDistinctionType) {
-    this._id = data._id;
+    // this._id = data._id;
     // this.hostId = data.hostId;
 
     this.name = data.name;
@@ -24,7 +24,7 @@ export default class ParticipantDistinction {
 
 export const participantTamplate: ParticipantDistinctionType =
   new ParticipantDistinction({
-    _id: "",
+    // _id: "",
     // hostId: "",
     name: "",
     association: "",

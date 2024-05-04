@@ -11,18 +11,12 @@ import ParticipantRecord, {
 } from "model/ParticipantRecord";
 import DriveRecord, { DriveRecordType } from "model/DriveRecord";
 
-import ContestDistintion from "model/Distinction/ContestDistinction";
-import ParticipantDistinction from "model/Distinction/ParticipantDistinction";
-import ParticipantRecordDistinction from "model/Distinction/ParticipantRecordDistinction";
-import DriveRecordDistinction from "model/Distinction/DriveRecordDistinction";
-
 import { ContestController } from "controller/ContestController";
 import { ParticipantController } from "controller/ParticipantController";
 import { ParticipantRecordController } from "controller/ParticipantRecordController";
 
-import SelectId from "component/SelectId/SelectId";
-import ContestManage from "component/ContestManage";
-import ParticipantManage from "component/ParticipantManage";
+import ContestManage from "component/contestManage/ContestManage";
+import ParticipantManage from "component/participantManage/ParticipantManage";
 import ParticipantRecordManage from "component/ParticipantRecordManage";
 import DriveRecordManage from "component/DriveRecordManage";
 
@@ -30,13 +24,22 @@ const contestController = new ContestController();
 const participantController = new ParticipantController();
 const participantRecordController = new ParticipantRecordController();
 
+function _idInObject(_id: string, objectList: any[]): boolean {
+  for (let object of objectList) {
+    if (object._id === _id) return true;
+  }
+  return false;
+}
+
 function App() {
-  const [contestListGetSignal, setContestListGetSignal] = useState<number>(0);
+  const [contestUpdateSignal, setContestUpdateSignal] = useState<number>(0);
   const [contestList, setContestList] = useState<ContestType[]>([]);
   const [targetContestId, setTargetContestId] = useState<string>("");
   const [targetContest, setTargetContest] = useState<Partial<ContestType>>({});
+  const [isContestTimerRunning, setIsContestTimerRunning] =
+    useState<boolean>(false);
 
-  const [participantListGetSignal, setParticipantListGetSignal] =
+  const [participantUpdateSignal, setParticipantUpdateSignal] =
     useState<number>(0);
   const [participantList, setParticipantList] = useState<ParticipantType[]>([]);
   const [targetParticipantId, setTargetParticipantId] = useState<string>("");
@@ -44,7 +47,7 @@ function App() {
     Partial<ParticipantType>
   >({});
 
-  const [participantRecordListGetSignal, setParticipantRecordListGetSignal] =
+  const [participantRecordUpdateSignal, setParticipantRecordUpdateSignal] =
     useState<number>(0);
   const [participantRecordList, setParticipantRecordList] = useState<
     ParticipantRecordType[]
@@ -55,7 +58,7 @@ function App() {
     Partial<ParticipantRecordType>
   >({});
 
-  const [driveRecordListGetSignal, setDriveRecordListGetSignal] =
+  const [driveRecordUpdateSignal, setDriveRecordUpdateSignal] =
     useState<number>(0);
   const [driveRecordList, setDriveRecordList] = useState<DriveRecordType[]>([]);
   const [targetDriveRecordId, setTargetDriveRecordId] = useState<string>("");
@@ -65,17 +68,18 @@ function App() {
 
   // drive record list is imbedded in participant record
   useEffect(() => {
-    setParticipantRecordListGetSignal((prev) => (prev + 1) % 1000);
-  }, [driveRecordListGetSignal]);
+    setParticipantRecordUpdateSignal((prev) => (prev + 1) % 1000);
+  }, [driveRecordUpdateSignal]);
 
   // get contest index
   useEffect(() => {
     const func = async () => {
       const contest = await contestController.getContestIndex();
+
       setContestList(contest);
     };
     func();
-  }, [contestListGetSignal]);
+  }, [contestUpdateSignal]);
 
   // set target contest id
   useEffect(() => {
@@ -87,8 +91,11 @@ function App() {
       return;
     }
 
+    if (_idInObject(targetContestId, contestList)) {
+      return;
+    }
     setTargetContestId(contestList[contestList.length - 1]._id);
-  }, [contestList]);
+  }, [contestList, contestUpdateSignal]);
 
   // get target contest
   useEffect(() => {
@@ -100,10 +107,12 @@ function App() {
     const func = async () => {
       const contest = await contestController.getContest(targetContestId);
 
+      console.log(contest);
+
       setTargetContest(contest);
     };
     func();
-  }, [targetContestId]);
+  }, [targetContestId, contestUpdateSignal]);
 
   // get participant index
   useEffect(() => {
@@ -120,7 +129,7 @@ function App() {
       setParticipantList(participantList as any);
     };
     func();
-  }, [targetContest, participantListGetSignal]);
+  }, [targetContest, participantUpdateSignal]);
 
   // set target participant id
   useEffect(() => {
@@ -129,8 +138,11 @@ function App() {
       return;
     }
 
+    if (_idInObject(targetParticipantId, participantList)) {
+      return;
+    }
     setTargetParticipantId(participantList[0]._id);
-  }, [participantList]);
+  }, [participantList, participantUpdateSignal]);
 
   // get target participant
   useEffect(() => {
@@ -147,7 +159,7 @@ function App() {
       setTargetParticipant(participant);
     };
     func();
-  }, [targetParticipantId]);
+  }, [targetParticipantId, participantUpdateSignal]);
 
   // get participant record index
   useEffect(() => {
@@ -165,7 +177,7 @@ function App() {
       setParticipantRecordList(participantRecordList as any);
     };
     func();
-  }, [targetParticipant, participantRecordListGetSignal]);
+  }, [targetParticipant, participantRecordUpdateSignal]);
 
   // set target participant record id
   useEffect(() => {
@@ -177,10 +189,13 @@ function App() {
       return;
     }
 
+    if (_idInObject(targetParticipantRecordId, participantRecordList)) {
+      return;
+    }
     setTargetParticipantRecordId(
       participantRecordList[participantRecordList.length - 1]._id
     );
-  }, [participantRecordList]);
+  }, [participantRecordList, participantRecordUpdateSignal]);
 
   // get target participant record
   useEffect(() => {
@@ -198,7 +213,7 @@ function App() {
       setTargetParticipantRecord(participantRecord as any);
     };
     func();
-  }, [targetParticipantRecordId]);
+  }, [targetParticipantRecordId, participantRecordUpdateSignal]);
 
   // get drive record index
   useEffect(() => {
@@ -208,7 +223,7 @@ function App() {
     }
 
     setDriveRecordList(targetParticipantRecord.driveRecordList as any);
-  }, [targetParticipantRecord]);
+  }, [targetParticipantRecord, driveRecordUpdateSignal]);
 
   // set target drive record id
   useEffect(() => {
@@ -220,8 +235,12 @@ function App() {
       return;
     }
 
+    if (_idInObject(targetDriveRecordId, driveRecordList)) {
+      setTargetDriveRecordId(targetDriveRecordId);
+      return;
+    }
     setTargetDriveRecordId(driveRecordList[driveRecordList.length - 1]._id);
-  }, [driveRecordList]);
+  }, [driveRecordList, driveRecordUpdateSignal]);
 
   // get target drive record
   useEffect(() => {
@@ -235,40 +254,62 @@ function App() {
       else return false;
     });
     setTargetDriveRecord(driveRecord as any);
-  }, [targetDriveRecordId]);
+  }, [targetDriveRecordId, driveRecordUpdateSignal]);
+
+  // console.log("contestList", contestList);
+  // console.log("targetContestId", targetContestId);
+  // console.log("targetContest", targetContest);
+  // console.log("participantList", participantList);
+  // console.log("targetParticipantId", targetParticipantId);
+  // console.log("targetParticipant", targetParticipant);
+  // console.log("participantRecordList", participantRecordList);
+  // console.log("targetParticipantRecordId", targetParticipantRecordId);
+  // console.log("targetParticipantRecord", targetParticipantRecord);
+  // console.log("driveRecordList", driveRecordList);
+  // console.log("targetDriveRecordId", targetDriveRecordId);
+  // console.log("targetDriveRecord", targetDriveRecord);
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header
+        className="App-header"
+        style={{ maxWidth: "1000px", padding: "1px", boxSizing: "border-box" }}
+      >
         <ContestManage
-          setContestListGetSignal={setContestListGetSignal}
+          setContestUpdateSignal={setContestUpdateSignal}
+          contestList={contestList}
           targetContestId={targetContestId}
           setTargetContestId={setTargetContestId}
-          contestList={contestList}
+          targetContest={targetContest}
+          isContestTimerRunning={isContestTimerRunning}
+          setIsContestTimerRunning={setIsContestTimerRunning}
         />
 
         <ParticipantManage
-          setParticipantListGetSignal={setParticipantListGetSignal}
+          setParticipantUpdateSignal={setParticipantUpdateSignal}
+          participantList={participantList}
           targetParticipantId={targetParticipantId}
           setTargetParticipantId={setTargetParticipantId}
-          participantList={participantList}
+          targetParticipant={targetParticipant}
+          curContestId={targetContest._id}
         />
 
         <ParticipantRecordManage
-          setParticipantRecordListGetSignal={setParticipantRecordListGetSignal}
+          setParticipantRecordUpdateSignal={setParticipantRecordUpdateSignal}
           targetParticipantRecordId={targetParticipantRecordId}
           setTargetParticipantRecordId={setTargetParticipantRecordId}
           participantRecordList={participantRecordList}
         />
 
         <DriveRecordManage
-          setDriveRecordListGetSignal={setDriveRecordListGetSignal}
+          setDriveRecordUpdateSignal={setDriveRecordUpdateSignal}
           targetDriveRecordId={targetDriveRecordId}
           setTargetDriveRecordId={setTargetDriveRecordId}
           driveRecordList={driveRecordList}
         />
+      </header>
 
-        {/* <button
+      {/* <button
           onClick={() => {
             const func = async () => {
               const response = await postParticipant(
@@ -282,7 +323,6 @@ function App() {
         >
           Post
         </button> */}
-      </header>
     </div>
   );
 }

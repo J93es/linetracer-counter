@@ -60,7 +60,15 @@ function getHtmlListGroup(
           aria-current="true"
           onClick={() => setTargetId(obj._id)}
         >
-          {JSON.stringify(new DistintionClass(obj))}
+          <small
+            style={{
+              maxWidth: "300px",
+              padding: "1px",
+              overflow: "scroll",
+            }}
+          >
+            {JSON.stringify(new DistintionClass(obj))}
+          </small>
         </button>
       );
 
@@ -73,7 +81,15 @@ function getHtmlListGroup(
           className="list-group-item list-group-item-action"
           onClick={() => setTargetId(obj._id)}
         >
-          {JSON.stringify(new DistintionClass(obj))}
+          <small
+            style={{
+              maxWidth: "200px",
+              padding: "1px",
+              overflow: "scroll",
+            }}
+          >
+            {JSON.stringify(new DistintionClass(obj))}
+          </small>
         </button>
       );
 
