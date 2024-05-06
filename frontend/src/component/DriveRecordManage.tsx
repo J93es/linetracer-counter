@@ -1,22 +1,23 @@
-import SelectId from "component/selectId/SelectId";
+import SelectTarget from "component/utils/selectTarget/SelectTarget";
 import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
+import { DriveRecordType } from "model/DriveRecord";
 
 export default function DriveRecordManage({
   setDriveRecordUpdateSignal,
-  targetDriveRecordId,
-  setTargetDriveRecordId,
+  targetDriveRecord,
+  setTargetDriveRecord,
   driveRecordList,
 }: {
   setDriveRecordUpdateSignal: Function;
-  targetDriveRecordId: string;
-  setTargetDriveRecordId: Function;
+  targetDriveRecord: Partial<DriveRecordType>;
+  setTargetDriveRecord: Function;
   driveRecordList: object[];
 }) {
   return (
     <div>
-      <SelectId
-        targetId={targetDriveRecordId}
-        setTargetId={setTargetDriveRecordId}
+      <SelectTarget
+        target={targetDriveRecord}
+        setTarget={setTargetDriveRecord}
         listOfObject={driveRecordList}
         DistintionClass={DriveRecordDistinction}
         setUpdateSignal={() => {

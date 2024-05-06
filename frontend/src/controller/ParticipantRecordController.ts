@@ -12,7 +12,7 @@ export class ParticipantRecordController {
     return instance;
   }
 
-  async getParticipantRecordIndex(
+  async getEveryParticipantRecord(
     participantId: string
   ): Promise<ParticipantRecordType[]> {
     try {

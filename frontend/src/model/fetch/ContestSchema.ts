@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sectorEnum } from "component/data";
+import { sectorEnum } from "model/enums/index";
 
 export const postContestSchema = z.object({
   id: z.string().min(4, { message: "4글자 이상이어야 합니다." }),

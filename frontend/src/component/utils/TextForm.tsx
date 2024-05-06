@@ -14,12 +14,13 @@ export default function TextForm({
 }) {
   return (
     <div className="form-group">
-      <label id={id}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
         id={id}
         type="text"
         className="form-control"
         placeholder={placeholder}
+        autoComplete="on"
         {...register(id)}
       />
       <small className="form-text text-muted">{errorMessage}</small>

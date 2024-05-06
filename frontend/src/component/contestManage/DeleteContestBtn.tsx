@@ -1,13 +1,14 @@
+import { ContestType } from "model/Contest";
 import { ContestController } from "controller/ContestController";
 
 const contestController = new ContestController();
 
 export default function DeleteContestBtn({
   setContestUpdateSignal,
-  targetContestId,
+  targetContest,
 }: {
   setContestUpdateSignal: Function;
-  targetContestId: string;
+  targetContest: Partial<ContestType>;
 }) {
   return (
     <button
@@ -15,7 +16,7 @@ export default function DeleteContestBtn({
       className="btn btn-danger"
       onClick={() => {
         const func = async () => {
-          await contestController.deleteContest(targetContestId);
+          await contestController.deleteContest(targetContest._id);
           setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

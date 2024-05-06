@@ -4,17 +4,17 @@ import { ContestController } from "controller/ContestController";
 const contestController = new ContestController();
 
 export default function ContestTimerStartBtn({
-  targetContestId,
+  targetContest,
   isContestTimerRunning,
   setIsContestTimerRunning,
 }: {
-  targetContestId: string;
+  targetContest: Partial<ContestType>;
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
 }) {
   const updateContestTimerStartTime = (data: Partial<ContestType>) => {
     const func = async () => {
-      console.log(await contestController.patchContest(data._id, data));
+      await contestController.patchContest(data._id, data);
     };
     func();
   };
@@ -25,7 +25,7 @@ export default function ContestTimerStartBtn({
       className="btn btn-primary"
       onClick={() => {
         const curTime = Date.now();
-        const data: Partial<ContestType> = { _id: targetContestId };
+        const data: Partial<ContestType> = { _id: targetContest._id };
 
         // timer running => stop
         if (isContestTimerRunning) {

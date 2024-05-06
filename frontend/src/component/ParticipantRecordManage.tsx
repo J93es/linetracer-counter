@@ -1,22 +1,23 @@
-import SelectId from "component/selectId/SelectId";
+import SelectTarget from "component/utils/selectTarget/SelectTarget";
 import ParticipantRecordDistinction from "model/distinction/ParticipantRecordDistinction";
+import { ParticipantRecordType } from "model/ParticipantRecord";
 
 export default function ParticipantRecordManage({
   setParticipantRecordUpdateSignal,
-  targetParticipantRecordId,
-  setTargetParticipantRecordId,
+  targetParticipantRecord,
+  setTargetParticipantRecord,
   participantRecordList,
 }: {
   setParticipantRecordUpdateSignal: Function;
-  targetParticipantRecordId: string;
-  setTargetParticipantRecordId: Function;
+  targetParticipantRecord: Partial<ParticipantRecordType>;
+  setTargetParticipantRecord: Function;
   participantRecordList: object[];
 }) {
   return (
     <div>
-      <SelectId
-        targetId={targetParticipantRecordId}
-        setTargetId={setTargetParticipantRecordId}
+      <SelectTarget
+        target={targetParticipantRecord}
+        setTarget={setTargetParticipantRecord}
         listOfObject={participantRecordList}
         DistintionClass={ParticipantRecordDistinction}
         setUpdateSignal={() => {

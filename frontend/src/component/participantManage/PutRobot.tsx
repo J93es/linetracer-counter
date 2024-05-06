@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -7,55 +8,45 @@ import { putRobotSchema } from "model/fetch/RobotSchema";
 
 import { ParticipantController } from "controller/ParticipantController";
 
-import TextForm from "component/form/TextForm";
+import TextForm from "component/utils/TextForm";
 
 const participantController = new ParticipantController();
 
 export default function PutParticipant({
   setParticipantUpdateSignal,
-  targetParticipantId,
   targetParticipant,
 }: {
   setParticipantUpdateSignal: Function;
-  targetParticipantId: string;
   targetParticipant: Partial<ParticipantType>;
 }) {
+  console.log(targetParticipant.robot);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<RobotType>({ resolver: zodResolver(putRobotSchema) });
+  } = useForm<RobotType>({
+    resolver: zodResolver(putRobotSchema),
+    defaultValues: targetParticipant.robot,
+  });
+
+  useEffect(() => {
+    setValue("name", targetParticipant.robot?.name || "");
+    setValue("cpu", targetParticipant.robot?.cpu || "");
+    setValue("rom", targetParticipant.robot?.rom || "");
+    setValue("ram", targetParticipant.robot?.ram || "");
+    setValue("motorDriver", targetParticipant.robot?.motorDriver || "");
+    setValue("motor", targetParticipant.robot?.motor || "");
+    setValue("adc", targetParticipant.robot?.adc || "");
+    setValue("sensor", targetParticipant.robot?.sensor || "");
+  }, [targetParticipant.robot]);
 
   const onSubmit = (data: Partial<RobotType>) => {
     const func = async () => {
-      let robot = {
-        name: "",
-        cpu: "",
-        rom: "",
-        ram: "",
-        motorDriver: "",
-        motor: "",
-        adc: "",
-        sensor: "",
-      } as RobotType;
-      if (targetParticipant) {
-        robot = JSON.parse(JSON.stringify(targetParticipant.robot));
-      }
-      robot.name = data.name || robot.name || "";
-      robot.cpu = data.cpu || robot.cpu || "";
-      robot.rom = data.rom || robot.rom || "";
-      robot.ram = data.ram || robot.ram || "";
-      robot.motorDriver = data.motorDriver || robot.motorDriver || "";
-      robot.motor = data.motor || robot.motor || "";
-      robot.adc = data.adc || robot.adc || "";
-      robot.sensor = data.sensor || robot.sensor || "";
-
-      console.log(
-        await participantController.putParticipant(targetParticipantId, {
-          _id: targetParticipantId,
-          robot: robot,
-        } as Partial<ParticipantType>)
-      );
+      await participantController.putParticipant(targetParticipant._id, {
+        _id: targetParticipant._id,
+        robot: data,
+      } as Partial<ParticipantType>);
       setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

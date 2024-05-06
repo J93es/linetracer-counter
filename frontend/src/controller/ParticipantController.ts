@@ -10,7 +10,7 @@ export class ParticipantController {
     return instance;
   }
 
-  async getParticipantIndex(hostId: string): Promise<ParticipantType[]> {
+  async getEveryParticipant(hostId: string): Promise<ParticipantType[]> {
     try {
       const response = await fetch(`${uri}/participant/?contest_Id=${hostId}`, {
         method: "GET",

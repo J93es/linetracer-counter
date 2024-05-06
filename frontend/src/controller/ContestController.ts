@@ -10,7 +10,7 @@ export class ContestController {
     return instance;
   }
 
-  async getContestIndex(): Promise<any> {
+  async getEveryContest(): Promise<any> {
     try {
       const response = await fetch(`${uri}/contest`, {
         method: "GET",
@@ -70,7 +70,7 @@ export class ContestController {
   ): Promise<Partial<ContestType>> {
     try {
       const contest = new Contest(srcData as ContestType);
-      const response = await fetch(`${uri}/Contest/${_id}`, {
+      const response = await fetch(`${uri}/contest/${_id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -5,29 +5,39 @@ import { ParticipantType } from "model/Participant";
 import { postParticipantSchema } from "model/fetch/ParticipantSchema";
 import { ParticipantController } from "controller/ParticipantController";
 
-import TextForm from "component/form/TextForm";
+import TextForm from "component/utils/TextForm";
+import { useEffect } from "react";
 
 const participantController = new ParticipantController();
 
 export default function PostParticipant({
+  targetParticipant,
   setParticipantUpdateSignal,
   curContestId,
 }: {
+  targetParticipant: Partial<ParticipantType>;
   setParticipantUpdateSignal: Function;
   curContestId: string;
 }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ParticipantType>({
     resolver: zodResolver(postParticipantSchema),
   });
 
+  useEffect(() => {
+    setValue("name", "");
+    setValue("association", "");
+    setValue("speech", "");
+  }, [targetParticipant]);
+
   const onSubmit = (data: Partial<ParticipantType>) => {
     const func = async () => {
       data.hostId = curContestId;
-      console.log(await participantController.postParticipant(data));
+      await participantController.postParticipant(data);
       setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

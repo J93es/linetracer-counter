@@ -1,13 +1,14 @@
 import { ParticipantController } from "controller/ParticipantController";
+import { ParticipantType } from "model/Participant";
 
 const participantController = new ParticipantController();
 
 export default function DeleteParticipantBtn({
   setParticipantUpdateSignal,
-  targetParticipantId,
+  targetParticipant,
 }: {
   setParticipantUpdateSignal: Function;
-  targetParticipantId: string;
+  targetParticipant: Partial<ParticipantType>;
 }) {
   return (
     <button
@@ -15,7 +16,7 @@ export default function DeleteParticipantBtn({
       className="btn btn-danger"
       onClick={() => {
         const func = async () => {
-          await participantController.deleteParticipant(targetParticipantId);
+          await participantController.deleteParticipant(targetParticipant._id);
           setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

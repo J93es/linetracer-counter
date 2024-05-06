@@ -1,14 +1,14 @@
 export default function ListGroup({
   listOfObject,
-  targetId,
-  setTargetId,
+  target,
+  setTarget,
   viewLengthPerPage,
   currentPageIndex,
   DistintionClass,
 }: {
   listOfObject: object[];
-  targetId: string;
-  setTargetId: Function;
+  target: object;
+  setTarget: Function;
   viewLengthPerPage: number;
   currentPageIndex: number;
   DistintionClass: any;
@@ -28,8 +28,8 @@ export default function ListGroup({
 
   const htmlListGroup = getHtmlListGroup(
     listOfObject,
-    targetId,
-    setTargetId,
+    target,
+    setTarget,
     viewIndexHead,
     viewIndexTail,
     DistintionClass
@@ -40,7 +40,7 @@ export default function ListGroup({
 
 function getHtmlListGroup(
   listOfObject: object[],
-  targetId: string,
+  target: object,
   setTargetId: Function,
   viewIndexHead: number,
   viewIndexTail: number,
@@ -50,15 +50,16 @@ function getHtmlListGroup(
 
   for (let i = viewIndexHead; i <= viewIndexTail; i++) {
     const obj: any = listOfObject[i];
+    const viewList = Object.values(new DistintionClass(obj));
 
-    if (obj._id === targetId) {
+    if (JSON.stringify(obj) === JSON.stringify(target)) {
       const htmlElement = (
         <button
           key={i}
           type="button"
           className="list-group-item list-group-item-action active"
           aria-current="true"
-          onClick={() => setTargetId(obj._id)}
+          onClick={() => setTargetId(obj)}
         >
           <small
             style={{
@@ -67,7 +68,7 @@ function getHtmlListGroup(
               overflow: "scroll",
             }}
           >
-            {JSON.stringify(new DistintionClass(obj))}
+            {JSON.stringify(viewList)}
           </small>
         </button>
       );
@@ -79,7 +80,7 @@ function getHtmlListGroup(
           key={i}
           type="button"
           className="list-group-item list-group-item-action"
-          onClick={() => setTargetId(obj._id)}
+          onClick={() => setTargetId(obj)}
         >
           <small
             style={{
@@ -88,7 +89,7 @@ function getHtmlListGroup(
               overflow: "scroll",
             }}
           >
-            {JSON.stringify(new DistintionClass(obj))}
+            {JSON.stringify(viewList)}
           </small>
         </button>
       );

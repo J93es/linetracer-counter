@@ -1,32 +1,41 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ContestType } from "model/Contest";
 import { postContestSchema } from "model/fetch/ContestSchema";
 
-import TextForm from "component/form/TextForm";
-import SelectForm from "component/form/SelectForm";
-
-import { sectorEnum } from "component/data";
+import TextForm from "component/utils/TextForm";
+import SelectForm from "component/utils/SelectForm";
 
 import { ContestController } from "controller/ContestController";
+import { sectorEnum } from "model/enums/index";
 
 const contestController = new ContestController();
 
 export default function PostContest({
+  targetContest,
   setContestUpdateSignal,
 }: {
+  targetContest: Partial<ContestType>;
   setContestUpdateSignal: Function;
 }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ContestType>({ resolver: zodResolver(postContestSchema) });
 
+  useEffect(() => {
+    setValue("id", "");
+    setValue("title", "");
+    setValue("curContestingSection", "ready");
+  }, [targetContest]);
+
   const onSubmit = (data: Partial<ContestType>) => {
     const func = async () => {
-      console.log(await contestController.postContest(data));
+      await contestController.postContest(data);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();
