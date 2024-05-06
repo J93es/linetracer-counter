@@ -93,9 +93,9 @@ export class ParticipantService implements ParticipantServiceInterface {
     return new Participant(participant as ParticipantType);
   }
 
-  async getParticipantIndex(contest_Id: string): Promise<ParticipantType[]> {
+  async getEveryParticipant(contest_Id: string): Promise<ParticipantType[]> {
     const participantList: Partial<ParticipantType>[] =
-      await participantRepository.readParticipantIndex(contest_Id);
+      await participantRepository.readEveryParticipant(contest_Id);
 
     return participantList.map(
       (participant) => new Participant(participant as ParticipantType)

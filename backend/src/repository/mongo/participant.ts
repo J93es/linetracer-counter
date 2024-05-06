@@ -59,10 +59,14 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async readParticipantIndex(contest_Id: any): Promise<any> {
+  async readEveryParticipant(contest_Id: any): Promise<any> {
     const participantIndex = await ParticipantSchema.find({
       hostId: contest_Id,
-    }).lean();
+    })
+      .populate({
+        path: "participantRecordList",
+      })
+      .lean();
     if (!participantIndex) {
       throw new Error("Participant list not found");
     }

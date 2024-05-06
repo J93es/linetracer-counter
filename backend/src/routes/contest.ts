@@ -17,7 +17,7 @@ const contestService: ContestServiceInterface = new ContestService();
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const contest: Partial<ContestType[]> =
-      await contestService.getContestIndex();
+      await contestService.getEveryContest();
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);

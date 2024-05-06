@@ -98,11 +98,11 @@ export class ParticipantRecordService
     return new ParticipantRecord(participantRecord as ParticipantRecordType);
   }
 
-  async getParticipantRecordIndex(
+  async getEveryParticipantRecord(
     participant_Id: string
   ): Promise<ParticipantRecordType[]> {
     const participantRecordList: Partial<ParticipantRecordType>[] =
-      await participantRecordRepository.readParticipantRecordIndex(
+      await participantRecordRepository.readEveryParticipantRecord(
         participant_Id
       );
 

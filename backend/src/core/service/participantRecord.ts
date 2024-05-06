@@ -12,7 +12,7 @@ export interface ParticipantRecordServiceInterface {
     _id: string,
     data: Partial<ParticipantRecordType>
   ): Promise<ParticipantRecordType>;
-  getParticipantRecordIndex(
+  getEveryParticipantRecord(
     participant_Id: string
   ): Promise<ParticipantRecordType[]>;
   getParticipantRecord(_id: string): Promise<ParticipantRecordType>;

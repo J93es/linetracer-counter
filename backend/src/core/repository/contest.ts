@@ -3,7 +3,7 @@ import { ContestType } from "../../model/Contest";
 export interface ContestRepository {
   isExistContest(id: string): Promise<Boolean>;
   createContest(data: ContestType): Promise<any>;
-  readContestIndex(): Promise<any>;
+  readEveryContest(): Promise<any>;
   readContest(id: string): Promise<any>;
   readContestWithJoin(
     id: string,

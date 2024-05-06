@@ -64,7 +64,7 @@ export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
     return participantRecord;
   }
 
-  async readParticipantRecordIndex(participant_Id: any): Promise<any> {
+  async readEveryParticipantRecord(participant_Id: any): Promise<any> {
     const participantRecordIndex = await ParticipantRecordSchema.find({
       hostId: participant_Id,
     }).lean();

@@ -40,8 +40,15 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContestIndex(): Promise<any> {
-    const contestIndex = await ContestSchema.find().lean();
+  async readEveryContest(): Promise<any> {
+    const contestIndex = await ContestSchema.find()
+      .populate({
+        path: "participantList",
+        populate: {
+          path: "participantRecordList",
+        },
+      })
+      .lean();
     if (!contestIndex) {
       throw new Error("Contest not found");
     }

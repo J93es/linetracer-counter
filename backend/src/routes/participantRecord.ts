@@ -19,7 +19,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const participant_Id: string = req.query.participant_Id as string;
     const participantRecordList: Partial<ParticipantRecordType[]> =
-      await participantRecordService.getParticipantRecordIndex(participant_Id);
+      await participantRecordService.getEveryParticipantRecord(participant_Id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participantRecordList).status(200);

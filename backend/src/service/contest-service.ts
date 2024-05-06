@@ -83,9 +83,9 @@ export class ContestService implements ContestServiceInterface {
     return new Contest(contest as ContestType);
   }
 
-  async getContestIndex(): Promise<ContestType[]> {
+  async getEveryContest(): Promise<ContestType[]> {
     const contests: Partial<ContestType>[] =
-      await contestRepository.readContestIndex();
+      await contestRepository.readEveryContest();
 
     return contests.map((contest) => new Contest(contest as ContestType));
   }
