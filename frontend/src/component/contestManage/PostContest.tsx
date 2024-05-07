@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ContestType } from "model/Contest";
-import { postContestSchema } from "model/fetch/ContestSchema";
+import { ContestSchema } from "model/fetch/ContestSchema";
 
 import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
+import SubmitBtn from "component/utils/SubmitBtn";
 
 import { ContestController } from "controller/ContestController";
 import { sectorEnum } from "model/enums/index";
@@ -25,13 +26,13 @@ export default function PostContest({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<ContestType>({ resolver: zodResolver(postContestSchema) });
+  } = useForm<ContestType>({ resolver: zodResolver(ContestSchema) });
 
   useEffect(() => {
     setValue("id", "");
     setValue("title", "");
-    setValue("curContestingSection", "ready");
-  }, [targetContest]);
+    setValue("curContestingSection", sectorEnum[0]);
+  }, [setValue, targetContest]);
 
   const onSubmit = (data: Partial<ContestType>) => {
     const func = async () => {
@@ -61,14 +62,13 @@ export default function PostContest({
 
       <SelectForm
         id="curContestingSection"
+        label="현재 진행중인 부문"
         selectList={sectorEnum}
         register={register}
         errorMessage={errors.curContestingSection?.message || ""}
       />
 
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <SubmitBtn />
     </form>
   );
 }

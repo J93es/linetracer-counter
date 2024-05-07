@@ -19,7 +19,7 @@ export default function SetViewLength({
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        한번에 표시할 개수: {viewLengthPerPage}
+        {viewLengthPerPage}개씩 보기
       </button>
       <ul className="dropdown-menu">{htmlViewLengthList}</ul>
     </div>

@@ -4,9 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
+import SubmitBtn from "component/utils/SubmitBtn";
 
 import { ContestType } from "model/Contest";
-import { putContestSchema } from "model/fetch/ContestSchema";
+import { ContestSchema } from "model/fetch/ContestSchema";
 import { sectorEnum } from "model/enums/index";
 import { ContestController } from "controller/ContestController";
 
@@ -24,12 +25,16 @@ export default function PutContest({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<ContestType>({ resolver: zodResolver(putContestSchema) });
+  } = useForm<ContestType>({ resolver: zodResolver(ContestSchema) });
 
   useEffect(() => {
+    setValue("id", targetContest.id || "");
     setValue("title", targetContest.title || "");
-    setValue("curContestingSection", targetContest.curContestingSection || "");
-  }, [targetContest]);
+    setValue(
+      "curContestingSection",
+      targetContest.curContestingSection || sectorEnum[0]
+    );
+  }, [setValue, targetContest]);
 
   const onSubmit = (data: Partial<ContestType>) => {
     const func = async () => {
@@ -45,6 +50,14 @@ export default function PutContest({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextForm
+        id="id"
+        placeholder="ex) 2024"
+        label="경연 id"
+        register={register}
+        errorMessage={errors.id?.message || ""}
+      />
+
+      <TextForm
         id="title"
         placeholder="ex) 제25회 전국 라인트레이서 경연대회"
         label="대회 이름"
@@ -54,14 +67,13 @@ export default function PutContest({
 
       <SelectForm
         id="curContestingSection"
+        label="현재 진행중인 부문"
         selectList={sectorEnum}
         register={register}
         errorMessage={errors.curContestingSection?.message || ""}
       />
 
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <SubmitBtn />
     </form>
   );
 }

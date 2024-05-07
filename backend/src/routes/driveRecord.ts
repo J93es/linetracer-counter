@@ -6,38 +6,27 @@ import express, {
   Errback,
 } from "express";
 
-import { ParticipantType } from "../model/Participant";
+import { DriveRecordType } from "../model/DriveRecord";
 
-import { ParticipantServiceInterface } from "../core/service/participant";
-import { ParticipantService } from "../service/participant-service";
+import { DriveRecordServiceInterface } from "../core/service/driveRecord";
+import { DriveRecordService } from "../service/driveRecord-service";
 
 const router: Router = express.Router();
-const participantService: ParticipantServiceInterface =
-  new ParticipantService();
+const driveRecordService: DriveRecordServiceInterface =
+  new DriveRecordService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const contest_Id: string = req.query.contest_Id as string;
-    const participant: Partial<ParticipantType[]> =
-      await participantService.getEveryParticipant(contest_Id);
-
-    res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
-  } catch (err: any) {
-    console.error(err);
-    res.header("Content-Type", "application/json; charset=utf-8");
-    res.send({ message: err.toString() }).status(404);
-  }
+  res.send("hello get");
 });
 
 router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id: string = req.params._id;
-    const participant: Partial<ParticipantType> =
-      await participantService.getParticipant(_id);
+    const driveRecord: Partial<DriveRecordType> =
+      await driveRecordService.getDriveRecord(_id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(driveRecord).status(200);
   } catch (err: any) {
     console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -48,12 +37,14 @@ router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
+    const participantRecord_Id: string = req.query
+      .participant_record_id as string;
 
-    const participant: Partial<ParticipantType> =
-      await participantService.postParticipant(data);
+    const driveRecord: Partial<DriveRecordType> =
+      await driveRecordService.postDriveRecord(participantRecord_Id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
+    res.send(driveRecord).status(200);
   } catch (err: any) {
     console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -71,13 +62,19 @@ router.patch(
     try {
       const data = req.body;
       const _id: string = req.params._id;
+      const participantRecord_Id: string = req.query
+        .participant_record_id as string;
 
-      const participant: Partial<ParticipantType> =
-        await participantService.patchParticipant(_id, data);
+      const driveRecord: Partial<DriveRecordType> =
+        await driveRecordService.patchDriveRecord(
+          participantRecord_Id,
+          _id,
+          data
+        );
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
-      res.send(participant);
+      res.send(driveRecord);
     } catch (err: any) {
       console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
@@ -95,13 +92,15 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
     const _id: string = req.params._id;
+    const participantRecord_Id: string = req.query
+      .participant_record_id as string;
 
-    const participant: Partial<ParticipantType> =
-      await participantService.putParticipant(_id, data);
+    const driveRecord: Partial<DriveRecordType> =
+      await driveRecordService.putDriveRecord(participantRecord_Id, _id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
-    res.send(participant);
+    res.send(driveRecord);
   } catch (err: any) {
     console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -119,13 +118,15 @@ router.delete(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const _id: string = req.params._id;
+      const participantRecord_Id: string = req.query
+        .participant_record_id as string;
 
-      const participant: Partial<ParticipantType> =
-        await participantService.removeParticipant(_id);
+      const driveRecord: Partial<DriveRecordType> =
+        await driveRecordService.removeDriveRecord(participantRecord_Id, _id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
-      res.send(participant);
+      res.send(driveRecord);
     } catch (err: any) {
       console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");

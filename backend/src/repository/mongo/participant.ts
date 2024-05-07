@@ -94,14 +94,11 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return contest;
   }
 
-  async updateParticipant(
-    _id: any,
-    data: Partial<ParticipantType>
-  ): Promise<any> {
+  async updateParticipant(data: Partial<ParticipantType>): Promise<any> {
     const filteredData = this.readonlyFilter(data);
 
     const participant = await ParticipantSchema.findOneAndUpdate(
-      { _id: _id },
+      { _id: data._id },
       filteredData,
       {
         returnDocument: "after",
@@ -141,12 +138,12 @@ export class ParticipantMongoRepo implements ParticipantRepository {
 
   async appendParticipantRecordList(
     _id: any,
-    participantRecordId: any
+    participantRecord_Id: any
   ): Promise<any> {
     const contest = await ParticipantSchema.findOneAndUpdate(
       { _id: _id },
       {
-        $addToSet: { participantRecordList: participantRecordId },
+        $addToSet: { participantRecordList: participantRecord_Id },
       },
       {
         returnDocument: "after",
@@ -156,17 +153,17 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       throw new Error("Failed to append participant list");
     }
 
-    return participantRecordId;
+    return participantRecord_Id;
   }
 
   async popParticipantRecordList(
     _id: any,
-    _participantRecordId: any
+    participantRecord_Id: any
   ): Promise<any> {
     const contest = await ParticipantSchema.findOneAndUpdate(
       { _id: _id },
       {
-        $pull: { participantRecordList: _participantRecordId },
+        $pull: { participantRecordList: participantRecord_Id },
       },
       {
         returnDocument: "after",
@@ -176,6 +173,6 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       throw new Error("Failed to remove participant list");
     }
 
-    return _participantRecordId;
+    return participantRecord_Id;
   }
 }

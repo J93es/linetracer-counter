@@ -42,7 +42,7 @@ export default function PaginationBar({
 
   return (
     <nav aria-label="...">
-      <ul className="pagination">
+      <ul className="pagination justify-content-center">
         <li className="page-item">
           <button className="page-link" onClick={previousClick}>
             Previous

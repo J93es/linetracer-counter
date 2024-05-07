@@ -53,7 +53,6 @@ export class ContestService implements ContestServiceInterface {
     srcContest = this.patchReadonlyFilter(srcContest);
 
     const contest: Partial<ContestType> = await contestRepository.updateContest(
-      _id,
       srcContest
     );
 
@@ -69,7 +68,6 @@ export class ContestService implements ContestServiceInterface {
     this.idFilter(_id, srcContest);
 
     const contest: Partial<ContestType> = await contestRepository.updateContest(
-      _id,
       srcContest
     );
 

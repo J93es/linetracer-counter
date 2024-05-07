@@ -17,9 +17,9 @@ const participantRecordService: ParticipantRecordServiceInterface =
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const participant_Id: string = req.query.participant_Id as string;
+    const participant_id: string = req.query.participant_id as string;
     const participantRecordList: Partial<ParticipantRecordType[]> =
-      await participantRecordService.getEveryParticipantRecord(participant_Id);
+      await participantRecordService.getEveryParticipantRecord(participant_id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participantRecordList).status(200);
@@ -66,22 +66,14 @@ router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.patch(
-  "/:id",
+  "/:_id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      const id: string = req.params.id;
-      if (!data.id) {
-        data.id = id;
-      }
-      if (id !== data.id) {
-        throw new Error(
-          "id is not matched : query id and body id is different"
-        );
-      }
+      const _id: string = req.params._id;
 
       const participantRecord: Partial<ParticipantRecordType> =
-        await participantRecordService.patchParticipantRecord(id, data);
+        await participantRecordService.patchParticipantRecord(_id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
@@ -99,19 +91,13 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello patch");
 });
 
-router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const id: string = req.params.id;
-    if (!data.id) {
-      data.id = id;
-    }
-    if (id !== data.id) {
-      throw new Error("id is not matched : query id and body id is different");
-    }
+    const _id: string = req.params._id;
 
     const participantRecord: Partial<ParticipantRecordType> =
-      await participantRecordService.putParticipantRecord(id, data);
+      await participantRecordService.putParticipantRecord(_id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
@@ -129,13 +115,13 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.delete(
-  "/:id",
+  "/:_id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id: string = req.params.id;
+      const _id: string = req.params._id;
 
       const participantRecord: Partial<ParticipantRecordType> =
-        await participantRecordService.removeParticipantRecord(id);
+        await participantRecordService.removeParticipantRecord(_id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

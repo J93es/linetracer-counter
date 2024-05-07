@@ -7,9 +7,10 @@ import DeleteContestBtn from "component/contestManage/DeleteContestBtn";
 import SelectContestSection from "component/contestManage/SelectContestSection";
 import ContestTimerStartBtn from "component/contestManage/ContestTimerStartBtn";
 import DropDown from "component/utils/DropDown";
+import Accordion from "component/utils/Accordion";
 
-import Contest, { ContestType } from "model/Contest";
-import { contesteditTypeEnum } from "model/enums/index";
+import { ContestType } from "model/Contest";
+import { contestEditMenuEnum } from "model/enums/index";
 import { isNotEmptyObject } from "tools/utils";
 
 export default function ContestManage({
@@ -27,12 +28,12 @@ export default function ContestManage({
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
 }) {
-  const [editType, setEditType] = useState<string>(contesteditTypeEnum[0]);
+  const [editMenu, setEditMenu] = useState<string>(contestEditMenuEnum[0]);
 
-  const editHtmlList = [];
+  let editMenuHtml = null;
 
-  if (editType === "대회 추가") {
-    editHtmlList.push(
+  if (editMenu === "대회 추가") {
+    editMenuHtml = (
       <PostContest
         targetContest={targetContest}
         setContestUpdateSignal={setContestUpdateSignal}
@@ -40,61 +41,73 @@ export default function ContestManage({
     );
   }
 
-  if (editType === "대회 수정") {
+  if (editMenu === "대회 수정") {
     if (isNotEmptyObject(targetContest)) {
-      editHtmlList.push(
+      editMenuHtml = (
         <PutContest
           setContestUpdateSignal={setContestUpdateSignal}
           targetContest={targetContest}
         />
       );
     } else {
-      editHtmlList.push(<a>대회를 선택하세요.</a>);
+      editMenuHtml = <p>대회를 선택하세요.</p>;
     }
   }
 
-  if (editType === "대회 삭제") {
+  if (editMenu === "대회 삭제") {
     if (isNotEmptyObject(targetContest)) {
-      editHtmlList.push(
+      editMenuHtml = (
         <DeleteContestBtn
           setContestUpdateSignal={setContestUpdateSignal}
           targetContest={targetContest}
         />
       );
     } else {
-      editHtmlList.push(<a>대회를 선택하세요.</a>);
+      editMenuHtml = <p>대회를 선택하세요.</p>;
     }
   }
 
   return (
     <div>
-      <SelectTarget
-        target={targetContest}
-        setTarget={setTargetContest}
-        listOfObject={contestList}
-        DistintionClass={ContestDistintion}
-        setUpdateSignal={() => {
-          setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
-        }}
-      />
+      <Accordion
+        id="contest-manage"
+        title="경연 관리"
+        body={
+          <div className="contest-manage">
+            <div className="select-contest">
+              <SelectTarget
+                target={targetContest}
+                setTarget={setTargetContest}
+                listOfObject={contestList}
+                DistintionClass={ContestDistintion}
+                setUpdateSignal={() => {
+                  setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
+                }}
+              />
+            </div>
 
-      <DropDown
-        target={editType}
-        onClick={setEditType}
-        menuList={contesteditTypeEnum}
-      />
+            <div className="edit-contest">
+              <DropDown
+                target={editMenu}
+                onClick={setEditMenu}
+                menuList={contestEditMenuEnum}
+              />
 
-      {editHtmlList}
+              {editMenuHtml}
+            </div>
 
-      <SelectContestSection
-        setContestUpdateSignal={setContestUpdateSignal}
-        targetContest={targetContest}
-      />
+            <SelectContestSection
+              setContestUpdateSignal={setContestUpdateSignal}
+              targetContest={targetContest}
+            />
 
-      <ContestTimerStartBtn
-        targetContest={targetContest}
-        isContestTimerRunning={isContestTimerRunning}
-        setIsContestTimerRunning={setIsContestTimerRunning}
+            <ContestTimerStartBtn
+              targetContest={targetContest}
+              isContestTimerRunning={isContestTimerRunning}
+              setIsContestTimerRunning={setIsContestTimerRunning}
+            />
+          </div>
+        }
       />
     </div>
   );

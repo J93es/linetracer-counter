@@ -71,7 +71,6 @@ export class ParticipantRecordService
 
     const participantRecord: Partial<ParticipantRecordType> =
       await participantRecordRepository.updateParticipantRecord(
-        _id,
         srcParticipantRecord,
         false
       );
@@ -90,7 +89,6 @@ export class ParticipantRecordService
 
     const participantRecord: Partial<ParticipantRecordType> =
       await participantRecordRepository.updateParticipantRecord(
-        _id,
         srcParticipantRecord,
         true
       );

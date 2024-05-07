@@ -87,12 +87,12 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContestWithJoinByYear(
-    year: string,
+  async readContestWithJoinById(
+    id: string,
     selectParticipantField: object,
     selectParticipantRecordField: object
   ): Promise<any> {
-    const contest = await ContestSchema.findOne({ id: year })
+    const contest = await ContestSchema.findOne({ id: id })
       .populate({
         path: "curParticipant nextParticipant participantList",
         select: selectParticipantField,
@@ -109,10 +109,10 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async updateContest(_id: string, data: Partial<ContestType>): Promise<any> {
+  async updateContest(data: Partial<ContestType>): Promise<any> {
     const filteredData = this.readonlyFilter(data);
     const contest = await ContestSchema.findOneAndUpdate(
-      { _id: _id },
+      { _id: data._id },
       filteredData,
       {
         returnDocument: "after",

@@ -57,19 +57,11 @@ function getHtmlListGroup(
         <button
           key={i}
           type="button"
-          className="list-group-item list-group-item-action active"
+          className="list-group-item list-group-item-action small active"
           aria-current="true"
           onClick={() => setTargetId(obj)}
         >
-          <small
-            style={{
-              maxWidth: "300px",
-              padding: "1px",
-              overflow: "scroll",
-            }}
-          >
-            {JSON.stringify(viewList)}
-          </small>
+          {JSON.stringify(viewList)}
         </button>
       );
 
@@ -79,18 +71,10 @@ function getHtmlListGroup(
         <button
           key={i}
           type="button"
-          className="list-group-item list-group-item-action"
+          className="list-group-item list-group-item-action small"
           onClick={() => setTargetId(obj)}
         >
-          <small
-            style={{
-              maxWidth: "200px",
-              padding: "1px",
-              overflow: "scroll",
-            }}
-          >
-            {JSON.stringify(viewList)}
-          </small>
+          {JSON.stringify(viewList)}
         </button>
       );
 

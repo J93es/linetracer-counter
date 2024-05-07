@@ -1,15 +1,7 @@
 import mongoose from "mongoose";
+import { driveRecordSchema } from "./DriveRecordSchema";
 
 const { Schema } = mongoose;
-
-const driveRecordSchema = new Schema({
-  type: {
-    type: String,
-    required: true,
-    enum: ["Ignored", "Line-Out", "Pit-In-KO", "SUCCESS"],
-  },
-  recordTime: { type: Number, required: true },
-});
 
 const participantRecordSchema = new Schema({
   hostId: { type: String, required: true, readonly: true },
@@ -32,7 +24,7 @@ const participantRecordSchema = new Schema({
   sectorState: {
     type: String,
     required: true,
-    enum: ["ready", "running", "end"],
+    enum: ["ready", "running", "suspend", "end"],
   },
 
   driveRecordList: {

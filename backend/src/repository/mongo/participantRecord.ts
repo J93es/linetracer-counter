@@ -87,13 +87,12 @@ export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
   }
 
   async updateParticipantRecord(
-    _id: any,
     data: Partial<ParticipantRecordType>,
     replace: boolean = false
   ): Promise<any> {
     const target = this.readonlyFilter(data);
     const originParticipantRecord = this.readonlyFilter(
-      await this.readParticipantRecord(_id)
+      await this.readParticipantRecord(data._id)
     );
 
     const srcDriveRecordList = target.driveRecordList;
@@ -107,7 +106,7 @@ export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
     }
 
     const participantRecord = await ParticipantRecordSchema.findOneAndUpdate(
-      { _id: _id },
+      { _id: data._id },
       target,
       {
         returnDocument: "after",
@@ -170,5 +169,42 @@ export class ParticipantRecordMongoRepo implements ParticipantRecordRepository {
     }
 
     return targetDriveRecord;
+  }
+
+  async appendDriveRecordList(
+    _id: any,
+    driveRecord: DriveRecordType
+  ): Promise<any> {
+    const participantRecord = await ParticipantRecordSchema.findOneAndUpdate(
+      { _id: _id },
+      {
+        $addToSet: { driveRecordList: driveRecord },
+      },
+      {
+        returnDocument: "after",
+      }
+    ).lean();
+    if (!participantRecord) {
+      throw new Error("Failed to append participant list");
+    }
+
+    return participantRecord;
+  }
+
+  async popDriveRecordList(_id: any, driveRecord_Id: any): Promise<any> {
+    const participantRecord = await ParticipantRecordSchema.findOneAndUpdate(
+      { _id: _id },
+      {
+        $pull: { driveRecordList: { _id: driveRecord_Id } },
+      },
+      {
+        returnDocument: "after",
+      }
+    ).lean();
+    if (!participantRecord) {
+      throw new Error("Failed to remove participant list");
+    }
+
+    return participantRecord;
   }
 }

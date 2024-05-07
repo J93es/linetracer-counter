@@ -1,12 +1,13 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ParticipantType } from "model/Participant";
-import { postParticipantSchema } from "model/fetch/ParticipantSchema";
+import { ParticipantSchema } from "model/fetch/ParticipantSchema";
 import { ParticipantController } from "controller/ParticipantController";
 
 import TextForm from "component/utils/TextForm";
-import { useEffect } from "react";
+import SubmitBtn from "component/utils/SubmitBtn";
 
 const participantController = new ParticipantController();
 
@@ -25,14 +26,14 @@ export default function PostParticipant({
     setValue,
     formState: { errors },
   } = useForm<ParticipantType>({
-    resolver: zodResolver(postParticipantSchema),
+    resolver: zodResolver(ParticipantSchema),
   });
 
   useEffect(() => {
     setValue("name", "");
     setValue("association", "");
     setValue("speech", "");
-  }, [targetParticipant]);
+  }, [setValue, targetParticipant]);
 
   const onSubmit = (data: Partial<ParticipantType>) => {
     const func = async () => {
@@ -69,9 +70,7 @@ export default function PostParticipant({
         errorMessage={errors.speech?.message || ""}
       />
 
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <SubmitBtn />
     </form>
   );
 }

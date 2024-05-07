@@ -13,9 +13,10 @@ import cors from "cors";
 import corsOptions from "./utils/cors/index";
 
 import indexRouter from "./routes/index";
+import contestRouter from "./routes/contest";
 import partipantRouter from "./routes/participant";
 import partipantRecordRouter from "./routes/participantRecord";
-import contestRouter from "./routes/contest";
+import driveRecordRouter from "./routes/driveRecord";
 import userRouter from "./routes/user";
 
 import { uri, PORT } from "./config";
@@ -37,9 +38,10 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
+app.use("/contest", contestRouter);
 app.use("/participant", partipantRouter);
 app.use("/participant-record", partipantRecordRouter);
-app.use("/contest", contestRouter);
+app.use("/drive-record", driveRecordRouter);
 app.use("/user", userRouter);
 
 // // catch 404 and forward to error handler

@@ -1,4 +1,4 @@
-export default function TextForm({
+export default function NumberForm({
   id,
   placeholder,
   label,
@@ -14,16 +14,18 @@ export default function TextForm({
   errorMessage: string;
 }) {
   return (
-    <div className="text-form">
+    <div className="number-form">
       <div className="form-group">
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={`id`}>{label}</label>
         <input
           id={id}
-          type="text"
+          type="number"
           className="form-control"
           placeholder={placeholder}
           autoComplete="on"
-          {...register(id)}
+          {...register(id, {
+            valueAsNumber: true,
+          })}
         />
         <small className="form-text text-muted">{errorMessage}</small>
       </div>

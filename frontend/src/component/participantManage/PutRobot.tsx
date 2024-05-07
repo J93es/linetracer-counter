@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ParticipantType } from "model/Participant";
 import { RobotType } from "model/Robot";
-import { putRobotSchema } from "model/fetch/RobotSchema";
+import { RobotSchema } from "model/fetch/RobotSchema";
 
 import { ParticipantController } from "controller/ParticipantController";
 
 import TextForm from "component/utils/TextForm";
+import SubmitBtn from "component/utils/SubmitBtn";
 
 const participantController = new ParticipantController();
 
@@ -26,7 +27,7 @@ export default function PutParticipant({
     setValue,
     formState: { errors },
   } = useForm<RobotType>({
-    resolver: zodResolver(putRobotSchema),
+    resolver: zodResolver(RobotSchema),
     defaultValues: targetParticipant.robot,
   });
 
@@ -39,7 +40,7 @@ export default function PutParticipant({
     setValue("motor", targetParticipant.robot?.motor || "");
     setValue("adc", targetParticipant.robot?.adc || "");
     setValue("sensor", targetParticipant.robot?.sensor || "");
-  }, [targetParticipant.robot]);
+  }, [setValue, targetParticipant.robot]);
 
   const onSubmit = (data: Partial<RobotType>) => {
     const func = async () => {
@@ -118,9 +119,7 @@ export default function PutParticipant({
         errorMessage={errors.sensor?.message || ""}
       />
 
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <SubmitBtn />
     </form>
   );
 }

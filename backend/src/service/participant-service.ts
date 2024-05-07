@@ -35,6 +35,8 @@ export class ParticipantService implements ParticipantServiceInterface {
     delete filteredParticipant.speech;
     delete filteredParticipant.robot;
 
+    // const {name, association, speech, robot, ...filteredParticipant} = JSON.parse(JSON.stringify(srcParticipant));
+
     return filteredParticipant;
   }
 
@@ -65,7 +67,7 @@ export class ParticipantService implements ParticipantServiceInterface {
     srcParticipant = this.patchReadonlyFilter(srcParticipant);
 
     const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant(_id, srcParticipant);
+      await participantRepository.updateParticipant(srcParticipant);
 
     return new Participant(participant as ParticipantType);
   }
@@ -81,7 +83,7 @@ export class ParticipantService implements ParticipantServiceInterface {
     this._idFilter(_id, srcParticipant);
 
     const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant(_id, srcParticipant);
+      await participantRepository.updateParticipant(srcParticipant);
 
     return new Participant(participant as ParticipantType);
   }

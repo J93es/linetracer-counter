@@ -3,6 +3,8 @@ import SetViewLength from "component/utils/selectTarget/SetViewLength";
 import ListGroup from "component/utils/selectTarget/ListGroup";
 import PaginationBar from "component/utils/selectTarget/PaginationBar";
 
+import "component/utils/selectTarget/SelectTarget.css";
+
 export default function SelectTarget({
   target,
   setTarget,
@@ -29,22 +31,29 @@ export default function SelectTarget({
   }
 
   return (
-    <div>
-      <div>
-        <button
-          type="button"
-          className="btn btn-info"
-          onClick={() => {
-            setUpdateSignal();
-          }}
-        >
-          새로고침
-        </button>
+    <div className="select-target">
+      <div className="select-target-header">
+        <div className="select-target-header-left">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => {
+              setUpdateSignal();
+            }}
+          >
+            새로고침
+          </button>
+        </div>
 
-        <SetViewLength
-          viewLengthPerPage={viewLengthPerPage}
-          setViewLengthPerPage={setViewLengthPerPage}
-        />
+        <div className="select-target-header-right">
+          <SetViewLength
+            viewLengthPerPage={viewLengthPerPage}
+            setViewLengthPerPage={setViewLengthPerPage}
+          />
+        </div>
+      </div>
+
+      <div className="select-target-body">
         <ListGroup
           listOfObject={listOfObject}
           target={target}
@@ -53,6 +62,9 @@ export default function SelectTarget({
           currentPageIndex={currentPageIndex}
           DistintionClass={DistintionClass}
         />
+      </div>
+
+      <div className="select-target-footer">
         <PaginationBar
           currentPageIndex={currentPageIndex}
           setPageIndex={setPageIndex}

@@ -1,15 +1,13 @@
-import React from "react";
-import logo from "./logo.svg";
+// import React from "react";
+// import logo from "./logo.svg";
 import "./App.css";
 
 import { useState, useEffect } from "react";
 
-import Contest, { ContestType } from "model/Contest";
-import Participant, { ParticipantType } from "model/Participant";
-import ParticipantRecord, {
-  ParticipantRecordType,
-} from "model/ParticipantRecord";
-import DriveRecord, { DriveRecordType } from "model/DriveRecord";
+import { ContestType } from "model/Contest";
+import { ParticipantType } from "model/Participant";
+import { ParticipantRecordType } from "model/ParticipantRecord";
+import { DriveRecordType } from "model/DriveRecord";
 
 import { ContestController } from "controller/ContestController";
 import { ParticipantController } from "controller/ParticipantController";
@@ -17,8 +15,8 @@ import { ParticipantRecordController } from "controller/ParticipantRecordControl
 
 import ContestManage from "component/contestManage/ContestManage";
 import ParticipantManage from "component/participantManage/ParticipantManage";
-import ParticipantRecordManage from "component/ParticipantRecordManage";
-import DriveRecordManage from "component/DriveRecordManage";
+import ParticipantRecordManage from "component/participantRecordManage/ParticipantRecordManage";
+import DriveRecordManage from "component/driveRecordManage/DriveRecordManage";
 
 import {
   isNotEmptyArray,
@@ -56,6 +54,7 @@ function App() {
     Partial<DriveRecordType>
   >({});
 
+  // set contestList when updateSignal is updated
   useEffect(() => {
     const func = async () => {
       const contestList = await contestController.getEveryContest();
@@ -68,6 +67,7 @@ function App() {
     func();
   }, [updateSignal]);
 
+  // set targetContest when contestList is updated
   useEffect(() => {
     if (!isNotEmptyArray(contestList)) {
       setTargetContest({});
@@ -80,8 +80,9 @@ function App() {
       return;
     }
     setTargetContest(contest);
-  }, [contestList]);
+  }, [contestList, targetContest._id]);
 
+  // set participantList when targetContest is updated
   useEffect(() => {
     const participantList = targetContest.participantList || [];
     if (!isNotEmptyArray(participantList)) {
@@ -92,6 +93,7 @@ function App() {
     setParticipantList(participantList);
   }, [targetContest]);
 
+  // set targetParticipant when participantList is updated
   useEffect(() => {
     if (!isNotEmptyArray(participantList)) {
       setTargetParticipant({});
@@ -104,8 +106,9 @@ function App() {
       return;
     }
     setTargetParticipant(participant);
-  }, [participantList]);
+  }, [participantList, targetParticipant._id]);
 
+  // set participantRecordList when targetParticipant is updated
   useEffect(() => {
     const participantRecordList = targetParticipant.participantRecordList || [];
     if (!isNotEmptyArray(participantRecordList)) {
@@ -116,6 +119,7 @@ function App() {
     setParticipantRecordList(participantRecordList);
   }, [targetParticipant]);
 
+  // set targetParticipantRecord when participantRecordList is updated
   useEffect(() => {
     if (!isNotEmptyArray(participantRecordList)) {
       setTargetParticipantRecord({});
@@ -133,8 +137,9 @@ function App() {
       return;
     }
     setTargetParticipantRecord(participantRecord);
-  }, [participantRecordList]);
+  }, [participantRecordList, targetParticipantRecord._id]);
 
+  // set driveRecordList when targetParticipantRecord is updated
   useEffect(() => {
     const driveRecordList = targetParticipantRecord.driveRecordList || [];
     if (!isNotEmptyArray(driveRecordList)) {
@@ -145,6 +150,7 @@ function App() {
     setDriveRecordList(driveRecordList);
   }, [targetParticipantRecord]);
 
+  // set targetDriveRecord when driveRecordList is updated
   useEffect(() => {
     if (!isNotEmptyArray(driveRecordList)) {
       setTargetDriveRecord({});
@@ -157,12 +163,12 @@ function App() {
       return;
     }
     setTargetDriveRecord(driveRecord);
-  }, [driveRecordList]);
+  }, [driveRecordList, targetDriveRecord._id]);
 
   // console.log("contestList", contestList);
-  console.log("targetContest", targetContest);
+  // console.log("targetContest", targetContest);
   // console.log("participantList", participantList);
-  console.log("targetParticipant", targetParticipant);
+  // console.log("targetParticipant", targetParticipant);
   // console.log("participantRecordList", participantRecordList);
   // console.log("targetParticipantRecord", targetParticipantRecord);
   // console.log("driveRecordList", driveRecordList);
@@ -170,40 +176,41 @@ function App() {
 
   return (
     <div className="App">
-      <header
-        className="App-header"
-        style={{ maxWidth: "1000px", padding: "1px", boxSizing: "border-box" }}
-      >
-        <ContestManage
-          setContestUpdateSignal={setUpdateSignal}
-          contestList={contestList}
-          targetContest={targetContest}
-          setTargetContest={setTargetContest}
-          isContestTimerRunning={isContestTimerRunning}
-          setIsContestTimerRunning={setIsContestTimerRunning}
-        />
+      <header className="App-header">
+        <div className="container">
+          <ContestManage
+            setContestUpdateSignal={setUpdateSignal}
+            contestList={contestList}
+            targetContest={targetContest}
+            setTargetContest={setTargetContest}
+            isContestTimerRunning={isContestTimerRunning}
+            setIsContestTimerRunning={setIsContestTimerRunning}
+          />
 
-        <ParticipantManage
-          setParticipantUpdateSignal={setUpdateSignal}
-          participantList={participantList}
-          targetParticipant={targetParticipant}
-          setTargetParticipant={setTargetParticipant}
-          curContestId={targetContest._id}
-        />
+          <ParticipantManage
+            setParticipantUpdateSignal={setUpdateSignal}
+            participantList={participantList}
+            targetParticipant={targetParticipant}
+            setTargetParticipant={setTargetParticipant}
+            targetContest={targetContest}
+          />
 
-        <ParticipantRecordManage
-          setParticipantRecordUpdateSignal={setUpdateSignal}
-          targetParticipantRecord={targetParticipantRecord}
-          setTargetParticipantRecord={setTargetParticipantRecord}
-          participantRecordList={participantRecordList}
-        />
+          <ParticipantRecordManage
+            setParticipantRecordUpdateSignal={setUpdateSignal}
+            targetParticipantRecord={targetParticipantRecord}
+            setTargetParticipantRecord={setTargetParticipantRecord}
+            participantRecordList={participantRecordList}
+            targetParticipant={targetParticipant}
+          />
 
-        <DriveRecordManage
-          setDriveRecordUpdateSignal={setUpdateSignal}
-          targetDriveRecord={targetDriveRecord}
-          setTargetDriveRecord={setTargetDriveRecord}
-          driveRecordList={driveRecordList}
-        />
+          <DriveRecordManage
+            setDriveRecordUpdateSignal={setUpdateSignal}
+            targetDriveRecord={targetDriveRecord}
+            setTargetDriveRecord={setTargetDriveRecord}
+            driveRecordList={driveRecordList}
+            targetParticipantRecord={targetParticipantRecord}
+          />
+        </div>
       </header>
     </div>
   );

@@ -28,25 +28,20 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get(
-  "/:year",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const year: string = req.params.year;
+router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const _id: string = req.params._id;
 
-      const contest: Partial<ContestType> = await contestService.getContest(
-        year
-      );
+    const contest: Partial<ContestType> = await contestService.getContest(_id);
 
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send(contest).status(200);
-    } catch (err: any) {
-      console.error(err);
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send({ message: err.toString() }).status(404);
-    }
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(contest).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
   }
-);
+});
 
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -65,48 +60,43 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.post(
-  "/:year",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const data = req.body;
-      const year: string = req.params.year;
-      if (!data.year) {
-        data.year = year;
-      }
-      if (year !== data.year) {
-        throw new Error(
-          "id is not matched : query id and body id is different"
-        );
-      }
-
-      const contest: Partial<ContestType> = await contestService.postContest(
-        data
-      );
-
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send(contest).status(200);
-    } catch (err: any) {
-      console.error(err);
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send({ message: err.toString() }).status(404);
+router.post("/:id", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = req.body;
+    const id: string = req.params.id;
+    if (!data._id) {
+      data.id = id;
     }
+    if (id !== data.id) {
+      throw new Error("id is not matched : query id and body id is different");
+    }
+
+    const contest: Partial<ContestType> = await contestService.postContest(
+      data
+    );
+
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(contest).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
   }
-);
+});
 
 router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello patch");
 });
 
 router.patch(
-  "/:year",
+  "/:_id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      const year: string = req.params.year;
+      const _id: string = req.params._id;
 
       const contest: Partial<ContestType> = await contestService.patchContest(
-        year,
+        _id,
         data
       );
 
@@ -125,41 +115,38 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello put");
 });
 
-router.put(
-  "/:year",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const data = req.body;
-      const year: string = req.params.year;
+router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = req.body;
+    const _id: string = req.params._id;
 
-      const contest: Partial<ContestType> = await contestService.putContest(
-        year,
-        data
-      );
+    const contest: Partial<ContestType> = await contestService.putContest(
+      _id,
+      data
+    );
 
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send(contest).status(200);
-    } catch (err: any) {
-      console.error(err);
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.status(404);
-      res.send({ message: err.toString() });
-    }
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(contest).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.status(404);
+    res.send({ message: err.toString() });
   }
-);
+});
 
 router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello delete");
 });
 
 router.delete(
-  "/:year",
+  "/:_id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const year: string = req.params.year;
+      const _id: string = req.params._id;
 
       const contest: Partial<ContestType> = await contestService.removeContest(
-        year
+        _id
       );
 
       res.header("Content-Type", "application/json; charset=utf-8");
