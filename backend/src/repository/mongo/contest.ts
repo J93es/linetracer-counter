@@ -45,7 +45,7 @@ export class ContestMongoRepo implements ContestRepository {
       .populate({
         path: "participantList",
         populate: {
-          path: "participantRecordList",
+          path: "sectorRecordList",
         },
       })
       .lean();
@@ -68,15 +68,15 @@ export class ContestMongoRepo implements ContestRepository {
   async readContestWithJoin(
     _id: string,
     selectParticipantField: object,
-    selectParticipantRecordField: object
+    selectSectorRecordField: object
   ): Promise<any> {
     const contest = await ContestSchema.findOne({ _id: _id })
       .populate({
         path: "participantList",
         select: selectParticipantField,
         populate: {
-          path: "participantRecordList",
-          select: selectParticipantRecordField,
+          path: "sectorRecordList",
+          select: selectSectorRecordField,
         },
       })
       .lean();
@@ -90,15 +90,15 @@ export class ContestMongoRepo implements ContestRepository {
   async readContestWithJoinById(
     id: string,
     selectParticipantField: object,
-    selectParticipantRecordField: object
+    selectSectorRecordField: object
   ): Promise<any> {
     const contest = await ContestSchema.findOne({ id: id })
       .populate({
         path: "curParticipant nextParticipant participantList",
         select: selectParticipantField,
         populate: {
-          path: "participantRecordList",
-          select: selectParticipantRecordField,
+          path: "sectorRecordList",
+          select: selectSectorRecordField,
         },
       })
       .lean();

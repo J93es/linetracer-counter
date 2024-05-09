@@ -20,7 +20,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
 
     delete filteredData._id;
     delete filteredData.hostId;
-    delete filteredData.participantRecordList;
+    delete filteredData.sectorRecordList;
 
     return filteredData;
   }
@@ -64,7 +64,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       hostId: contest_Id,
     })
       .populate({
-        path: "participantRecordList",
+        path: "sectorRecordList",
       })
       .lean();
     if (!participantIndex) {
@@ -85,7 +85,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
 
   async readParticipantWithJoin(_id: any, selectField: object): Promise<any> {
     const contest = await ParticipantSchema.findOne({ _id: _id })
-      .populate("participantRecordList", selectField)
+      .populate("sectorRecordList", selectField)
       .lean();
     if (!contest) {
       throw new Error("Participant not found");
@@ -119,9 +119,9 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       throw new Error("Failed to delete participant, check participant _id");
     }
 
-    if (JSON.stringify(participant.participantRecordList) !== "[]") {
+    if (JSON.stringify(participant.sectorRecordList) !== "[]") {
       throw new Error(
-        "Failed to delete participant, participantRecordList is not empty"
+        "Failed to delete participant, sectorRecordList is not empty"
       );
     }
     try {
@@ -136,14 +136,11 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async appendParticipantRecordList(
-    _id: any,
-    participantRecord_Id: any
-  ): Promise<any> {
+  async appendSectorRecordList(_id: any, sectorRecord_Id: any): Promise<any> {
     const contest = await ParticipantSchema.findOneAndUpdate(
       { _id: _id },
       {
-        $addToSet: { participantRecordList: participantRecord_Id },
+        $addToSet: { sectorRecordList: sectorRecord_Id },
       },
       {
         returnDocument: "after",
@@ -153,17 +150,14 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       throw new Error("Failed to append participant list");
     }
 
-    return participantRecord_Id;
+    return sectorRecord_Id;
   }
 
-  async popParticipantRecordList(
-    _id: any,
-    participantRecord_Id: any
-  ): Promise<any> {
+  async popSectorRecordList(_id: any, sectorRecord_Id: any): Promise<any> {
     const contest = await ParticipantSchema.findOneAndUpdate(
       { _id: _id },
       {
-        $pull: { participantRecordList: participantRecord_Id },
+        $pull: { sectorRecordList: sectorRecord_Id },
       },
       {
         returnDocument: "after",
@@ -173,6 +167,6 @@ export class ParticipantMongoRepo implements ParticipantRepository {
       throw new Error("Failed to remove participant list");
     }
 
-    return participantRecord_Id;
+    return sectorRecord_Id;
   }
 }

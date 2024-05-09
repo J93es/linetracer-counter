@@ -1,5 +1,3 @@
-import "component/utils/util.css";
-
 export default function SubmitBtn({}) {
   return (
     <div className="submit-btn">

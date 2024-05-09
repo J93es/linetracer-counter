@@ -10,13 +10,13 @@ export interface ContestRepository {
   readContestWithJoin(
     _id: string,
     selectParticipantField: object,
-    selectParticipantRecordField: object
+    selectSectorRecordField: object
   ): Promise<any>;
 
   readContestWithJoinById(
     id: string,
     selectParticipantField: object,
-    selectParticipantRecordField: object
+    selectSectorRecordField: object
   ): Promise<any>;
 
   updateContest(data: Partial<ContestType>): Promise<any>;

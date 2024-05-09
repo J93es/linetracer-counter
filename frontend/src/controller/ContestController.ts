@@ -21,8 +21,8 @@ export class ContestController {
 
       return resContestList;
     } catch (error) {
-      console.error("Failed to fetch data", error);
-      throw new Error("Failed to fetch data");
+      console.error("Failed to get every Contest data", error);
+      throw error;
     }
   }
 
@@ -37,8 +37,8 @@ export class ContestController {
 
       return resContest;
     } catch (error) {
-      console.error("Failed to fetch data", error);
-      throw new Error("Failed to fetch data");
+      console.error("Failed to get Contest data", error);
+      throw error;
     }
   }
 
@@ -60,7 +60,8 @@ export class ContestController {
 
       return resContest;
     } catch (error) {
-      throw new Error("Failed to post Contest data");
+      console.error("Failed to post Contest data", error);
+      throw error;
     }
   }
 
@@ -83,7 +84,8 @@ export class ContestController {
 
       return resContest;
     } catch (error) {
-      throw new Error("Failed to post Contest data");
+      console.error("Failed to patch Contest data", error);
+      throw error;
     }
   }
 
@@ -106,7 +108,8 @@ export class ContestController {
 
       return resContest;
     } catch (error) {
-      throw new Error("Failed to post Contest data");
+      console.error("Failed to put Contest data", error);
+      throw error;
     }
   }
 
@@ -124,7 +127,8 @@ export class ContestController {
 
       return resContest;
     } catch (error) {
-      throw new Error("Failed to post Contest data");
+      console.error("Failed to delete Contest data", error);
+      throw error;
     }
   }
 }

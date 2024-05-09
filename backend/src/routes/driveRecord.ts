@@ -37,11 +37,10 @@ router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const participantRecord_Id: string = req.query
-      .participant_record_id as string;
+    const sectorRecord_Id: string = req.query.sector_record_id as string;
 
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordService.postDriveRecord(participantRecord_Id, data);
+      await driveRecordService.postDriveRecord(sectorRecord_Id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(driveRecord).status(200);
@@ -62,15 +61,10 @@ router.patch(
     try {
       const data = req.body;
       const _id: string = req.params._id;
-      const participantRecord_Id: string = req.query
-        .participant_record_id as string;
+      const sectorRecord_Id: string = req.query.sector_record_id as string;
 
       const driveRecord: Partial<DriveRecordType> =
-        await driveRecordService.patchDriveRecord(
-          participantRecord_Id,
-          _id,
-          data
-        );
+        await driveRecordService.patchDriveRecord(sectorRecord_Id, _id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
@@ -92,11 +86,10 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
     const _id: string = req.params._id;
-    const participantRecord_Id: string = req.query
-      .participant_record_id as string;
+    const sectorRecord_Id: string = req.query.sector_record_id as string;
 
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordService.putDriveRecord(participantRecord_Id, _id, data);
+      await driveRecordService.putDriveRecord(sectorRecord_Id, _id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
@@ -118,11 +111,10 @@ router.delete(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const _id: string = req.params._id;
-      const participantRecord_Id: string = req.query
-        .participant_record_id as string;
+      const sectorRecord_Id: string = req.query.sector_record_id as string;
 
       const driveRecord: Partial<DriveRecordType> =
-        await driveRecordService.removeDriveRecord(participantRecord_Id, _id);
+        await driveRecordService.removeDriveRecord(sectorRecord_Id, _id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

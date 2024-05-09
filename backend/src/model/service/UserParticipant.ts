@@ -1,11 +1,11 @@
-import { UserParticipantRecordType } from "./UserParticipantRecord";
+import { UserSectorRecordType } from "./UserSectorRecord";
 
 export type UserParticipantType = {
   name: string;
   association: string;
   speech: string;
 
-  participantRecordList: UserParticipantRecordType[];
+  sectorRecordList: UserSectorRecordType[];
 };
 
 export default class UserParticipant {
@@ -13,13 +13,13 @@ export default class UserParticipant {
   association: string;
   speech: string;
 
-  participantRecordList: UserParticipantRecordType[];
+  sectorRecordList: UserSectorRecordType[];
 
   constructor(data: UserParticipantType) {
     this.name = data.name;
     this.association = data.association;
     this.speech = data.speech;
 
-    this.participantRecordList = data.participantRecordList;
+    this.sectorRecordList = data.sectorRecordList;
   }
 }

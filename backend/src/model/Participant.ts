@@ -1,5 +1,5 @@
 import { RobotType } from "./Robot";
-import { ParticipantRecordType } from "./ParticipantRecord";
+import { SectorRecordType } from "./SectorRecord";
 
 export type ParticipantType = {
   _id: any;
@@ -11,7 +11,7 @@ export type ParticipantType = {
 
   robot: RobotType;
 
-  participantRecordList: object[];
+  sectorRecordList: object[];
 };
 
 export default class Participant {
@@ -24,7 +24,7 @@ export default class Participant {
 
   robot: RobotType;
 
-  participantRecordList: object[];
+  sectorRecordList: object[];
 
   constructor(data: ParticipantType) {
     this._id = data._id;
@@ -36,6 +36,6 @@ export default class Participant {
 
     this.robot = data.robot;
 
-    this.participantRecordList = data.participantRecordList;
+    this.sectorRecordList = data.sectorRecordList;
   }
 }

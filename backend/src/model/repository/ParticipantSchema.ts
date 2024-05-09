@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-import { ParticipantRecordSchema } from "./ParticipantRecordSchema";
+import { SectorRecordSchema } from "./SectorRecordSchema";
 
 const robotSchema = new Schema({
   name: { type: String },
@@ -24,9 +24,9 @@ const participantSchema = new Schema({
 
   robot: { type: robotSchema },
 
-  participantRecordList: {
+  sectorRecordList: {
     type: [Schema.Types.ObjectId],
-    ref: "ParticipantRecordSchema",
+    ref: "SectorRecordSchema",
     required: true,
   },
 });

@@ -1,13 +1,13 @@
 import DriveRecord, { DriveRecordType } from "../../model/DriveRecord";
 import { DriveRecordRepository } from "../../core/repository/driveRecord";
-import { ParticipantRecordSchema } from "../../model/repository/ParticipantRecordSchema";
+import { SectorRecordSchema } from "../../model/repository/SectorRecordSchema";
 import { DriveRecordSchema } from "../../model/repository/DriveRecordSchema";
 
-import { ParticipantRecordRepository } from "../../core/repository/participantRecord";
-import { ParticipantRecordMongoRepo } from "../../repository/mongo/participantRecord";
+import { SectorRecordRepository } from "../../core/repository/sectorRecord";
+import { SectorRecordMongoRepo } from "./sectorRecord";
 
-const participantRecordRepository: ParticipantRecordRepository =
-  new ParticipantRecordMongoRepo();
+const sectorRecordRepository: SectorRecordRepository =
+  new SectorRecordMongoRepo();
 
 export class DriveRecordMongoRepo implements DriveRecordRepository {
   async isExistDriveRecord(_id: any): Promise<Boolean> {
@@ -27,12 +27,11 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
       throw new Error("Failed to create driveRecord");
     }
 
-    const participantRecord =
-      await participantRecordRepository.appendDriveRecordList(
-        hostId,
-        driveRecord
-      );
-    if (!participantRecord) {
+    const sectorRecord = await sectorRecordRepository.appendDriveRecordList(
+      hostId,
+      driveRecord
+    );
+    if (!sectorRecord) {
       throw new Error("Failed to append participant list");
     }
 
@@ -66,7 +65,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     }
 
     if (
-      !(await participantRecordRepository.popDriveRecordList(
+      !(await sectorRecordRepository.popDriveRecordList(
         hostId,
         driveRecord._id
       ))
@@ -75,10 +74,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     }
 
     if (
-      !(await participantRecordRepository.appendDriveRecordList(
-        hostId,
-        driveRecord
-      ))
+      !(await sectorRecordRepository.appendDriveRecordList(hostId, driveRecord))
     ) {
       throw new Error("Failed to append participant list");
     }
@@ -87,12 +83,12 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
   }
 
   async deleteDriveRecord(hostId: string, driveRecordId: string): Promise<any> {
-    const participantRecord =
-      await participantRecordRepository.popDriveRecordList(
-        hostId,
-        driveRecordId
-      );
-    if (!participantRecord) {
+    const sectorRecord = await sectorRecordRepository.popDriveRecordList(
+      hostId,
+      driveRecordId
+    );
+    if (!sectorRecord) {
+      console.log("Failed to remove participant list");
       throw new Error("Failed to remove participant list");
     }
 

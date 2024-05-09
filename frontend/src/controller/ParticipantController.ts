@@ -23,8 +23,8 @@ export class ParticipantController {
 
       return resParticipantList;
     } catch (error) {
-      console.error("Failed to fetch data", error);
-      throw new Error("Failed to fetch data");
+      console.error("Failed to get EveryParticipant data", error);
+      throw error;
     }
   }
 
@@ -39,8 +39,8 @@ export class ParticipantController {
 
       return resParticipant;
     } catch (error) {
-      console.error("Failed to fetch data", error);
-      throw new Error("Failed to fetch data");
+      console.error("Failed to get Participant data", error);
+      throw error;
     }
   }
 
@@ -62,7 +62,8 @@ export class ParticipantController {
 
       return resParticipant;
     } catch (error) {
-      throw new Error("Failed to post participant data");
+      console.error("Failed to post Participant data", error);
+      throw error;
     }
   }
 
@@ -85,7 +86,8 @@ export class ParticipantController {
 
       return resParticipant;
     } catch (error) {
-      throw new Error("Failed to post participant data");
+      console.error("Failed to patch Participant data", error);
+      throw error;
     }
   }
 
@@ -108,7 +110,8 @@ export class ParticipantController {
 
       return resParticipant;
     } catch (error) {
-      throw new Error("Failed to post participant data");
+      console.error("Failed to put Participant data", error);
+      throw error;
     }
   }
 
@@ -126,7 +129,8 @@ export class ParticipantController {
 
       return resParticipant;
     } catch (error) {
-      throw new Error("Failed to post participant data");
+      console.error("Failed to delete Participant data", error);
+      throw error;
     }
   }
 }

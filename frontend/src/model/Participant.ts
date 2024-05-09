@@ -1,5 +1,5 @@
 import { RobotType } from "model/Robot";
-import { ParticipantRecordType } from "model/ParticipantRecord";
+import { SectorRecordType } from "model/SectorRecord";
 import { robotTamplate } from "model/Robot";
 
 export type ParticipantType = {
@@ -12,7 +12,7 @@ export type ParticipantType = {
 
   robot: RobotType;
 
-  participantRecordList: ParticipantRecordType[];
+  sectorRecordList: SectorRecordType[];
 };
 
 export default class Participant {
@@ -25,7 +25,7 @@ export default class Participant {
 
   robot: RobotType;
 
-  participantRecordList: ParticipantRecordType[];
+  sectorRecordList: SectorRecordType[];
 
   constructor(data: ParticipantType) {
     this._id = data._id;
@@ -37,7 +37,7 @@ export default class Participant {
 
     this.robot = data.robot;
 
-    this.participantRecordList = data.participantRecordList;
+    this.sectorRecordList = data.sectorRecordList;
   }
 }
 
@@ -48,5 +48,5 @@ export const participantTamplate: ParticipantType = new Participant({
   association: "",
   speech: "",
   robot: robotTamplate,
-  participantRecordList: [],
+  sectorRecordList: [],
 });

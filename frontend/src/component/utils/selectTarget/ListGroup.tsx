@@ -5,6 +5,7 @@ export default function ListGroup({
   viewLengthPerPage,
   currentPageIndex,
   DistintionClass,
+  disabled,
 }: {
   listOfObject: object[];
   target: object;
@@ -12,6 +13,7 @@ export default function ListGroup({
   viewLengthPerPage: number;
   currentPageIndex: number;
   DistintionClass: any;
+  disabled: boolean;
 }) {
   const viewIndexMin = 0;
   const viewIndexMax = listOfObject.length - 1;
@@ -32,7 +34,8 @@ export default function ListGroup({
     setTarget,
     viewIndexHead,
     viewIndexTail,
-    DistintionClass
+    DistintionClass,
+    disabled
   );
 
   return <div className="list-group">{htmlListGroup}</div>;
@@ -44,42 +47,47 @@ function getHtmlListGroup(
   setTargetId: Function,
   viewIndexHead: number,
   viewIndexTail: number,
-  DistintionClass: any
+  DistintionClass: any,
+  disabled: boolean
 ) {
   let htmlListGroup = [];
 
   for (let i = viewIndexHead; i <= viewIndexTail; i++) {
-    const obj: any = listOfObject[i];
-    const viewList = Object.values(new DistintionClass(obj));
+    const obj: object = listOfObject[i];
 
-    if (JSON.stringify(obj) === JSON.stringify(target)) {
-      const htmlElement = (
-        <button
-          key={i}
-          type="button"
-          className="list-group-item list-group-item-action small active"
-          aria-current="true"
-          onClick={() => setTargetId(obj)}
-        >
-          {JSON.stringify(viewList)}
-        </button>
-      );
-
-      htmlListGroup.push(htmlElement);
-    } else {
-      const htmlElement = (
-        <button
-          key={i}
-          type="button"
-          className="list-group-item list-group-item-action small"
-          onClick={() => setTargetId(obj)}
-        >
-          {JSON.stringify(viewList)}
-        </button>
-      );
-
-      htmlListGroup.push(htmlElement);
+    let distintionInfo = "";
+    try {
+      distintionInfo = Object.values(new DistintionClass(obj)).join(", ");
+    } catch (e) {
+      distintionInfo = Object.values(obj).join(", ");
     }
+
+    let className = "list-group-item list-group-item-action small";
+    let active = false;
+    if (JSON.stringify(obj) === JSON.stringify(target)) {
+      className += " active";
+      active = true;
+    }
+
+    if (disabled) {
+      className += " disabled";
+    }
+
+    const onClick = () => setTargetId(obj);
+
+    const htmlElement = (
+      <button
+        key={i}
+        type="button"
+        className={className}
+        onClick={onClick}
+        aria-current={active ? "true" : "false"}
+      >
+        {distintionInfo}
+      </button>
+    );
+
+    htmlListGroup.push(htmlElement);
   }
   return htmlListGroup;
 }

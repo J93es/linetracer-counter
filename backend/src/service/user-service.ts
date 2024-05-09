@@ -2,9 +2,9 @@ import UserContest, { UserContestType } from "../model/service/UserContest";
 import UserParticipant, {
   UserParticipantType,
 } from "../model/service/UserParticipant";
-import UserParticipantRecord, {
-  UserParticipantRecordType,
-} from "../model/service/UserParticipantRecord";
+import UserSectorRecord, {
+  UserSectorRecordType,
+} from "../model/service/UserSectorRecord";
 import UserDriveRecord, {
   UserDriveRecordType,
 } from "../model/service/UserDriveRecord";
@@ -22,12 +22,12 @@ const contestRepository: ContestRepository = new ContestMongoRepo();
 //   });
 // }
 
-// function userParticipantRecordFilter(
-//   participantRecordList: UserParticipantType[]
+// function userSectorRecordFilter(
+//   SectorRecordList: UserParticipantType[]
 // ) {
-//   return participantRecordList.map(
-//     (participantRecord: UserParticipantRecordType) => {
-//       const newParticipantRecord = new UserParticipantRecord(participantRecord);
+//   return SectorRecordList.map(
+//     (SectorRecord: UserSectorRecordType) => {
+//       const newSectorRecord = new UserSectorRecord(SectorRecord);
 
 //       return userParticipantFilter(participant);
 //     }
@@ -58,7 +58,7 @@ export class UserMongoService implements UserService {
           name: 1,
           association: 1,
           speech: 1,
-          participantRecordList: 1,
+          SectorRecordList: 1,
         },
         {
           _id: 0,

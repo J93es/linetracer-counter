@@ -21,8 +21,8 @@ export class DriveRecordController {
 
       return resDriveRecord;
     } catch (error) {
-      console.error("Failed to fetch data", error);
-      throw new Error("Failed to fetch data");
+      console.error("Failed to get DriveRecord data", error);
+      throw error;
     }
   }
 
@@ -33,7 +33,7 @@ export class DriveRecordController {
     try {
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(
-        `${uri}/drive-record/?participant_record_id=${hostId}`,
+        `${uri}/drive-record/?sector_record_id=${hostId}`,
         {
           method: "POST",
           headers: {
@@ -48,7 +48,8 @@ export class DriveRecordController {
 
       return resDriveRecord;
     } catch (error) {
-      throw new Error("Failed to post DriveRecord data");
+      console.error("Failed to post DriveRecord data", error);
+      throw error;
     }
   }
 
@@ -60,7 +61,7 @@ export class DriveRecordController {
     try {
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(
-        `${uri}/drive-record/${_id}?participant_record_id=${hostId}`,
+        `${uri}/drive-record/${_id}?sector_record_id=${hostId}`,
         {
           method: "PATCH",
           headers: {
@@ -75,7 +76,8 @@ export class DriveRecordController {
 
       return resDriveRecord;
     } catch (error) {
-      throw new Error("Failed to post DriveRecord data");
+      console.error("Failed to patch DriveRecord data", error);
+      throw error;
     }
   }
 
@@ -87,7 +89,7 @@ export class DriveRecordController {
     try {
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(
-        `${uri}/drive-record/${_id}?participant_record_id=${hostId}`,
+        `${uri}/drive-record/${_id}?sector_record_id=${hostId}`,
         {
           method: "PUT",
           headers: {
@@ -102,7 +104,8 @@ export class DriveRecordController {
 
       return resDriveRecord;
     } catch (error) {
-      throw new Error("Failed to post DriveRecord data");
+      console.error("Failed to put DriveRecord data", error);
+      throw error;
     }
   }
 
@@ -112,7 +115,7 @@ export class DriveRecordController {
   ): Promise<Partial<DriveRecordType>> {
     try {
       const response = await fetch(
-        `${uri}/Drive-record/${_id}/participant_record_id=${hostId}`,
+        `${uri}/drive-record/${_id}/?sector_record_id=${hostId}`,
         {
           method: "DELETE",
           headers: {
@@ -126,7 +129,8 @@ export class DriveRecordController {
 
       return resDriveRecord;
     } catch (error) {
-      throw new Error("Failed to post DriveRecord data");
+      console.error("Failed to delete DriveRecord data", error);
+      throw error;
     }
   }
 }
