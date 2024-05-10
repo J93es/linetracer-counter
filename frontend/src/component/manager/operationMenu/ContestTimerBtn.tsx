@@ -24,11 +24,8 @@ export default function ContestTimerBtn({
     sectorRecord: Partial<SectorRecordType>
   ) => {
     const func = async () => {
-      await contestController.patchContest(contest._id, contest);
-      await sectorRecordController.patchSectorRecord(
-        sectorRecord._id,
-        sectorRecord
-      );
+      await contestController.patch(contest._id, contest);
+      await sectorRecordController.patch(sectorRecord._id, sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();
@@ -39,11 +36,8 @@ export default function ContestTimerBtn({
     sectorRecord: Partial<SectorRecordType>
   ) => {
     const func = async () => {
-      await contestController.patchContest(contest._id, contest);
-      await sectorRecordController.patchSectorRecord(
-        sectorRecord._id,
-        sectorRecord
-      );
+      await contestController.patch(contest._id, contest);
+      await sectorRecordController.patch(sectorRecord._id, sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

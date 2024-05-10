@@ -16,7 +16,7 @@ export default function DeleteParticipantBtn({
       className="btn btn-danger"
       onClick={() => {
         const func = async () => {
-          await participantController.deleteParticipant(targetParticipant._id);
+          await participantController.delete(targetParticipant._id);
           setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

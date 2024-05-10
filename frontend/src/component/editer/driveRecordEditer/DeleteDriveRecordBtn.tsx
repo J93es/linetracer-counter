@@ -19,7 +19,7 @@ export default function DeleteDriveRecordBtn({
       className="btn btn-danger"
       onClick={() => {
         const func = async () => {
-          await driveRecordController.deleteDriveRecord(
+          await driveRecordController.delete(
             targetSectorRecordId,
             targetDriveRecord._id
           );

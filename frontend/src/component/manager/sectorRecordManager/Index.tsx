@@ -3,10 +3,9 @@ import SectorRecordDistintion from "model/distinction/SectorRecordDistinction";
 import Accordion from "component/utils/Accordion";
 import RetouchSectorRecord from "component/manager/sectorRecordManager/RetouchSectorRecord";
 
-import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function SectorRecordManager({
   setSectorRecordUpdateSignal,
@@ -27,9 +26,9 @@ export default function SectorRecordManager({
 
   if (isContestTimerRunning) {
     retouchHtml = <p>경연이 진행 중입니다.</p>;
-  } else if (!isNotEmptyArray(sectorRecordList)) {
+  } else if (isEmptyArray(sectorRecordList)) {
     retouchHtml = emptySectorRecordListMessage;
-  } else if (!isNotEmptyObject(targetSectorRecord)) {
+  } else if (isEmptyObject(targetSectorRecord)) {
     retouchHtml = emptySectorRecordMessage;
   } else {
     retouchHtml = (

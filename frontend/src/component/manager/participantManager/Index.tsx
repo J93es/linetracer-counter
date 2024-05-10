@@ -4,7 +4,7 @@ import Accordion from "component/utils/Accordion";
 
 import { ParticipantType } from "model/Participant";
 
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function ParticipantManager({
   setParticipantUpdateSignal,
@@ -28,9 +28,9 @@ export default function ParticipantManager({
   );
   const emptyParticipantMessage = <p>참가자를 선택하세요.</p>;
 
-  if (!isNotEmptyArray(participantList)) {
+  if (isEmptyArray(participantList)) {
     messageHtml = emptyParticipantListListMessage;
-  } else if (!isNotEmptyObject(targetParticipant)) {
+  } else if (isEmptyObject(targetParticipant)) {
     messageHtml = emptyParticipantMessage;
   }
   return (

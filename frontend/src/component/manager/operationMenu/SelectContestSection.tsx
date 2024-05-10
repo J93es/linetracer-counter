@@ -20,7 +20,7 @@ export default function SelectContestSection({
         target={targetContest.curContestingSection ?? sectorEnum[0]}
         onClick={(target: string) => {
           const func = async () => {
-            await contestController.patchContest(targetContest._id, {
+            await contestController.patch(targetContest._id, {
               _id: targetContest._id,
               curContestingSection: target,
             });

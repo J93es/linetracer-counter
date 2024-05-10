@@ -36,7 +36,7 @@ export default function PostContest({
 
   const onSubmit = (data: Partial<ContestType>) => {
     const func = async () => {
-      await contestController.postContest(data);
+      await contestController.post(data);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

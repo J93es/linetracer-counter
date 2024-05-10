@@ -38,7 +38,7 @@ export default function PostParticipant({
   const onSubmit = (data: Partial<ParticipantType>) => {
     const func = async () => {
       data.hostId = targetContestId;
-      await participantController.postParticipant(data);
+      await participantController.post(data);
       setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

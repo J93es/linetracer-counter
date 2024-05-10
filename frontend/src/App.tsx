@@ -11,12 +11,7 @@ import { ContestController } from "controller/ContestController";
 import Editer from "component/editer/Editer";
 import Manager from "component/manager/Manager";
 
-import {
-  isNotEmptyArray,
-  isNotEmptyObject,
-  findTargetBy_id,
-} from "tools/utils";
-import { ParticipantController } from "controller/ParticipantController";
+import { isEmptyArray } from "tools/utils";
 
 const contestController = new ContestController();
 function App() {
@@ -27,8 +22,8 @@ function App() {
   // set contestList when updateSignal is updated
   useEffect(() => {
     const func = async () => {
-      const contestList = await contestController.getEveryContest();
-      if (!isNotEmptyArray(contestList)) {
+      const contestList = await contestController.getEvery();
+      if (isEmptyArray(contestList)) {
         setContestList([]);
         return;
       }

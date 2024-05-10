@@ -38,7 +38,7 @@ export default function PutContest({
 
   const onSubmit = (data: Partial<ContestType>) => {
     const func = async () => {
-      await contestController.putContest(targetContest._id, {
+      await contestController.put(targetContest._id, {
         _id: targetContest._id,
         ...data,
       });

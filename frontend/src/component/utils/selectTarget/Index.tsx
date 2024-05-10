@@ -5,7 +5,7 @@ import PaginationBar from "component/utils/selectTarget/PaginationBar";
 
 import "component/utils/selectTarget/SelectTarget.css";
 
-import { isNotEmptyArray } from "tools/utils";
+import { isEmptyArray } from "tools/utils";
 
 export default function SelectTarget({
   target,
@@ -30,7 +30,7 @@ export default function SelectTarget({
     Math.trunc(targetIndex / viewLengthPerPage + 1)
   );
 
-  if (!isNotEmptyArray(listOfObject)) {
+  if (isEmptyArray(listOfObject)) {
     return null;
   }
 

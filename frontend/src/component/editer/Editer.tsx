@@ -10,11 +10,7 @@ import SectorRecordEditer from "component/editer/sectorRecordEditer/Index";
 import DriveRecordEditer from "component/editer/driveRecordEditer/Index";
 
 import { sortParticipantListByName } from "tools/sortParticipantList";
-import {
-  isNotEmptyArray,
-  isNotEmptyObject,
-  findTargetBy_id,
-} from "tools/utils";
+import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
 import "component/editer/Editer.css";
 
@@ -50,13 +46,13 @@ export default function Editer({
 
   // set targetContest when contestList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(contestList)) {
+    if (isEmptyArray(contestList)) {
       setTargetContest({});
       return;
     }
 
     let contest = findTargetBy_id(targetContest._id, contestList);
-    if (!isNotEmptyObject(contest)) {
+    if (isEmptyObject(contest)) {
       setTargetContest(contestList[contestList.length - 1]);
       return;
     }
@@ -67,7 +63,7 @@ export default function Editer({
   useEffect(() => {
     let participantList: Partial<ParticipantType>[] =
       targetContest.participantList ?? [];
-    if (!isNotEmptyArray(participantList)) {
+    if (isEmptyArray(participantList)) {
       setParticipantList([]);
       return;
     }
@@ -79,13 +75,13 @@ export default function Editer({
 
   // set targetParticipant when participantList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(participantList)) {
+    if (isEmptyArray(participantList)) {
       setTargetParticipant({});
       return;
     }
 
     let participant = findTargetBy_id(targetParticipant._id, participantList);
-    if (!isNotEmptyObject(participant)) {
+    if (isEmptyObject(participant)) {
       setTargetParticipant(participantList[participantList.length - 1]);
       return;
     }
@@ -95,7 +91,7 @@ export default function Editer({
   // set SectorRecordList when targetParticipant is updated
   useEffect(() => {
     const sectorRecordList = targetParticipant.sectorRecordList ?? [];
-    if (!isNotEmptyArray(sectorRecordList)) {
+    if (isEmptyArray(sectorRecordList)) {
       setSectorRecordList([]);
       return;
     }
@@ -105,7 +101,7 @@ export default function Editer({
 
   // set targetSectorRecord when SectorRecordList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(sectorRecordList)) {
+    if (isEmptyArray(sectorRecordList)) {
       setTargetSectorRecord({});
       return;
     }
@@ -114,7 +110,7 @@ export default function Editer({
       targetSectorRecord._id,
       sectorRecordList
     );
-    if (!isNotEmptyObject(sectorRecord)) {
+    if (isEmptyObject(sectorRecord)) {
       setTargetSectorRecord(sectorRecordList[sectorRecordList.length - 1]);
       return;
     }
@@ -124,7 +120,7 @@ export default function Editer({
   // set driveRecordList when targetSectorRecord is updated
   useEffect(() => {
     const driveRecordList = targetSectorRecord.driveRecordList ?? [];
-    if (!isNotEmptyArray(driveRecordList)) {
+    if (isEmptyArray(driveRecordList)) {
       setDriveRecordList([]);
       return;
     }
@@ -134,13 +130,13 @@ export default function Editer({
 
   // set targetDriveRecord when driveRecordList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(driveRecordList)) {
+    if (isEmptyArray(driveRecordList)) {
       setTargetDriveRecord({});
       return;
     }
 
     let driveRecord = findTargetBy_id(targetDriveRecord._id, driveRecordList);
-    if (!isNotEmptyObject(driveRecord)) {
+    if (isEmptyObject(driveRecord)) {
       setTargetDriveRecord(driveRecordList[driveRecordList.length - 1]);
       return;
     }

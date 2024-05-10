@@ -1,20 +1,28 @@
-export function isNotEmptyObject(target: object) {
+export function isEmptyObject(target: object) {
   try {
-    if (typeof target === "object" && JSON.stringify(target) !== "{}") {
+    if (!(typeof target === "object")) {
+      return true;
+    }
+    if (JSON.stringify(target) === "{}") {
       return true;
     }
     return false;
   } catch (e) {
-    return false;
+    return true;
   }
 }
 
-export function isNotEmptyArray(src: any): boolean {
+export function isEmptyArray(src: any): boolean {
   try {
-    if (Array.isArray(src) && src.length > 0) return true;
+    if (!Array.isArray(src)) {
+      return true;
+    }
+    if (src.length === 0) {
+      return true;
+    }
     return false;
   } catch (e) {
-    return false;
+    return true;
   }
 }
 

@@ -24,15 +24,12 @@ export default function UpdateRemainingContestTimeBtn({
       className={className}
       onClick={() => {
         const func = async () => {
-          await sectorRecordController.patchSectorRecord(
-            targetSectorRecord._id,
-            {
-              _id: targetSectorRecord._id,
-              hostId: targetSectorRecord.hostId,
-              remainingContestTime:
-                remainingContestTime < 0 ? 0 : remainingContestTime,
-            }
-          );
+          await sectorRecordController.patch(targetSectorRecord._id, {
+            _id: targetSectorRecord._id,
+            hostId: targetSectorRecord.hostId,
+            remainingContestTime:
+              remainingContestTime < 0 ? 0 : remainingContestTime,
+          });
           setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

@@ -16,9 +16,7 @@ export default function DeleteSectorRecordBtn({
       className="btn btn-danger"
       onClick={() => {
         const func = async () => {
-          await sectorRecordController.deleteSectorRecord(
-            targetSectorRecord._id
-          );
+          await sectorRecordController.delete(targetSectorRecord._id);
           setSectorRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

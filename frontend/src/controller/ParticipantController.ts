@@ -10,7 +10,7 @@ export class ParticipantController {
     return instance;
   }
 
-  async getEveryParticipant(hostId: string): Promise<ParticipantType[]> {
+  async getEvery(hostId: string): Promise<ParticipantType[]> {
     try {
       const response = await fetch(`${uri}/participant/?contest_Id=${hostId}`, {
         method: "GET",
@@ -28,7 +28,7 @@ export class ParticipantController {
     }
   }
 
-  async getParticipant(_id: string): Promise<ParticipantType> {
+  async get(_id: string): Promise<ParticipantType> {
     try {
       const response = await fetch(`${uri}/participant/${_id}`, {
         method: "GET",
@@ -44,7 +44,7 @@ export class ParticipantController {
     }
   }
 
-  async postParticipant(
+  async post(
     srcData: Partial<ParticipantType>
   ): Promise<Partial<ParticipantType>> {
     try {
@@ -67,7 +67,7 @@ export class ParticipantController {
     }
   }
 
-  async patchParticipant(
+  async patch(
     _id: string,
     srcData: Partial<ParticipantType>
   ): Promise<Partial<ParticipantType>> {
@@ -91,7 +91,7 @@ export class ParticipantController {
     }
   }
 
-  async putParticipant(
+  async put(
     _id: string,
     srcData: Partial<ParticipantType>
   ): Promise<Partial<ParticipantType>> {
@@ -115,7 +115,7 @@ export class ParticipantController {
     }
   }
 
-  async deleteParticipant(_id: string): Promise<Partial<ParticipantType>> {
+  async delete(_id: string): Promise<Partial<ParticipantType>> {
     try {
       const response = await fetch(`${uri}/participant/${_id}`, {
         method: "DELETE",

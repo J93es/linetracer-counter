@@ -52,7 +52,7 @@ export default function RetouchSectorRecord({
   const onSubmit = (data: Partial<SectorRecordType>) => {
     const func = async () => {
       data._id = targetSectorRecord._id;
-      await sectorRecordController.putSectorRecord(targetSectorRecord._id, {
+      await sectorRecordController.put(targetSectorRecord._id, {
         _id: targetSectorRecord._id,
         ...data,
       });

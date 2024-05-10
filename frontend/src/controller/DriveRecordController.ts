@@ -10,7 +10,7 @@ export class DriveRecordController {
     return instance;
   }
 
-  async getDriveRecord(_id: string): Promise<DriveRecordType> {
+  async get(_id: string): Promise<DriveRecordType> {
     try {
       const response = await fetch(`${uri}/drive-record/${_id}`, {
         method: "GET",
@@ -26,7 +26,7 @@ export class DriveRecordController {
     }
   }
 
-  async postDriveRecord(
+  async post(
     hostId: string,
     srcData: Partial<DriveRecordType>
   ): Promise<Partial<DriveRecordType>> {
@@ -53,7 +53,7 @@ export class DriveRecordController {
     }
   }
 
-  async patchDriveRecord(
+  async patch(
     hostId: string,
     _id: string,
     srcData: Partial<DriveRecordType>
@@ -81,7 +81,7 @@ export class DriveRecordController {
     }
   }
 
-  async putDriveRecord(
+  async put(
     hostId: string,
     _id: string,
     srcData: Partial<DriveRecordType>
@@ -109,10 +109,7 @@ export class DriveRecordController {
     }
   }
 
-  async deleteDriveRecord(
-    hostId: string,
-    _id: string
-  ): Promise<Partial<DriveRecordType>> {
+  async delete(hostId: string, _id: string): Promise<Partial<DriveRecordType>> {
     try {
       const response = await fetch(
         `${uri}/drive-record/${_id}/?sector_record_id=${hostId}`,

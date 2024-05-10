@@ -10,7 +10,7 @@ import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
 import { DriveRecordType } from "model/DriveRecord";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 import { driveRecordEditMenuEnum } from "model/enums/index";
 
@@ -35,7 +35,7 @@ export default function DriveRecordEditer({
   const emptyDriveRecordListMessage = <p>주행 기록이 없습니다.</p>;
   const emptyDriveRecordMessage = <p>주행 기록을 선택하세요.</p>;
 
-  if (!isNotEmptyObject(targetSectorRecord)) {
+  if (isEmptyObject(targetSectorRecord)) {
     editMenuHtml = emptySectorRecordMessage;
   } else if (editMenu === "주행 기록 추가") {
     editMenuHtml = (
@@ -45,9 +45,9 @@ export default function DriveRecordEditer({
         targetSectorRecordId={targetSectorRecord._id}
       />
     );
-  } else if (!isNotEmptyArray(driveRecordList)) {
+  } else if (isEmptyArray(driveRecordList)) {
     editMenuHtml = emptyDriveRecordListMessage;
-  } else if (!isNotEmptyObject(targetDriveRecord)) {
+  } else if (isEmptyObject(targetDriveRecord)) {
     editMenuHtml = emptyDriveRecordMessage;
   } else if (editMenu === "주행 기록 수정") {
     editMenuHtml = (

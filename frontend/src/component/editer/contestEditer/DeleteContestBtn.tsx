@@ -16,7 +16,7 @@ export default function DeleteContestBtn({
       className="btn btn-danger"
       onClick={() => {
         const func = async () => {
-          await contestController.deleteContest(targetContest._id);
+          await contestController.delete(targetContest._id);
           setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

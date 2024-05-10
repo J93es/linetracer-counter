@@ -11,7 +11,7 @@ import Accordion from "component/utils/Accordion";
 import { ContestType } from "model/Contest";
 import { ParticipantType } from "model/Participant";
 import { participantEditMenuEnum } from "model/enums/index";
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function ParticipantEditer({
   setParticipantUpdateSignal,
@@ -33,7 +33,7 @@ export default function ParticipantEditer({
   const emptyParticipantListMessage = <p>참가자가 없습니다.</p>;
   const emptyParticipantMessage = <p>참가자를 선택하세요.</p>;
 
-  if (!isNotEmptyObject(targetContest)) {
+  if (isEmptyObject(targetContest)) {
     editMenuHtml = emptyContestMessage;
   } else if (editMenu === "참가자 추가") {
     editMenuHtml = (
@@ -43,9 +43,9 @@ export default function ParticipantEditer({
         targetContestId={targetContest._id}
       />
     );
-  } else if (!isNotEmptyArray(participantList)) {
+  } else if (isEmptyArray(participantList)) {
     editMenuHtml = emptyParticipantListMessage;
-  } else if (!isNotEmptyObject(targetParticipant)) {
+  } else if (isEmptyObject(targetParticipant)) {
     editMenuHtml = emptyParticipantMessage;
   } else if (editMenu === "참가자 수정") {
     editMenuHtml = (

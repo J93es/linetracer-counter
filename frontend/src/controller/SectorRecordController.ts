@@ -10,7 +10,7 @@ export class SectorRecordController {
     return instance;
   }
 
-  async getEverySectorRecord(sectorId: string): Promise<SectorRecordType[]> {
+  async getEvery(sectorId: string): Promise<SectorRecordType[]> {
     try {
       const response = await fetch(
         `${uri}/sector-record/?sector_Id=${sectorId}`,
@@ -31,7 +31,7 @@ export class SectorRecordController {
     }
   }
 
-  async getSectorRecord(_id: string): Promise<SectorRecordType> {
+  async get(_id: string): Promise<SectorRecordType> {
     try {
       const response = await fetch(`${uri}/sector-record/${_id}`, {
         method: "GET",
@@ -47,7 +47,7 @@ export class SectorRecordController {
     }
   }
 
-  async postSectorRecord(
+  async post(
     srcData: Partial<SectorRecordType>
   ): Promise<Partial<SectorRecordType>> {
     try {
@@ -70,7 +70,7 @@ export class SectorRecordController {
     }
   }
 
-  async patchSectorRecord(
+  async patch(
     _id: string,
     srcData: Partial<SectorRecordType>
   ): Promise<Partial<SectorRecordType>> {
@@ -94,7 +94,7 @@ export class SectorRecordController {
     }
   }
 
-  async putSectorRecord(
+  async put(
     _id: string,
     srcData: Partial<SectorRecordType>
   ): Promise<Partial<SectorRecordType>> {
@@ -118,7 +118,7 @@ export class SectorRecordController {
     }
   }
 
-  async deleteSectorRecord(_id: string): Promise<Partial<SectorRecordType>> {
+  async delete(_id: string): Promise<Partial<SectorRecordType>> {
     try {
       const response = await fetch(`${uri}/sector-record/${_id}`, {
         method: "DELETE",

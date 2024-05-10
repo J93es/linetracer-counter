@@ -39,7 +39,7 @@ export default function RetouchDriveRecord({
 
   const onSubmit = (data: Partial<DriveRecordType>) => {
     const func = async () => {
-      await driveRecordController.putDriveRecord(
+      await driveRecordController.put(
         targetSectorRecordId,
         targetDriveRecord._id,
         {

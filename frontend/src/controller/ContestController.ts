@@ -10,7 +10,7 @@ export class ContestController {
     return instance;
   }
 
-  async getEveryContest(): Promise<any> {
+  async getEvery(): Promise<any> {
     try {
       const response = await fetch(`${uri}/contest`, {
         method: "GET",
@@ -26,7 +26,7 @@ export class ContestController {
     }
   }
 
-  async getContest(id: string): Promise<any> {
+  async get(id: string): Promise<any> {
     try {
       const response = await fetch(`${uri}/Contest/${id}`, {
         method: "GET",
@@ -42,9 +42,7 @@ export class ContestController {
     }
   }
 
-  async postContest(
-    srcData: Partial<ContestType>
-  ): Promise<Partial<ContestType>> {
+  async post(srcData: Partial<ContestType>): Promise<Partial<ContestType>> {
     try {
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/Contest`, {
@@ -65,7 +63,7 @@ export class ContestController {
     }
   }
 
-  async patchContest(
+  async patch(
     _id: string,
     srcData: Partial<ContestType>
   ): Promise<Partial<ContestType>> {
@@ -89,7 +87,7 @@ export class ContestController {
     }
   }
 
-  async putContest(
+  async put(
     _id: string,
     srcData: Partial<ContestType>
   ): Promise<Partial<Contest>> {
@@ -113,7 +111,7 @@ export class ContestController {
     }
   }
 
-  async deleteContest(_id: string): Promise<Partial<Contest>> {
+  async delete(_id: string): Promise<Partial<Contest>> {
     try {
       const response = await fetch(`${uri}/Contest/${_id}`, {
         method: "DELETE",

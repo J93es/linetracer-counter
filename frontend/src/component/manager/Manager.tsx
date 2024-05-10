@@ -14,11 +14,7 @@ import { extractParticipantList } from "tools/extractParticipantList";
 
 import { timerStopValue } from "model/Contest";
 
-import {
-  isNotEmptyArray,
-  isNotEmptyObject,
-  findTargetBy_id,
-} from "tools/utils";
+import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
 import "component/manager/Manager.css";
 
@@ -57,13 +53,13 @@ export default function Manager({
 
   // set targetContest when contestList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(contestList)) {
+    if (isEmptyArray(contestList)) {
       setTargetContest({});
       return;
     }
 
     let contest = findTargetBy_id(targetContest._id, contestList);
-    if (!isNotEmptyObject(contest)) {
+    if (isEmptyObject(contest)) {
       setTargetContest(contestList[contestList.length - 1]);
       return;
     }
@@ -79,7 +75,7 @@ export default function Manager({
   useEffect(() => {
     let participantList: Partial<ParticipantType>[] =
       targetContest.participantList || [];
-    if (!isNotEmptyArray(participantList)) {
+    if (isEmptyArray(participantList)) {
       setParticipantList([]);
       return;
     }
@@ -95,13 +91,13 @@ export default function Manager({
 
   // set targetParticipant when participantList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(participantList)) {
+    if (isEmptyArray(participantList)) {
       setTargetParticipant({});
       return;
     }
 
     let participant = findTargetBy_id(targetParticipant._id, participantList);
-    if (!isNotEmptyObject(participant)) {
+    if (isEmptyObject(participant)) {
       setTargetParticipant(participantList[participantList.length - 1]);
       return;
     }
@@ -112,7 +108,7 @@ export default function Manager({
   // set SectorRecordList when targetParticipant is updated
   useEffect(() => {
     const sectorRecordList = targetParticipant.sectorRecordList || [];
-    if (!isNotEmptyArray(sectorRecordList)) {
+    if (isEmptyArray(sectorRecordList)) {
       setSectorRecordList([]);
       return;
     }
@@ -122,7 +118,7 @@ export default function Manager({
 
   // set targetSectorRecord when SectorRecordList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(sectorRecordList)) {
+    if (isEmptyArray(sectorRecordList)) {
       setTargetSectorRecord({});
       return;
     }
@@ -131,7 +127,7 @@ export default function Manager({
       targetSectorRecord._id,
       sectorRecordList
     );
-    if (!isNotEmptyObject(sectorRecord)) {
+    if (isEmptyObject(sectorRecord)) {
       setTargetSectorRecord(sectorRecordList[sectorRecordList.length - 1]);
       return;
     }
@@ -141,7 +137,7 @@ export default function Manager({
   // set driveRecordList when targetSectorRecord is updated
   useEffect(() => {
     const driveRecordList = targetSectorRecord.driveRecordList || [];
-    if (!isNotEmptyArray(driveRecordList)) {
+    if (isEmptyArray(driveRecordList)) {
       setDriveRecordList([]);
       return;
     }
@@ -151,13 +147,13 @@ export default function Manager({
 
   // set targetDriveRecord when driveRecordList is updated
   useEffect(() => {
-    if (!isNotEmptyArray(driveRecordList)) {
+    if (isEmptyArray(driveRecordList)) {
       setTargetDriveRecord({});
       return;
     }
 
     let driveRecord = findTargetBy_id(targetDriveRecord._id, driveRecordList);
-    if (!isNotEmptyObject(driveRecord)) {
+    if (isEmptyObject(driveRecord)) {
       setTargetDriveRecord(driveRecordList[driveRecordList.length - 1]);
       return;
     }

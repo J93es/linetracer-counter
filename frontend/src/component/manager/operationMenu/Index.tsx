@@ -9,7 +9,7 @@ import "component/manager/operationMenu/Index.css";
 import { ContestType } from "model/Contest";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { isNotEmptyObject } from "tools/utils";
+import { isEmptyObject } from "tools/utils";
 
 export default function OperationMenu({
   setContestUpdateSignal,
@@ -23,7 +23,7 @@ export default function OperationMenu({
   isContestTimerRunning: boolean;
 }) {
   let contestTimerBtn_html = null;
-  if (isNotEmptyObject(targetSectorRecord)) {
+  if (!isEmptyObject(targetSectorRecord)) {
     contestTimerBtn_html = (
       <ContestTimerBtn
         setContestUpdateSignal={setContestUpdateSignal}
@@ -35,7 +35,7 @@ export default function OperationMenu({
   }
 
   let suspendOrderBtn_html = null;
-  if (isNotEmptyObject(targetSectorRecord) && !isContestTimerRunning) {
+  if (!isEmptyObject(targetSectorRecord) && !isContestTimerRunning) {
     suspendOrderBtn_html = (
       <SuspendOrder
         setContestUpdateSignal={setContestUpdateSignal}
@@ -45,7 +45,7 @@ export default function OperationMenu({
   }
 
   let manageRemainingContestTimeBtn_html = null;
-  if (isNotEmptyObject(targetSectorRecord)) {
+  if (!isEmptyObject(targetSectorRecord)) {
     manageRemainingContestTimeBtn_html = (
       <ManageRemainingContestTime
         setContestUpdateSignal={setContestUpdateSignal}

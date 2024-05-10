@@ -43,7 +43,7 @@ export default function PostSectorRecord({
   const onSubmit = (data: Partial<SectorRecordType>) => {
     const func = async () => {
       data.hostId = targetParticipantId;
-      await sectorRecordController.postSectorRecord(data);
+      await sectorRecordController.post(data);
       setSectorRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

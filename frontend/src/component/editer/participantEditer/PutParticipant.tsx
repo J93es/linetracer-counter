@@ -35,7 +35,7 @@ export default function PutParticipant({
   const onSubmit = (data: Partial<ParticipantType>) => {
     const func = async () => {
       data._id = targetParticipant._id;
-      await participantController.putParticipant(targetParticipant._id, {
+      await participantController.put(targetParticipant._id, {
         _id: targetParticipant._id,
         ...data,
       });

@@ -9,7 +9,7 @@ import Accordion from "component/utils/Accordion";
 
 import { ContestType } from "model/Contest";
 import { contestEditMenuEnum } from "model/enums/index";
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyObject } from "tools/utils";
 
 export default function ContestEditer({
   setContestUpdateSignal,
@@ -35,7 +35,7 @@ export default function ContestEditer({
         setContestUpdateSignal={setContestUpdateSignal}
       />
     );
-  } else if (!isNotEmptyObject(targetContest)) {
+  } else if (isEmptyObject(targetContest)) {
     editMenuHtml = emptyContestMessage;
   } else if (editMenu === "대회 수정") {
     editMenuHtml = (

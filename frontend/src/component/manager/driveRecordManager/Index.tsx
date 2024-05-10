@@ -6,7 +6,7 @@ import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
 import { DriveRecordType } from "model/DriveRecord";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function DriveRecordManager({
   setDriveRecordUpdateSignal,
@@ -26,9 +26,9 @@ export default function DriveRecordManager({
   const emptyDriveRecordListMessage = <p>주행 기록이 없습니다.</p>;
   const emptyDriveRecordMessage = <p>주행 기록을 선택하세요.</p>;
 
-  if (!isNotEmptyArray(driveRecordList)) {
+  if (isEmptyArray(driveRecordList)) {
     retouchHtml = emptyDriveRecordListMessage;
-  } else if (!isNotEmptyObject(targetDriveRecord)) {
+  } else if (isEmptyObject(targetDriveRecord)) {
     retouchHtml = emptyDriveRecordMessage;
   } else {
     retouchHtml = (

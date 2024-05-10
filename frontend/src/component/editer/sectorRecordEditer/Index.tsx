@@ -10,7 +10,7 @@ import Accordion from "component/utils/Accordion";
 import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 import { sectorRecordEditMenuEnum } from "model/enums/index";
-import { isNotEmptyArray, isNotEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function SectorRecordEditer({
   setSectorRecordUpdateSignal,
@@ -32,7 +32,7 @@ export default function SectorRecordEditer({
   const emptySectorRecordListMessage = <p>부문 기록이 없습니다.</p>;
   const emptySectorRecordMessage = <p>부문 기록을 선택하세요.</p>;
 
-  if (!isNotEmptyObject(targetParticipant)) {
+  if (isEmptyObject(targetParticipant)) {
     editMenuHtml = emptyParticipantMessage;
   } else if (editMenu === "부문 기록 추가") {
     editMenuHtml = (
@@ -42,9 +42,9 @@ export default function SectorRecordEditer({
         targetParticipantId={targetParticipant._id}
       />
     );
-  } else if (!isNotEmptyArray(sectorRecordList)) {
+  } else if (isEmptyArray(sectorRecordList)) {
     editMenuHtml = emptySectorRecordListMessage;
-  } else if (!isNotEmptyObject(targetSectorRecord)) {
+  } else if (isEmptyObject(targetSectorRecord)) {
     editMenuHtml = emptySectorRecordMessage;
   } else if (editMenu === "부문 기록 수정") {
     editMenuHtml = (
