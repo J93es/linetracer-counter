@@ -49,7 +49,7 @@ export default function PostContest({
         placeholder="ex) 2024"
         label="경연 id"
         register={register}
-        errorMessage={errors.id?.message || ""}
+        errorMessage={errors.id?.message ?? ""}
       />
 
       <TextForm
@@ -57,7 +57,7 @@ export default function PostContest({
         placeholder="ex) 제25회 전국 라인트레이서 경연대회"
         label="대회 이름"
         register={register}
-        errorMessage={errors.title?.message || ""}
+        errorMessage={errors.title?.message ?? ""}
       />
 
       <SelectForm
@@ -65,7 +65,7 @@ export default function PostContest({
         label="현재 진행중인 부문"
         selectList={sectorEnum}
         register={register}
-        errorMessage={errors.curContestingSection?.message || ""}
+        errorMessage={errors.curContestingSection?.message ?? ""}
       />
 
       <SubmitBtn />

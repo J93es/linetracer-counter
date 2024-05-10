@@ -52,7 +52,7 @@ export default function PostDriveRecord({
         label="기록 타입"
         selectList={driveRecord_typeEnum}
         register={register}
-        errorMessage={errors.type?.message || ""}
+        errorMessage={errors.type?.message ?? ""}
       />
 
       <NumberForm
@@ -60,7 +60,7 @@ export default function PostDriveRecord({
         placeholder="ex) 0(ms)"
         label="주행 시간(ms)"
         register={register}
-        errorMessage={errors.recordTime?.message || ""}
+        errorMessage={errors.recordTime?.message ?? ""}
       />
 
       <SubmitBtn />

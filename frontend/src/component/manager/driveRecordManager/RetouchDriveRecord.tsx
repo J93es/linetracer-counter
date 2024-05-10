@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DriveRecordType } from "model/DriveRecord";
 import { DriveRecordSchema } from "model/fetch/DriveRecordSchema";
 
-import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
@@ -34,13 +33,12 @@ export default function RetouchDriveRecord({
   });
 
   useEffect(() => {
-    setValue("type", targetDriveRecord.type || driveRecord_typeEnum[0]);
-    setValue("recordTime", targetDriveRecord.recordTime || 0);
+    setValue("type", targetDriveRecord.type ?? driveRecord_typeEnum[0]);
+    setValue("recordTime", targetDriveRecord.recordTime ?? 0);
   }, [setValue, targetDriveRecord]);
 
   const onSubmit = (data: Partial<DriveRecordType>) => {
     const func = async () => {
-      console.log(data);
       await driveRecordController.putDriveRecord(
         targetSectorRecordId,
         targetDriveRecord._id,
@@ -56,20 +54,13 @@ export default function RetouchDriveRecord({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h4>주행 기록 수정</h4>
       <SelectForm
         id="type"
         label="기록 타입"
         selectList={driveRecord_typeEnum}
         register={register}
-        errorMessage={errors.type?.message || ""}
-      />
-
-      <NumberForm
-        id="recordTime"
-        placeholder="ex) 0(ms)"
-        label="주행 시간(ms)"
-        register={register}
-        errorMessage={errors.recordTime?.message || ""}
+        errorMessage={errors.type?.message ?? ""}
       />
 
       <SubmitBtn />

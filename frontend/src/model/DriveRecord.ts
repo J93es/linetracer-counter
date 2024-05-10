@@ -19,5 +19,5 @@ export default class DriveRecord {
 export const driveRecordTamplate: DriveRecordType = new DriveRecord({
   _id: "",
   type: "",
-  recordTime: 300000,
+  recordTime: 0,
 });

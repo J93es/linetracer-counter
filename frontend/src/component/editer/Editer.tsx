@@ -66,7 +66,7 @@ export default function Editer({
   // set participantList when targetContest is updated
   useEffect(() => {
     let participantList: Partial<ParticipantType>[] =
-      targetContest.participantList || [];
+      targetContest.participantList ?? [];
     if (!isNotEmptyArray(participantList)) {
       setParticipantList([]);
       return;
@@ -94,7 +94,7 @@ export default function Editer({
 
   // set SectorRecordList when targetParticipant is updated
   useEffect(() => {
-    const sectorRecordList = targetParticipant.sectorRecordList || [];
+    const sectorRecordList = targetParticipant.sectorRecordList ?? [];
     if (!isNotEmptyArray(sectorRecordList)) {
       setSectorRecordList([]);
       return;
@@ -123,7 +123,7 @@ export default function Editer({
 
   // set driveRecordList when targetSectorRecord is updated
   useEffect(() => {
-    const driveRecordList = targetSectorRecord.driveRecordList || [];
+    const driveRecordList = targetSectorRecord.driveRecordList ?? [];
     if (!isNotEmptyArray(driveRecordList)) {
       setDriveRecordList([]);
       return;

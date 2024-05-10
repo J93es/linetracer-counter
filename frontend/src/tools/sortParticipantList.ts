@@ -1,6 +1,8 @@
 import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 
+import { defaultOrder } from "model/SectorRecord";
+
 function sortSectorRecordListByOrder(
   targetSectorRecordList: Partial<SectorRecordType>[]
 ): Partial<SectorRecordType>[] {
@@ -43,7 +45,7 @@ export function sortParticipantListByOrder(
 
   for (let i = 0; i < list.length; i++) {
     let sectorRecordList: Partial<SectorRecordType>[] =
-      list[i]?.sectorRecordList || [];
+      list[i]?.sectorRecordList ?? [];
 
     sectorRecordList = sortSectorRecordListByOrder(sectorRecordList);
 
@@ -56,11 +58,11 @@ export function sortParticipantListByOrder(
     i: number
   ) {
     const sectorRecordList: Partial<SectorRecordType>[] =
-      targetParticipant?.sectorRecordList || [];
+      targetParticipant?.sectorRecordList ?? [];
 
-    let order = 501;
+    let order = defaultOrder;
     if (sectorRecordList.length > 0) {
-      order = sectorRecordList[0].order || 501;
+      order = sectorRecordList[0].order ?? defaultOrder;
     }
 
     return {

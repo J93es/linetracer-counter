@@ -39,6 +39,8 @@ export default class Contest {
   }
 }
 
+export const timerStopValue = -1;
+
 export const contestTamplate: ContestType = new Contest({
   _id: "",
   id: "",
@@ -46,7 +48,7 @@ export const contestTamplate: ContestType = new Contest({
 
   curContestingSection: "",
 
-  contestTimerStartTime: 0,
-  driveStartTime: 0,
+  contestTimerStartTime: timerStopValue,
+  driveStartTime: timerStopValue,
   participantList: [participantTamplate],
 });

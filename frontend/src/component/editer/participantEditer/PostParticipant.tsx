@@ -51,7 +51,7 @@ export default function PostParticipant({
         placeholder="ex) 정민석"
         label="이름"
         register={register}
-        errorMessage={errors.name?.message || ""}
+        errorMessage={errors.name?.message ?? ""}
       />
 
       <TextForm
@@ -59,7 +59,7 @@ export default function PostParticipant({
         placeholder="ex) 서울시립대학교 ZETIN"
         label="소속"
         register={register}
-        errorMessage={errors.association?.message || ""}
+        errorMessage={errors.association?.message ?? ""}
       />
 
       <TextForm
@@ -67,7 +67,7 @@ export default function PostParticipant({
         placeholder="ex) 이제 그만 죽여줘..."
         label="하고 싶은 말"
         register={register}
-        errorMessage={errors.speech?.message || ""}
+        errorMessage={errors.speech?.message ?? ""}
       />
 
       <SubmitBtn />

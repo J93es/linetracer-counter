@@ -11,6 +11,8 @@ import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
+import { defaultOrder, defaultRemainingContestTime } from "model/SectorRecord";
+
 import { sectorRecord_sectorStateEnum, sectorEnum } from "model/enums";
 
 const sectorRecordController = new SectorRecordController();
@@ -34,16 +36,16 @@ export default function RetouchSectorRecord({
   useEffect(() => {
     setValue(
       "contestSector",
-      targetSectorRecord.contestSector || sectorEnum[0]
+      targetSectorRecord.contestSector ?? sectorEnum[0]
     );
-    setValue("order", targetSectorRecord.order || 501);
+    setValue("order", targetSectorRecord.order ?? defaultOrder);
     setValue(
       "remainingContestTime",
-      targetSectorRecord.remainingContestTime || 300000
+      targetSectorRecord.remainingContestTime ?? defaultRemainingContestTime
     );
     setValue(
       "sectorState",
-      targetSectorRecord.sectorState || sectorRecord_sectorStateEnum[0]
+      targetSectorRecord.sectorState ?? sectorRecord_sectorStateEnum[0]
     );
   }, [setValue, targetSectorRecord]);
 
@@ -61,12 +63,13 @@ export default function RetouchSectorRecord({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h4>부문 기록 수정</h4>
       <NumberForm
         id="order"
         placeholder="ex) 1"
-        label="부문별 경연 순서"
+        label="경연 순서"
         register={register}
-        errorMessage={errors.order?.message || ""}
+        errorMessage={errors.order?.message ?? ""}
       />
 
       <NumberForm
@@ -74,15 +77,15 @@ export default function RetouchSectorRecord({
         placeholder="ex) 300000(ms)"
         label="남은 경연 시간(ms)"
         register={register}
-        errorMessage={errors.remainingContestTime?.message || ""}
+        errorMessage={errors.remainingContestTime?.message ?? ""}
       />
 
       <SelectForm
         id="sectorState"
-        label="부문별 경연 상태"
+        label="경연 상태"
         selectList={sectorRecord_sectorStateEnum}
         register={register}
-        errorMessage={errors.sectorState?.message || ""}
+        errorMessage={errors.sectorState?.message ?? ""}
       />
 
       <SubmitBtn />

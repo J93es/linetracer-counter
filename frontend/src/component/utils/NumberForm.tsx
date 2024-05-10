@@ -16,7 +16,9 @@ export default function NumberForm({
   return (
     <div className="number-form">
       <div className="form-group">
-        <label htmlFor={`id`}>{label}</label>
+        <label htmlFor={`id`}>
+          <h5>{label}</h5>
+        </label>
         <input
           id={id}
           type="number"

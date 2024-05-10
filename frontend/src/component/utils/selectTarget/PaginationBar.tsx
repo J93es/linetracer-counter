@@ -24,15 +24,11 @@ export default function PaginationBar({
   );
 
   const previousClick = () => {
-    setPageIndex(
-      currentPageIndex - 1 < pageIndexMin ? pageIndexMin : currentPageIndex - 1
-    );
+    setPageIndex(pageIndexMin);
   };
 
   const nextClick = () => {
-    setPageIndex(
-      currentPageIndex + 1 > pageIndexMax ? pageIndexMax : currentPageIndex + 1
-    );
+    setPageIndex(pageIndexMax);
   };
 
   useEffect(() => {
@@ -45,7 +41,7 @@ export default function PaginationBar({
       <ul className="pagination justify-content-center">
         <li className="page-item">
           <button className="page-link" onClick={previousClick}>
-            Previous
+            <span aria-hidden="true">&laquo;</span>
           </button>
         </li>
 
@@ -53,7 +49,7 @@ export default function PaginationBar({
 
         <li className="page-item">
           <button className="page-link" onClick={nextClick}>
-            Next
+            <span aria-hidden="true">&raquo;</span>
           </button>
         </li>
       </ul>

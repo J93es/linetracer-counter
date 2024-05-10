@@ -11,6 +11,7 @@ import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
 import { sectorRecord_sectorStateEnum, sectorEnum } from "model/enums";
+import { defaultRemainingContestTime, defaultOrder } from "model/SectorRecord";
 
 const sectorRecordController = new SectorRecordController();
 
@@ -34,8 +35,8 @@ export default function PostSectorRecord({
 
   useEffect(() => {
     setValue("contestSector", sectorEnum[0]);
-    setValue("order", 501);
-    setValue("remainingContestTime", 300000);
+    setValue("order", defaultOrder);
+    setValue("remainingContestTime", defaultRemainingContestTime);
     setValue("sectorState", sectorRecord_sectorStateEnum[0]);
   }, [setValue, targetSectorRecord]);
 
@@ -55,7 +56,7 @@ export default function PostSectorRecord({
         label="부문"
         selectList={sectorEnum}
         register={register}
-        errorMessage={errors.contestSector?.message || ""}
+        errorMessage={errors.contestSector?.message ?? ""}
       />
 
       <NumberForm
@@ -63,7 +64,7 @@ export default function PostSectorRecord({
         placeholder="ex) 1"
         label="부문별 경연 순서"
         register={register}
-        errorMessage={errors.order?.message || ""}
+        errorMessage={errors.order?.message ?? ""}
       />
 
       <NumberForm
@@ -71,7 +72,7 @@ export default function PostSectorRecord({
         placeholder="ex) 300000(ms)"
         label="남은 경연 시간(ms)"
         register={register}
-        errorMessage={errors.remainingContestTime?.message || ""}
+        errorMessage={errors.remainingContestTime?.message ?? ""}
       />
 
       <SelectForm
@@ -79,7 +80,7 @@ export default function PostSectorRecord({
         label="부문별 경연 상태"
         selectList={sectorRecord_sectorStateEnum}
         register={register}
-        errorMessage={errors.sectorState?.message || ""}
+        errorMessage={errors.sectorState?.message ?? ""}
       />
 
       <SubmitBtn />

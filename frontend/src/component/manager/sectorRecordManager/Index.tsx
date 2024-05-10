@@ -25,7 +25,9 @@ export default function SectorRecordManager({
   const emptySectorRecordListMessage = <p>부문 기록이 없습니다.</p>;
   const emptySectorRecordMessage = <p>부문 기록을 선택하세요.</p>;
 
-  if (!isNotEmptyArray(sectorRecordList)) {
+  if (isContestTimerRunning) {
+    retouchHtml = <p>경연이 진행 중입니다.</p>;
+  } else if (!isNotEmptyArray(sectorRecordList)) {
     retouchHtml = emptySectorRecordListMessage;
   } else if (!isNotEmptyObject(targetSectorRecord)) {
     retouchHtml = emptySectorRecordMessage;
@@ -41,7 +43,7 @@ export default function SectorRecordManager({
   return (
     <Accordion
       id="sector-record-Manager"
-      title="현재 부문 기록 관리"
+      title="현재 부문 기록 선택/편집"
       body={
         <div className="sector-record-Manager">
           <SelectTarget

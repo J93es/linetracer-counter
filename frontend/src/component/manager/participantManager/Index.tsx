@@ -23,7 +23,7 @@ export default function ParticipantManager({
   const emptyParticipantListListMessage = (
     <p>
       현재 진행 부문에 속한 <br />
-      참가자가 없습니다
+      참가자가 없습니다.
     </p>
   );
   const emptyParticipantMessage = <p>참가자를 선택하세요.</p>;
@@ -36,7 +36,7 @@ export default function ParticipantManager({
   return (
     <Accordion
       id="participant-Manager"
-      title="현재 참가자 관리"
+      title="현재 참가자 선택"
       body={
         <div className="participant-Manager">
           <SelectTarget

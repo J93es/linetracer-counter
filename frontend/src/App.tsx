@@ -60,8 +60,8 @@ function App() {
           isContestTimerRunning={isContestTimerRunning}
           setIsContestTimerRunning={setIsContestTimerRunning}
         /> */}
-        <Editer setUpdateSignal={setUpdateSignal} contestList={contestList} />
         <Manager setUpdateSignal={setUpdateSignal} contestList={contestList} />
+        <Editer setUpdateSignal={setUpdateSignal} contestList={contestList} />
       </header>
     </div>
   );

@@ -36,12 +36,15 @@ export default class SectorRecord {
   }
 }
 
+export const defaultOrder = 501;
+export const defaultRemainingContestTime = 300000;
+
 export const SectorRecordTamplate: SectorRecordType = new SectorRecord({
   _id: "",
   hostId: "",
   contestSector: "",
-  order: 0,
-  remainingContestTime: 0,
+  order: defaultOrder,
+  remainingContestTime: defaultRemainingContestTime,
   sectorState: "ready",
   driveRecordList: [driveRecordTamplate],
 });

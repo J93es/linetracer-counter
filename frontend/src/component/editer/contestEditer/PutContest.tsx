@@ -28,11 +28,11 @@ export default function PutContest({
   } = useForm<ContestType>({ resolver: zodResolver(ContestSchema) });
 
   useEffect(() => {
-    setValue("id", targetContest.id || "");
-    setValue("title", targetContest.title || "");
+    setValue("id", targetContest.id ?? "");
+    setValue("title", targetContest.title ?? "");
     setValue(
       "curContestingSection",
-      targetContest.curContestingSection || sectorEnum[0]
+      targetContest.curContestingSection ?? sectorEnum[0]
     );
   }, [setValue, targetContest]);
 
@@ -54,7 +54,7 @@ export default function PutContest({
         placeholder="ex) 2024"
         label="경연 id"
         register={register}
-        errorMessage={errors.id?.message || ""}
+        errorMessage={errors.id?.message ?? ""}
       />
 
       <TextForm
@@ -62,7 +62,7 @@ export default function PutContest({
         placeholder="ex) 제25회 전국 라인트레이서 경연대회"
         label="대회 이름"
         register={register}
-        errorMessage={errors.title?.message || ""}
+        errorMessage={errors.title?.message ?? ""}
       />
 
       <SelectForm
@@ -70,7 +70,7 @@ export default function PutContest({
         label="현재 진행중인 부문"
         selectList={sectorEnum}
         register={register}
-        errorMessage={errors.curContestingSection?.message || ""}
+        errorMessage={errors.curContestingSection?.message ?? ""}
       />
 
       <SubmitBtn />

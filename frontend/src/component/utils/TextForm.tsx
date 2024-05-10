@@ -16,7 +16,9 @@ export default function TextForm({
   return (
     <div className="text-form">
       <div className="form-group">
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}>
+          <h5>{label}</h5>
+        </label>
         <input
           id={id}
           type="text"

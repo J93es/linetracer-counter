@@ -8,8 +8,11 @@ import ContestManager from "component/manager/contestManager/Index";
 import ParticipantManager from "component/manager/participantManager/Index";
 import SectorRecordManager from "component/manager/sectorRecordManager/Index";
 import DriveRecordManager from "component/manager/driveRecordManager/Index";
+import OperationMenu from "component/manager/operationMenu/Index";
 
 import { extractParticipantList } from "tools/extractParticipantList";
+
+import { timerStopValue } from "model/Contest";
 
 import {
   isNotEmptyArray,
@@ -63,6 +66,11 @@ export default function Manager({
     if (!isNotEmptyObject(contest)) {
       setTargetContest(contestList[contestList.length - 1]);
       return;
+    }
+    if (contest.contestTimerStartTime === timerStopValue) {
+      setIsContestTimerRunning(false);
+    } else {
+      setIsContestTimerRunning(true);
     }
     setTargetContest(contest);
   }, [contestList, targetContest._id]);
@@ -158,14 +166,22 @@ export default function Manager({
 
   return (
     <div className="manager">
-      <ContestManager
-        setContestUpdateSignal={setUpdateSignal}
-        contestList={contestList}
-        targetContest={targetContest}
-        setTargetContest={setTargetContest}
-        isContestTimerRunning={isContestTimerRunning}
-        setIsContestTimerRunning={setIsContestTimerRunning}
-      />
+      <div className="manager-col-1">
+        <ContestManager
+          setContestUpdateSignal={setUpdateSignal}
+          contestList={contestList}
+          targetContest={targetContest}
+          setTargetContest={setTargetContest}
+          isContestTimerRunning={isContestTimerRunning}
+        />
+
+        <OperationMenu
+          setContestUpdateSignal={setUpdateSignal}
+          targetContest={targetContest}
+          targetSectorRecord={targetSectorRecord}
+          isContestTimerRunning={isContestTimerRunning}
+        />
+      </div>
 
       <ParticipantManager
         setParticipantUpdateSignal={setUpdateSignal}

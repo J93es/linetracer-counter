@@ -31,7 +31,7 @@ function filterParticipantByCurSector(
 
     let sectorRecordList = extractSectorRecordListByCurSector(
       curSector,
-      participant.sectorRecordList || []
+      participant.sectorRecordList ?? []
     );
 
     if (sectorRecordList) {

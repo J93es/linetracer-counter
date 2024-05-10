@@ -43,7 +43,7 @@ export default function DriveRecordManager({
   return (
     <Accordion
       id="drive-record-Manager"
-      title="현재 주행 기록 관리"
+      title="현재 주행 기록 선택/편집"
       body={
         <div className="drive-record-Manager">
           <SelectTarget

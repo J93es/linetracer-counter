@@ -31,14 +31,14 @@ export default function PutParticipant({
   });
 
   useEffect(() => {
-    setValue("name", targetParticipant.robot?.name || "");
-    setValue("cpu", targetParticipant.robot?.cpu || "");
-    setValue("rom", targetParticipant.robot?.rom || "");
-    setValue("ram", targetParticipant.robot?.ram || "");
-    setValue("motorDriver", targetParticipant.robot?.motorDriver || "");
-    setValue("motor", targetParticipant.robot?.motor || "");
-    setValue("adc", targetParticipant.robot?.adc || "");
-    setValue("sensor", targetParticipant.robot?.sensor || "");
+    setValue("name", targetParticipant.robot?.name ?? "");
+    setValue("cpu", targetParticipant.robot?.cpu ?? "");
+    setValue("rom", targetParticipant.robot?.rom ?? "");
+    setValue("ram", targetParticipant.robot?.ram ?? "");
+    setValue("motorDriver", targetParticipant.robot?.motorDriver ?? "");
+    setValue("motor", targetParticipant.robot?.motor ?? "");
+    setValue("adc", targetParticipant.robot?.adc ?? "");
+    setValue("sensor", targetParticipant.robot?.sensor ?? "");
   }, [setValue, targetParticipant.robot]);
 
   const onSubmit = (data: Partial<RobotType>) => {
@@ -59,7 +59,7 @@ export default function PutParticipant({
         placeholder="ex) Sonyador and Sparta"
         label="이름"
         register={register}
-        errorMessage={errors.name?.message || ""}
+        errorMessage={errors.name?.message ?? ""}
       />
 
       <TextForm
@@ -67,7 +67,7 @@ export default function PutParticipant({
         placeholder="ex) STM32F411RET6"
         label="cpu"
         register={register}
-        errorMessage={errors.cpu?.message || ""}
+        errorMessage={errors.cpu?.message ?? ""}
       />
 
       <TextForm
@@ -75,7 +75,7 @@ export default function PutParticipant({
         placeholder="ex) built-in"
         label="rom"
         register={register}
-        errorMessage={errors.rom?.message || ""}
+        errorMessage={errors.rom?.message ?? ""}
       />
 
       <TextForm
@@ -83,7 +83,7 @@ export default function PutParticipant({
         placeholder="ex) built-in"
         label="ram"
         register={register}
-        errorMessage={errors.ram?.message || ""}
+        errorMessage={errors.ram?.message ?? ""}
       />
 
       <TextForm
@@ -91,7 +91,7 @@ export default function PutParticipant({
         placeholder="ex) SLA7026M"
         label="motorDriver"
         register={register}
-        errorMessage={errors.motorDriver?.message || ""}
+        errorMessage={errors.motorDriver?.message ?? ""}
       />
 
       <TextForm
@@ -99,7 +99,7 @@ export default function PutParticipant({
         placeholder="ex) KH42JM2-901"
         label="motor"
         register={register}
-        errorMessage={errors.motor?.message || ""}
+        errorMessage={errors.motor?.message ?? ""}
       />
 
       <TextForm
@@ -107,7 +107,7 @@ export default function PutParticipant({
         placeholder="ex) built-in"
         label="adc"
         register={register}
-        errorMessage={errors.adc?.message || ""}
+        errorMessage={errors.adc?.message ?? ""}
       />
 
       <TextForm
@@ -115,7 +115,7 @@ export default function PutParticipant({
         placeholder="ex) IR 8조"
         label="sensor"
         register={register}
-        errorMessage={errors.sensor?.message || ""}
+        errorMessage={errors.sensor?.message ?? ""}
       />
 
       <SubmitBtn />

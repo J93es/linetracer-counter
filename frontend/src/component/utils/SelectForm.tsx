@@ -16,7 +16,9 @@ export default function SelectForm({
   return (
     <div className="select-form">
       <div className="form-group">
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}>
+          <h5>{label}</h5>
+        </label>
         <select id={id} className="form-control" {...register(id)}>
           {selectList.map((elem) => {
             return <option key={elem}>{elem}</option>;
