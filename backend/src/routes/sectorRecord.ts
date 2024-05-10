@@ -19,7 +19,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const participant_id: string = req.query.participant_id as string;
     const sectorRecordList: Partial<SectorRecordType[]> =
-      await sectorRecordService.getEverySectorRecord(participant_id);
+      await sectorRecordService.getEvery(participant_id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(sectorRecordList).status(200);
@@ -34,7 +34,7 @@ router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id: string = req.params._id;
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordService.getSectorRecord(_id);
+      await sectorRecordService.get(_id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(sectorRecord).status(200);
@@ -50,7 +50,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
 
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordService.postSectorRecord(data);
+      await sectorRecordService.post(data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(sectorRecord).status(200);
@@ -73,7 +73,7 @@ router.patch(
       const _id: string = req.params._id;
 
       const sectorRecord: Partial<SectorRecordType> =
-        await sectorRecordService.patchSectorRecord(_id, data);
+        await sectorRecordService.patch(_id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
@@ -97,7 +97,7 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
     const _id: string = req.params._id;
 
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordService.putSectorRecord(_id, data);
+      await sectorRecordService.put(_id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
@@ -121,7 +121,7 @@ router.delete(
       const _id: string = req.params._id;
 
       const sectorRecord: Partial<SectorRecordType> =
-        await sectorRecordService.removeSectorRecord(_id);
+        await sectorRecordService.remove(_id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

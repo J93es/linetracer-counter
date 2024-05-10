@@ -1,26 +1,26 @@
 import { ContestType } from "../../model/Contest";
 
 export interface ContestRepository {
-  isExistContest(_id: string): Promise<Boolean>;
+  isExist(_id: string): Promise<Boolean>;
 
-  createContest(data: ContestType): Promise<any>;
+  create(data: ContestType): Promise<any>;
 
-  readEveryContest(): Promise<any>;
-  readContest(_id: string): Promise<any>;
-  readContestWithJoin(
+  readEvery(): Promise<any>;
+  read(_id: string): Promise<any>;
+  readWithJoin(
     _id: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<any>;
 
-  readContestWithJoinById(
+  readWithJoinById(
     id: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<any>;
 
-  updateContest(data: Partial<ContestType>): Promise<any>;
-  deleteContest(_id: string): Promise<ContestType>;
+  update(data: Partial<ContestType>): Promise<any>;
+  delete(_id: string): Promise<ContestType>;
   appendParticipantList(_id: string, participant_Id: any): Promise<any>;
   popParticipantList(_id: string, participant_Id: any): Promise<any>;
 }

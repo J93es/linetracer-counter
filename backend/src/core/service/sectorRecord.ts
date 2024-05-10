@@ -1,16 +1,13 @@
 import { SectorRecordType } from "../../model/SectorRecord";
 
 export interface SectorRecordServiceInterface {
-  postSectorRecord(data: Partial<SectorRecordType>): Promise<SectorRecordType>;
-  patchSectorRecord(
+  post(data: Partial<SectorRecordType>): Promise<SectorRecordType>;
+  patch(
     _id: string,
     data: Partial<SectorRecordType>
   ): Promise<SectorRecordType>;
-  putSectorRecord(
-    _id: string,
-    data: Partial<SectorRecordType>
-  ): Promise<SectorRecordType>;
-  getEverySectorRecord(participant_Id: string): Promise<SectorRecordType[]>;
-  getSectorRecord(_id: string): Promise<SectorRecordType>;
-  removeSectorRecord(_id: string): Promise<SectorRecordType>;
+  put(_id: string, data: Partial<SectorRecordType>): Promise<SectorRecordType>;
+  getEvery(participant_Id: string): Promise<SectorRecordType[]>;
+  get(_id: string): Promise<SectorRecordType>;
+  remove(_id: string): Promise<SectorRecordType>;
 }

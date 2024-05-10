@@ -21,7 +21,7 @@ export class ContestMongoRepo implements ContestRepository {
     return filteredData;
   }
 
-  async isExistContest(_id: string): Promise<Boolean> {
+  async isExist(_id: string): Promise<Boolean> {
     if (await ContestSchema.exists({ _id: _id })) {
       return true;
     } else {
@@ -29,7 +29,7 @@ export class ContestMongoRepo implements ContestRepository {
     }
   }
 
-  async createContest(data: ContestType): Promise<any> {
+  async create(data: ContestType): Promise<any> {
     delete data._id;
 
     const contest = await ContestSchema.create(data);
@@ -40,7 +40,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readEveryContest(): Promise<any> {
+  async readEvery(): Promise<any> {
     const contestIndex = await ContestSchema.find()
       .populate({
         path: "participantList",
@@ -56,7 +56,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contestIndex;
   }
 
-  async readContest(_id: string): Promise<any> {
+  async read(_id: string): Promise<any> {
     const contest = await ContestSchema.findOne({ _id: _id }).lean();
     if (!contest) {
       throw new Error("Contest not found");
@@ -65,7 +65,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContestWithJoin(
+  async readWithJoin(
     _id: string,
     selectParticipantField: object,
     selectSectorRecordField: object
@@ -87,7 +87,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readContestWithJoinById(
+  async readWithJoinById(
     id: string,
     selectParticipantField: object,
     selectSectorRecordField: object
@@ -109,7 +109,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async updateContest(data: Partial<ContestType>): Promise<any> {
+  async update(data: Partial<ContestType>): Promise<any> {
     const filteredData = this.readonlyFilter(data);
     const contest = await ContestSchema.findOneAndUpdate(
       { _id: data._id },
@@ -125,7 +125,7 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async deleteContest(_id: string): Promise<any> {
+  async delete(_id: string): Promise<any> {
     const contest = await ContestSchema.findOneAndDelete({ _id: _id }).lean();
     if (!contest) {
       throw new Error("Failed to delete contest");

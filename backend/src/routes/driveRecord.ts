@@ -22,8 +22,9 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id: string = req.params._id;
-    const driveRecord: Partial<DriveRecordType> =
-      await driveRecordService.getDriveRecord(_id);
+    const driveRecord: Partial<DriveRecordType> = await driveRecordService.get(
+      _id
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(driveRecord).status(200);
@@ -39,8 +40,10 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
     const sectorRecord_Id: string = req.query.sector_record_id as string;
 
-    const driveRecord: Partial<DriveRecordType> =
-      await driveRecordService.postDriveRecord(sectorRecord_Id, data);
+    const driveRecord: Partial<DriveRecordType> = await driveRecordService.post(
+      sectorRecord_Id,
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(driveRecord).status(200);
@@ -64,7 +67,7 @@ router.patch(
       const sectorRecord_Id: string = req.query.sector_record_id as string;
 
       const driveRecord: Partial<DriveRecordType> =
-        await driveRecordService.patchDriveRecord(sectorRecord_Id, _id, data);
+        await driveRecordService.patch(sectorRecord_Id, _id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
@@ -88,8 +91,11 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
     const _id: string = req.params._id;
     const sectorRecord_Id: string = req.query.sector_record_id as string;
 
-    const driveRecord: Partial<DriveRecordType> =
-      await driveRecordService.putDriveRecord(sectorRecord_Id, _id, data);
+    const driveRecord: Partial<DriveRecordType> = await driveRecordService.put(
+      sectorRecord_Id,
+      _id,
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
@@ -114,7 +120,7 @@ router.delete(
       const sectorRecord_Id: string = req.query.sector_record_id as string;
 
       const driveRecord: Partial<DriveRecordType> =
-        await driveRecordService.removeDriveRecord(sectorRecord_Id, _id);
+        await driveRecordService.remove(sectorRecord_Id, _id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

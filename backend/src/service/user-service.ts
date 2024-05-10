@@ -51,7 +51,7 @@ export class UserMongoService implements UserService {
 
   async getData(year: string): Promise<UserContestType> {
     try {
-      const data = await contestRepository.readContestWithJoinById(
+      const data = await contestRepository.readWithJoinById(
         year,
         {
           _id: 0,

@@ -19,7 +19,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const contest_Id: string = req.query.contest_Id as string;
     const participant: Partial<ParticipantType[]> =
-      await participantService.getEveryParticipant(contest_Id);
+      await participantService.getEvery(contest_Id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participant).status(200);
@@ -33,8 +33,9 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id: string = req.params._id;
-    const participant: Partial<ParticipantType> =
-      await participantService.getParticipant(_id);
+    const participant: Partial<ParticipantType> = await participantService.get(
+      _id
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participant).status(200);
@@ -49,8 +50,9 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
 
-    const participant: Partial<ParticipantType> =
-      await participantService.postParticipant(data);
+    const participant: Partial<ParticipantType> = await participantService.post(
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(participant).status(200);
@@ -73,7 +75,7 @@ router.patch(
       const _id: string = req.params._id;
 
       const participant: Partial<ParticipantType> =
-        await participantService.patchParticipant(_id, data);
+        await participantService.patch(_id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
@@ -96,8 +98,10 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
     const _id: string = req.params._id;
 
-    const participant: Partial<ParticipantType> =
-      await participantService.putParticipant(_id, data);
+    const participant: Partial<ParticipantType> = await participantService.put(
+      _id,
+      data
+    );
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
@@ -121,7 +125,7 @@ router.delete(
       const _id: string = req.params._id;
 
       const participant: Partial<ParticipantType> =
-        await participantService.removeParticipant(_id);
+        await participantService.remove(_id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

@@ -25,7 +25,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return filteredData;
   }
 
-  async isExistParticipant(_id: any): Promise<Boolean> {
+  async isExist(_id: any): Promise<Boolean> {
     if (await ParticipantSchema.exists({ _id: _id })) {
       return true;
     } else {
@@ -33,10 +33,10 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     }
   }
 
-  async createParticipant(data: Partial<ParticipantType>): Promise<any> {
+  async create(data: Partial<ParticipantType>): Promise<any> {
     delete data._id;
 
-    if (!(await contestRepository.isExistContest(data.hostId))) {
+    if (!(await contestRepository.isExist(data.hostId))) {
       throw new Error(
         "Contest data is not founded by hostId, check hostId field in Participant data"
       );
@@ -59,7 +59,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async readEveryParticipant(contest_Id: any): Promise<any> {
+  async readEvery(contest_Id: any): Promise<any> {
     const participantIndex = await ParticipantSchema.find({
       hostId: contest_Id,
     })
@@ -74,7 +74,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participantIndex;
   }
 
-  async readParticipant(_id: any): Promise<any> {
+  async read(_id: any): Promise<any> {
     const participant = await ParticipantSchema.findOne({ _id: _id }).lean();
     if (!participant) {
       throw new Error("Participant not found");
@@ -83,7 +83,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async readParticipantWithJoin(_id: any, selectField: object): Promise<any> {
+  async readWithJoin(_id: any, selectField: object): Promise<any> {
     const contest = await ParticipantSchema.findOne({ _id: _id })
       .populate("sectorRecordList", selectField)
       .lean();
@@ -94,7 +94,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return contest;
   }
 
-  async updateParticipant(data: Partial<ParticipantType>): Promise<any> {
+  async update(data: Partial<ParticipantType>): Promise<any> {
     const filteredData = this.readonlyFilter(data);
 
     const participant = await ParticipantSchema.findOneAndUpdate(
@@ -111,7 +111,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async deleteParticipant(_id: any): Promise<any> {
+  async delete(_id: any): Promise<any> {
     const participant = await ParticipantSchema.findOneAndDelete({
       _id: _id,
     }).lean();

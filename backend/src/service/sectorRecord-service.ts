@@ -36,21 +36,17 @@ export class SectorRecordService implements SectorRecordServiceInterface {
     return filteredSectorRecord;
   }
 
-  async postSectorRecord(
-    data: Partial<SectorRecordType>
-  ): Promise<SectorRecordType> {
+  async post(data: Partial<SectorRecordType>): Promise<SectorRecordType> {
     const srcSectorRecord: Partial<SectorRecordType> = new SectorRecord(
       data as SectorRecordType
     );
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.createSectorRecord(
-        srcSectorRecord as SectorRecordType
-      );
+      await sectorRecordRepository.create(srcSectorRecord as SectorRecordType);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
 
-  async patchSectorRecord(
+  async patch(
     _id: string,
     data: Partial<SectorRecordType>
   ): Promise<SectorRecordType> {
@@ -63,12 +59,12 @@ export class SectorRecordService implements SectorRecordServiceInterface {
     srcSectorRecord = this.patchReadonlyFilter(srcSectorRecord);
 
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.updateSectorRecord(srcSectorRecord, false);
+      await sectorRecordRepository.update(srcSectorRecord, false);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
 
-  async putSectorRecord(
+  async put(
     _id: string,
     data: Partial<SectorRecordType>
   ): Promise<SectorRecordType> {
@@ -79,32 +75,30 @@ export class SectorRecordService implements SectorRecordServiceInterface {
     this._idFilter(_id, srcSectorRecord);
 
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.updateSectorRecord(srcSectorRecord, true);
+      await sectorRecordRepository.update(srcSectorRecord, true);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
 
-  async getEverySectorRecord(
-    participant_Id: string
-  ): Promise<SectorRecordType[]> {
+  async getEvery(participant_Id: string): Promise<SectorRecordType[]> {
     const sectorRecordList: Partial<SectorRecordType>[] =
-      await sectorRecordRepository.readEverySectorRecord(participant_Id);
+      await sectorRecordRepository.readEvery(participant_Id);
 
     return sectorRecordList.map(
       (sectorRecord) => new SectorRecord(sectorRecord as SectorRecordType)
     );
   }
 
-  async getSectorRecord(_id: string): Promise<SectorRecordType> {
+  async get(_id: string): Promise<SectorRecordType> {
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.readSectorRecord(_id);
+      await sectorRecordRepository.read(_id);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
 
-  async removeSectorRecord(_id: string): Promise<SectorRecordType> {
+  async remove(_id: string): Promise<SectorRecordType> {
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.deleteSectorRecord(_id);
+      await sectorRecordRepository.delete(_id);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }

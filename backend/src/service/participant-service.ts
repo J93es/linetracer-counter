@@ -40,21 +40,17 @@ export class ParticipantService implements ParticipantServiceInterface {
     return filteredParticipant;
   }
 
-  async postParticipant(
-    data: Partial<ParticipantType>
-  ): Promise<ParticipantType> {
+  async post(data: Partial<ParticipantType>): Promise<ParticipantType> {
     const srcParticipant: Partial<ParticipantType> = new Participant(
       data as ParticipantType
     );
     const participant: Partial<ParticipantType> =
-      await participantRepository.createParticipant(
-        srcParticipant as ParticipantType
-      );
+      await participantRepository.create(srcParticipant as ParticipantType);
 
     return new Participant(participant as ParticipantType);
   }
 
-  async patchParticipant(
+  async patch(
     _id: string,
     data: Partial<ParticipantType>
   ): Promise<ParticipantType> {
@@ -67,12 +63,12 @@ export class ParticipantService implements ParticipantServiceInterface {
     srcParticipant = this.patchReadonlyFilter(srcParticipant);
 
     const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant(srcParticipant);
+      await participantRepository.update(srcParticipant);
 
     return new Participant(participant as ParticipantType);
   }
 
-  async putParticipant(
+  async put(
     _id: string,
     data: Partial<ParticipantType>
   ): Promise<ParticipantType> {
@@ -83,30 +79,30 @@ export class ParticipantService implements ParticipantServiceInterface {
     this._idFilter(_id, srcParticipant);
 
     const participant: Partial<ParticipantType> =
-      await participantRepository.updateParticipant(srcParticipant);
+      await participantRepository.update(srcParticipant);
 
     return new Participant(participant as ParticipantType);
   }
 
-  async getParticipant(_id: string): Promise<ParticipantType> {
+  async get(_id: string): Promise<ParticipantType> {
     const participant: Partial<ParticipantType> =
-      await participantRepository.readParticipantWithJoin(_id, {});
+      await participantRepository.readWithJoin(_id, {});
 
     return new Participant(participant as ParticipantType);
   }
 
-  async getEveryParticipant(contest_Id: string): Promise<ParticipantType[]> {
+  async getEvery(contest_Id: string): Promise<ParticipantType[]> {
     const participantList: Partial<ParticipantType>[] =
-      await participantRepository.readEveryParticipant(contest_Id);
+      await participantRepository.readEvery(contest_Id);
 
     return participantList.map(
       (participant) => new Participant(participant as ParticipantType)
     );
   }
 
-  async removeParticipant(_id: string): Promise<ParticipantType> {
+  async remove(_id: string): Promise<ParticipantType> {
     const participant: Partial<ParticipantType> =
-      await participantRepository.deleteParticipant(_id);
+      await participantRepository.delete(_id);
 
     return new Participant(participant as ParticipantType);
   }

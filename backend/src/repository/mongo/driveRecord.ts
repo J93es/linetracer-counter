@@ -10,7 +10,7 @@ const sectorRecordRepository: SectorRecordRepository =
   new SectorRecordMongoRepo();
 
 export class DriveRecordMongoRepo implements DriveRecordRepository {
-  async isExistDriveRecord(_id: any): Promise<Boolean> {
+  async isExist(_id: any): Promise<Boolean> {
     if (await DriveRecordSchema.exists({ _id: _id })) {
       return true;
     } else {
@@ -18,10 +18,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     }
   }
 
-  async createDriveRecord(
-    hostId: string,
-    data: Partial<DriveRecordType>
-  ): Promise<any> {
+  async create(hostId: string, data: Partial<DriveRecordType>): Promise<any> {
     const driveRecord = await DriveRecordSchema.create(data);
     if (!driveRecord) {
       throw new Error("Failed to create driveRecord");
@@ -38,7 +35,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     return driveRecord;
   }
 
-  async readDriveRecord(_id: string): Promise<any> {
+  async read(_id: string): Promise<any> {
     const driveRecord = await DriveRecordSchema.findOne({
       _id: _id,
     }).lean();
@@ -49,10 +46,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     return driveRecord;
   }
 
-  async updateDriveRecord(
-    hostId: string,
-    data: Partial<DriveRecordType>
-  ): Promise<any> {
+  async update(hostId: string, data: Partial<DriveRecordType>): Promise<any> {
     const driveRecord = await DriveRecordSchema.findOneAndUpdate(
       { _id: data._id },
       data,
@@ -82,7 +76,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     return driveRecord;
   }
 
-  async deleteDriveRecord(hostId: string, driveRecordId: string): Promise<any> {
+  async delete(hostId: string, driveRecordId: string): Promise<any> {
     const sectorRecord = await sectorRecordRepository.popDriveRecordList(
       hostId,
       driveRecordId

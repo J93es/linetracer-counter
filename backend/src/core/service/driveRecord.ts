@@ -1,20 +1,20 @@
 import { DriveRecordType } from "../../model/DriveRecord";
 
 export interface DriveRecordServiceInterface {
-  postDriveRecord(
+  post(
     hostId: string,
     data: Partial<DriveRecordType>
   ): Promise<DriveRecordType>;
-  patchDriveRecord(
-    hostId: string,
-    _id: string,
-    data: Partial<DriveRecordType>
-  ): Promise<DriveRecordType>;
-  putDriveRecord(
+  patch(
     hostId: string,
     _id: string,
     data: Partial<DriveRecordType>
   ): Promise<DriveRecordType>;
-  getDriveRecord(_id: string): Promise<DriveRecordType>;
-  removeDriveRecord(hostId: string, _id: string): Promise<DriveRecordType>;
+  put(
+    hostId: string,
+    _id: string,
+    data: Partial<DriveRecordType>
+  ): Promise<DriveRecordType>;
+  get(_id: string): Promise<DriveRecordType>;
+  remove(hostId: string, _id: string): Promise<DriveRecordType>;
 }

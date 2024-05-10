@@ -26,7 +26,7 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return filteredData;
   }
 
-  async isExistSectorRecord(_id: any): Promise<Boolean> {
+  async isExist(_id: any): Promise<Boolean> {
     if (await SectorRecordSchema.exists({ _id: _id })) {
       return true;
     } else {
@@ -34,10 +34,10 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     }
   }
 
-  async createSectorRecord(data: Partial<SectorRecordType>): Promise<any> {
+  async create(data: Partial<SectorRecordType>): Promise<any> {
     delete data._id;
 
-    if (!(await participantRepository.isExistParticipant(data.hostId))) {
+    if (!(await participantRepository.isExist(data.hostId))) {
       throw new Error(
         "Participant data is not founded by hostId, check hostId field in SectorRecord data"
       );
@@ -62,7 +62,7 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async readEverySectorRecord(participant_Id: any): Promise<any> {
+  async readEvery(participant_Id: any): Promise<any> {
     const sectorRecordIndex = await SectorRecordSchema.find({
       hostId: participant_Id,
     }).lean();
@@ -73,7 +73,7 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecordIndex;
   }
 
-  async readSectorRecord(_id: any): Promise<any> {
+  async read(_id: any): Promise<any> {
     const sectorRecord = await SectorRecordSchema.findOne({
       _id: _id,
     }).lean();
@@ -84,14 +84,12 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async updateSectorRecord(
+  async update(
     data: Partial<SectorRecordType>,
     replace: boolean = false
   ): Promise<any> {
     const target = this.readonlyFilter(data);
-    const originSectorRecord = this.readonlyFilter(
-      await this.readSectorRecord(data._id)
-    );
+    const originSectorRecord = this.readonlyFilter(await this.read(data._id));
 
     const srcDriveRecordList = target.driveRecordList;
     const originDriveRecordList = originSectorRecord.driveRecordList;
@@ -117,7 +115,7 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async deleteSectorRecord(_id: any): Promise<any> {
+  async delete(_id: any): Promise<any> {
     const sectorRecord = await SectorRecordSchema.findOneAndDelete({
       _id: _id,
     }).lean();

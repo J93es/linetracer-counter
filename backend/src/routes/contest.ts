@@ -16,8 +16,7 @@ const contestService: ContestServiceInterface = new ContestService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const contest: Partial<ContestType[]> =
-      await contestService.getEveryContest();
+    const contest: Partial<ContestType[]> = await contestService.getEvery();
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -32,7 +31,7 @@ router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id: string = req.params._id;
 
-    const contest: Partial<ContestType> = await contestService.getContest(_id);
+    const contest: Partial<ContestType> = await contestService.get(_id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -47,9 +46,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
 
-    const contest: Partial<ContestType> = await contestService.postContest(
-      data
-    );
+    const contest: Partial<ContestType> = await contestService.post(data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -71,9 +68,7 @@ router.post("/:id", async (req: Request, res: Response, next: NextFunction) => {
       throw new Error("id is not matched : query id and body id is different");
     }
 
-    const contest: Partial<ContestType> = await contestService.postContest(
-      data
-    );
+    const contest: Partial<ContestType> = await contestService.post(data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -95,7 +90,7 @@ router.patch(
       const data = req.body;
       const _id: string = req.params._id;
 
-      const contest: Partial<ContestType> = await contestService.patchContest(
+      const contest: Partial<ContestType> = await contestService.patch(
         _id,
         data
       );
@@ -120,10 +115,7 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
     const _id: string = req.params._id;
 
-    const contest: Partial<ContestType> = await contestService.putContest(
-      _id,
-      data
-    );
+    const contest: Partial<ContestType> = await contestService.put(_id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -145,9 +137,7 @@ router.delete(
     try {
       const _id: string = req.params._id;
 
-      const contest: Partial<ContestType> = await contestService.removeContest(
-        _id
-      );
+      const contest: Partial<ContestType> = await contestService.remove(_id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
