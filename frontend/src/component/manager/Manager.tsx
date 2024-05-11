@@ -176,6 +176,7 @@ export default function Manager({
     setIsContestTimerRunning(false);
   }, [targetContest]);
 
+  // set isContestInProgress when targetSectorRecord is updated
   useEffect(() => {
     if (isEmptyObject(targetSectorRecord)) {
       setIsContestInProgress(false);

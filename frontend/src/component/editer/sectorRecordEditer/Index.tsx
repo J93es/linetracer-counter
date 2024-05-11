@@ -28,12 +28,8 @@ export default function SectorRecordEditer({
   const [editMenu, setEditMenu] = useState<string>(sectorRecordEditMenuEnum[0]);
 
   let editMenuHtml = null;
-  const emptyParticipantMessage = <p>참가자를 선택하세요.</p>;
-  const emptySectorRecordListMessage = <p>부문 기록이 없습니다.</p>;
-  const emptySectorRecordMessage = <p>부문 기록을 선택하세요.</p>;
-
   if (isEmptyObject(targetParticipant)) {
-    editMenuHtml = emptyParticipantMessage;
+    editMenuHtml = <p>참가자를 선택하세요.</p>;
   } else if (editMenu === "부문 기록 추가") {
     editMenuHtml = (
       <PostSectorRecord
@@ -43,9 +39,9 @@ export default function SectorRecordEditer({
       />
     );
   } else if (isEmptyArray(sectorRecordList)) {
-    editMenuHtml = emptySectorRecordListMessage;
+    editMenuHtml = <p>부문 기록이 없습니다.</p>;
   } else if (isEmptyObject(targetSectorRecord)) {
-    editMenuHtml = emptySectorRecordMessage;
+    editMenuHtml = <p>부문 기록을 선택하세요.</p>;
   } else if (editMenu === "부문 기록 수정") {
     editMenuHtml = (
       <PutSectorRecord

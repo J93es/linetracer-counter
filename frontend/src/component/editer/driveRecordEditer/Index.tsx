@@ -30,13 +30,8 @@ export default function DriveRecordEditer({
   const [editMenu, setEditMenu] = useState<string>(driveRecordEditMenuEnum[0]);
 
   let editMenuHtml = null;
-
-  const emptySectorRecordMessage = <p>부문 기록을 선택하세요.</p>;
-  const emptyDriveRecordListMessage = <p>주행 기록이 없습니다.</p>;
-  const emptyDriveRecordMessage = <p>주행 기록을 선택하세요.</p>;
-
   if (isEmptyObject(targetSectorRecord)) {
-    editMenuHtml = emptySectorRecordMessage;
+    editMenuHtml = <p>부문 기록을 선택하세요.</p>;
   } else if (editMenu === "주행 기록 추가") {
     editMenuHtml = (
       <PostDriveRecord
@@ -46,9 +41,9 @@ export default function DriveRecordEditer({
       />
     );
   } else if (isEmptyArray(driveRecordList)) {
-    editMenuHtml = emptyDriveRecordListMessage;
+    editMenuHtml = <p>주행 기록이 없습니다.</p>;
   } else if (isEmptyObject(targetDriveRecord)) {
-    editMenuHtml = emptyDriveRecordMessage;
+    editMenuHtml = <p>주행 기록을 선택하세요.</p>;
   } else if (editMenu === "주행 기록 수정") {
     editMenuHtml = (
       <PutDriveRecord

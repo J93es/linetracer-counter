@@ -25,9 +25,6 @@ export default function ContestEditer({
   const [editMenu, setEditMenu] = useState<string>(contestEditMenuEnum[0]);
 
   let editMenuHtml = null;
-
-  const emptyContestMessage = <p>대회를 선택하세요.</p>;
-
   if (editMenu === "대회 추가") {
     editMenuHtml = (
       <PostContest
@@ -36,7 +33,7 @@ export default function ContestEditer({
       />
     );
   } else if (isEmptyObject(targetContest)) {
-    editMenuHtml = emptyContestMessage;
+    editMenuHtml = <p>대회를 선택하세요.</p>;
   } else if (editMenu === "대회 수정") {
     editMenuHtml = (
       <PutContest

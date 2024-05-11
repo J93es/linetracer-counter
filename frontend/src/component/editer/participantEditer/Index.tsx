@@ -35,12 +35,9 @@ export default function ParticipantEditer({
   const [editMenu, setEditMenu] = useState<string>(participantEditMenuEnum[0]);
 
   let editMenuHtml = null;
-  const emptyContestMessage = <p>경연을 선택하세요.</p>;
-  const emptyParticipantListMessage = <p>참가자가 없습니다.</p>;
-  const emptyParticipantMessage = <p>참가자를 선택하세요.</p>;
 
   if (isEmptyObject(targetContest)) {
-    editMenuHtml = emptyContestMessage;
+    editMenuHtml = <p>경연을 선택하세요.</p>;
   } else if (editMenu === "참가자 추가") {
     editMenuHtml = (
       <PostParticipant
@@ -50,9 +47,9 @@ export default function ParticipantEditer({
       />
     );
   } else if (isEmptyArray(participantList)) {
-    editMenuHtml = emptyParticipantListMessage;
+    editMenuHtml = <p>참가자가 없습니다.</p>;
   } else if (isEmptyObject(targetParticipant)) {
-    editMenuHtml = emptyParticipantMessage;
+    editMenuHtml = <p>참가자를 선택하세요.</p>;
   } else if (editMenu === "참가자 수정") {
     editMenuHtml = (
       <PutParticipant
