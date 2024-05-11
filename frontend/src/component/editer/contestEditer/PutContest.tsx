@@ -7,7 +7,7 @@ import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
 import { ContestType } from "model/Contest";
-import { ContestSchema } from "model/fetch/ContestSchema";
+import { ContestSchema } from "model/form/ContestSchema";
 import { sectorEnum } from "model/enums/index";
 import { ContestController } from "controller/ContestController";
 

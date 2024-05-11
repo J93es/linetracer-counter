@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DriveRecordType } from "model/DriveRecord";
-import { DriveRecordSchema } from "model/fetch/DriveRecordSchema";
+import { DriveRecordSchema } from "model/form/DriveRecordSchema";
 import { driveRecord_typeEnum } from "model/enums/index";
 
 import NumberForm from "component/utils/NumberForm";

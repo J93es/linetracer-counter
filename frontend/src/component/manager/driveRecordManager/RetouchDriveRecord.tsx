@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DriveRecordType } from "model/DriveRecord";
-import { DriveRecordSchema } from "model/fetch/DriveRecordSchema";
+import { DriveRecordSchema } from "model/form/DriveRecordSchema";
 
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";

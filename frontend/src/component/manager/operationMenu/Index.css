@@ -4,18 +4,14 @@
   align-items: center;
 }
 
-.operation-menu-row-1 {
+.operation-menu-row-head {
   margin-bottom: 20px;
 }
 
-.operation-menu-row-2 {
+.operation-menu-row {
   margin-bottom: 20px;
 }
 
-.operation-menu-row-3 {
-  margin-bottom: 20px;
-}
-
-.operation-menu-row-4 {
+.operation-menu-row-foot {
   margin-bottom: 20px;
 }

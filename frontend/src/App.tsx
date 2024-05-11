@@ -19,6 +19,8 @@ function App() {
 
   const [contestList, setContestList] = useState<ContestType[]>([]);
 
+  console.log("contestList", contestList);
+
   // set contestList when updateSignal is updated
   useEffect(() => {
     const func = async () => {

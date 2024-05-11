@@ -4,9 +4,15 @@ export type ContestType = {
   title: string;
 
   curContestingSection: string;
+  curParticipnatId: string;
+  curSectorRecordId: string;
 
   contestTimerStartTime: number;
+  isContestTimerRunning: boolean;
+
   driveStartTime: number;
+  isDriveTimerRunning: boolean;
+  latestDriveRecordTime: number;
 
   participantList: object[];
 };
@@ -17,9 +23,15 @@ export default class Contest {
   title: string;
 
   curContestingSection: string;
+  curParticipnatId: string;
+  curSectorRecordId: string;
 
   contestTimerStartTime: number;
+  isContestTimerRunning: boolean;
+
   driveStartTime: number;
+  isDriveTimerRunning: boolean;
+  latestDriveRecordTime: number;
 
   participantList: object[];
 
@@ -29,9 +41,15 @@ export default class Contest {
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
+    this.curParticipnatId = data.curParticipnatId;
+    this.curSectorRecordId = data.curSectorRecordId;
 
     this.contestTimerStartTime = data.contestTimerStartTime;
+    this.isContestTimerRunning = data.isContestTimerRunning;
+
     this.driveStartTime = data.driveStartTime;
+    this.isDriveTimerRunning = data.isDriveTimerRunning;
+    this.latestDriveRecordTime = data.latestDriveRecordTime;
 
     this.participantList = data.participantList;
   }

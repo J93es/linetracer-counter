@@ -13,17 +13,30 @@ export default function ContestTimerBtn({
   targetContest,
   targetSectorRecord,
   isContestTimerRunning,
+  disabled,
 }: {
   setContestUpdateSignal: Function;
   targetContest: Partial<ContestType>;
   targetSectorRecord: Partial<SectorRecordType>;
   isContestTimerRunning: boolean;
+  disabled: boolean;
 }) {
-  const contestTimerStart = (
-    contest: Partial<ContestType>,
-    sectorRecord: Partial<SectorRecordType>
-  ) => {
+  const contestTimerStart = (curTime: number) => {
     const func = async () => {
+      const contest: Partial<ContestType> = {
+        _id: targetContest._id,
+        curParticipnatId: targetSectorRecord.hostId,
+        curSectorRecordId: targetSectorRecord._id,
+
+        contestTimerStartTime: curTime,
+        isContestTimerRunning: true,
+      };
+      const sectorRecord: Partial<SectorRecordType> = {
+        _id: targetSectorRecord._id,
+        hostId: targetSectorRecord.hostId,
+        sectorState: "running",
+      };
+
       await contestController.patch(contest._id, contest);
       await sectorRecordController.patch(sectorRecord._id, sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
@@ -31,11 +44,26 @@ export default function ContestTimerBtn({
     func();
   };
 
-  const contestTimerStop = (
-    contest: Partial<ContestType>,
-    sectorRecord: Partial<SectorRecordType>
-  ) => {
+  const contestTimerStop = (curTime: number) => {
     const func = async () => {
+      const remainingContestTime = getRemainingTime(
+        targetSectorRecord.remainingContestTime,
+        targetContest.contestTimerStartTime,
+        curTime
+      );
+
+      const contest: Partial<ContestType> = {
+        _id: targetContest._id,
+        contestTimerStartTime: -1,
+        isContestTimerRunning: false,
+      };
+      const sectorRecord: Partial<SectorRecordType> = {
+        _id: targetSectorRecord._id,
+        hostId: targetSectorRecord.hostId,
+        remainingContestTime: remainingContestTime,
+        sectorState: "end",
+      };
+
       await contestController.patch(contest._id, contest);
       await sectorRecordController.patch(sectorRecord._id, sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
@@ -49,33 +77,17 @@ export default function ContestTimerBtn({
       <button
         type="button"
         className="btn btn-primary"
+        disabled={disabled}
         onClick={() => {
           const curTime = Date.now();
-          const contest: Partial<ContestType> = {
-            _id: targetContest._id,
-          };
-          const sectorRecord: Partial<SectorRecordType> = {
-            _id: targetSectorRecord._id,
-            hostId: targetSectorRecord.hostId,
-          };
 
-          // timer running => stop
+          // timer start => stop
           if (isContestTimerRunning) {
-            sectorRecord.remainingContestTime = getRemainingTime(
-              targetSectorRecord.remainingContestTime,
-              targetContest.contestTimerStartTime,
-              curTime
-            );
-            sectorRecord.sectorState = "end";
-            contest.contestTimerStartTime = -1;
-            contestTimerStop(contest, sectorRecord);
+            contestTimerStop(curTime);
+            return;
           }
           // timer stop => running
-          else {
-            contest.contestTimerStartTime = curTime;
-            sectorRecord.sectorState = "running";
-            contestTimerStart(contest, sectorRecord);
-          }
+          contestTimerStart(curTime);
         }}
       >
         {isContestTimerRunning ? "경연 타이머 동작중" : "경연 타이머 시작"}

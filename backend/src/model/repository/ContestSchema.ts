@@ -20,9 +20,15 @@ const contestSchema = new Schema({
       "end",
     ],
   },
+  curParticipnatId: { type: Schema.Types.ObjectId },
+  curSectorRecordId: { type: Schema.Types.ObjectId },
 
   contestTimerStartTime: { type: Number },
+  isContestTimerRunning: { type: Boolean },
+
   driveStartTime: { type: Number },
+  isDriveTimerRunning: { type: Boolean },
+  latestDriveRecordTime: { type: Number },
 
   participantList: {
     type: [Schema.Types.ObjectId],

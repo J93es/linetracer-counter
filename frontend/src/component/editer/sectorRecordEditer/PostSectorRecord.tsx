@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SectorRecordType } from "model/SectorRecord";
-import { SectorRecordSchema } from "model/fetch/SectorRecordSchema";
+import { SectorRecordSchema } from "model/form/SectorRecordSchema";
 import { SectorRecordController } from "controller/SectorRecordController";
 
 import NumberForm from "component/utils/NumberForm";

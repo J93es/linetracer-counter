@@ -4,23 +4,25 @@ import Accordion from "component/utils/Accordion";
 
 import { ContestType } from "model/Contest";
 
+import { isEmptyArray, isEmptyObject } from "tools/utils";
+
 export default function ContestManager({
   setContestUpdateSignal,
   contestList,
   targetContest,
   setTargetContest,
-  isContestTimerRunning,
+  isBlocked,
 }: {
   setContestUpdateSignal: Function;
   contestList: Partial<ContestType>[];
   targetContest: Partial<ContestType>;
   setTargetContest: Function;
-  isContestTimerRunning: boolean;
+  isBlocked: boolean;
 }) {
   return (
     <Accordion
       id="contest-Manager"
-      title="현재 경연 선택"
+      title="경연 선택"
       body={
         <div className="contest-Manager">
           <SelectTarget
@@ -31,7 +33,7 @@ export default function ContestManager({
             setUpdateSignal={() => {
               setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
             }}
-            disabled={isContestTimerRunning}
+            disabled={isBlocked}
           />
         </div>
       }

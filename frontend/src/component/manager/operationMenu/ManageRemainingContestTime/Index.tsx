@@ -8,9 +8,11 @@ import "component/manager/operationMenu/ManageRemainingContestTime/Index.css";
 export default function ManageRemainingContestTime({
   setContestUpdateSignal,
   targetSectorRecord,
+  disabled,
 }: {
   setContestUpdateSignal: Function;
   targetSectorRecord: Partial<SectorRecordType>;
+  disabled: boolean;
 }) {
   return (
     <div className="manage-remaining-contest-time">
@@ -25,6 +27,7 @@ export default function ManageRemainingContestTime({
           remainingContestTime={defaultRemainingContestTime}
           label="경연 시간 초기화"
           btnType="btn-warning"
+          disabled={disabled}
         />
       </div>
 
@@ -38,6 +41,7 @@ export default function ManageRemainingContestTime({
           }
           label="1분 삭감"
           btnType="btn-primary"
+          disabled={disabled}
         />
 
         <UpdateRemainingContestTimeBtn
@@ -49,6 +53,7 @@ export default function ManageRemainingContestTime({
           }
           label="1분 증가"
           btnType="btn-light"
+          disabled={disabled}
         />
       </div>
 
@@ -62,6 +67,7 @@ export default function ManageRemainingContestTime({
           }
           label="30초 삭감"
           btnType="btn-primary"
+          disabled={disabled}
         />
 
         <UpdateRemainingContestTimeBtn
@@ -73,6 +79,7 @@ export default function ManageRemainingContestTime({
           }
           label="30초 증가"
           btnType="btn-light"
+          disabled={disabled}
         />
       </div>
     </div>

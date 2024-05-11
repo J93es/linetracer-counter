@@ -3,6 +3,7 @@ import SectorRecordDistintion from "model/distinction/SectorRecordDistinction";
 import Accordion from "component/utils/Accordion";
 import RetouchSectorRecord from "component/manager/sectorRecordManager/RetouchSectorRecord";
 
+import { ContestType } from "model/Contest";
 import { SectorRecordType } from "model/SectorRecord";
 
 import { isEmptyArray, isEmptyObject } from "tools/utils";
@@ -12,24 +13,21 @@ export default function SectorRecordManager({
   sectorRecordList,
   targetSectorRecord,
   setTargetSectorRecord,
-  isContestTimerRunning,
+  isBlocked,
 }: {
   setSectorRecordUpdateSignal: Function;
-  sectorRecordList: object[];
+  sectorRecordList: Partial<SectorRecordType>[];
   targetSectorRecord: Partial<SectorRecordType>;
   setTargetSectorRecord: Function;
-  isContestTimerRunning: boolean;
+  isBlocked: boolean;
 }) {
   let retouchHtml = null;
-  const emptySectorRecordListMessage = <p>부문 기록이 없습니다.</p>;
-  const emptySectorRecordMessage = <p>부문 기록을 선택하세요.</p>;
-
-  if (isContestTimerRunning) {
-    retouchHtml = <p>경연이 진행 중입니다.</p>;
+  if (isBlocked) {
+    retouchHtml = <p>선택/수정이 불가능 합니다.</p>;
   } else if (isEmptyArray(sectorRecordList)) {
-    retouchHtml = emptySectorRecordListMessage;
+    retouchHtml = <p>부문 기록이 없습니다.</p>;
   } else if (isEmptyObject(targetSectorRecord)) {
-    retouchHtml = emptySectorRecordMessage;
+    retouchHtml = <p>부문 기록을 선택하세요.</p>;
   } else {
     retouchHtml = (
       <RetouchSectorRecord
@@ -42,9 +40,9 @@ export default function SectorRecordManager({
   return (
     <Accordion
       id="sector-record-Manager"
-      title="현재 부문 기록 선택/편집"
+      title="부문 기록 선택/수정"
       body={
-        <div className="sector-record-Manager">
+        <div className="sector-record-manager">
           <SelectTarget
             target={targetSectorRecord}
             setTarget={setTargetSectorRecord}
@@ -53,7 +51,7 @@ export default function SectorRecordManager({
             setUpdateSignal={() => {
               setSectorRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
             }}
-            disabled={isContestTimerRunning}
+            disabled={isBlocked}
           />
 
           {retouchHtml}

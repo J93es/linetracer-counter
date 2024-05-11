@@ -11,12 +11,10 @@ import DriveRecordManager from "component/manager/driveRecordManager/Index";
 import OperationMenu from "component/manager/operationMenu/Index";
 
 import { extractParticipantList } from "tools/extractParticipantList";
-
-import { timerStopValue } from "model/Contest";
-
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
 import "component/manager/Manager.css";
+import { set } from "react-hook-form";
 
 export default function Manager({
   setUpdateSignal,
@@ -25,11 +23,16 @@ export default function Manager({
   setUpdateSignal: Function;
   contestList: Partial<ContestType>[];
 }) {
+  const [isContestInProgress, setIsContestInProgress] =
+    useState<boolean>(false);
   const [isContestTimerRunning, setIsContestTimerRunning] =
     useState<boolean>(false);
 
+  const [isContestBlocked, setIsContestBlocked] = useState<boolean>(false);
   const [targetContest, setTargetContest] = useState<Partial<ContestType>>({});
 
+  const [isParticipantBlocked, setIsParticipantBlocked] =
+    useState<boolean>(false);
   const [participantList, setParticipantList] = useState<
     Partial<ParticipantType>[]
   >([]);
@@ -37,6 +40,8 @@ export default function Manager({
     Partial<ParticipantType>
   >({});
 
+  const [isSectorRecordBlocked, setIsSectorRecordBlocked] =
+    useState<boolean>(false);
   const [sectorRecordList, setSectorRecordList] = useState<
     Partial<SectorRecordType>[]
   >([]);
@@ -44,6 +49,8 @@ export default function Manager({
     Partial<SectorRecordType>
   >({});
 
+  const [isDriveRecordBlocked, setIsDriveRecordBlocked] =
+    useState<boolean>(false);
   const [driveRecordList, setDriveRecordList] = useState<
     Partial<DriveRecordType>[]
   >([]);
@@ -63,11 +70,7 @@ export default function Manager({
       setTargetContest(contestList[contestList.length - 1]);
       return;
     }
-    if (contest.contestTimerStartTime === timerStopValue) {
-      setIsContestTimerRunning(false);
-    } else {
-      setIsContestTimerRunning(true);
-    }
+
     setTargetContest(contest);
   }, [contestList, targetContest._id]);
 
@@ -160,6 +163,29 @@ export default function Manager({
     setTargetDriveRecord(driveRecord);
   }, [driveRecordList, targetDriveRecord._id]);
 
+  // set isContestTimerRunning when targetContest is updated
+  useEffect(() => {
+    if (targetContest.isContestTimerRunning) {
+      setIsContestTimerRunning(true);
+    } else {
+      setIsContestTimerRunning(false);
+    }
+  }, [targetContest.isContestTimerRunning]);
+
+  // set block status when isContestInProgress or isContestTimerRunning is updated
+  useEffect(() => {
+    if (!isContestInProgress && !isContestTimerRunning) {
+      setIsContestBlocked(false);
+      setIsParticipantBlocked(false);
+      setIsSectorRecordBlocked(false);
+      return;
+    }
+
+    setIsContestBlocked(true);
+    setIsParticipantBlocked(true);
+    setIsSectorRecordBlocked(true);
+  }, [isContestInProgress, isContestTimerRunning]);
+
   return (
     <div className="manager">
       <div className="manager-col-1">
@@ -168,14 +194,17 @@ export default function Manager({
           contestList={contestList}
           targetContest={targetContest}
           setTargetContest={setTargetContest}
-          isContestTimerRunning={isContestTimerRunning}
+          isBlocked={isContestBlocked}
         />
 
         <OperationMenu
           setContestUpdateSignal={setUpdateSignal}
           targetContest={targetContest}
+          targetParticipant={targetParticipant}
           targetSectorRecord={targetSectorRecord}
           isContestTimerRunning={isContestTimerRunning}
+          isContestInProgress={isContestInProgress}
+          setIsContestInProgress={setIsContestInProgress}
         />
       </div>
 
@@ -184,7 +213,7 @@ export default function Manager({
         participantList={participantList}
         targetParticipant={targetParticipant}
         setTargetParticipant={setTargetParticipant}
-        isContestTimerRunning={isContestTimerRunning}
+        isBlocked={isParticipantBlocked}
       />
 
       <SectorRecordManager
@@ -192,7 +221,7 @@ export default function Manager({
         targetSectorRecord={targetSectorRecord}
         setTargetSectorRecord={setTargetSectorRecord}
         sectorRecordList={sectorRecordList}
-        isContestTimerRunning={isContestTimerRunning}
+        isBlocked={isSectorRecordBlocked}
       />
 
       <DriveRecordManager
@@ -201,6 +230,7 @@ export default function Manager({
         setTargetDriveRecord={setTargetDriveRecord}
         driveRecordList={driveRecordList}
         targetSectorRecord={targetSectorRecord}
+        isBlocked={isDriveRecordBlocked}
       />
     </div>
   );

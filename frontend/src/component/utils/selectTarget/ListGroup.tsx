@@ -5,15 +5,15 @@ export default function ListGroup({
   viewLengthPerPage,
   currentPageIndex,
   DistintionClass,
-  disabled,
+  disabled = false,
 }: {
   listOfObject: object[];
   target: object;
   setTarget: Function;
   viewLengthPerPage: number;
   currentPageIndex: number;
-  DistintionClass: any;
-  disabled: boolean;
+  DistintionClass: object;
+  disabled?: boolean;
 }) {
   const viewIndexMin = 0;
   const viewIndexMax = listOfObject.length - 1;

@@ -8,16 +8,19 @@ const sectorRecordController = new SectorRecordController();
 export default function SuspendOrder({
   setContestUpdateSignal,
   targetSectorRecord,
+  disabled,
 }: {
   setContestUpdateSignal: Function;
   targetSectorRecord: Partial<SectorRecordType>;
+  disabled: boolean;
 }) {
   return (
-    <div className="update-remaining-contest-time-btn">
+    <div className="suspend-order-btn">
       <h5>경연 순서 관리</h5>
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-secondary"
+        disabled={disabled}
         onClick={() => {
           const func = async () => {
             await sectorRecordController.patch(targetSectorRecord._id, {

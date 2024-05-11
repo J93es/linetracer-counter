@@ -14,22 +14,22 @@ export default function DriveRecordManager({
   setTargetDriveRecord,
   driveRecordList,
   targetSectorRecord,
+  isBlocked,
 }: {
   setDriveRecordUpdateSignal: Function;
   targetDriveRecord: Partial<DriveRecordType>;
   setTargetDriveRecord: Function;
   driveRecordList: object[];
   targetSectorRecord: Partial<SectorRecordType>;
+  isBlocked: boolean;
 }) {
   let retouchHtml = null;
-
-  const emptyDriveRecordListMessage = <p>주행 기록이 없습니다.</p>;
-  const emptyDriveRecordMessage = <p>주행 기록을 선택하세요.</p>;
-
-  if (isEmptyArray(driveRecordList)) {
-    retouchHtml = emptyDriveRecordListMessage;
+  if (isBlocked) {
+    retouchHtml = <p>수정이 불가능 합니다.</p>;
+  } else if (isEmptyArray(driveRecordList)) {
+    retouchHtml = <p>주행 기록이 없습니다.</p>;
   } else if (isEmptyObject(targetDriveRecord)) {
-    retouchHtml = emptyDriveRecordMessage;
+    retouchHtml = <p>주행 기록을 선택하세요.</p>;
   } else {
     retouchHtml = (
       <RetouchDriveRecord
@@ -43,7 +43,7 @@ export default function DriveRecordManager({
   return (
     <Accordion
       id="drive-record-Manager"
-      title="현재 주행 기록 선택/편집"
+      title="주행 기록 수정"
       body={
         <div className="drive-record-Manager">
           <SelectTarget

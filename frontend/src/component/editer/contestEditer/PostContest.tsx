@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ContestType } from "model/Contest";
-import { ContestSchema } from "model/fetch/ContestSchema";
+import { ContestSchema } from "model/form/ContestSchema";
 
 import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
