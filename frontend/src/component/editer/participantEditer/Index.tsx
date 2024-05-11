@@ -13,18 +13,24 @@ import { ParticipantType } from "model/Participant";
 import { participantEditMenuEnum } from "model/enums/index";
 import { isEmptyArray, isEmptyObject } from "tools/utils";
 
+import { filterStringBySectorEnum } from "model/enums";
+
 export default function ParticipantEditer({
   setParticipantUpdateSignal,
   participantList,
   targetParticipant,
   setTargetParticipant,
   targetContest,
+  filterStringBySector,
+  setFilterStringBySector,
 }: {
   setParticipantUpdateSignal: Function;
   participantList: object[];
   targetParticipant: Partial<ParticipantType>;
   setTargetParticipant: Function;
   targetContest: Partial<ContestType>;
+  filterStringBySector: string;
+  setFilterStringBySector: Function;
 }) {
   const [editMenu, setEditMenu] = useState<string>(participantEditMenuEnum[0]);
 
@@ -76,6 +82,11 @@ export default function ParticipantEditer({
       title="참가자 편집"
       body={
         <div className="participant-Editer">
+          <DropDown
+            target={filterStringBySector}
+            onClick={setFilterStringBySector}
+            menuList={filterStringBySectorEnum}
+          />
           <SelectTarget
             target={targetParticipant}
             setTarget={setTargetParticipant}

@@ -23,6 +23,17 @@ export const driveRecordEditMenuEnum: string[] = [
   "주행 기록 삭제",
 ];
 
+export const filterStringBySectorEnum: string[] = [
+  "all",
+  "freshman",
+  "expert-STEP--pre",
+  "expert-DC--pre",
+  "Time-Attack",
+  "expert-STEP--main",
+  "expert-DC--main",
+  "senior",
+];
+
 export const sectorEnum: string[] = [
   "freshman",
   "expert-STEP--pre",

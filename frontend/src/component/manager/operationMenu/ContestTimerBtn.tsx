@@ -25,16 +25,12 @@ export default function ContestTimerBtn({
     const func = async () => {
       const contest: Partial<ContestType> = {
         _id: targetContest._id,
-        curParticipnatId: targetSectorRecord.hostId,
-        curSectorRecordId: targetSectorRecord._id,
-
         contestTimerStartTime: curTime,
         isContestTimerRunning: true,
       };
       const sectorRecord: Partial<SectorRecordType> = {
         _id: targetSectorRecord._id,
         hostId: targetSectorRecord.hostId,
-        sectorState: "running",
       };
 
       await contestController.patch(contest._id, contest);
@@ -61,7 +57,6 @@ export default function ContestTimerBtn({
         _id: targetSectorRecord._id,
         hostId: targetSectorRecord.hostId,
         remainingContestTime: remainingContestTime,
-        sectorState: "end",
       };
 
       await contestController.patch(contest._id, contest);

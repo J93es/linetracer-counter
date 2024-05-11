@@ -3,8 +3,10 @@ import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 
 import { ContestController } from "controller/ContestController";
+import { SectorRecordController } from "controller/SectorRecordController";
 
 const contestController = new ContestController();
+const sectorRecordController = new SectorRecordController();
 
 export default function ManageProgress({
   setContestUpdateSignal,
@@ -25,13 +27,22 @@ export default function ManageProgress({
 }) {
   const startProgress = () => {
     const func = async () => {
-      await contestController.patch(targetContest._id, {
+      const contest: Partial<ContestType> = {
         _id: targetContest._id,
         curParticipnatId: targetParticipant._id,
         curSectorRecordId: targetSectorRecord._id,
-      });
+      };
+
+      const sectorRecord: Partial<SectorRecordType> = {
+        _id: targetSectorRecord._id,
+        hostId: targetSectorRecord.hostId,
+        sectorState: "running",
+      };
+
+      await contestController.patch(targetContest._id, contest);
+      await sectorRecordController.patch(targetSectorRecord._id, sectorRecord);
+
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
-      setIsContestInProgress(true);
     };
     func();
   };

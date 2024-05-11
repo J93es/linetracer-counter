@@ -3,7 +3,7 @@ import { SectorRecordType } from "model/SectorRecord";
 
 import { sortParticipantListByOrder } from "tools/sortParticipantList";
 
-function extractSectorRecordListByCurSector(
+function filterSectorRecordListByCurSector(
   curSector: string,
   targetSectorRecordList: SectorRecordType[]
 ): SectorRecordType[] | null {
@@ -17,10 +17,10 @@ function extractSectorRecordListByCurSector(
     return null;
   }
 
-  return JSON.parse(JSON.stringify(sectorRecordList));
+  return JSON.parse(JSON.stringify(targetSectorRecordList));
 }
 
-function extractParticipantByCurSector(
+function filterParticipantByCurSector(
   curSector: string,
   targetParticipantList: Partial<ParticipantType>[]
 ): Partial<ParticipantType>[] {
@@ -29,7 +29,7 @@ function extractParticipantByCurSector(
   for (let targetParticipant of targetParticipantList) {
     let participant = JSON.parse(JSON.stringify(targetParticipant));
 
-    let sectorRecordList = extractSectorRecordListByCurSector(
+    let sectorRecordList = filterSectorRecordListByCurSector(
       curSector,
       participant.sectorRecordList ?? []
     );
@@ -43,12 +43,12 @@ function extractParticipantByCurSector(
   return JSON.parse(JSON.stringify(participantList));
 }
 
-// curSector에 해당하는 참가자 목록, 부문 기록 만을 추출.
-export function extractParticipantList(
+// curSector에 해당하는 참가자 목록 만을 추출.
+export function filterParticipantList(
   curSector: string,
   targetParticipantList: Partial<ParticipantType>[]
 ): Partial<ParticipantType>[] {
-  let list: Partial<ParticipantType>[] = extractParticipantByCurSector(
+  let list: Partial<ParticipantType>[] = filterParticipantByCurSector(
     curSector,
     targetParticipantList
   );

@@ -69,12 +69,12 @@ export default function OperationMenu({
       setSuspendOrderBtnDisabled(true);
       return;
     }
-    if (isContestTimerRunning) {
+    if (isContestInProgress || isContestTimerRunning) {
       setSuspendOrderBtnDisabled(true);
       return;
     }
     setSuspendOrderBtnDisabled(false);
-  }, [targetSectorRecord, isContestTimerRunning]);
+  }, [targetSectorRecord, isContestInProgress, isContestTimerRunning]);
 
   useEffect(() => {
     if (isEmptyObject(targetSectorRecord)) {

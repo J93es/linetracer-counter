@@ -11,6 +11,7 @@ import DriveRecordEditer from "component/editer/driveRecordEditer/Index";
 
 import { sortParticipantListByName } from "tools/sortParticipantList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
+import { filterParticipantList } from "tools/filterParticipantList";
 
 import "component/editer/Editer.css";
 
@@ -26,6 +27,8 @@ export default function Editer({
   const [participantList, setParticipantList] = useState<
     Partial<ParticipantType>[]
   >([]);
+  const [filterStringBySector, setFilterStringBySector] =
+    useState<string>("all");
   const [targetParticipant, setTargetParticipant] = useState<
     Partial<ParticipantType>
   >({});
@@ -68,10 +71,17 @@ export default function Editer({
       return;
     }
 
-    participantList = sortParticipantListByName(participantList);
+    if (filterStringBySector === "all") {
+      participantList = sortParticipantListByName(participantList);
+    } else {
+      participantList = filterParticipantList(
+        filterStringBySector,
+        participantList
+      );
+    }
 
     setParticipantList(participantList);
-  }, [targetContest]);
+  }, [targetContest, filterStringBySector]);
 
   // set targetParticipant when participantList is updated
   useEffect(() => {
@@ -158,6 +168,8 @@ export default function Editer({
         targetParticipant={targetParticipant}
         setTargetParticipant={setTargetParticipant}
         targetContest={targetContest}
+        filterStringBySector={filterStringBySector}
+        setFilterStringBySector={setFilterStringBySector}
       />
 
       <SectorRecordEditer

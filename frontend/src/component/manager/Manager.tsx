@@ -14,7 +14,6 @@ import { extractParticipantList } from "tools/extractParticipantList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
 import "component/manager/Manager.css";
-import { set } from "react-hook-form";
 
 export default function Manager({
   setUpdateSignal,
@@ -134,6 +133,7 @@ export default function Manager({
       setTargetSectorRecord(sectorRecordList[sectorRecordList.length - 1]);
       return;
     }
+
     setTargetSectorRecord(sectorRecord);
   }, [sectorRecordList, targetSectorRecord._id]);
 
@@ -165,12 +165,28 @@ export default function Manager({
 
   // set isContestTimerRunning when targetContest is updated
   useEffect(() => {
+    if (isEmptyObject(targetContest)) {
+      setIsContestTimerRunning(false);
+      return;
+    }
     if (targetContest.isContestTimerRunning) {
       setIsContestTimerRunning(true);
-    } else {
-      setIsContestTimerRunning(false);
+      return;
     }
-  }, [targetContest.isContestTimerRunning]);
+    setIsContestTimerRunning(false);
+  }, [targetContest]);
+
+  useEffect(() => {
+    if (isEmptyObject(targetSectorRecord)) {
+      setIsContestInProgress(false);
+      return;
+    }
+    if (targetSectorRecord.sectorState === "running") {
+      setIsContestInProgress(true);
+      return;
+    }
+    setIsContestInProgress(false);
+  }, [targetSectorRecord]);
 
   // set block status when isContestInProgress or isContestTimerRunning is updated
   useEffect(() => {
