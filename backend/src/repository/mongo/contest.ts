@@ -3,8 +3,6 @@ import { ContestType } from "../../model/Contest";
 import { ContestRepository } from "../../core/repository/contest";
 import { ContestSchema } from "../../model/repository/ContestSchema";
 
-import { UserParticipantType } from "../..//model/service/UserParticipant";
-
 let instance: ContestMongoRepo | null = null;
 export class ContestMongoRepo implements ContestRepository {
   constructor() {
@@ -15,7 +13,6 @@ export class ContestMongoRepo implements ContestRepository {
   readonlyFilter(data: any) {
     const filteredData = JSON.parse(JSON.stringify(data));
     delete filteredData._id;
-    delete filteredData.id;
     delete filteredData.participantList;
 
     return filteredData;

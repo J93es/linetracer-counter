@@ -13,19 +13,20 @@ export default function DeleteDriveRecordBtn({
   targetDriveRecord: Partial<DriveRecordType>;
   targetSectorRecordId: string;
 }) {
+  const deleteDriveRecord = async () => {
+    await driveRecordController.delete(
+      targetSectorRecordId,
+      targetDriveRecord._id
+    );
+    setDriveRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
+  };
+
   return (
     <button
       type="button"
       className="btn btn-danger"
       onClick={() => {
-        const func = async () => {
-          await driveRecordController.delete(
-            targetSectorRecordId,
-            targetDriveRecord._id
-          );
-          setDriveRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
-        };
-        func();
+        deleteDriveRecord();
       }}
     >
       선택한 주행 기록 삭제

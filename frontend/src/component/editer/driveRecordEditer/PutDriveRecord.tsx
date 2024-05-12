@@ -40,7 +40,6 @@ export default function PutDriveRecord({
 
   const onSubmit = (data: Partial<DriveRecordType>) => {
     const func = async () => {
-      console.log(data);
       await driveRecordController.put(
         targetSectorRecordId,
         targetDriveRecord._id,

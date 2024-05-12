@@ -12,12 +12,12 @@ import { contestEditMenuEnum } from "model/enums/index";
 import { isEmptyObject } from "tools/utils";
 
 export default function ContestEditer({
-  setContestUpdateSignal,
+  setContestListRefreshSignal,
   contestList,
   targetContest,
   setTargetContest,
 }: {
-  setContestUpdateSignal: Function;
+  setContestListRefreshSignal: Function;
   contestList: Partial<ContestType>[];
   targetContest: Partial<ContestType>;
   setTargetContest: Function;
@@ -29,7 +29,7 @@ export default function ContestEditer({
     editMenuHtml = (
       <PostContest
         targetContest={targetContest}
-        setContestUpdateSignal={setContestUpdateSignal}
+        setContestUpdateSignal={setContestListRefreshSignal}
       />
     );
   } else if (isEmptyObject(targetContest)) {
@@ -37,14 +37,14 @@ export default function ContestEditer({
   } else if (editMenu === "대회 수정") {
     editMenuHtml = (
       <PutContest
-        setContestUpdateSignal={setContestUpdateSignal}
+        setContestUpdateSignal={setContestListRefreshSignal}
         targetContest={targetContest}
       />
     );
   } else if (editMenu === "대회 삭제") {
     editMenuHtml = (
       <DeleteContestBtn
-        setContestUpdateSignal={setContestUpdateSignal}
+        setContestUpdateSignal={setContestListRefreshSignal}
         targetContest={targetContest}
       />
     );
@@ -62,7 +62,7 @@ export default function ContestEditer({
             listOfObject={contestList}
             DistintionClass={ContestDistintion}
             setUpdateSignal={() => {
-              setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
+              setContestListRefreshSignal((prev: number) => (prev + 1) % 1000);
             }}
             disabled={false}
           />

@@ -13,22 +13,26 @@ import OperationMenu from "component/manager/operationMenu/Index";
 import { extractParticipantList } from "tools/extractParticipantList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
-import "component/manager/Manager.css";
+import "component/manager/Index.css";
 
 export default function Manager({
+  setContestListRefreshSignal,
   setUpdateSignal,
   contestList,
+  targetContest,
+  setTargetContest,
 }: {
+  setContestListRefreshSignal: Function;
   setUpdateSignal: Function;
   contestList: Partial<ContestType>[];
+  targetContest: Partial<ContestType>;
+  setTargetContest: Function;
 }) {
-  const [isContestInProgress, setIsContestInProgress] =
-    useState<boolean>(false);
+  const [isContestLaunch, setIsContestLaunch] = useState<boolean>(false);
   const [isContestTimerRunning, setIsContestTimerRunning] =
     useState<boolean>(false);
 
   const [isContestBlocked, setIsContestBlocked] = useState<boolean>(false);
-  const [targetContest, setTargetContest] = useState<Partial<ContestType>>({});
 
   const [isParticipantBlocked, setIsParticipantBlocked] =
     useState<boolean>(false);
@@ -48,30 +52,13 @@ export default function Manager({
     Partial<SectorRecordType>
   >({});
 
-  const [isDriveRecordBlocked, setIsDriveRecordBlocked] =
-    useState<boolean>(false);
+  const [isDriveRecordBlocked] = useState<boolean>(false);
   const [driveRecordList, setDriveRecordList] = useState<
     Partial<DriveRecordType>[]
   >([]);
   const [targetDriveRecord, setTargetDriveRecord] = useState<
     Partial<DriveRecordType>
   >({});
-
-  // set targetContest when contestList is updated
-  useEffect(() => {
-    if (isEmptyArray(contestList)) {
-      setTargetContest({});
-      return;
-    }
-
-    let contest = findTargetBy_id(targetContest._id, contestList);
-    if (isEmptyObject(contest)) {
-      setTargetContest(contestList[contestList.length - 1]);
-      return;
-    }
-
-    setTargetContest(contest);
-  }, [contestList, targetContest._id]);
 
   // set participantList when targetContest is updated
   useEffect(() => {
@@ -84,7 +71,7 @@ export default function Manager({
 
     // curSector에 해당하는 참가자 목록, 부문 기록 만을 추출.
     participantList = extractParticipantList(
-      targetContest?.curContestingSection || "",
+      targetContest.curContestingSection || "",
       participantList
     );
 
@@ -176,38 +163,37 @@ export default function Manager({
     setIsContestTimerRunning(false);
   }, [targetContest]);
 
-  // set isContestInProgress when targetSectorRecord is updated
+  // set isContestLaunch when targetSectorRecord is updated
   useEffect(() => {
     if (isEmptyObject(targetSectorRecord)) {
-      setIsContestInProgress(false);
+      setIsContestLaunch(false);
       return;
     }
     if (targetSectorRecord.sectorState === "running") {
-      setIsContestInProgress(true);
+      setIsContestLaunch(true);
       return;
     }
-    setIsContestInProgress(false);
+    setIsContestLaunch(false);
   }, [targetSectorRecord]);
 
-  // set block status when isContestInProgress or isContestTimerRunning is updated
+  // set block status when isContestLaunch or isContestTimerRunning is updated
   useEffect(() => {
-    if (!isContestInProgress && !isContestTimerRunning) {
-      setIsContestBlocked(false);
-      setIsParticipantBlocked(false);
-      setIsSectorRecordBlocked(false);
+    if (isContestLaunch || isContestTimerRunning) {
+      setIsContestBlocked(true);
+      setIsParticipantBlocked(true);
+      setIsSectorRecordBlocked(true);
       return;
     }
-
-    setIsContestBlocked(true);
-    setIsParticipantBlocked(true);
-    setIsSectorRecordBlocked(true);
-  }, [isContestInProgress, isContestTimerRunning]);
+    setIsContestBlocked(false);
+    setIsParticipantBlocked(false);
+    setIsSectorRecordBlocked(false);
+  }, [isContestLaunch, isContestTimerRunning]);
 
   return (
     <div className="manager">
       <div className="manager-col-1">
         <ContestManager
-          setContestUpdateSignal={setUpdateSignal}
+          setContestListRefreshSignal={setContestListRefreshSignal}
           contestList={contestList}
           targetContest={targetContest}
           setTargetContest={setTargetContest}
@@ -217,11 +203,11 @@ export default function Manager({
         <OperationMenu
           setContestUpdateSignal={setUpdateSignal}
           targetContest={targetContest}
-          targetParticipant={targetParticipant}
           targetSectorRecord={targetSectorRecord}
           isContestTimerRunning={isContestTimerRunning}
-          isContestInProgress={isContestInProgress}
-          setIsContestInProgress={setIsContestInProgress}
+          isContestLaunch={isContestLaunch}
+          setIsContestTimerRunning={setIsContestTimerRunning}
+          setIsContestLaunch={setIsContestLaunch}
         />
       </div>
 

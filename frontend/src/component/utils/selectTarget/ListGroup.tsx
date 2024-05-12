@@ -42,8 +42,8 @@ export default function ListGroup({
 }
 
 function getHtmlListGroup(
-  listOfObject: object[],
-  target: object,
+  listOfObject: any[],
+  target: any,
   setTargetId: Function,
   viewIndexHead: number,
   viewIndexTail: number,
@@ -53,7 +53,7 @@ function getHtmlListGroup(
   let htmlListGroup = [];
 
   for (let i = viewIndexHead; i <= viewIndexTail; i++) {
-    const obj: object = listOfObject[i];
+    const obj: any = listOfObject[i];
 
     let distintionInfo = "";
     try {
@@ -64,7 +64,10 @@ function getHtmlListGroup(
 
     let className = "list-group-item list-group-item-action small";
     let active = false;
-    if (JSON.stringify(obj) === JSON.stringify(target)) {
+    if (obj._id && target._id && obj._id === target._id) {
+      className += " active";
+      active = true;
+    } else if (JSON.stringify(obj) === JSON.stringify(target)) {
       className += " active";
       active = true;
     }

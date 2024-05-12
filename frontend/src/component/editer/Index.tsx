@@ -13,17 +13,21 @@ import { sortParticipantListByName } from "tools/sortParticipantList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 import { filterParticipantList } from "tools/filterParticipantList";
 
-import "component/editer/Editer.css";
+import "component/editer/Index.css";
 
 export default function Editer({
+  setContestListRefreshSignal,
   setUpdateSignal,
   contestList,
+  targetContest,
+  setTargetContest,
 }: {
+  setContestListRefreshSignal: Function;
   setUpdateSignal: Function;
   contestList: Partial<ContestType>[];
+  targetContest: Partial<ContestType>;
+  setTargetContest: Function;
 }) {
-  const [targetContest, setTargetContest] = useState<Partial<ContestType>>({});
-
   const [participantList, setParticipantList] = useState<
     Partial<ParticipantType>[]
   >([]);
@@ -46,21 +50,6 @@ export default function Editer({
   const [targetDriveRecord, setTargetDriveRecord] = useState<
     Partial<DriveRecordType>
   >({});
-
-  // set targetContest when contestList is updated
-  useEffect(() => {
-    if (isEmptyArray(contestList)) {
-      setTargetContest({});
-      return;
-    }
-
-    let contest = findTargetBy_id(targetContest._id, contestList);
-    if (isEmptyObject(contest)) {
-      setTargetContest(contestList[contestList.length - 1]);
-      return;
-    }
-    setTargetContest(contest);
-  }, [contestList, targetContest._id]);
 
   // set participantList when targetContest is updated
   useEffect(() => {
@@ -156,7 +145,7 @@ export default function Editer({
   return (
     <div className="editer">
       <ContestEditer
-        setContestUpdateSignal={setUpdateSignal}
+        setContestListRefreshSignal={setContestListRefreshSignal}
         contestList={contestList}
         targetContest={targetContest}
         setTargetContest={setTargetContest}

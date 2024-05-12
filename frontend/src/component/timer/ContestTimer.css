@@ -1,0 +1,19 @@
+.show-time {
+  display: flex;
+}
+
+.show-time-minute {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  width: 60px;
+}
+
+.show-time-second {
+  width: 80px;
+}
+
+.show-time-ms {
+  width: 140px;
+}

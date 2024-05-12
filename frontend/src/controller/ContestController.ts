@@ -28,7 +28,7 @@ export class ContestController {
 
   async get(id: string): Promise<any> {
     try {
-      const response = await fetch(`${uri}/Contest/${id}`, {
+      const response = await fetch(`${uri}/contest/${id}`, {
         method: "GET",
         credentials: "include",
       });

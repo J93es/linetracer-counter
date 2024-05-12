@@ -1,5 +1,4 @@
 import { ContestType } from "model/Contest";
-import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 
 import { ContestController } from "controller/ContestController";
@@ -8,28 +7,26 @@ import { SectorRecordController } from "controller/SectorRecordController";
 const contestController = new ContestController();
 const sectorRecordController = new SectorRecordController();
 
-export default function ManageProgress({
+export default function ContestLaunch({
   setContestUpdateSignal,
   targetContest,
-  targetParticipant,
   targetSectorRecord,
-  isContestInProgress,
-  setIsContestInProgress,
+  isContestLaunch,
+  setIsContestLaunch,
   disabled,
 }: {
   setContestUpdateSignal: Function;
   targetContest: Partial<ContestType>;
-  targetParticipant: Partial<ParticipantType>;
   targetSectorRecord: Partial<SectorRecordType>;
-  isContestInProgress: boolean;
-  setIsContestInProgress: Function;
+  isContestLaunch: boolean;
+  setIsContestLaunch: Function;
   disabled: boolean;
 }) {
   const startProgress = () => {
     const func = async () => {
       const contest: Partial<ContestType> = {
         _id: targetContest._id,
-        curParticipnatId: targetParticipant._id,
+        curParticipnatId: targetSectorRecord.hostId,
         curSectorRecordId: targetSectorRecord._id,
       };
 
@@ -41,14 +38,32 @@ export default function ManageProgress({
 
       await contestController.patch(targetContest._id, contest);
       await sectorRecordController.patch(targetSectorRecord._id, sectorRecord);
-
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();
   };
 
-  const stopProgress = () => {
-    setIsContestInProgress(false);
+  const stopProgress = async () => {
+    const sectorRecord: Partial<SectorRecordType> = {
+      _id: targetSectorRecord._id,
+      hostId: targetSectorRecord.hostId,
+      sectorState: "end",
+    };
+
+    await sectorRecordController.patch(targetSectorRecord._id, sectorRecord);
+    setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
+  };
+
+  const onClick = () => {
+    // start => stop
+    if (isContestLaunch) {
+      setIsContestLaunch(false);
+      stopProgress();
+      return;
+    }
+    // stop => start
+    setIsContestLaunch(true);
+    startProgress();
   };
 
   return (
@@ -58,17 +73,9 @@ export default function ManageProgress({
         type="button"
         className="btn btn-primary"
         disabled={disabled}
-        onClick={() => {
-          // start => stop
-          if (isContestInProgress) {
-            stopProgress();
-            return;
-          }
-          // stop => start
-          startProgress();
-        }}
+        onClick={onClick}
       >
-        {isContestInProgress ? "참가자 경연 종료" : "참가자 경연 시작"}
+        {isContestLaunch ? "참가자 경연 종료" : "참가자 경연 시작"}
       </button>
     </div>
   );
