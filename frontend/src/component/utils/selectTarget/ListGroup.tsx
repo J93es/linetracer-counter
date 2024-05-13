@@ -3,7 +3,7 @@ export default function ListGroup({
   target,
   setTarget,
   viewLengthPerPage,
-  currentPageIndex,
+  currentPageNumber,
   DistintionClass,
   disabled = false,
 }: {
@@ -11,7 +11,7 @@ export default function ListGroup({
   target: object;
   setTarget: Function;
   viewLengthPerPage: number;
-  currentPageIndex: number;
+  currentPageNumber: number;
   DistintionClass: object;
   disabled?: boolean;
 }) {
@@ -19,14 +19,14 @@ export default function ListGroup({
   const viewIndexMax = listOfObject.length - 1;
 
   const viewIndexHead =
-    currentPageIndex * viewLengthPerPage - viewLengthPerPage < viewIndexMin
+    currentPageNumber * viewLengthPerPage - viewLengthPerPage < viewIndexMin
       ? viewIndexMin
-      : currentPageIndex * viewLengthPerPage - viewLengthPerPage;
+      : currentPageNumber * viewLengthPerPage - viewLengthPerPage;
 
   const viewIndexTail =
-    currentPageIndex * viewLengthPerPage - 1 > viewIndexMax
+    currentPageNumber * viewLengthPerPage - 1 > viewIndexMax
       ? viewIndexMax
-      : currentPageIndex * viewLengthPerPage - 1;
+      : currentPageNumber * viewLengthPerPage - 1;
 
   const htmlListGroup = getHtmlListGroup(
     listOfObject,
@@ -53,42 +53,57 @@ function getHtmlListGroup(
   let htmlListGroup = [];
 
   for (let i = viewIndexHead; i <= viewIndexTail; i++) {
-    const obj: any = listOfObject[i];
-
-    let distintionInfo = "";
+    let htmlElement = null;
     try {
-      distintionInfo = Object.values(new DistintionClass(obj)).join(", ");
+      const obj: any = listOfObject[i];
+
+      let distintionInfo = "";
+      try {
+        distintionInfo = Object.values(new DistintionClass(obj)).join(", ");
+      } catch (e) {
+        distintionInfo = Object.values(obj).join(", ");
+      }
+
+      let className = "list-group-item list-group-item-action small";
+      let active = false;
+      if (obj._id && target._id && obj._id === target._id) {
+        className += " active";
+        active = true;
+      } else if (JSON.stringify(obj) === JSON.stringify(target)) {
+        className += " active";
+        active = true;
+      }
+
+      if (disabled) {
+        className += " disabled";
+      }
+
+      const onClick = () => setTargetId(obj);
+
+      htmlElement = (
+        <button
+          key={i}
+          type="button"
+          className={className}
+          onClick={onClick}
+          aria-current={active ? "true" : "false"}
+        >
+          {distintionInfo}
+        </button>
+      );
     } catch (e) {
-      distintionInfo = Object.values(obj).join(", ");
+      htmlElement = (
+        <button
+          key={i}
+          type="button"
+          className="list-group-item list-group-item-action small"
+          onClick={() => {}}
+          aria-current="false"
+        >
+          error
+        </button>
+      );
     }
-
-    let className = "list-group-item list-group-item-action small";
-    let active = false;
-    if (obj._id && target._id && obj._id === target._id) {
-      className += " active";
-      active = true;
-    } else if (JSON.stringify(obj) === JSON.stringify(target)) {
-      className += " active";
-      active = true;
-    }
-
-    if (disabled) {
-      className += " disabled";
-    }
-
-    const onClick = () => setTargetId(obj);
-
-    const htmlElement = (
-      <button
-        key={i}
-        type="button"
-        className={className}
-        onClick={onClick}
-        aria-current={active ? "true" : "false"}
-      >
-        {distintionInfo}
-      </button>
-    );
 
     htmlListGroup.push(htmlElement);
   }

@@ -1,54 +1,86 @@
 import { useEffect } from "react";
 
 export default function PaginationBar({
-  currentPageIndex,
-  setPageIndex,
+  currentPageNumber,
+  setPageNumber,
   viewLengthPerPage,
   listLength,
   targetIndex,
 }: {
-  currentPageIndex: number;
-  setPageIndex: Function;
+  currentPageNumber: number;
+  setPageNumber: Function;
   viewLengthPerPage: number;
   listLength: number;
   targetIndex: number;
 }) {
-  const pageIndexMin = 1;
-  const pageIndexMax = Math.trunc((listLength - 1) / viewLengthPerPage + 1);
-  const pageIndexList = getPageIndexList(pageIndexMin, pageIndexMax);
-
-  const htmlPageIndexList = getHtmlPageIndexList(
-    pageIndexList,
-    currentPageIndex,
-    setPageIndex
+  const viewLength = 3;
+  const pageNumberMin = 1;
+  const pageNumberMax = Math.trunc((listLength - 1) / viewLengthPerPage + 1);
+  const pageNumberList = getPageNumberList(
+    viewLength,
+    currentPageNumber,
+    pageNumberMin,
+    pageNumberMax
   );
 
-  const previousClick = () => {
-    setPageIndex(pageIndexMin);
+  const htmlPageNumberList = getHtmlPageNumberList(
+    pageNumberList,
+    currentPageNumber,
+    setPageNumber
+  );
+
+  const goFirstPage = () => {
+    setPageNumber(pageNumberMin);
   };
 
-  const nextClick = () => {
-    setPageIndex(pageIndexMax);
+  const goLastPage = () => {
+    setPageNumber(pageNumberMax);
+  };
+
+  const goPrevPage = () => {
+    const targetPageNumber =
+      currentPageNumber - 1 > pageNumberMin
+        ? currentPageNumber - 1
+        : pageNumberMin;
+    setPageNumber(targetPageNumber);
+  };
+
+  const goNextPage = () => {
+    const targetPageNumber =
+      currentPageNumber + 1 < pageNumberMax
+        ? currentPageNumber + 1
+        : pageNumberMax;
+    setPageNumber(targetPageNumber);
   };
 
   useEffect(() => {
     const targetPageViewIndex = Math.trunc(targetIndex / viewLengthPerPage + 1);
-    setPageIndex(targetPageViewIndex);
-  }, [targetIndex, viewLengthPerPage, setPageIndex, listLength]);
+    setPageNumber(targetPageViewIndex);
+  }, [targetIndex, viewLengthPerPage, setPageNumber, listLength]);
 
   return (
     <nav aria-label="...">
       <ul className="pagination justify-content-center">
         <li className="page-item">
-          <button className="page-link" onClick={previousClick}>
+          <button className="page-link" onClick={goFirstPage}>
             <span aria-hidden="true">&laquo;</span>
           </button>
         </li>
+        <li className="page-item">
+          <button className="page-link" onClick={goPrevPage}>
+            <span aria-hidden="true">&lsaquo;</span>
+          </button>
+        </li>
 
-        {htmlPageIndexList}
+        {htmlPageNumberList}
 
         <li className="page-item">
-          <button className="page-link" onClick={nextClick}>
+          <button className="page-link" onClick={goNextPage}>
+            <span aria-hidden="true">&rsaquo;</span>
+          </button>
+        </li>
+        <li className="page-item">
+          <button className="page-link" onClick={goLastPage}>
             <span aria-hidden="true">&raquo;</span>
           </button>
         </li>
@@ -57,39 +89,67 @@ export default function PaginationBar({
   );
 }
 
-function getPageIndexList(viewPageMin: number, viewPageMax: number) {
-  let pageIndexList = [];
+function getPageNumberList(
+  viewLength: number,
+  currentPageNumber: number,
+  pageNumberMin: number,
+  pageNumberMax: number
+) {
+  let headPageNumber: number = currentPageNumber - viewLength + 1;
+  let tailPageNumber: number = currentPageNumber + viewLength - 1;
+  let pageNumberList: number[] = [];
 
-  for (let i = viewPageMin; i <= viewPageMax; i++) {
-    pageIndexList.push(i);
+  if (headPageNumber < pageNumberMin) {
+    headPageNumber = pageNumberMin;
+
+    tailPageNumber = pageNumberMin + viewLength - 1;
+    if (tailPageNumber > pageNumberMax) {
+      tailPageNumber = pageNumberMax;
+    }
+  } else if (tailPageNumber > pageNumberMax) {
+    tailPageNumber = pageNumberMax;
+
+    headPageNumber = pageNumberMax - viewLength + 1;
+    if (headPageNumber < pageNumberMin) {
+      headPageNumber = pageNumberMin;
+    }
   }
 
-  return pageIndexList;
+  if (headPageNumber === tailPageNumber) {
+    pageNumberList.push(headPageNumber);
+    return pageNumberList;
+  }
+
+  for (let i = headPageNumber; i <= tailPageNumber; i++) {
+    pageNumberList.push(i);
+  }
+
+  return pageNumberList;
 }
 
-function getHtmlPageIndexList(
-  pageIndexList: number[],
-  currentPageIndex: number,
-  setPageIndex: Function
+function getHtmlPageNumberList(
+  pageNumberList: number[],
+  currentPageNumber: number,
+  setPageNumber: Function
 ) {
-  return pageIndexList.map((pageIndex) => {
-    if (currentPageIndex === pageIndex) {
+  return pageNumberList.map((pageNumber) => {
+    if (currentPageNumber === pageNumber) {
       return (
-        <li key={pageIndex} className="page-item active" aria-current="page">
-          <button className="page-link">{pageIndex}</button>
+        <li key={pageNumber} className="page-item active" aria-current="page">
+          <button className="page-link">{pageNumber}</button>
         </li>
       );
     }
 
     return (
-      <li key={pageIndex} className="page-item">
+      <li key={pageNumber} className="page-item">
         <button
           className="page-link"
           onClick={() => {
-            setPageIndex(pageIndex);
+            setPageNumber(pageNumber);
           }}
         >
-          {pageIndex}
+          {pageNumber}
         </button>
       </li>
     );

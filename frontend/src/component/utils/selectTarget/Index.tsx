@@ -3,14 +3,14 @@ import SetViewLength from "component/utils/selectTarget/SetViewLength";
 import ListGroup from "component/utils/selectTarget/ListGroup";
 import PaginationBar from "component/utils/selectTarget/PaginationBar";
 
-import "component/utils/selectTarget/SelectTarget.css";
+import "component/utils/selectTarget/Index.css";
 
 import { isEmptyArray } from "tools/utils";
 
 export default function SelectTarget({
   target,
   setTarget,
-  listOfObject = [],
+  listOfObject,
   DistintionClass,
   setUpdateSignal,
   disabled = false,
@@ -26,7 +26,7 @@ export default function SelectTarget({
 
   const targetIndex = getTargetIndex(listOfObject, target);
 
-  const [currentPageIndex, setPageIndex] = useState(
+  const [currentPageNumber, setPageNumber] = useState(
     Math.trunc(targetIndex / viewLengthPerPage + 1)
   );
 
@@ -63,7 +63,7 @@ export default function SelectTarget({
           target={target}
           setTarget={setTarget}
           viewLengthPerPage={viewLengthPerPage}
-          currentPageIndex={currentPageIndex}
+          currentPageNumber={currentPageNumber}
           DistintionClass={DistintionClass}
           disabled={disabled}
         />
@@ -71,8 +71,8 @@ export default function SelectTarget({
 
       <div className="select-target-footer">
         <PaginationBar
-          currentPageIndex={currentPageIndex}
-          setPageIndex={setPageIndex}
+          currentPageNumber={currentPageNumber}
+          setPageNumber={setPageNumber}
           viewLengthPerPage={viewLengthPerPage}
           listLength={listOfObject.length}
           targetIndex={targetIndex}
