@@ -9,9 +9,9 @@ import ParticipantEditer from "component/editer/participantEditer/Index";
 import SectorRecordEditer from "component/editer/sectorRecordEditer/Index";
 import DriveRecordEditer from "component/editer/driveRecordEditer/Index";
 
-import { sortParticipantListByName } from "tools/sortParticipantList";
+import { sortParticipantListByName } from "tools/sortTargetList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
-import { filterParticipantList } from "tools/filterParticipantList";
+import { filterParticipantListBySector } from "tools/filterTargetList";
 
 import "component/editer/Index.css";
 
@@ -63,7 +63,7 @@ export default function Editer({
     if (filterStringBySector === "all") {
       participantList = sortParticipantListByName(participantList);
     } else {
-      participantList = filterParticipantList(
+      participantList = filterParticipantListBySector(
         filterStringBySector,
         participantList
       );

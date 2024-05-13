@@ -1,15 +1,15 @@
 import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { sortParticipantListByOrder } from "tools/sortParticipantList";
+import { sortParticipantListByOrder } from "tools/sortTargetList";
 
-function filterSectorRecordListByCurSector(
-  curSector: string,
+function extractSectorRecordListBySector(
+  sector: string,
   targetSectorRecordList: SectorRecordType[]
 ): SectorRecordType[] | null {
   const sectorRecordList: SectorRecordType[] = targetSectorRecordList.filter(
     ({ contestSector }) => {
-      return contestSector === curSector;
+      return contestSector === sector;
     }
   );
 
@@ -17,11 +17,11 @@ function filterSectorRecordListByCurSector(
     return null;
   }
 
-  return JSON.parse(JSON.stringify(targetSectorRecordList));
+  return JSON.parse(JSON.stringify(sectorRecordList));
 }
 
-function filterParticipantByCurSector(
-  curSector: string,
+function extractParticipantBySector(
+  sector: string,
   targetParticipantList: Partial<ParticipantType>[]
 ): Partial<ParticipantType>[] {
   let participantList: Partial<ParticipantType>[] = [];
@@ -29,8 +29,8 @@ function filterParticipantByCurSector(
   for (let targetParticipant of targetParticipantList) {
     let participant = JSON.parse(JSON.stringify(targetParticipant));
 
-    let sectorRecordList = filterSectorRecordListByCurSector(
-      curSector,
+    let sectorRecordList = extractSectorRecordListBySector(
+      sector,
       participant.sectorRecordList ?? []
     );
 
@@ -43,13 +43,13 @@ function filterParticipantByCurSector(
   return JSON.parse(JSON.stringify(participantList));
 }
 
-// curSector에 해당하는 참가자 목록 만을 추출.
-export function filterParticipantList(
-  curSector: string,
+// Sector에 해당하는 참가자 목록, 부문 기록 만을 추출.
+export function extractParticipantListBySector(
+  sector: string,
   targetParticipantList: Partial<ParticipantType>[]
 ): Partial<ParticipantType>[] {
-  let list: Partial<ParticipantType>[] = filterParticipantByCurSector(
-    curSector,
+  let list: Partial<ParticipantType>[] = extractParticipantBySector(
+    sector,
     targetParticipantList
   );
 

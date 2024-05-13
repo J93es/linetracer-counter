@@ -10,7 +10,7 @@ import SectorRecordManager from "component/manager/sectorRecordManager/Index";
 import DriveRecordManager from "component/manager/driveRecordManager/Index";
 import OperationMenu from "component/manager/operationMenu/Index";
 
-import { extractParticipantList } from "tools/extractParticipantList";
+import { extractParticipantListBySector } from "tools/extractTargetList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
 import "component/manager/Index.css";
@@ -21,15 +21,18 @@ export default function Manager({
   contestList,
   targetContest,
   setTargetContest,
+  isContestTimerRunning,
+  setIsContestTimerRunning,
 }: {
   setContestListRefreshSignal: Function;
   setUpdateSignal: Function;
   contestList: Partial<ContestType>[];
   targetContest: Partial<ContestType>;
   setTargetContest: Function;
+  isContestTimerRunning: boolean;
+  setIsContestTimerRunning: Function;
 }) {
-  const [isContestLaunch, setIsContestLaunch] = useState<boolean>(false);
-  const [isContestTimerRunning, setIsContestTimerRunning] =
+  const [isSectorRecordLaunched, setIsSectorRecordLaunched] =
     useState<boolean>(false);
 
   const [isContestBlocked, setIsContestBlocked] = useState<boolean>(false);
@@ -70,7 +73,7 @@ export default function Manager({
     }
 
     // curSector에 해당하는 참가자 목록, 부문 기록 만을 추출.
-    participantList = extractParticipantList(
+    participantList = extractParticipantListBySector(
       targetContest.curContestingSection || "",
       participantList
     );
@@ -150,35 +153,22 @@ export default function Manager({
     setTargetDriveRecord(driveRecord);
   }, [driveRecordList, targetDriveRecord._id]);
 
-  // set isContestTimerRunning when targetContest is updated
-  useEffect(() => {
-    if (isEmptyObject(targetContest)) {
-      setIsContestTimerRunning(false);
-      return;
-    }
-    if (targetContest.isContestTimerRunning) {
-      setIsContestTimerRunning(true);
-      return;
-    }
-    setIsContestTimerRunning(false);
-  }, [targetContest]);
-
-  // set isContestLaunch when targetSectorRecord is updated
+  // set isSectorRecordLaunched when targetSectorRecord is updated
   useEffect(() => {
     if (isEmptyObject(targetSectorRecord)) {
-      setIsContestLaunch(false);
+      setIsSectorRecordLaunched(false);
       return;
     }
     if (targetSectorRecord.sectorState === "running") {
-      setIsContestLaunch(true);
+      setIsSectorRecordLaunched(true);
       return;
     }
-    setIsContestLaunch(false);
-  }, [targetSectorRecord]);
+    setIsSectorRecordLaunched(false);
+  }, [targetSectorRecord, setIsSectorRecordLaunched]);
 
-  // set block status when isContestLaunch or isContestTimerRunning is updated
+  // set block status when isSectorRecordLaunched or isContestTimerRunning is updated
   useEffect(() => {
-    if (isContestLaunch || isContestTimerRunning) {
+    if (isSectorRecordLaunched || isContestTimerRunning) {
       setIsContestBlocked(true);
       setIsParticipantBlocked(true);
       setIsSectorRecordBlocked(true);
@@ -187,7 +177,7 @@ export default function Manager({
     setIsContestBlocked(false);
     setIsParticipantBlocked(false);
     setIsSectorRecordBlocked(false);
-  }, [isContestLaunch, isContestTimerRunning]);
+  }, [isSectorRecordLaunched, isContestTimerRunning]);
 
   return (
     <div className="manager">
@@ -205,9 +195,9 @@ export default function Manager({
           targetContest={targetContest}
           targetSectorRecord={targetSectorRecord}
           isContestTimerRunning={isContestTimerRunning}
-          isContestLaunch={isContestLaunch}
+          isSectorRecordLaunched={isSectorRecordLaunched}
           setIsContestTimerRunning={setIsContestTimerRunning}
-          setIsContestLaunch={setIsContestLaunch}
+          setIsSectorRecordLaunched={setIsSectorRecordLaunched}
         />
       </div>
 

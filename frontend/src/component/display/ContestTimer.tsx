@@ -1,23 +1,22 @@
 import { useEffect, useState, useRef } from "react";
 
 import { ContestType } from "model/Contest";
-import { ParticipantType } from "model/Participant";
 
 import { getRemainingTime } from "tools/getRemainingTime";
-import { findTargetBy_id } from "tools/utils";
 
 import { SectorRecordType } from "model/SectorRecord";
 
-import "component/timer/ContestTimer.css";
+import "component/display/ContestTimer.css";
 
 export default function ContestTimer({
   targetContest,
+  curSectorRecord,
+  isContestTimerRunning,
 }: {
   targetContest: Partial<ContestType>;
+  curSectorRecord: Partial<SectorRecordType>;
+  isContestTimerRunning: boolean;
 }) {
-  const [isContestTimerRunning, setIsContestTimerRunning] = useState<boolean>(
-    targetContest.isContestTimerRunning || false
-  );
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [originRemainingTime, setOriginRemainingTime] = useState<
     number | undefined
@@ -26,20 +25,10 @@ export default function ContestTimer({
   const requestRef = useRef<number>(0);
 
   useEffect(() => {
-    const participant: Partial<ParticipantType> = findTargetBy_id(
-      targetContest.curParticipnatId || "",
-      targetContest.participantList || []
-    );
-    const sectorRecord: Partial<SectorRecordType> = findTargetBy_id(
-      targetContest.curSectorRecordId || "",
-      participant?.sectorRecordList || []
-    );
-
-    setRemainingTime(sectorRecord.remainingContestTime ?? 0);
-    setIsContestTimerRunning(targetContest.isContestTimerRunning || false);
-    setOriginRemainingTime(sectorRecord.remainingContestTime);
+    setRemainingTime(curSectorRecord.remainingContestTime ?? 0);
+    setOriginRemainingTime(curSectorRecord.remainingContestTime);
     setTimerStartTime(targetContest.contestTimerStartTime || -1);
-  }, [targetContest]);
+  }, [targetContest, curSectorRecord]);
 
   const timerAnimation = (prevTime: number) => {
     let timeStemp = prevTime;
@@ -50,7 +39,7 @@ export default function ContestTimer({
       curTime
     );
 
-    if (curTime - prevTime > 50) {
+    if (curTime - prevTime > 20) {
       setRemainingTime(remainingTime);
       timeStemp = curTime;
     }

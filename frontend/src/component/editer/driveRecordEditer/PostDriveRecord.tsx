@@ -39,7 +39,14 @@ export default function PostDriveRecord({
 
   const onSubmit = (data: Partial<DriveRecordType>) => {
     const func = async () => {
-      await driveRecordController.post(targetSectorRecordId, data);
+      console.log({
+        ...data,
+        writeTime: Date.now(),
+      });
+      await driveRecordController.post(targetSectorRecordId, {
+        ...data,
+        writeTime: Date.now(),
+      });
       setDriveRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

@@ -4,30 +4,41 @@ import { SectorRecordType } from "model/SectorRecord";
 import { ContestController } from "controller/ContestController";
 import { SectorRecordController } from "controller/SectorRecordController";
 
+import { getNextParticipant } from "tools/utils";
+
 const contestController = new ContestController();
 const sectorRecordController = new SectorRecordController();
 
-export default function ContestLaunch({
+export default function LaunchSectorRecord({
   setContestUpdateSignal,
   targetContest,
   targetSectorRecord,
-  isContestLaunch,
-  setIsContestLaunch,
+  isSectorRecordLaunched,
+  setIsSectorRecordLaunched,
   disabled,
 }: {
   setContestUpdateSignal: Function;
   targetContest: Partial<ContestType>;
   targetSectorRecord: Partial<SectorRecordType>;
-  isContestLaunch: boolean;
-  setIsContestLaunch: Function;
+  isSectorRecordLaunched: boolean;
+  setIsSectorRecordLaunched: Function;
   disabled: boolean;
 }) {
   const startProgress = () => {
     const func = async () => {
+      const targetParticipantId = targetSectorRecord.hostId;
+
+      const nextParticipant = getNextParticipant(
+        targetContest.curContestingSection || "",
+        targetParticipantId,
+        targetContest.participantList ?? []
+      );
+
       const contest: Partial<ContestType> = {
         _id: targetContest._id,
-        curParticipnatId: targetSectorRecord.hostId,
-        curSectorRecordId: targetSectorRecord._id,
+        curParticipant: targetParticipantId,
+        nextParticipant: nextParticipant._id,
+        curSectorRecord: targetSectorRecord._id,
       };
 
       const sectorRecord: Partial<SectorRecordType> = {
@@ -56,13 +67,13 @@ export default function ContestLaunch({
 
   const onClick = () => {
     // start => stop
-    if (isContestLaunch) {
-      setIsContestLaunch(false);
+    if (isSectorRecordLaunched) {
+      setIsSectorRecordLaunched(false);
       stopProgress();
       return;
     }
     // stop => start
-    setIsContestLaunch(true);
+    setIsSectorRecordLaunched(true);
     startProgress();
   };
 
@@ -75,7 +86,7 @@ export default function ContestLaunch({
         disabled={disabled}
         onClick={onClick}
       >
-        {isContestLaunch ? "참가자 경연 종료" : "참가자 경연 시작"}
+        {isSectorRecordLaunched ? "참가자 경연 종료" : "참가자 경연 시작"}
       </button>
     </div>
   );

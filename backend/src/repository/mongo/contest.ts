@@ -64,12 +64,13 @@ export class ContestMongoRepo implements ContestRepository {
 
   async readWithJoin(
     _id: string,
+    participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<any> {
     const contest = await ContestSchema.findOne({ _id: _id })
       .populate({
-        path: "participantList",
+        path: participantJoinTarget,
         select: selectParticipantField,
         populate: {
           path: "sectorRecordList",
@@ -86,12 +87,13 @@ export class ContestMongoRepo implements ContestRepository {
 
   async readWithJoinById(
     id: string,
+    participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<any> {
     const contest = await ContestSchema.findOne({ id: id })
       .populate({
-        path: "curParticipant nextParticipant participantList",
+        path: participantJoinTarget,
         select: selectParticipantField,
         populate: {
           path: "sectorRecordList",

@@ -71,6 +71,7 @@ export class ContestService implements ContestServiceInterface {
   async get(_id: string): Promise<ContestType> {
     const contest: Partial<ContestType> = await contestRepository.readWithJoin(
       _id,
+      "participantList",
       {},
       {}
     );

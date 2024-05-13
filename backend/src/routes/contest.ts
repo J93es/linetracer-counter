@@ -57,27 +57,32 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.post("/:id", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = req.body;
-    const id: string = req.params.id;
-    if (!data._id) {
-      data.id = id;
-    }
-    if (id !== data.id) {
-      throw new Error("id is not matched : query id and body id is different");
-    }
+router.post(
+  "/:_id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data = req.body;
+      const _id: string = req.params._id;
+      if (!data._id) {
+        data._id = _id;
+      }
+      if (_id !== data._id) {
+        throw new Error(
+          "id is not matched : query id and body id is different"
+        );
+      }
 
-    const contest: Partial<ContestType> = await contestService.post(data);
+      const contest: Partial<ContestType> = await contestService.post(data);
 
-    res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(contest).status(200);
-  } catch (err: any) {
-    console.error(err);
-    res.header("Content-Type", "application/json; charset=utf-8");
-    res.send({ message: err.toString() }).status(404);
+      res.header("Content-Type", "application/json; charset=utf-8");
+      res.send(contest).status(200);
+    } catch (err: any) {
+      console.error(err);
+      res.header("Content-Type", "application/json; charset=utf-8");
+      res.send({ message: err.toString() }).status(404);
+    }
   }
-});
+);
 
 router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello patch");

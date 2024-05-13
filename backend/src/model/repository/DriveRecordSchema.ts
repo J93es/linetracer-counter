@@ -9,6 +9,7 @@ export const driveRecordSchema = new Schema({
     enum: ["Ignored", "Line-Out", "Pit-In-KO", "SUCCESS"],
   },
   recordTime: { type: Number, required: true },
+  writeTime: { type: Number, required: true },
 });
 
 export const DriveRecordSchema = mongoose.model(

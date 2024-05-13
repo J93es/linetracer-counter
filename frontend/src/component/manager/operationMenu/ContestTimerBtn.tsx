@@ -5,6 +5,8 @@ import { SectorRecordController } from "controller/SectorRecordController";
 
 import { getRemainingTime } from "tools/getRemainingTime";
 
+import { getNextParticipant } from "tools/utils";
+
 const contestController = new ContestController();
 const sectorRecordController = new SectorRecordController();
 
@@ -24,12 +26,21 @@ export default function ContestTimerBtn({
   disabled: boolean;
 }) {
   const contestTimerStart = (curTime: number) => {
+    const targetParticipantId = targetSectorRecord.hostId;
+
+    const nextParticipant = getNextParticipant(
+      targetContest.curContestingSection || "",
+      targetParticipantId,
+      targetContest.participantList ?? []
+    );
+
     const func = async () => {
       const contest: Partial<ContestType> = {
         _id: targetContest._id,
 
-        curParticipnatId: targetSectorRecord.hostId,
-        curSectorRecordId: targetSectorRecord._id,
+        curParticipant: targetParticipantId,
+        curSectorRecord: targetSectorRecord._id,
+        nextParticipant: nextParticipant._id,
         contestTimerStartTime: curTime,
         isContestTimerRunning: true,
       };

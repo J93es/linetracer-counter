@@ -4,8 +4,9 @@ export type ContestType = {
   title: string;
 
   curContestingSection: string;
-  curParticipnatId: string;
-  curSectorRecordId: string;
+  curParticipant: object;
+  nextParticipant: object;
+  curSectorRecord: object;
 
   contestTimerStartTime: number;
   isContestTimerRunning: boolean;
@@ -23,8 +24,9 @@ export default class Contest {
   title: string;
 
   curContestingSection: string;
-  curParticipnatId: string;
-  curSectorRecordId: string;
+  curParticipant: object;
+  nextParticipant: object;
+  curSectorRecord: object;
 
   contestTimerStartTime: number;
   isContestTimerRunning: boolean;
@@ -41,8 +43,9 @@ export default class Contest {
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
-    this.curParticipnatId = data.curParticipnatId;
-    this.curSectorRecordId = data.curSectorRecordId;
+    this.curParticipant = data.curParticipant;
+    this.nextParticipant = data.nextParticipant;
+    this.curSectorRecord = data.curSectorRecord;
 
     this.contestTimerStartTime = data.contestTimerStartTime;
     this.isContestTimerRunning = data.isContestTimerRunning;

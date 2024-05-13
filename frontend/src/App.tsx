@@ -1,5 +1,3 @@
-// import React from "react";
-// import logo from "./logo.svg";
 import "./App.css";
 
 import { useState, useEffect } from "react";
@@ -10,7 +8,7 @@ import { ContestController } from "controller/ContestController";
 
 import Editer from "component/editer/Index";
 import Manager from "component/manager/Index";
-import ContestTimer from "component/timer/ContestTimer";
+import Display from "component/display/Index";
 
 import { isEmptyArray, isEmptyObject } from "tools/utils";
 
@@ -29,6 +27,9 @@ function App() {
   const [managerTargetContest, setManagerTargetContest] = useState<
     Partial<ContestType>
   >({});
+
+  const [isContestTimerRunning, setIsContestTimerRunning] =
+    useState<boolean>(false);
 
   // set contestList when contestListRefreshSignal is updated
   useEffect(() => {
@@ -80,36 +81,34 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [managerUpdateSignal, managerTargetContest._id]);
 
-  // console.log("contestList", contestList);
-  // console.log("targetContest", targetContest);
-  // console.log("participantList", participantList);
-  // console.log("targetParticipant", targetParticipant);
-  // console.log("participantRecordList", participantRecordList);
-  // console.log("targetParticipantRecord", targetParticipantRecord);
-  // console.log("driveRecordList", driveRecordList);
-  // console.log("targetDriveRecord", targetDriveRecord);
+  // set isContestTimerRunning when targetContest is updated
+  useEffect(() => {
+    if (isEmptyObject(managerTargetContest)) {
+      setIsContestTimerRunning(false);
+      return;
+    }
+    if (managerTargetContest.isContestTimerRunning) {
+      setIsContestTimerRunning(true);
+      return;
+    }
+    setIsContestTimerRunning(false);
+  }, [managerTargetContest]);
 
   return (
     <div className="App">
       <header className="App-header">
-        {/* <SelectContestSection
-          setContestUpdateSignal={setUpdateSignal}
-          targetContest={targetContest}
-        />
-
-        <ContestTimerStartBtn
-          setContestUpdateSignal={setUpdateSignal}
-          targetContest={targetContest}
+        <Display
+          targetContest={managerTargetContest}
           isContestTimerRunning={isContestTimerRunning}
-          setIsContestTimerRunning={setIsContestTimerRunning}
-        /> */}
-        <ContestTimer targetContest={managerTargetContest} />
+        />
         <Manager
           setContestListRefreshSignal={setContestListRefreshSignal}
           setUpdateSignal={setManagerUpdateSignal}
           contestList={contestList}
           targetContest={managerTargetContest}
           setTargetContest={setManagerTargetContest}
+          isContestTimerRunning={isContestTimerRunning}
+          setIsContestTimerRunning={setIsContestTimerRunning}
         />
         <Editer
           setContestListRefreshSignal={setContestListRefreshSignal}

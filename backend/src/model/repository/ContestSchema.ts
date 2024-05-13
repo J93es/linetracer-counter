@@ -20,8 +20,21 @@ const contestSchema = new Schema({
       "end",
     ],
   },
-  curParticipnatId: { type: Schema.Types.ObjectId },
-  curSectorRecordId: { type: Schema.Types.ObjectId },
+  curParticipant: {
+    type: Schema.Types.ObjectId,
+    ref: "ParticipantSchema",
+    required: true,
+  },
+  nextParticipant: {
+    type: Schema.Types.ObjectId,
+    ref: "ParticipantSchema",
+    required: true,
+  },
+  curSectorRecord: {
+    type: Schema.Types.ObjectId,
+    ref: "SectorRecordSchema",
+    required: true,
+  },
 
   contestTimerStartTime: { type: Number },
   isContestTimerRunning: { type: Boolean },

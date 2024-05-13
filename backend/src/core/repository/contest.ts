@@ -9,12 +9,14 @@ export interface ContestRepository {
   read(_id: string): Promise<any>;
   readWithJoin(
     _id: string,
+    participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<any>;
 
   readWithJoinById(
     id: string,
+    participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<any>;

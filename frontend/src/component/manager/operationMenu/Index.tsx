@@ -3,7 +3,7 @@ import ContestTimerBtn from "component/manager/operationMenu/ContestTimerBtn";
 import SelectContestSection from "component/manager/operationMenu/SelectContestSection";
 import ManageRemainingContestTime from "component/manager/operationMenu/ManageRemainingContestTime/Index";
 import SuspendOrder from "component/manager/operationMenu/SuspendOrder";
-import ContestLaunch from "component/manager/operationMenu/ContestLaunch";
+import LaunchSectorRecord from "component/manager/operationMenu/LaunchSectorRecord";
 
 import "component/manager/operationMenu/Index.css";
 
@@ -19,16 +19,16 @@ export default function OperationMenu({
   targetSectorRecord,
   isContestTimerRunning,
   setIsContestTimerRunning,
-  isContestLaunch,
-  setIsContestLaunch,
+  isSectorRecordLaunched,
+  setIsSectorRecordLaunched,
 }: {
   setContestUpdateSignal: Function;
   targetContest: Partial<ContestType>;
   targetSectorRecord: Partial<SectorRecordType>;
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
-  isContestLaunch: boolean;
-  setIsContestLaunch: Function;
+  isSectorRecordLaunched: boolean;
+  setIsSectorRecordLaunched: Function;
 }) {
   const [contestTimerBtnDisabled, setContestTimerBtnDisabled] = useState(false);
   const [contestLaunchBtnDisabled, setcontestLaunchBtnDisabled] =
@@ -58,12 +58,12 @@ export default function OperationMenu({
 
       return;
     }
-    if (!isContestLaunch) {
+    if (!isSectorRecordLaunched) {
       setContestTimerBtnDisabled(true);
       return;
     }
     setContestTimerBtnDisabled(false);
-  }, [targetSectorRecord, isContestLaunch]);
+  }, [targetSectorRecord, isSectorRecordLaunched]);
 
   // set suspendOrderBtnDisabled
   useEffect(() => {
@@ -71,12 +71,12 @@ export default function OperationMenu({
       setSuspendOrderBtnDisabled(true);
       return;
     }
-    if (isContestLaunch || isContestTimerRunning) {
+    if (isContestTimerRunning) {
       setSuspendOrderBtnDisabled(true);
       return;
     }
     setSuspendOrderBtnDisabled(false);
-  }, [targetSectorRecord, isContestLaunch, isContestTimerRunning]);
+  }, [targetSectorRecord, isSectorRecordLaunched, isContestTimerRunning]);
 
   // set manageRemainingContestTimeBtnDisabled
   useEffect(() => {
@@ -105,12 +105,12 @@ export default function OperationMenu({
           </div>
 
           <div className="operation-menu-row">
-            <ContestLaunch
+            <LaunchSectorRecord
               setContestUpdateSignal={setContestUpdateSignal}
               targetContest={targetContest}
               targetSectorRecord={targetSectorRecord}
-              isContestLaunch={isContestLaunch}
-              setIsContestLaunch={setIsContestLaunch}
+              isSectorRecordLaunched={isSectorRecordLaunched}
+              setIsSectorRecordLaunched={setIsSectorRecordLaunched}
               disabled={contestLaunchBtnDisabled}
             />
           </div>

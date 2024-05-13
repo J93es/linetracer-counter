@@ -53,6 +53,7 @@ export class UserMongoService implements UserService {
     try {
       const data = await contestRepository.readWithJoinById(
         year,
+        "participantList curParticipant",
         {
           _id: 0,
           name: 1,
