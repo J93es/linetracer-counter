@@ -1,19 +1,36 @@
+import { ContestType } from "../Contest";
+
 import { UserParticipantType } from "./UserParticipant";
 
-export type UserContestType = {
+export interface UserContestType
+  extends Omit<
+    ContestType,
+    | "_id"
+    | "contestTimerStartTime"
+    | "isContestTimerRunning"
+    | "driveStartTime"
+    | "isDriveTimerRunning"
+    | "latestDriveRecordTime"
+  > {
   id: string;
   title: string;
 
   curContestingSection: string;
+  curParticipant: object;
+  nextParticipant: object;
+  curSectorRecord: object;
 
   participantList: UserParticipantType[];
-};
+}
 
-export default class UserContest {
+export default class UserContest implements UserContestType {
   id: string;
   title: string;
 
   curContestingSection: string;
+  curParticipant: object;
+  nextParticipant: object;
+  curSectorRecord: object;
 
   participantList: UserParticipantType[];
 
@@ -22,7 +39,22 @@ export default class UserContest {
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
+    this.curParticipant = data.curParticipant;
+    this.nextParticipant = data.nextParticipant;
+    this.curSectorRecord = data.curSectorRecord;
 
     this.participantList = data.participantList;
   }
 }
+
+export const userContestTamplate: UserContestType = new UserContest({
+  id: "",
+  title: "",
+
+  curContestingSection: "",
+  curParticipant: {},
+  nextParticipant: {},
+  curSectorRecord: {},
+
+  participantList: [],
+});

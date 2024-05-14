@@ -1,5 +1,6 @@
-export interface RobotType {
-  _id: any;
+import { RobotType } from "../Robot";
+
+export interface UserRobotType extends Omit<RobotType, "_id"> {
   name: string;
   cpu: string;
   rom: string;
@@ -10,8 +11,7 @@ export interface RobotType {
   sensor: string;
 }
 
-export default class Robot implements RobotType {
-  _id: any;
+export default class UserRobot {
   name: string;
   cpu: string;
   rom: string;
@@ -21,8 +21,7 @@ export default class Robot implements RobotType {
   adc: string;
   sensor: string;
 
-  constructor(data: RobotType) {
-    this._id = data._id;
+  constructor(data: UserRobotType) {
     this.name = data.name;
     this.cpu = data.cpu;
     this.rom = data.rom;
@@ -34,8 +33,7 @@ export default class Robot implements RobotType {
   }
 }
 
-export const robotTamplate: RobotType = {
-  _id: "",
+export const userRobotTamplate: UserRobotType = new UserRobot({
   name: "",
   cpu: "",
   rom: "",
@@ -44,4 +42,4 @@ export const robotTamplate: RobotType = {
   motor: "",
   adc: "",
   sensor: "",
-};
+});

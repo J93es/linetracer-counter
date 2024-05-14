@@ -1,7 +1,20 @@
 import { RobotType } from "./Robot";
 import { SectorRecordType } from "./SectorRecord";
 
-export type ParticipantType = {
+export interface ParticipantType {
+  _id: any;
+  hostId: any;
+
+  name: string;
+  association: string;
+  speech: string;
+
+  robot: any;
+
+  sectorRecordList: any;
+}
+
+export default class Participant implements ParticipantType {
   _id: any;
   hostId: any;
 
@@ -11,20 +24,7 @@ export type ParticipantType = {
 
   robot: RobotType;
 
-  sectorRecordList: object[];
-};
-
-export default class Participant {
-  _id: any;
-  hostId: any;
-
-  name: string;
-  association: string;
-  speech: string;
-
-  robot: RobotType;
-
-  sectorRecordList: object[];
+  sectorRecordList: SectorRecordType[];
 
   constructor(data: ParticipantType) {
     this._id = data._id;

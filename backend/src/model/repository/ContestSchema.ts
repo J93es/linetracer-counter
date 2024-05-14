@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
+import { ContestType } from "../Contest";
+
 const { Schema } = mongoose;
 
-const contestSchema = new Schema({
+const contestSchema = new Schema<ContestType>({
   id: { type: String, unique: true, required: true, readonly: true },
   title: { type: String, required: true },
 

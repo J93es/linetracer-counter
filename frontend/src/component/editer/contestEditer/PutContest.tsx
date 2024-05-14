@@ -7,7 +7,7 @@ import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
 import { ContestType } from "model/Contest";
-import { ContestSchema } from "model/form/ContestSchema";
+import { FormContestSchema } from "model/form/ContestSchema";
 import { sectorEnum } from "model/enums/index";
 import { ContestController } from "controller/ContestController";
 
@@ -25,7 +25,7 @@ export default function PutContest({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<ContestType>({ resolver: zodResolver(ContestSchema) });
+  } = useForm<ContestType>({ resolver: zodResolver(FormContestSchema) });
 
   useEffect(() => {
     setValue("id", targetContest.id ?? "");

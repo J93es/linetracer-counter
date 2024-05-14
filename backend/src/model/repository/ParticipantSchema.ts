@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-import { SectorRecordSchema } from "./SectorRecordSchema";
+import { RobotType } from "../Robot";
 
-const robotSchema = new Schema({
+const robotSchema = new Schema<RobotType>({
   name: { type: String },
   cpu: { type: String },
   rom: { type: String },

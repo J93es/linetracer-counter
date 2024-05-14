@@ -1,13 +1,15 @@
+import { SectorRecordType } from "../SectorRecord";
 import { UserDriveRecordType } from "./UserDriveRecord";
 
-export type UserSectorRecordType = {
+export interface UserSectorRecordType
+  extends Omit<SectorRecordType, "_id" | "hostId"> {
   contestSector: string;
   order: number;
   remainingContestTime: number;
   sectorState: string;
 
   driveRecordList: UserDriveRecordType[];
-};
+}
 
 export default class UserSectorRecord {
   contestSector: string;
@@ -26,3 +28,13 @@ export default class UserSectorRecord {
     this.driveRecordList = data.driveRecordList;
   }
 }
+
+export const userSectorRecordTamplate: UserSectorRecordType =
+  new UserSectorRecord({
+    contestSector: "",
+    order: 0,
+    remainingContestTime: 300000,
+    sectorState: "ready",
+
+    driveRecordList: [],
+  });

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SectorRecordType } from "model/SectorRecord";
-import { SectorRecordSchema } from "model/form/SectorRecordSchema";
+import { FormSectorRecordSchema } from "model/form/SectorRecordSchema";
 
 import { SectorRecordController } from "controller/SectorRecordController";
 
@@ -30,7 +30,7 @@ export default function RetouchSectorRecord({
     setValue,
     formState: { errors },
   } = useForm<SectorRecordType>({
-    resolver: zodResolver(SectorRecordSchema),
+    resolver: zodResolver(FormSectorRecordSchema),
   });
 
   useEffect(() => {

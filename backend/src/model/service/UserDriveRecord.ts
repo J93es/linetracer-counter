@@ -1,8 +1,10 @@
-export type UserDriveRecordType = {
+import { DriveRecordType } from "../DriveRecord";
+
+export interface UserDriveRecordType extends Omit<DriveRecordType, "_id"> {
   type: string;
   recordTime: number;
   writeTime: number;
-};
+}
 
 export default class UserDriveRecord {
   type: string;
@@ -15,3 +17,11 @@ export default class UserDriveRecord {
     this.writeTime = data.writeTime;
   }
 }
+
+export const userDriveRecordTamplate: UserDriveRecordType = new UserDriveRecord(
+  {
+    type: "",
+    recordTime: 300000,
+    writeTime: Date.now(),
+  }
+);

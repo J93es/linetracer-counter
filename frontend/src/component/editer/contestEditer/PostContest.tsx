@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ContestType } from "model/Contest";
-import { ContestSchema } from "model/form/ContestSchema";
+import { FormContestSchema } from "model/form/ContestSchema";
 
 import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
@@ -26,7 +26,7 @@ export default function PostContest({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<ContestType>({ resolver: zodResolver(ContestSchema) });
+  } = useForm<ContestType>({ resolver: zodResolver(FormContestSchema) });
 
   useEffect(() => {
     setValue("id", "");

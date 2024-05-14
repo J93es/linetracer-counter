@@ -1,11 +1,11 @@
-export type DriveRecordType = {
+export interface DriveRecordType {
   _id: any;
   type: string;
   recordTime: number;
   writeTime: number;
-};
+}
 
-export default class DriveRecord {
+export default class DriveRecord implements DriveRecordType {
   _id: any;
   type: string;
   recordTime: number;

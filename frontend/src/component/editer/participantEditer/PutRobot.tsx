@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ParticipantType } from "model/Participant";
 import { RobotType } from "model/Robot";
-import { RobotSchema } from "model/form/RobotSchema";
+import { FormRobotSchema } from "model/form/RobotSchema";
 
 import { ParticipantController } from "controller/ParticipantController";
 
@@ -26,7 +26,7 @@ export default function PutParticipant({
     setValue,
     formState: { errors },
   } = useForm<RobotType>({
-    resolver: zodResolver(RobotSchema),
+    resolver: zodResolver(FormRobotSchema),
     defaultValues: targetParticipant.robot,
   });
 

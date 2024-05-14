@@ -1,4 +1,6 @@
-export type ContestType = {
+import { ParticipantType } from "./Participant";
+
+export interface ContestType {
   _id: any;
   id: string;
   title: string;
@@ -15,10 +17,10 @@ export type ContestType = {
   isDriveTimerRunning: boolean;
   latestDriveRecordTime: number;
 
-  participantList: object[];
-};
+  participantList: any;
+}
 
-export default class Contest {
+export default class Contest implements ContestType {
   _id: any;
   id: string;
   title: string;
@@ -35,7 +37,7 @@ export default class Contest {
   isDriveTimerRunning: boolean;
   latestDriveRecordTime: number;
 
-  participantList: object[];
+  participantList: Partial<ParticipantType>[];
 
   constructor(data: ContestType) {
     this._id = data._id;

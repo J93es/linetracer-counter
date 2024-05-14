@@ -1,6 +1,19 @@
 import { z } from "zod";
 
-export const RobotSchema = z.object({
+import { RobotType } from "model/Robot";
+
+export interface FormDriveRecordType extends Omit<RobotType, "_id"> {
+  name: string;
+  cpu: string;
+  rom: string;
+  ram: string;
+  motorDriver: string;
+  motor: string;
+  adc: string;
+  sensor: string;
+}
+
+export const FormRobotSchema = z.object({
   name: z.string().min(1, { message: "1글자 이상이어야 합니다." }),
   cpu: z.string(),
   rom: z.string(),

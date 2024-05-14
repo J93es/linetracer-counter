@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DriveRecordType } from "model/DriveRecord";
-import { DriveRecordSchema } from "model/form/DriveRecordSchema";
+import { FormDriveRecordSchema } from "model/form/DriveRecordSchema";
 
 import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";
@@ -30,7 +30,7 @@ export default function PutDriveRecord({
     setValue,
     formState: { errors },
   } = useForm<DriveRecordType>({
-    resolver: zodResolver(DriveRecordSchema),
+    resolver: zodResolver(FormDriveRecordSchema),
   });
 
   useEffect(() => {

@@ -1,31 +1,32 @@
-export type ContestDistinctionType = {
-  // _id: string;
+import { ContestType } from "model/Contest";
+
+export interface ContestDistinctionType
+  extends Omit<
+    ContestType,
+    | "_id"
+    | "title"
+    | "curContestingSection"
+    | "curParticipant"
+    | "nextParticipant"
+    | "curSectorRecord"
+    | "contestTimerStartTime"
+    | "isContestTimerRunning"
+    | "driveStartTime"
+    | "isDriveTimerRunning"
+    | "latestDriveRecordTime"
+    | "participantList"
+  > {
   id: string;
-  // title: string;
+}
 
-  // curContestingSection: string;
-};
-
-export default class ContestDistinction {
-  // _id: string;
+export default class ContestDistinction implements ContestDistinctionType {
   id: string;
-  // title: string;
-
-  // curContestingSection: string;
 
   constructor(data: ContestDistinctionType) {
-    // this._id = data?._id;
-    this.id = data?.id;
-    // this.title = data?.title;
-
-    // this.curContestingSection = data?.curContestingSection;
+    this.id = data.id;
   }
 }
 
 export const contestTamplate: ContestDistinctionType = new ContestDistinction({
-  // _id: "",
   id: "",
-  // title: "",
-
-  // curContestingSection: "",
 });

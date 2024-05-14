@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ParticipantType } from "model/Participant";
-import { ParticipantSchema } from "model/form/ParticipantSchema";
+import { FormParticipantSchema } from "model/form/ParticipantSchema";
 
 import { ParticipantController } from "controller/ParticipantController";
 
@@ -24,7 +24,9 @@ export default function PutParticipant({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<ParticipantType>({ resolver: zodResolver(ParticipantSchema) });
+  } = useForm<ParticipantType>({
+    resolver: zodResolver(FormParticipantSchema),
+  });
 
   useEffect(() => {
     setValue("name", targetParticipant.name ?? "");

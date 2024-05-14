@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+
+import { SectorRecordType } from "../SectorRecord";
 import { driveRecordSchema } from "./DriveRecordSchema";
 
 const { Schema } = mongoose;
 
-const sectorRecordSchema = new Schema({
+const sectorRecordSchema = new Schema<SectorRecordType>({
   hostId: { type: String, required: true, readonly: true },
 
   contestSector: {

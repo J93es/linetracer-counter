@@ -1,6 +1,6 @@
 import { DriveRecordType, driveRecordTamplate } from "model/DriveRecord";
 
-export type SectorRecordType = {
+export interface SectorRecordType {
   _id: any;
   hostId: any;
 
@@ -9,10 +9,10 @@ export type SectorRecordType = {
   remainingContestTime: number;
   sectorState: string;
 
-  driveRecordList: DriveRecordType[];
-};
+  driveRecordList: any;
+}
 
-export default class SectorRecord {
+export default class SectorRecord implements SectorRecordType {
   _id: any;
   hostId: any;
 
@@ -28,8 +28,8 @@ export default class SectorRecord {
     this.hostId = data.hostId;
 
     this.contestSector = data.contestSector;
-    this.order = data.order;
     this.remainingContestTime = data.remainingContestTime;
+    this.order = data.order;
     this.sectorState = data.sectorState;
 
     this.driveRecordList = data.driveRecordList;

@@ -2,7 +2,7 @@ import { RobotType } from "model/Robot";
 import { SectorRecordType } from "model/SectorRecord";
 import { robotTamplate } from "model/Robot";
 
-export type ParticipantType = {
+export interface ParticipantType {
   _id: any;
   hostId: any;
 
@@ -12,10 +12,10 @@ export type ParticipantType = {
 
   robot: RobotType;
 
-  sectorRecordList: SectorRecordType[];
-};
+  sectorRecordList: any;
+}
 
-export default class Participant {
+export default class Participant implements ParticipantType {
   _id: any;
   hostId: any;
 

@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
+import { DriveRecordType } from "../DriveRecord";
+
 const { Schema } = mongoose;
 
-export const driveRecordSchema = new Schema({
+export const driveRecordSchema = new Schema<DriveRecordType>({
   type: {
     type: String,
     required: true,

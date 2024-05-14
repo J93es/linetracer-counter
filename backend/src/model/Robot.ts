@@ -1,4 +1,4 @@
-export type RobotType = {
+export interface RobotType {
   _id: any;
   name: string;
   cpu: string;
@@ -8,9 +8,9 @@ export type RobotType = {
   motor: string;
   adc: string;
   sensor: string;
-};
+}
 
-export default class Robot {
+export default class Robot implements RobotType {
   _id: any;
   name: string;
   cpu: string;
