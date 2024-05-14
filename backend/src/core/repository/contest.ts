@@ -1,4 +1,4 @@
-import { ContestType } from "../../model/Contest";
+import { ContestType } from "@src/model/Contest";
 
 export interface ContestRepository {
   isExist(_id: string): Promise<Boolean>;

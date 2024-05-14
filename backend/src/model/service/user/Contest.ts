@@ -1,6 +1,6 @@
-import { ContestType } from "../Contest";
+import { ContestType } from "@src/model/Contest";
 
-import { UserParticipantType } from "./UserParticipant";
+import { UserParticipantType } from "@src/model/service/user/Participant";
 
 export interface UserContestType
   extends Omit<

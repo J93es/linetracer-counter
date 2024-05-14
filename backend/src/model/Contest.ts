@@ -1,4 +1,4 @@
-import { ParticipantType } from "./Participant";
+import { ParticipantType } from "@src/model/Participant";
 
 export interface ContestType {
   _id: any;

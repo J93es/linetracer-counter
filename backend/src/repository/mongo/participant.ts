@@ -1,10 +1,10 @@
-import { ParticipantType } from "../../model/Participant";
+import { ParticipantType } from "@src/model/Participant";
 
-import { ParticipantRepository } from "../../core/repository/participant";
-import { ParticipantSchema } from "../../model/repository/ParticipantSchema";
+import { ParticipantRepository } from "@src/core/repository/participant";
+import { ParticipantSchema } from "@src/model/repository/ParticipantSchema";
 
-import { ContestRepository } from "../../core/repository/contest";
-import { ContestMongoRepo } from "../../repository/mongo/contest";
+import { ContestRepository } from "@src/core/repository/contest";
+import { ContestMongoRepo } from "@src/repository/mongo/contest";
 
 const contestRepository: ContestRepository = new ContestMongoRepo();
 

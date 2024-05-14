@@ -1,4 +1,4 @@
-import { DriveRecordType } from "../../model/DriveRecord";
+import { DriveRecordType } from "@src/model/DriveRecord";
 
 export interface DriveRecordRepository {
   isExist(_id: string): Promise<Boolean>;

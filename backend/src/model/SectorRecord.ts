@@ -1,4 +1,4 @@
-import { DriveRecordType } from "./DriveRecord";
+import { DriveRecordType } from "@src/model/DriveRecord";
 
 export interface SectorRecordType {
   _id: any;

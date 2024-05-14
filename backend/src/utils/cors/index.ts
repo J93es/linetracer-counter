@@ -1,6 +1,6 @@
 import cors from "cors";
 
-import { whitelist } from "../../config";
+import { whitelist } from "@src/config";
 
 // 옵션
 const corsOptions: cors.CorsOptions = {

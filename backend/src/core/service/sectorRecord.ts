@@ -1,4 +1,4 @@
-import { SectorRecordType } from "../../model/SectorRecord";
+import { SectorRecordType } from "@src/model/SectorRecord";
 
 export interface SectorRecordServiceInterface {
   post(data: Partial<SectorRecordType>): Promise<SectorRecordType>;

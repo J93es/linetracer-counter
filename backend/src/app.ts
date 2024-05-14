@@ -10,16 +10,16 @@ import express, {
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
-import corsOptions from "./utils/cors/index";
+import corsOptions from "@src/utils/cors/index";
 
-import indexRouter from "./routes/index";
-import contestRouter from "./routes/contest";
-import partipantRouter from "./routes/participant";
-import sectorRecordRouter from "./routes/sectorRecord";
-import driveRecordRouter from "./routes/driveRecord";
-import userRouter from "./routes/user";
+import indexRouter from "@src/routes/index";
+import contestRouter from "@src/routes/contest";
+import partipantRouter from "@src/routes/participant";
+import sectorRecordRouter from "@src/routes/sectorRecord";
+import driveRecordRouter from "@src/routes/driveRecord";
+import userRouter from "@src/routes/user";
 
-import { uri, PORT } from "./config";
+import { uri, PORT } from "@src/config";
 import mongoose from "mongoose";
 
 const app: Application = express();

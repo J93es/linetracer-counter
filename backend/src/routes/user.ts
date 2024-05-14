@@ -2,8 +2,8 @@ import express, { Router, Request, Response, NextFunction } from "express";
 
 const router: Router = express.Router();
 
-import { UserService } from "../core/service/user";
-import { UserMongoService } from "../service/user-service";
+import { UserService } from "@src/core/service/user";
+import { UserMongoService } from "@src/service/user-service";
 
 const userService: UserService = new UserMongoService();
 

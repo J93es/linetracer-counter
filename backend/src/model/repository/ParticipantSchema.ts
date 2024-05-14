@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-import { RobotType } from "../Robot";
+import { RobotType } from "@src/model/Robot";
 
 const robotSchema = new Schema<RobotType>({
   name: { type: String },

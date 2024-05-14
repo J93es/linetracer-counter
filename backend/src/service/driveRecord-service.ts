@@ -1,9 +1,9 @@
-import { DriveRecordServiceInterface } from "../core/service/driveRecord";
+import { DriveRecordServiceInterface } from "@src/core/service/driveRecord";
 
-import DriveRecord, { DriveRecordType } from "../model/DriveRecord";
+import DriveRecord, { DriveRecordType } from "@src/model/DriveRecord";
 
-import { DriveRecordRepository } from "../core/repository/driveRecord";
-import { DriveRecordMongoRepo } from "../repository/mongo/driveRecord";
+import { DriveRecordRepository } from "@src/core/repository/driveRecord";
+import { DriveRecordMongoRepo } from "@src/repository/mongo/driveRecord";
 
 const driveRecordRepository: DriveRecordRepository = new DriveRecordMongoRepo();
 

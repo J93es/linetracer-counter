@@ -18,10 +18,19 @@
     "@types/node": "^20.12.7",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
+    "tsmodel-paths": "^4.2.0",
     "typescript": "^5.4.5"
   },
   "scripts": {
     "dev": "nodemon ./src/app.ts"
   },
-  "main": "dist/server.js"
+  "main": "dist/server.js",
+  "imports": {
+    "#core/*": "./src/core/*",
+    "#model/*": "./src/model/*",
+    "#repository/*": "./src/repository/*",
+    "#service/*": "./src/service/*",
+    "#routes/*": "./src/routes/*",
+    "#utils/*": "./src/utils/*"
+  }
 }

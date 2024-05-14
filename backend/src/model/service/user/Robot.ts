@@ -1,4 +1,4 @@
-import { RobotType } from "../Robot";
+import { RobotType } from "@src/model/Robot";
 
 export interface UserRobotType extends Omit<RobotType, "_id"> {
   name: string;

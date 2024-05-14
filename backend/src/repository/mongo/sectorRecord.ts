@@ -1,12 +1,12 @@
-import { SectorRecordType } from "../../model/SectorRecord";
-import { DriveRecordType } from "../../model/DriveRecord";
+import { SectorRecordType } from "@src/model/SectorRecord";
+import { DriveRecordType } from "@src/model/DriveRecord";
 
-import { SectorRecordSchema } from "../../model/repository/SectorRecordSchema";
+import { SectorRecordSchema } from "@src/model/repository/SectorRecordSchema";
 
-import { ParticipantRepository } from "../../core/repository/participant";
-import { ParticipantMongoRepo } from "./participant";
+import { ParticipantRepository } from "@src/core/repository/participant";
+import { ParticipantMongoRepo } from "@src/repository/mongo/participant";
 
-import { SectorRecordRepository } from "../../core/repository/sectorRecord";
+import { SectorRecordRepository } from "@src/core/repository/sectorRecord";
 
 const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
 

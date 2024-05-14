@@ -6,10 +6,10 @@ import express, {
   Errback,
 } from "express";
 
-import { SectorRecordType } from "../model/SectorRecord";
+import { SectorRecordType } from "@src/model/SectorRecord";
 
-import { SectorRecordServiceInterface } from "../core/service/sectorRecord";
-import { SectorRecordService } from "../service/sectorRecord-service";
+import { SectorRecordServiceInterface } from "@src/core/service/sectorRecord";
+import { SectorRecordService } from "@src/service/sectorRecord-service";
 
 const router: Router = express.Router();
 const sectorRecordService: SectorRecordServiceInterface =

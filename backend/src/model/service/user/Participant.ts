@@ -1,9 +1,12 @@
-import { ParticipantType } from "../Participant";
-import { UserRobotType, userRobotTamplate } from "./UserRobot";
+import { ParticipantType } from "@src/model/Participant";
+import {
+  UserRobotType,
+  userRobotTamplate,
+} from "@src/model/service/user/Robot";
 import {
   UserSectorRecordType,
   userSectorRecordTamplate,
-} from "./UserSectorRecord";
+} from "@src/model/service/user/SectorRecord";
 
 export interface UserParticipantType
   extends Omit<ParticipantType, "_id" | "hostId"> {

@@ -1,10 +1,9 @@
-import DriveRecord, { DriveRecordType } from "../../model/DriveRecord";
-import { DriveRecordRepository } from "../../core/repository/driveRecord";
-import { SectorRecordSchema } from "../../model/repository/SectorRecordSchema";
-import { DriveRecordSchema } from "../../model/repository/DriveRecordSchema";
+import { DriveRecordType } from "@src/model/DriveRecord";
+import { DriveRecordRepository } from "@src/core/repository/driveRecord";
+import { DriveRecordSchema } from "@src/model/repository/DriveRecordSchema";
 
-import { SectorRecordRepository } from "../../core/repository/sectorRecord";
-import { SectorRecordMongoRepo } from "./sectorRecord";
+import { SectorRecordRepository } from "@src/core/repository/sectorRecord";
+import { SectorRecordMongoRepo } from "@src/repository/mongo/sectorRecord";
 
 const sectorRecordRepository: SectorRecordRepository =
   new SectorRecordMongoRepo();

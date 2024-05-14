@@ -1,9 +1,9 @@
-import { ParticipantServiceInterface } from "../core/service/participant";
+import { ParticipantServiceInterface } from "@src/core/service/participant";
 
-import Participant, { ParticipantType } from "../model/Participant";
+import Participant, { ParticipantType } from "@src/model/Participant";
 
-import { ParticipantRepository } from "../core/repository/participant";
-import { ParticipantMongoRepo } from "../repository/mongo/participant";
+import { ParticipantRepository } from "@src/core/repository/participant";
+import { ParticipantMongoRepo } from "@src/repository/mongo/participant";
 
 const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
 

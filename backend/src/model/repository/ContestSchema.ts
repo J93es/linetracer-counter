@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { ContestType } from "../Contest";
+import { ContestType } from "@src/model/Contest";
 
 const { Schema } = mongoose;
 

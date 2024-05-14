@@ -1,4 +1,4 @@
-import { ParticipantType } from "../../model/Participant";
+import { ParticipantType } from "@src/model/Participant";
 
 export interface ParticipantServiceInterface {
   post(data: Partial<ParticipantType>): Promise<ParticipantType>;

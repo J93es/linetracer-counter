@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-import { SectorRecordType } from "../SectorRecord";
-import { driveRecordSchema } from "./DriveRecordSchema";
+import { SectorRecordType } from "@src/model/SectorRecord";
+import { driveRecordSchema } from "@src/model/repository/DriveRecordSchema";
 
 const { Schema } = mongoose;
 

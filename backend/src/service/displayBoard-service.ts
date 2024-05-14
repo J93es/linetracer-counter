@@ -1,7 +1,7 @@
-import UserContest, { UserContestType } from "../model/service/UserContest";
+import UserContest, { UserContestType } from "@src/model/service/user/Contest";
 
-import { ContestRepository } from "../core/repository/contest";
-import { ContestMongoRepo } from "../repository/mongo/contest";
+import { ContestRepository } from "@src/core/repository/contest";
+import { ContestMongoRepo } from "@src/repository/mongo/contest";
 
 const contestRepository: ContestRepository = new ContestMongoRepo();
 
