@@ -1,4 +1,4 @@
-import { ParticipantType } from "@src/model/Participant";
+import { ParticipantType } from "@model/Participant";
 
 export interface ParticipantRepository {
   isExist(_id: any): Promise<Boolean>;

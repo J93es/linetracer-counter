@@ -1,5 +1,5 @@
-import { SectorRecordType } from "@src/model/SectorRecord";
-import { DriveRecordType } from "@src/model/DriveRecord";
+import { SectorRecordType } from "@model/SectorRecord";
+import { DriveRecordType } from "@model/DriveRecord";
 
 export interface SectorRecordRepository {
   isExist(_id: any): Promise<Boolean>;

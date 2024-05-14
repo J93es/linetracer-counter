@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { DriveRecordType } from "@src/model/DriveRecord";
+import { DriveRecordType } from "@model/DriveRecord";
 
 const { Schema } = mongoose;
 

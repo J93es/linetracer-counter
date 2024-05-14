@@ -1,7 +1,7 @@
-import { ContestType } from "@src/model/Contest";
+import { ContestType } from "@model/Contest";
 
-import { ContestRepository } from "@src/core/repository/contest";
-import { ContestSchema } from "@src/model/repository/ContestSchema";
+import { ContestRepository } from "@core/repository/contest";
+import { ContestSchema } from "@model/repository/ContestSchema";
 
 let instance: ContestMongoRepo | null = null;
 export class ContestMongoRepo implements ContestRepository {

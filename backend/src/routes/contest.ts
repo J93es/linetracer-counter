@@ -6,10 +6,10 @@ import express, {
   Errback,
 } from "express";
 
-import { ContestType } from "@src/model/Contest";
+import { ContestType } from "@model/Contest";
 
-import { ContestServiceInterface } from "@src/core/service/contest";
-import { ContestService } from "@src/service/contest-service";
+import { ContestServiceInterface } from "@core/service/contest";
+import { ContestService } from "@service/contest-service";
 
 const router: Router = express.Router();
 const contestService: ContestServiceInterface = new ContestService();

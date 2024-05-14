@@ -6,10 +6,10 @@ import express, {
   Errback,
 } from "express";
 
-import { ParticipantType } from "@src/model/Participant";
+import { ParticipantType } from "@model/Participant";
 
-import { ParticipantServiceInterface } from "@src/core/service/participant";
-import { ParticipantService } from "@src/service/participant-service";
+import { ParticipantServiceInterface } from "@core/service/participant";
+import { ParticipantService } from "@service/participant-service";
 
 const router: Router = express.Router();
 const participantService: ParticipantServiceInterface =

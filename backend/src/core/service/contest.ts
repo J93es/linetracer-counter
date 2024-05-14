@@ -1,4 +1,4 @@
-import { ContestType } from "@src/model/Contest";
+import { ContestType } from "@model/Contest";
 
 export interface ContestServiceInterface {
   post(data: Partial<ContestType>): Promise<ContestType>;

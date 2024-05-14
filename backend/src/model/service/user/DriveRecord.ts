@@ -1,4 +1,4 @@
-import { DriveRecordType } from "@src/model/DriveRecord";
+import { DriveRecordType } from "@model/DriveRecord";
 
 export interface UserDriveRecordType extends Omit<DriveRecordType, "_id"> {
   type: string;

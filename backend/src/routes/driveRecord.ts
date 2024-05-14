@@ -6,10 +6,10 @@ import express, {
   Errback,
 } from "express";
 
-import { DriveRecordType } from "@src/model/DriveRecord";
+import { DriveRecordType } from "@model/DriveRecord";
 
-import { DriveRecordServiceInterface } from "@src/core/service/driveRecord";
-import { DriveRecordService } from "@src/service/driveRecord-service";
+import { DriveRecordServiceInterface } from "@core/service/driveRecord";
+import { DriveRecordService } from "@service/driveRecord-service";
 
 const router: Router = express.Router();
 const driveRecordService: DriveRecordServiceInterface =

@@ -1,5 +1,5 @@
-import { SectorRecordType } from "@src/model/SectorRecord";
-import { UserDriveRecordType } from "@src/model/service/user/DriveRecord";
+import { SectorRecordType } from "@model/SectorRecord";
+import { UserDriveRecordType } from "@model/service/user/DriveRecord";
 
 export interface UserSectorRecordType
   extends Omit<SectorRecordType, "_id" | "hostId"> {

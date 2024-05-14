@@ -1,5 +1,5 @@
-import { RobotType } from "@src/model/Robot";
-import { SectorRecordType } from "@src/model/SectorRecord";
+import { RobotType } from "@model/Robot";
+import { SectorRecordType } from "@model/SectorRecord";
 
 export interface ParticipantType {
   _id: any;

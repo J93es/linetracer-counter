@@ -1,9 +1,9 @@
-import { SectorRecordServiceInterface } from "@src/core/service/sectorRecord";
+import { SectorRecordServiceInterface } from "@core/service/sectorRecord";
 
-import SectorRecord, { SectorRecordType } from "@src/model/SectorRecord";
+import SectorRecord, { SectorRecordType } from "@model/SectorRecord";
 
-import { SectorRecordRepository } from "@src/core/repository/sectorRecord";
-import { SectorRecordMongoRepo } from "@src/repository/mongo/sectorRecord";
+import { SectorRecordRepository } from "@core/repository/sectorRecord";
+import { SectorRecordMongoRepo } from "@repository/mongo/sectorRecord";
 
 const sectorRecordRepository: SectorRecordRepository =
   new SectorRecordMongoRepo();
