@@ -9,9 +9,12 @@ import ParticipantEditer from "component/editer/participantEditer/Index";
 import SectorRecordEditer from "component/editer/sectorRecordEditer/Index";
 import DriveRecordEditer from "component/editer/driveRecordEditer/Index";
 
-import { sortParticipantListByName } from "tools/sortTargetList";
+import {
+  sortParticipantList,
+  sortParticipantListBySectorRecordField,
+} from "tools/sortTargetList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
-import { filterParticipantListBySector } from "tools/filterTargetList";
+import { filterParticipantList } from "tools/filterTargetList";
 
 import "component/editer/Index.css";
 
@@ -61,11 +64,23 @@ export default function Editer({
     }
 
     if (filterStringBySector === "all") {
-      participantList = sortParticipantListByName(participantList);
+      participantList = sortParticipantList(participantList, {
+        sectorRecordBy: "contestSector",
+        driveRecordBy: "writeTime",
+      });
     } else {
-      participantList = filterParticipantListBySector(
-        filterStringBySector,
-        participantList
+      participantList = filterParticipantList(
+        participantList,
+        {
+          sectorRecordBy: "contestSector",
+          sectorRecordValue: filterStringBySector,
+        },
+        { ifValueInTarget_returnOrigin: true }
+      );
+      participantList = sortParticipantListBySectorRecordField(
+        "contestSector",
+        participantList,
+        { driveRecordBy: "writeTime" }
       );
     }
 
@@ -157,8 +172,6 @@ export default function Editer({
         targetParticipant={targetParticipant}
         setTargetParticipant={setTargetParticipant}
         targetContest={targetContest}
-        filterStringBySector={filterStringBySector}
-        setFilterStringBySector={setFilterStringBySector}
       />
 
       <SectorRecordEditer
@@ -167,6 +180,8 @@ export default function Editer({
         setTargetSectorRecord={setTargetSectorRecord}
         sectorRecordList={sectorRecordList}
         targetParticipant={targetParticipant}
+        filterStringBySector={filterStringBySector}
+        setFilterStringBySector={setFilterStringBySector}
       />
 
       <DriveRecordEditer

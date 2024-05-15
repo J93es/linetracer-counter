@@ -10,7 +10,8 @@ import SectorRecordManager from "component/manager/sectorRecordManager/Index";
 import DriveRecordManager from "component/manager/driveRecordManager/Index";
 import OperationMenu from "component/manager/operationMenu/Index";
 
-import { extractParticipantListBySector } from "tools/extractTargetList";
+import { filterParticipantList } from "tools/filterTargetList";
+import { sortParticipantListBySectorRecordField } from "tools/sortTargetList";
 import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
 
 import "component/manager/Index.css";
@@ -73,9 +74,14 @@ export default function Manager({
     }
 
     // curSector에 해당하는 참가자 목록, 부문 기록 만을 추출.
-    participantList = extractParticipantListBySector(
-      targetContest.curContestingSection || "",
-      participantList
+    participantList = filterParticipantList(participantList, {
+      sectorRecordBy: "contestSector",
+      sectorRecordValue: targetContest.curContestingSection,
+    });
+    participantList = sortParticipantListBySectorRecordField(
+      "order",
+      participantList,
+      { driveRecordBy: "writeTime" }
     );
 
     setParticipantList(participantList);

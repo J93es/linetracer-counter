@@ -12,18 +12,24 @@ import { SectorRecordType } from "model/SectorRecord";
 import { sectorRecordEditMenuEnum } from "model/enums/index";
 import { isEmptyArray, isEmptyObject } from "tools/utils";
 
+import { filterStringBySectorEnum } from "model/enums";
+
 export default function SectorRecordEditer({
   setSectorRecordUpdateSignal,
   sectorRecordList,
   targetSectorRecord,
   setTargetSectorRecord,
   targetParticipant,
+  filterStringBySector,
+  setFilterStringBySector,
 }: {
   setSectorRecordUpdateSignal: Function;
   sectorRecordList: object[];
   targetSectorRecord: Partial<SectorRecordType>;
   setTargetSectorRecord: Function;
   targetParticipant: Partial<ParticipantType>;
+  filterStringBySector: string;
+  setFilterStringBySector: Function;
 }) {
   const [editMenu, setEditMenu] = useState<string>(sectorRecordEditMenuEnum[0]);
 
@@ -64,6 +70,12 @@ export default function SectorRecordEditer({
       title="부문 기록 편집"
       body={
         <div className="sector-record-Editer">
+          <DropDown
+            target={filterStringBySector}
+            onClick={setFilterStringBySector}
+            menuList={filterStringBySectorEnum}
+          />
+
           <SelectTarget
             target={targetSectorRecord}
             setTarget={setTargetSectorRecord}

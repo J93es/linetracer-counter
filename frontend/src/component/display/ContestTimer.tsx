@@ -27,7 +27,7 @@ export default function ContestTimer({
   useEffect(() => {
     setRemainingTime(curSectorRecord.remainingContestTime ?? 0);
     setOriginRemainingTime(curSectorRecord.remainingContestTime);
-    setTimerStartTime(targetContest.contestTimerStartTime || -1);
+    setTimerStartTime(targetContest.contestTimerStartTime ?? -1);
   }, [targetContest, curSectorRecord]);
 
   const timerAnimation = (prevTime: number) => {
@@ -66,17 +66,31 @@ export default function ContestTimer({
   }, [isContestTimerRunning]);
 
   return (
-    <div className="contest-timer">
-      <h4>남은 경연 시간</h4>
-      <div className="show-time">
-        <div className="show-time-minute">
-          {Math.floor(remainingTime / 60000)}분
+    <div className="remaining-time-card shadow">
+      <h4 className="remaining-time-message">남은 경연 시간</h4>
+      <div className="remaining-time">
+        <div className="remaining-minute">
+          <div className="remaining-minute-num">
+            {Math.floor(remainingTime / 60000)}
+          </div>
+          <div className="remaining-minute-str">분</div>
         </div>
-        <div className="show-time-second">
-          {Math.floor((remainingTime % 60000) / 1000)}초
+
+        <div className="remaining-second">
+          <div className="remaining-second-num">
+            {String(Math.floor((remainingTime % 60000) / 1000)).padStart(
+              2,
+              "0"
+            )}
+          </div>
+          <div className="remaining-second-str">초</div>
         </div>
-        <div className="show-time-ms">
-          {String(Math.floor(remainingTime % 1000)).padStart(3, "0")}(ms)
+
+        <div className="remaining-ms">
+          <div className="remaining-ms-num">
+            {String(Math.floor(remainingTime % 1000)).padStart(3, "0")}
+          </div>
+          <div className="remaining-ms-str">(ms)</div>
         </div>
       </div>
     </div>

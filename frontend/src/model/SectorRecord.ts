@@ -39,7 +39,7 @@ export default class SectorRecord implements SectorRecordType {
 export const defaultOrder = 501;
 export const defaultRemainingContestTime = 300000;
 
-export const SectorRecordTamplate: SectorRecordType = new SectorRecord({
+export const sectorRecordTamplate: SectorRecordType = new SectorRecord({
   _id: "",
   hostId: "",
   contestSector: "",

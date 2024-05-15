@@ -1,57 +1,137 @@
-import { ParticipantType } from "model/Participant";
-import { SectorRecordType } from "model/SectorRecord";
+import { ParticipantType, participantTamplate } from "model/Participant";
+import { SectorRecordType, sectorRecordTamplate } from "model/SectorRecord";
+import { DriveRecordType, driveRecordTamplate } from "model/DriveRecord";
 
-import { sortParticipantListByOrder } from "tools/sortTargetList";
+import { isEmptyArray } from "tools/utils";
 
-export function filterSectorRecordListBySector(
-  sector: string,
-  targetSectorRecordList: SectorRecordType[]
-): SectorRecordType[] | null {
-  const sectorRecordList: SectorRecordType[] = targetSectorRecordList.filter(
-    ({ contestSector }) => {
-      return contestSector === sector;
-    }
-  );
+export function filterTargetList(
+  targetList: any[],
+  filterBy: string,
+  filterValue: any,
+  option?: {
+    ifValueInTarget_returnOrigin?: boolean;
+  }
+): any[] {
+  let list: any[] = JSON.parse(JSON.stringify(targetList));
+  let filteredList: any[] = list.filter((data) => {
+    return data[filterBy] === filterValue;
+  });
 
-  if (sectorRecordList.length === 0) {
-    return null;
+  if (option?.ifValueInTarget_returnOrigin) {
+    return JSON.parse(JSON.stringify(targetList));
   }
 
-  return JSON.parse(JSON.stringify(targetSectorRecordList));
+  return JSON.parse(JSON.stringify(filteredList));
 }
 
-export function filterParticipantBySector(
-  sector: string,
-  targetParticipantList: Partial<ParticipantType>[]
+export function filterDriveRecordList(
+  driveRecordList: Partial<DriveRecordType>[],
+  by?: {
+    driveRecordBy?: string;
+    driveRecordValue?: any;
+  },
+  option?: {
+    ifValueInTarget_returnOrigin?: boolean;
+  }
+): Partial<SectorRecordType>[] {
+  const { driveRecordBy, driveRecordValue } = by ?? {};
+
+  if (driveRecordBy && driveRecordBy in driveRecordTamplate) {
+    return filterTargetList(
+      driveRecordList ?? [],
+      driveRecordBy,
+      driveRecordValue,
+      option
+    );
+  }
+
+  return JSON.parse(JSON.stringify(driveRecordList));
+}
+
+export function filterSectorRecordList(
+  sectorRecordList: Partial<SectorRecordType>[],
+  by?: {
+    sectorRecordBy?: string;
+    sectorRecordValue?: any;
+    driveRecordBy?: string;
+    driveRecordValue?: any;
+  },
+  option?: {
+    ifValueInTarget_returnOrigin?: boolean;
+  }
 ): Partial<ParticipantType>[] {
-  let participantList: Partial<ParticipantType>[] = [];
+  const { sectorRecordBy, sectorRecordValue, ...otherBy } = by ?? {};
+  let list: Partial<SectorRecordType>[] = [];
 
-  for (let targetParticipant of targetParticipantList) {
-    let participant = JSON.parse(JSON.stringify(targetParticipant));
-
-    let sectorRecordList = filterSectorRecordListBySector(
-      sector,
-      participant.sectorRecordList ?? []
+  for (let sectorRecord of sectorRecordList) {
+    let target: Partial<SectorRecordType> = JSON.parse(
+      JSON.stringify(sectorRecord)
+    );
+    let driveRecordList: Partial<DriveRecordType>[] = filterDriveRecordList(
+      target.driveRecordList ?? [],
+      otherBy,
+      option
     );
 
-    if (sectorRecordList) {
-      participant.sectorRecordList = sectorRecordList;
-      participantList.push(participant);
+    if (!isEmptyArray(sectorRecordList)) {
+      target.driveRecordList = driveRecordList;
+      list.push(target);
     }
   }
 
-  return JSON.parse(JSON.stringify(participantList));
+  if (sectorRecordBy && sectorRecordBy in sectorRecordTamplate) {
+    return filterTargetList(
+      list ?? [],
+      sectorRecordBy,
+      sectorRecordValue,
+      option
+    );
+  }
+
+  return list;
 }
 
-// sector에 해당하는 참가자 목록 만을 추출.
-export function filterParticipantListBySector(
-  sector: string,
-  targetParticipantList: Partial<ParticipantType>[]
+export function filterParticipantList(
+  participantList: Partial<ParticipantType>[],
+  by?: {
+    participantBy?: string;
+    participantValue?: any;
+    sectorRecordBy?: string;
+    sectorRecordValue?: any;
+    driveRecordBy?: string;
+    driveRecordValue?: any;
+  },
+  option?: {
+    ifValueInTarget_returnOrigin?: boolean;
+  }
 ): Partial<ParticipantType>[] {
-  let list: Partial<ParticipantType>[] = filterParticipantBySector(
-    sector,
-    targetParticipantList
-  );
+  const { participantBy, participantValue, ...otherBy } = by ?? {};
+  let list: Partial<ParticipantType>[] = [];
 
-  return sortParticipantListByOrder(list);
+  for (let participant of participantList) {
+    let target: Partial<ParticipantType> = JSON.parse(
+      JSON.stringify(participant)
+    );
+    let sectorRecordList: Partial<SectorRecordType>[] = filterSectorRecordList(
+      participant.sectorRecordList ?? [],
+      otherBy,
+      option
+    );
+
+    if (!isEmptyArray(sectorRecordList)) {
+      target.sectorRecordList = sectorRecordList;
+      list.push(target);
+    }
+  }
+
+  if (participantBy && participantBy in participantTamplate) {
+    return filterTargetList(
+      list ?? [],
+      participantBy,
+      participantValue,
+      option
+    );
+  }
+
+  return list;
 }

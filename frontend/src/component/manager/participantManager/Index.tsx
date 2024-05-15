@@ -2,7 +2,6 @@ import SelectTarget from "component/utils/selectTarget/Index";
 import ParticipantDistintion from "model/distinction/ParticipantDistinction";
 import Accordion from "component/utils/Accordion";
 
-import { ContestType } from "model/Contest";
 import { ParticipantType } from "model/Participant";
 
 import { isEmptyArray, isEmptyObject } from "tools/utils";

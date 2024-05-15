@@ -1,0 +1,17 @@
+.display {
+  width: 1500px;
+  height: 1000px;
+  background: #eff6fd;
+
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 40px;
+  font-family: "Public Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  color: black;
+}

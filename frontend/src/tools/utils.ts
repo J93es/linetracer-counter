@@ -1,5 +1,5 @@
 import { ParticipantType } from "model/Participant";
-import { extractParticipantListBySector } from "tools/extractTargetList";
+import { filterParticipantList } from "tools/filterTargetList";
 
 export function isEmptyObject(target: object) {
   try {
@@ -46,10 +46,10 @@ export function getNextParticipant(
   participantList: Partial<ParticipantType>[]
 ): any {
   try {
-    const sortedParticipantList = extractParticipantListBySector(
-      curSector,
-      participantList
-    );
+    const sortedParticipantList = filterParticipantList(participantList, {
+      sectorRecordBy: "contestSector",
+      sectorRecordValue: curSector,
+    });
     for (let i = 0; i < sortedParticipantList.length; i++) {
       if (sortedParticipantList[i]._id === curParticipantId) {
         if (i + 1 >= sortedParticipantList.length) {

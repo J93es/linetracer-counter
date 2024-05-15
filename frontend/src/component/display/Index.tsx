@@ -9,6 +9,8 @@ import { SectorRecordType } from "model/SectorRecord";
 
 import ContestTimer from "component/display/ContestTimer";
 
+import "component/display/Index.css";
+
 export default function Display({
   targetContest,
   isContestTimerRunning,
