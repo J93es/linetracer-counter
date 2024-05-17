@@ -34,10 +34,11 @@ export class DriveRecordServ implements DriveRecordService {
     const srcDriveRecord: Partial<DriveRecordType> = new DriveRecord(
       data as DriveRecordType
     );
-    const driveRecord: Partial<DriveRecordType> =
-      await driveRecordRepository.create(srcDriveRecord as DriveRecordType);
+    const driveRecord: DriveRecordType = await driveRecordRepository.create(
+      srcDriveRecord as DriveRecordType
+    );
 
-    return new DriveRecord(driveRecord as DriveRecordType);
+    return new DriveRecord(driveRecord);
   }
 
   async patch(

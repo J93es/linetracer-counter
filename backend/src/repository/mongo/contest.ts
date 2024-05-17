@@ -28,7 +28,7 @@ export class ContestMongoRepo implements ContestRepository {
     }
   }
 
-  async create(data: ContestType): Promise<ContestType> {
+  async create(data: Partial<ContestType>): Promise<ContestType> {
     const newid = idController.generateId();
     const contest: ContestType | null = await ContestSchema.create({
       ...data,

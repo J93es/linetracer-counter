@@ -3,11 +3,6 @@ import JwtService from "@auth/service/jwt-service";
 
 const router: Router = express.Router();
 
-import { UserService } from "@core/service/user";
-import { UserServ } from "@service/user";
-
-const userService: UserService = new UserServ();
-
 /* GET home page. */
 router.post(
   "/login",

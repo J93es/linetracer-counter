@@ -15,7 +15,7 @@ export class DriveRecordMongoRepo implements DriveRecordRepository {
     }
   }
 
-  async create(data: DriveRecordType): Promise<DriveRecordType> {
+  async create(data: Partial<DriveRecordType>): Promise<DriveRecordType> {
     if (!(await sectorRecordRepository.isExist(data.hostId ?? ""))) {
       throw new Error("host(SectorRecord) not found by hostId");
     }

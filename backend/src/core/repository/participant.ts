@@ -2,7 +2,7 @@ import { ParticipantType } from "@model/Participant";
 
 export interface ParticipantRepository {
   isExist(id: string): Promise<Boolean>;
-  create(data: ParticipantType): Promise<ParticipantType>;
+  create(data: Partial<ParticipantType>): Promise<ParticipantType>;
   read(id: string): Promise<ParticipantType>;
   readWithJoin(id: string, selectField: object): Promise<ParticipantType>;
   update(data: Partial<ParticipantType>): Promise<ParticipantType>;

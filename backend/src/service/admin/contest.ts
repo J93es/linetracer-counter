@@ -31,13 +31,13 @@ export class ContestServ implements ContestService {
   }
 
   async post(data: Partial<ContestType>): Promise<ContestType> {
-    const srcContest: Partial<ContestType> = new Contest(data as ContestType);
+    const srcContest: ContestType = new Contest(data as ContestType);
 
     const contest: ContestType = await contestRepository.create(
       srcContest as ContestType
     );
 
-    return new Contest(contest as ContestType);
+    return new Contest(contest);
   }
 
   async patch(id: string, data: Partial<ContestType>): Promise<ContestType> {
@@ -46,11 +46,9 @@ export class ContestServ implements ContestService {
     this.idFilter(id, srcContest);
     srcContest = this.patchReadonlyFilter(srcContest);
 
-    const contest: Partial<ContestType> = await contestRepository.update(
-      srcContest
-    );
+    const contest: ContestType = await contestRepository.update(srcContest);
 
-    return new Contest(contest as ContestType);
+    return new Contest(contest);
   }
 
   async put(id: string, data: Partial<ContestType>): Promise<ContestType> {
@@ -58,34 +56,31 @@ export class ContestServ implements ContestService {
 
     this.idFilter(id, srcContest);
 
-    const contest: Partial<ContestType> = await contestRepository.update(
-      srcContest
-    );
+    const contest: ContestType = await contestRepository.update(srcContest);
 
-    return new Contest(contest as ContestType);
+    return new Contest(contest);
   }
 
   async get(id: string): Promise<ContestType> {
-    const contest: Partial<ContestType> = await contestRepository.readWithJoin(
+    const contest: ContestType = await contestRepository.readWithJoin(
       id,
       "participantList",
       {},
       {}
     );
 
-    return new Contest(contest as ContestType);
+    return new Contest(contest);
   }
 
   async getEvery(): Promise<ContestType[]> {
-    const contests: Partial<ContestType>[] =
-      await contestRepository.readEvery();
+    const contests: ContestType[] = await contestRepository.readEvery();
 
-    return contests.map((contest) => new Contest(contest as ContestType));
+    return contests.map((contest) => new Contest(contest));
   }
 
   async remove(id: string): Promise<ContestType> {
-    const contest: Partial<ContestType> = await contestRepository.delete(id);
+    const contest: ContestType = await contestRepository.delete(id);
 
-    return new Contest(contest as ContestType);
+    return new Contest(contest);
   }
 }

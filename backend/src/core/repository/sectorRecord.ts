@@ -3,7 +3,7 @@ import { DriveRecordType } from "@model/DriveRecord";
 
 export interface SectorRecordRepository {
   isExist(id: string): Promise<Boolean>;
-  create(data: SectorRecordType): Promise<SectorRecordType>;
+  create(data: Partial<SectorRecordType>): Promise<SectorRecordType>;
   read(id: string): Promise<SectorRecordType>;
   update(
     data: Partial<SectorRecordType>,
