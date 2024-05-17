@@ -25,7 +25,7 @@ export function filterTargetList(
 }
 
 export function filterDriveRecordList(
-  driveRecordList: Partial<DriveRecordType>[],
+  driveRecordList: DriveRecordType[],
   by?: {
     driveRecordBy?: string;
     driveRecordValue?: any;
@@ -33,7 +33,7 @@ export function filterDriveRecordList(
   option?: {
     ifValueInTarget_returnOrigin?: boolean;
   }
-): Partial<SectorRecordType>[] {
+): DriveRecordType[] {
   const { driveRecordBy, driveRecordValue } = by ?? {};
 
   if (driveRecordBy && driveRecordBy in driveRecordTamplate) {
@@ -49,7 +49,7 @@ export function filterDriveRecordList(
 }
 
 export function filterSectorRecordList(
-  sectorRecordList: Partial<SectorRecordType>[],
+  sectorRecordList: SectorRecordType[],
   by?: {
     sectorRecordBy?: string;
     sectorRecordValue?: any;
@@ -59,15 +59,13 @@ export function filterSectorRecordList(
   option?: {
     ifValueInTarget_returnOrigin?: boolean;
   }
-): Partial<ParticipantType>[] {
+): SectorRecordType[] {
   const { sectorRecordBy, sectorRecordValue, ...otherBy } = by ?? {};
-  let list: Partial<SectorRecordType>[] = [];
+  let list: SectorRecordType[] = [];
 
   for (let sectorRecord of sectorRecordList) {
-    let target: Partial<SectorRecordType> = JSON.parse(
-      JSON.stringify(sectorRecord)
-    );
-    let driveRecordList: Partial<DriveRecordType>[] = filterDriveRecordList(
+    let target: SectorRecordType = JSON.parse(JSON.stringify(sectorRecord));
+    let driveRecordList: DriveRecordType[] = filterDriveRecordList(
       target.driveRecordList ?? [],
       otherBy,
       option
@@ -92,7 +90,7 @@ export function filterSectorRecordList(
 }
 
 export function filterParticipantList(
-  participantList: Partial<ParticipantType>[],
+  participantList: ParticipantType[],
   by?: {
     participantBy?: string;
     participantValue?: any;
@@ -104,15 +102,13 @@ export function filterParticipantList(
   option?: {
     ifValueInTarget_returnOrigin?: boolean;
   }
-): Partial<ParticipantType>[] {
+): ParticipantType[] {
   const { participantBy, participantValue, ...otherBy } = by ?? {};
-  let list: Partial<ParticipantType>[] = [];
+  let list: ParticipantType[] = [];
 
   for (let participant of participantList) {
-    let target: Partial<ParticipantType> = JSON.parse(
-      JSON.stringify(participant)
-    );
-    let sectorRecordList: Partial<SectorRecordType>[] = filterSectorRecordList(
+    let target: ParticipantType = JSON.parse(JSON.stringify(participant));
+    let sectorRecordList: SectorRecordType[] = filterSectorRecordList(
       participant.sectorRecordList ?? [],
       otherBy,
       option

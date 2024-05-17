@@ -1,6 +1,8 @@
 import Contest, { ContestType } from "model/Contest";
 import { uri } from "../config";
 
+import { isEmptyArray, isEmptyObject } from "tools/utils";
+
 let instance: ContestController | null = null;
 export class ContestController {
   constructor() {
@@ -10,7 +12,7 @@ export class ContestController {
     return instance;
   }
 
-  async getEvery(): Promise<any> {
+  async getEvery(): Promise<ContestType[] | undefined> {
     try {
       const response = await fetch(`${uri}/contest`, {
         method: "GET",
@@ -19,6 +21,10 @@ export class ContestController {
       const resDataList = await response.json();
       const resContestList = resDataList.map((data: any) => new Contest(data));
 
+      if (isEmptyArray(resContestList)) {
+        return undefined;
+      }
+
       return resContestList;
     } catch (error) {
       console.error("Failed to get every Contest data", error);
@@ -26,7 +32,7 @@ export class ContestController {
     }
   }
 
-  async get(id: string): Promise<any> {
+  async get(id: string | undefined): Promise<ContestType | undefined> {
     try {
       const response = await fetch(`${uri}/contest/${id}`, {
         method: "GET",
@@ -35,6 +41,10 @@ export class ContestController {
       const resData = await response.json();
       const resContest = new Contest(resData);
 
+      if (isEmptyObject(resContest)) {
+        return undefined;
+      }
+
       return resContest;
     } catch (error) {
       console.error("Failed to get Contest data", error);
@@ -42,7 +52,7 @@ export class ContestController {
     }
   }
 
-  async post(srcData: Partial<ContestType>): Promise<Partial<ContestType>> {
+  async post(srcData: Partial<ContestType>): Promise<ContestType | undefined> {
     try {
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/Contest`, {
@@ -56,6 +66,10 @@ export class ContestController {
       const resData = await response.json();
       const resContest = new Contest(resData);
 
+      if (isEmptyObject(resContest)) {
+        return undefined;
+      }
+
       return resContest;
     } catch (error) {
       console.error("Failed to post Contest data", error);
@@ -63,13 +77,10 @@ export class ContestController {
     }
   }
 
-  async patch(
-    _id: string,
-    srcData: Partial<ContestType>
-  ): Promise<Partial<ContestType>> {
+  async patch(srcData: Partial<ContestType>): Promise<ContestType | undefined> {
     try {
       const contest = new Contest(srcData as ContestType);
-      const response = await fetch(`${uri}/contest/${_id}`, {
+      const response = await fetch(`${uri}/contest/${srcData.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -80,6 +91,10 @@ export class ContestController {
       const resData = await response.json();
       const resContest = new Contest(resData);
 
+      if (isEmptyObject(resContest)) {
+        return undefined;
+      }
+
       return resContest;
     } catch (error) {
       console.error("Failed to patch Contest data", error);
@@ -87,13 +102,10 @@ export class ContestController {
     }
   }
 
-  async put(
-    _id: string,
-    srcData: Partial<ContestType>
-  ): Promise<Partial<Contest>> {
+  async put(srcData: Partial<ContestType>): Promise<ContestType | undefined> {
     try {
       const contest = new Contest(srcData as ContestType);
-      const response = await fetch(`${uri}/Contest/${_id}`, {
+      const response = await fetch(`${uri}/Contest/${srcData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -104,6 +116,10 @@ export class ContestController {
       const resData = await response.json();
       const resContest = new Contest(resData);
 
+      if (isEmptyObject(resContest)) {
+        return undefined;
+      }
+
       return resContest;
     } catch (error) {
       console.error("Failed to put Contest data", error);
@@ -111,9 +127,9 @@ export class ContestController {
     }
   }
 
-  async delete(_id: string): Promise<Partial<Contest>> {
+  async delete(id: string | undefined): Promise<ContestType | undefined> {
     try {
-      const response = await fetch(`${uri}/Contest/${_id}`, {
+      const response = await fetch(`${uri}/Contest/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -122,6 +138,10 @@ export class ContestController {
       });
       const resData = await response.json();
       const resContest = new Contest(resData);
+
+      if (isEmptyObject(resContest)) {
+        return undefined;
+      }
 
       return resContest;
     } catch (error) {

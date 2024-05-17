@@ -12,7 +12,7 @@ export default function UpdateRemainingContestTimeBtn({
   disabled,
 }: {
   setContestUpdateSignal: Function;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetSectorRecord: SectorRecordType | undefined;
   remainingContestTime: number;
   label: string;
   btnType: string;
@@ -27,9 +27,9 @@ export default function UpdateRemainingContestTimeBtn({
       disabled={disabled}
       onClick={() => {
         const func = async () => {
-          await sectorRecordController.patch(targetSectorRecord._id, {
-            _id: targetSectorRecord._id,
-            hostId: targetSectorRecord.hostId,
+          await sectorRecordController.patch({
+            id: targetSectorRecord?.id,
+            hostId: targetSectorRecord?.hostId,
             remainingContestTime:
               remainingContestTime < 0 ? 0 : remainingContestTime,
           });

@@ -3,8 +3,7 @@ import { ContestType } from "model/Contest";
 export interface ContestDistinctionType
   extends Omit<
     ContestType,
-    | "_id"
-    | "title"
+    | "id"
     | "curContestingSection"
     | "curParticipant"
     | "nextParticipant"
@@ -16,17 +15,17 @@ export interface ContestDistinctionType
     | "latestDriveRecordTime"
     | "participantList"
   > {
-  id: string;
+  title: string;
 }
 
 export default class ContestDistinction implements ContestDistinctionType {
-  id: string;
+  title: string;
 
   constructor(data: ContestDistinctionType) {
-    this.id = data.id;
+    this.title = data.title;
   }
 }
 
 export const contestTamplate: ContestDistinctionType = new ContestDistinction({
-  id: "",
+  title: "",
 });

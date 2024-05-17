@@ -1,10 +1,10 @@
 import { ContestType } from "@model/Contest";
 
-export interface ContestServiceInterface {
-  post(data: Partial<ContestType>): Promise<ContestType>;
-  patch(_id: string, data: Partial<ContestType>): Promise<ContestType>;
-  put(_id: string, data: Partial<ContestType>): Promise<ContestType>;
+export interface ContestService {
+  post(data: ContestType): Promise<ContestType>;
+  patch(id: string, data: Partial<ContestType>): Promise<ContestType>;
+  put(id: string, data: Partial<ContestType>): Promise<ContestType>;
   getEvery(): Promise<ContestType[]>;
-  get(_id: string): Promise<ContestType>;
-  remove(_id: string): Promise<ContestType>;
+  get(id: string): Promise<ContestType>;
+  remove(id: string): Promise<ContestType>;
 }

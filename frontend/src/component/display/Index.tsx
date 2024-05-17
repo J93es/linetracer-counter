@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import { ContestType } from "model/Contest";
 import { ParticipantType } from "model/Participant";
 
-import { findTargetBy_id, isEmptyObject } from "tools/utils";
+import { findTargetById } from "tools/utils";
 
 import { SectorRecordType } from "model/SectorRecord";
 
@@ -15,50 +15,50 @@ export default function Display({
   targetContest,
   isContestTimerRunning,
 }: {
-  targetContest: Partial<ContestType>;
+  targetContest: ContestType | undefined;
   isContestTimerRunning: boolean;
 }) {
   const [curSection, setCurSection] = useState<string>(
-    targetContest.curContestingSection ?? ""
+    targetContest?.curContestingSection ?? ""
   );
   const [curParticipant, setCurParticipant] = useState<
-    Partial<ParticipantType>
-  >({});
+    ParticipantType | undefined
+  >();
   const [nextParticipant, setNextParticipant] = useState<
-    Partial<ParticipantType>
-  >({});
+    ParticipantType | undefined
+  >();
   const [curSectorRecord, setCurSectorRecord] = useState<
-    Partial<SectorRecordType>
-  >({});
+    SectorRecordType | undefined
+  >();
 
   useEffect(() => {
-    const curParticipant: Partial<ParticipantType> = findTargetBy_id(
-      targetContest.curParticipant ?? "",
-      targetContest.participantList ?? []
+    const curParticipant: ParticipantType = findTargetById(
+      targetContest?.curParticipant,
+      targetContest?.participantList
     );
-    const nextParticipant: Partial<ParticipantType> = findTargetBy_id(
-      targetContest.nextParticipant ?? "",
-      targetContest.participantList ?? []
+    const nextParticipant: ParticipantType = findTargetById(
+      targetContest?.nextParticipant,
+      targetContest?.participantList
     );
-    const sectorRecord: Partial<SectorRecordType> = findTargetBy_id(
-      targetContest.curSectorRecord ?? "",
-      curParticipant?.sectorRecordList ?? []
+    const sectorRecord: SectorRecordType = findTargetById(
+      targetContest?.curSectorRecord,
+      curParticipant?.sectorRecordList
     );
 
-    if (isEmptyObject(curParticipant)) {
-      setCurParticipant({});
+    if (!curParticipant) {
+      setCurParticipant(undefined);
     } else {
       setCurParticipant(curParticipant);
     }
 
-    if (isEmptyObject(nextParticipant)) {
-      setNextParticipant({});
+    if (!nextParticipant) {
+      setNextParticipant(undefined);
     } else {
       setNextParticipant(nextParticipant);
     }
 
-    if (isEmptyObject(sectorRecord)) {
-      setCurSectorRecord({});
+    if (!sectorRecord) {
+      setCurSectorRecord(undefined);
     } else {
       setCurSectorRecord(sectorRecord);
     }

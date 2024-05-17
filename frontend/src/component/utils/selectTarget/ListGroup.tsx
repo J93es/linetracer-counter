@@ -1,3 +1,5 @@
+import { isEmptyObject } from "tools/utils";
+
 export default function ListGroup({
   listOfObject,
   target,
@@ -7,8 +9,8 @@ export default function ListGroup({
   DistintionClass,
   disabled = false,
 }: {
-  listOfObject: object[];
-  target: object;
+  listOfObject: object[] | undefined;
+  target: object | undefined;
   setTarget: Function;
   viewLengthPerPage: number;
   currentPageNumber: number;
@@ -16,7 +18,7 @@ export default function ListGroup({
   disabled?: boolean;
 }) {
   const viewIndexMin = 0;
-  const viewIndexMax = listOfObject.length - 1;
+  const viewIndexMax = listOfObject?.length ?? 1 - 1;
 
   const viewIndexHead =
     currentPageNumber * viewLengthPerPage - viewLengthPerPage < viewIndexMin
@@ -42,7 +44,7 @@ export default function ListGroup({
 }
 
 function getHtmlListGroup(
-  listOfObject: any[],
+  listOfObject: any[] | undefined,
   target: any,
   setTargetId: Function,
   viewIndexHead: number,
@@ -55,7 +57,10 @@ function getHtmlListGroup(
   for (let i = viewIndexHead; i <= viewIndexTail; i++) {
     let htmlElement = null;
     try {
-      const obj: any = listOfObject[i];
+      const obj: any = listOfObject && listOfObject[i];
+      if (!obj || isEmptyObject(obj)) {
+        continue;
+      }
 
       let distintionInfo = "";
       try {
@@ -66,7 +71,7 @@ function getHtmlListGroup(
 
       let className = "list-group-item list-group-item-action small";
       let active = false;
-      if (obj._id && target._id && obj._id === target._id) {
+      if (obj.id && target?.id && obj.id === target?.id) {
         className += " active";
         active = true;
       } else if (JSON.stringify(obj) === JSON.stringify(target)) {

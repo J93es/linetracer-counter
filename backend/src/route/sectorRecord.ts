@@ -1,33 +1,19 @@
-import express, {
-  Router,
-  Request,
-  Response,
-  NextFunction,
-  Errback,
-} from "express";
+import express, { Router, Request, Response, NextFunction } from "express";
 
-import { DriveRecordType } from "@model/DriveRecord";
+import { SectorRecordType } from "@model/SectorRecord";
 
-import { DriveRecordServiceInterface } from "@core/service/driveRecord";
-import { DriveRecordService } from "@service/driveRecord-service";
+import { sectorRecordService } from "@service/index";
 
 const router: Router = express.Router();
-const driveRecordService: DriveRecordServiceInterface =
-  new DriveRecordService();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello get");
-});
-
-router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const _id: string = req.params._id;
-    const driveRecord: Partial<DriveRecordType> = await driveRecordService.get(
-      _id
-    );
+    const id: string = req.params.id;
+    const sectorRecord: Partial<SectorRecordType> =
+      await sectorRecordService.get(id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(driveRecord).status(200);
+    res.send(sectorRecord).status(200);
   } catch (err: any) {
     console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -38,15 +24,12 @@ router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const sectorRecord_Id: string = req.query.sector_record_id as string;
 
-    const driveRecord: Partial<DriveRecordType> = await driveRecordService.post(
-      sectorRecord_Id,
-      data
-    );
+    const sectorRecord: Partial<SectorRecordType> =
+      await sectorRecordService.post(data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(driveRecord).status(200);
+    res.send(sectorRecord).status(200);
   } catch (err: any) {
     console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -59,19 +42,18 @@ router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.patch(
-  "/:_id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      const _id: string = req.params._id;
-      const sectorRecord_Id: string = req.query.sector_record_id as string;
+      const id: string = req.params.id;
 
-      const driveRecord: Partial<DriveRecordType> =
-        await driveRecordService.patch(sectorRecord_Id, _id, data);
+      const sectorRecord: Partial<SectorRecordType> =
+        await sectorRecordService.patch(id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
-      res.send(driveRecord);
+      res.send(sectorRecord);
     } catch (err: any) {
       console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");
@@ -85,21 +67,17 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello patch");
 });
 
-router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const _id: string = req.params._id;
-    const sectorRecord_Id: string = req.query.sector_record_id as string;
+    const id: string = req.params.id;
 
-    const driveRecord: Partial<DriveRecordType> = await driveRecordService.put(
-      sectorRecord_Id,
-      _id,
-      data
-    );
+    const sectorRecord: Partial<SectorRecordType> =
+      await sectorRecordService.put(id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.status(200);
-    res.send(driveRecord);
+    res.send(sectorRecord);
   } catch (err: any) {
     console.error(err);
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -113,18 +91,17 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.delete(
-  "/:_id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const _id: string = req.params._id;
-      const sectorRecord_Id: string = req.query.sector_record_id as string;
+      const id: string = req.params.id;
 
-      const driveRecord: Partial<DriveRecordType> =
-        await driveRecordService.remove(sectorRecord_Id, _id);
+      const sectorRecord: Partial<SectorRecordType> =
+        await sectorRecordService.remove(id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
-      res.send(driveRecord);
+      res.send(sectorRecord);
     } catch (err: any) {
       console.error(err);
       res.header("Content-Type", "application/json; charset=utf-8");

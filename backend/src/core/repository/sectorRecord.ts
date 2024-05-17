@@ -2,12 +2,20 @@ import { SectorRecordType } from "@model/SectorRecord";
 import { DriveRecordType } from "@model/DriveRecord";
 
 export interface SectorRecordRepository {
-  isExist(_id: any): Promise<Boolean>;
-  create(data: SectorRecordType): Promise<any>;
-  readEvery(participant_Id: any): Promise<any>;
-  read(_id: any): Promise<any>;
-  update(data: Partial<SectorRecordType>, replace: boolean): Promise<any>;
-  delete(_id: any): Promise<any>;
-  appendDriveRecordList(_id: any, driveRecord: DriveRecordType): Promise<any>;
-  popDriveRecordList(_id: any, driveRecord_Id: any): Promise<any>;
+  isExist(id: string): Promise<Boolean>;
+  create(data: SectorRecordType): Promise<SectorRecordType>;
+  read(id: string): Promise<SectorRecordType>;
+  update(
+    data: Partial<SectorRecordType>,
+    replace: boolean
+  ): Promise<SectorRecordType>;
+  delete(id: string): Promise<SectorRecordType>;
+  appendDriveRecordList(
+    id: string,
+    driveRecord: DriveRecordType
+  ): Promise<SectorRecordType>;
+  popDriveRecordList(
+    id: string,
+    driveRecordId: string
+  ): Promise<SectorRecordType>;
 }

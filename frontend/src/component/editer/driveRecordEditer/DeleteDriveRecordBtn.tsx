@@ -7,17 +7,12 @@ const driveRecordController = new DriveRecordController();
 export default function DeleteDriveRecordBtn({
   setDriveRecordUpdateSignal,
   targetDriveRecord,
-  targetSectorRecordId,
 }: {
   setDriveRecordUpdateSignal: Function;
-  targetDriveRecord: Partial<DriveRecordType>;
-  targetSectorRecordId: string;
+  targetDriveRecord: DriveRecordType | undefined;
 }) {
   const deleteDriveRecord = async () => {
-    await driveRecordController.delete(
-      targetSectorRecordId,
-      targetDriveRecord._id
-    );
+    await driveRecordController.delete(targetDriveRecord?.id);
     setDriveRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
   };
 

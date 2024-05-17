@@ -15,22 +15,22 @@ export default function SelectTarget({
   setUpdateSignal,
   disabled = false,
 }: {
-  target: object;
+  target: object | undefined;
   setTarget: Function;
-  listOfObject: object[];
+  listOfObject: object[] | undefined;
   DistintionClass: any;
   setUpdateSignal: Function;
   disabled: boolean;
 }) {
   const [viewLengthPerPage, setViewLengthPerPage] = useState(5);
 
-  const targetIndex = getTargetIndex(listOfObject, target);
+  const targetIndex = getTargetIndex(listOfObject ?? [], target);
 
   const [currentPageNumber, setPageNumber] = useState(
     Math.trunc(targetIndex / viewLengthPerPage + 1)
   );
 
-  if (isEmptyArray(listOfObject)) {
+  if (!listOfObject || isEmptyArray(listOfObject)) {
     return null;
   }
 
@@ -74,7 +74,7 @@ export default function SelectTarget({
           currentPageNumber={currentPageNumber}
           setPageNumber={setPageNumber}
           viewLengthPerPage={viewLengthPerPage}
-          listLength={listOfObject.length}
+          listLength={listOfObject?.length ?? 0}
           targetIndex={targetIndex}
         />
       </div>
@@ -82,7 +82,7 @@ export default function SelectTarget({
   );
 }
 
-function getTargetIndex(listOfObject: object[], target: object) {
+function getTargetIndex(listOfObject: object[], target: object | undefined) {
   for (let i = 0; i < listOfObject.length; i++) {
     if (JSON.stringify(listOfObject[i]) === JSON.stringify(target)) {
       return i;

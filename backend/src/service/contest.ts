@@ -1,24 +1,21 @@
 import Contest, { ContestType } from "@model/Contest";
 
-import { ContestRepository } from "@core/repository/contest";
-import { ContestMongoRepo } from "@repository/mongo/contest";
+import { ContestService } from "@core/service/contest";
 
-import { ContestServiceInterface } from "@core/service/contest";
+import { contestRepository } from "@repository/index";
 
-const contestRepository: ContestRepository = new ContestMongoRepo();
-
-let instance: ContestService | null = null;
-export class ContestService implements ContestServiceInterface {
+let instance: ContestServ | null = null;
+export class ContestServ implements ContestService {
   constructor() {
     if (instance) return instance;
     instance = this;
   }
 
-  private idFilter(_id: string, srcData: Partial<ContestType>): void {
-    if (!srcData._id) {
+  private idFilter(id: string, srcData: Partial<ContestType>): void {
+    if (!srcData.id) {
       throw new Error("id is required");
     }
-    if (String(_id) !== String(srcData._id)) {
+    if (String(id) !== String(srcData.id)) {
       throw new Error("id is not matched : query id and body id is different");
     }
   }
@@ -43,10 +40,10 @@ export class ContestService implements ContestServiceInterface {
     return new Contest(contest as ContestType);
   }
 
-  async patch(_id: string, data: Partial<ContestType>): Promise<ContestType> {
+  async patch(id: string, data: Partial<ContestType>): Promise<ContestType> {
     let srcContest: Partial<ContestType> = new Contest(data as ContestType);
 
-    this.idFilter(_id, srcContest);
+    this.idFilter(id, srcContest);
     srcContest = this.patchReadonlyFilter(srcContest);
 
     const contest: Partial<ContestType> = await contestRepository.update(
@@ -56,10 +53,10 @@ export class ContestService implements ContestServiceInterface {
     return new Contest(contest as ContestType);
   }
 
-  async put(_id: string, data: Partial<ContestType>): Promise<ContestType> {
+  async put(id: string, data: Partial<ContestType>): Promise<ContestType> {
     const srcContest: Partial<ContestType> = new Contest(data as ContestType);
 
-    this.idFilter(_id, srcContest);
+    this.idFilter(id, srcContest);
 
     const contest: Partial<ContestType> = await contestRepository.update(
       srcContest
@@ -68,9 +65,9 @@ export class ContestService implements ContestServiceInterface {
     return new Contest(contest as ContestType);
   }
 
-  async get(_id: string): Promise<ContestType> {
+  async get(id: string): Promise<ContestType> {
     const contest: Partial<ContestType> = await contestRepository.readWithJoin(
-      _id,
+      id,
       "participantList",
       {},
       {}
@@ -86,8 +83,8 @@ export class ContestService implements ContestServiceInterface {
     return contests.map((contest) => new Contest(contest as ContestType));
   }
 
-  async remove(_id: string): Promise<ContestType> {
-    const contest: Partial<ContestType> = await contestRepository.delete(_id);
+  async remove(id: string): Promise<ContestType> {
+    const contest: Partial<ContestType> = await contestRepository.delete(id);
 
     return new Contest(contest as ContestType);
   }

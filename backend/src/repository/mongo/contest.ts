@@ -1,7 +1,8 @@
 import { ContestType } from "@model/Contest";
-
 import { ContestRepository } from "@core/repository/contest";
-import { ContestSchema } from "@model/repository/ContestSchema";
+import { ContestSchema } from "@model/repository/mongo/ContestSchema";
+
+import { idController } from "@core/main";
 
 let instance: ContestMongoRepo | null = null;
 export class ContestMongoRepo implements ContestRepository {
@@ -10,26 +11,30 @@ export class ContestMongoRepo implements ContestRepository {
     instance = this;
   }
 
-  readonlyFilter(data: any) {
+  readonlyFilter(data: Partial<ContestType>) {
     const filteredData = JSON.parse(JSON.stringify(data));
     delete filteredData._id;
+    delete filteredData.id;
     delete filteredData.participantList;
 
     return filteredData;
   }
 
-  async isExist(_id: string): Promise<Boolean> {
-    if (await ContestSchema.exists({ _id: _id })) {
+  async isExist(id: string): Promise<Boolean> {
+    if (await ContestSchema.exists({ id: id })) {
       return true;
     } else {
       return false;
     }
   }
 
-  async create(data: ContestType): Promise<any> {
-    delete data._id;
-
-    const contest = await ContestSchema.create(data);
+  async create(data: ContestType): Promise<ContestType> {
+    const newid = idController.generateId();
+    const contest: ContestType | null = await ContestSchema.create({
+      ...data,
+      id: newid,
+      _id: newid,
+    });
     if (!contest) {
       throw new Error("Failed to create contest");
     }
@@ -37,8 +42,8 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readEvery(): Promise<any> {
-    const contestIndex = await ContestSchema.find()
+  async readEvery(): Promise<ContestType[]> {
+    const contestList: ContestType[] | null = await ContestSchema.find()
       .populate({
         path: "participantList",
         populate: {
@@ -46,15 +51,17 @@ export class ContestMongoRepo implements ContestRepository {
         },
       })
       .lean();
-    if (!contestIndex) {
+    if (!contestList) {
       throw new Error("Contest not found");
     }
 
-    return contestIndex;
+    return contestList;
   }
 
-  async read(_id: string): Promise<any> {
-    const contest = await ContestSchema.findOne({ _id: _id }).lean();
+  async read(id: string): Promise<ContestType> {
+    const contest: ContestType | null = await ContestSchema.findOne({
+      id: id,
+    }).lean();
     if (!contest) {
       throw new Error("Contest not found");
     }
@@ -63,35 +70,12 @@ export class ContestMongoRepo implements ContestRepository {
   }
 
   async readWithJoin(
-    _id: string,
-    participantJoinTarget: string,
-    selectParticipantField: object,
-    selectSectorRecordField: object
-  ): Promise<any> {
-    const contest = await ContestSchema.findOne({ _id: _id })
-      .populate({
-        path: participantJoinTarget,
-        select: selectParticipantField,
-        populate: {
-          path: "sectorRecordList",
-          select: selectSectorRecordField,
-        },
-      })
-      .lean();
-    if (!contest) {
-      throw new Error("Contest not found");
-    }
-
-    return contest;
-  }
-
-  async readWithJoinById(
     id: string,
     participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object
-  ): Promise<any> {
-    const contest = await ContestSchema.findOne({ id: id })
+  ): Promise<ContestType> {
+    const contest: ContestType | null = await ContestSchema.findOne({ id: id })
       .populate({
         path: participantJoinTarget,
         select: selectParticipantField,
@@ -108,10 +92,36 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async update(data: Partial<ContestType>): Promise<any> {
+  async readWithJoinByQuery(
+    query: string,
+    participantJoinTarget: string,
+    selectParticipantField: object,
+    selectSectorRecordField: object
+  ): Promise<ContestType> {
+    const contest: ContestType | null = await ContestSchema.findOne({
+      id: query,
+    })
+      .populate({
+        path: participantJoinTarget,
+        select: selectParticipantField,
+        populate: {
+          path: "sectorRecordList",
+          select: selectSectorRecordField,
+        },
+      })
+      .lean();
+    if (!contest) {
+      throw new Error("Contest not found");
+    }
+
+    return contest;
+  }
+
+  async update(data: Partial<ContestType>): Promise<ContestType> {
+    const id = data.id;
     const filteredData = this.readonlyFilter(data);
-    const contest = await ContestSchema.findOneAndUpdate(
-      { _id: data._id },
+    const contest: ContestType | null = await ContestSchema.findOneAndUpdate(
+      { id: id },
       filteredData,
       {
         returnDocument: "after",
@@ -124,8 +134,10 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async delete(_id: string): Promise<any> {
-    const contest = await ContestSchema.findOneAndDelete({ _id: _id }).lean();
+  async delete(id: string): Promise<ContestType> {
+    const contest: ContestType | null = await ContestSchema.findOneAndDelete({
+      id: id,
+    }).lean();
     if (!contest) {
       throw new Error("Failed to delete contest");
     }
@@ -133,11 +145,14 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async appendParticipantList(_id: string, participantId: any): Promise<any> {
-    const contest = await ContestSchema.findOneAndUpdate(
-      { _id: _id },
+  async appendParticipantList(
+    id: string,
+    participant_Id: string
+  ): Promise<ContestType> {
+    const contest: ContestType | null = await ContestSchema.findOneAndUpdate(
+      { id: id },
       {
-        $addToSet: { participantList: participantId },
+        $addToSet: { participantList: participant_Id },
       },
       {
         returnDocument: "after",
@@ -147,14 +162,17 @@ export class ContestMongoRepo implements ContestRepository {
       throw new Error("Failed to append participant list");
     }
 
-    return participantId;
+    return contest;
   }
 
-  async popParticipantList(_id: string, participantId: any): Promise<any> {
-    const contest = await ContestSchema.findOneAndUpdate(
-      { _id: _id },
+  async popParticipantList(
+    id: string,
+    participant_Id: string
+  ): Promise<ContestType> {
+    const contest: ContestType | null = await ContestSchema.findOneAndUpdate(
+      { id: id },
       {
-        $pull: { participantList: participantId },
+        $pull: { participantList: participant_Id },
       },
       {
         returnDocument: "after",
@@ -164,48 +182,6 @@ export class ContestMongoRepo implements ContestRepository {
       throw new Error("Failed to remove participant list");
     }
 
-    return participantId;
+    return contest;
   }
 }
-
-// 싱글톤 패턴
-// class Singletone {
-//   private static instance: Singletone | null = null;
-
-//   private constructor() { }
-
-//   public static getInstance(): Singletone {
-//     if (!Singletone.instance) {
-//       Singletone.instance = new Singletone();
-//     }
-
-//     return Singletone.instance;
-//   }
-
-//   public getParticipant(id: string): ParticipantType {
-//     return {
-//       id: "",
-//       title: "",
-//       contestLog: "",
-//       driveLog: "",
-//       remainingContestTime: 0
-//     };
-//   }
-
-//   public postParticipant(id: string, srcData: any): string {
-//     return "OK";
-//   }
-
-//   public margeParticipant(id: string, src: any, origin: ParticipantType): ParticipantType {
-//     return {
-//       id: "",
-//       title: "",
-//       contestLog: "",
-//       driveLog: "",
-//       remainingContestTime: 0
-//     };
-//   }
-// }
-
-// const myInstance = new Singletone();
-// myInstance.getParticipant("test");

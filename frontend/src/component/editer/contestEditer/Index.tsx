@@ -9,7 +9,6 @@ import Accordion from "component/utils/Accordion";
 
 import { ContestType } from "model/Contest";
 import { contestEditMenuEnum } from "model/enums/index";
-import { isEmptyObject } from "tools/utils";
 
 export default function ContestEditer({
   setContestListRefreshSignal,
@@ -18,8 +17,8 @@ export default function ContestEditer({
   setTargetContest,
 }: {
   setContestListRefreshSignal: Function;
-  contestList: Partial<ContestType>[];
-  targetContest: Partial<ContestType>;
+  contestList: ContestType[] | undefined;
+  targetContest: ContestType | undefined;
   setTargetContest: Function;
 }) {
   const [editMenu, setEditMenu] = useState<string>(contestEditMenuEnum[0]);
@@ -32,7 +31,7 @@ export default function ContestEditer({
         setContestUpdateSignal={setContestListRefreshSignal}
       />
     );
-  } else if (isEmptyObject(targetContest)) {
+  } else if (!targetContest) {
     editMenuHtml = <p>대회를 선택하세요.</p>;
   } else if (editMenu === "대회 수정") {
     editMenuHtml = (

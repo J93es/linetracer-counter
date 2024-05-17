@@ -18,36 +18,30 @@ const driveRecordController = new DriveRecordController();
 export default function PutDriveRecord({
   setDriveRecordUpdateSignal,
   targetDriveRecord,
-  targetSectorRecordId,
 }: {
   setDriveRecordUpdateSignal: Function;
-  targetDriveRecord: Partial<DriveRecordType>;
-  targetSectorRecordId: string;
+  targetDriveRecord: DriveRecordType | undefined;
 }) {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<DriveRecordType>({
+  } = useForm<Partial<DriveRecordType>>({
     resolver: zodResolver(FormDriveRecordSchema),
   });
 
   useEffect(() => {
-    setValue("type", targetDriveRecord.type ?? driveRecord_typeEnum[0]);
-    setValue("recordTime", targetDriveRecord.recordTime ?? 0);
+    setValue("type", targetDriveRecord?.type ?? driveRecord_typeEnum[0]);
+    setValue("recordTime", targetDriveRecord?.recordTime ?? 0);
   }, [setValue, targetDriveRecord]);
 
   const onSubmit = (data: Partial<DriveRecordType>) => {
     const func = async () => {
-      await driveRecordController.put(
-        targetSectorRecordId,
-        targetDriveRecord._id,
-        {
-          _id: targetDriveRecord._id,
-          ...data,
-        }
-      );
+      await driveRecordController.put({
+        ...data,
+        id: targetDriveRecord?.id,
+      });
       setDriveRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

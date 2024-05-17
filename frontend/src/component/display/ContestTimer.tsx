@@ -13,8 +13,8 @@ export default function ContestTimer({
   curSectorRecord,
   isContestTimerRunning,
 }: {
-  targetContest: Partial<ContestType>;
-  curSectorRecord: Partial<SectorRecordType>;
+  targetContest: ContestType | undefined;
+  curSectorRecord: SectorRecordType | undefined;
   isContestTimerRunning: boolean;
 }) {
   const [remainingTime, setRemainingTime] = useState<number>(0);
@@ -25,9 +25,9 @@ export default function ContestTimer({
   const requestRef = useRef<number>(0);
 
   useEffect(() => {
-    setRemainingTime(curSectorRecord.remainingContestTime ?? 0);
-    setOriginRemainingTime(curSectorRecord.remainingContestTime);
-    setTimerStartTime(targetContest.contestTimerStartTime ?? -1);
+    setRemainingTime(curSectorRecord?.remainingContestTime ?? 0);
+    setOriginRemainingTime(curSectorRecord?.remainingContestTime);
+    setTimerStartTime(targetContest?.contestTimerStartTime ?? -1);
   }, [targetContest, curSectorRecord]);
 
   const timerAnimation = (prevTime: number) => {

@@ -3,10 +3,7 @@ import SectorRecordDistintion from "model/distinction/SectorRecordDistinction";
 import Accordion from "component/utils/Accordion";
 import RetouchSectorRecord from "component/manager/sectorRecordManager/RetouchSectorRecord";
 
-import { ContestType } from "model/Contest";
 import { SectorRecordType } from "model/SectorRecord";
-
-import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function SectorRecordManager({
   setSectorRecordUpdateSignal,
@@ -16,17 +13,17 @@ export default function SectorRecordManager({
   isBlocked,
 }: {
   setSectorRecordUpdateSignal: Function;
-  sectorRecordList: Partial<SectorRecordType>[];
-  targetSectorRecord: Partial<SectorRecordType>;
+  sectorRecordList: SectorRecordType[] | undefined;
+  targetSectorRecord: SectorRecordType | undefined;
   setTargetSectorRecord: Function;
   isBlocked: boolean;
 }) {
   let retouchHtml = null;
   if (isBlocked) {
     retouchHtml = <p>선택/수정이 불가능 합니다.</p>;
-  } else if (isEmptyArray(sectorRecordList)) {
+  } else if (!sectorRecordList) {
     retouchHtml = <p>부문 기록이 없습니다.</p>;
-  } else if (isEmptyObject(targetSectorRecord)) {
+  } else if (!targetSectorRecord) {
     retouchHtml = <p>부문 기록을 선택하세요.</p>;
   } else {
     retouchHtml = (

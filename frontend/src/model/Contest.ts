@@ -1,46 +1,43 @@
 import { ParticipantType, participantTamplate } from "model/Participant";
 
 export interface ContestType {
-  _id: any;
   id: string;
   title: string;
 
-  curContestingSection: string;
-  curParticipant: string;
-  nextParticipant: string;
-  curSectorRecord: string;
+  curContestingSection?: string;
+  curParticipant?: string;
+  nextParticipant?: string;
+  curSectorRecord?: string;
 
-  contestTimerStartTime: number;
-  isContestTimerRunning: boolean;
+  contestTimerStartTime?: number;
+  isContestTimerRunning?: boolean;
 
-  driveStartTime: number;
-  isDriveTimerRunning: boolean;
-  latestDriveRecordTime: number;
+  driveStartTime?: number;
+  isDriveTimerRunning?: boolean;
+  latestDriveRecordTime?: number;
 
-  participantList: any;
+  participantList: ParticipantType[];
 }
 
 export default class Contest implements ContestType {
-  _id: any;
   id: string;
   title: string;
 
-  curContestingSection: string;
-  curParticipant: string;
-  nextParticipant: string;
-  curSectorRecord: string;
+  curContestingSection?: string;
+  curParticipant?: string;
+  nextParticipant?: string;
+  curSectorRecord?: string;
 
-  contestTimerStartTime: number;
-  isContestTimerRunning: boolean;
+  contestTimerStartTime?: number;
+  isContestTimerRunning?: boolean;
 
-  driveStartTime: number;
-  isDriveTimerRunning: boolean;
-  latestDriveRecordTime: number;
+  driveStartTime?: number;
+  isDriveTimerRunning?: boolean;
+  latestDriveRecordTime?: number;
 
-  participantList: Partial<ParticipantType>[];
+  participantList: ParticipantType[];
 
   constructor(data: ContestType) {
-    this._id = data._id;
     this.id = data.id;
     this.title = data.title;
 
@@ -63,7 +60,6 @@ export default class Contest implements ContestType {
 export const timerStopValue = -1;
 
 export const contestTamplate: ContestType = new Contest({
-  _id: "",
   id: "",
   title: "",
 

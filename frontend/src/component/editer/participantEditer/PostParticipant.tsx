@@ -16,9 +16,9 @@ export default function PostParticipant({
   setParticipantUpdateSignal,
   targetContestId,
 }: {
-  targetParticipant: Partial<ParticipantType>;
+  targetParticipant: ParticipantType | undefined;
   setParticipantUpdateSignal: Function;
-  targetContestId: string;
+  targetContestId: string | undefined;
 }) {
   const {
     register,
@@ -37,8 +37,7 @@ export default function PostParticipant({
 
   const onSubmit = (data: Partial<ParticipantType>) => {
     const func = async () => {
-      data.hostId = targetContestId;
-      await participantController.post(data);
+      await participantController.post({ ...data, hostId: targetContestId });
       setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

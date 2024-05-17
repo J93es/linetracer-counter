@@ -19,16 +19,16 @@ export default function PostDriveRecord({
   setDriveRecordUpdateSignal,
   targetSectorRecordId,
 }: {
-  targetDriveRecord: Partial<DriveRecordType>;
+  targetDriveRecord: DriveRecordType | undefined;
   setDriveRecordUpdateSignal: Function;
-  targetSectorRecordId: string;
+  targetSectorRecordId: string | undefined;
 }) {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<DriveRecordType>({
+  } = useForm<Partial<DriveRecordType>>({
     resolver: zodResolver(FormDriveRecordSchema),
   });
 
@@ -39,13 +39,11 @@ export default function PostDriveRecord({
 
   const onSubmit = (data: Partial<DriveRecordType>) => {
     const func = async () => {
-      console.log({
+      await driveRecordController.post({
         ...data,
         writeTime: Date.now(),
-      });
-      await driveRecordController.post(targetSectorRecordId, {
-        ...data,
-        writeTime: Date.now(),
+        id: targetDriveRecord?.id,
+        hostId: targetSectorRecordId,
       });
       setDriveRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
     };

@@ -18,7 +18,7 @@ export default function PostContest({
   targetContest,
   setContestUpdateSignal,
 }: {
-  targetContest: Partial<ContestType>;
+  targetContest: ContestType | undefined;
   setContestUpdateSignal: Function;
 }) {
   const {
@@ -34,7 +34,7 @@ export default function PostContest({
     setValue("curContestingSection", sectorEnum[0]);
   }, [setValue, targetContest]);
 
-  const onSubmit = (data: Partial<ContestType>) => {
+  const onSubmit = (data: ContestType) => {
     const func = async () => {
       await contestController.post(data);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);

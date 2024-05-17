@@ -22,7 +22,7 @@ export default function PutSectorRecord({
   targetSectorRecord,
 }: {
   setSectorRecordUpdateSignal: Function;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetSectorRecord: SectorRecordType | undefined;
 }) {
   const {
     register,
@@ -36,25 +36,24 @@ export default function PutSectorRecord({
   useEffect(() => {
     setValue(
       "contestSector",
-      targetSectorRecord.contestSector ?? sectorEnum[0]
+      targetSectorRecord?.contestSector ?? sectorEnum[0]
     );
-    setValue("order", targetSectorRecord.order ?? defaultOrder);
+    setValue("order", targetSectorRecord?.order ?? defaultOrder);
     setValue(
       "remainingContestTime",
-      targetSectorRecord.remainingContestTime ?? defaultRemainingContestTime
+      targetSectorRecord?.remainingContestTime ?? defaultRemainingContestTime
     );
     setValue(
       "sectorState",
-      targetSectorRecord.sectorState ?? sectorRecord_sectorStateEnum[0]
+      targetSectorRecord?.sectorState ?? sectorRecord_sectorStateEnum[0]
     );
   }, [setValue, targetSectorRecord]);
 
   const onSubmit = (data: Partial<SectorRecordType>) => {
     const func = async () => {
-      data._id = targetSectorRecord._id;
-      await sectorRecordController.put(targetSectorRecord._id, {
-        _id: targetSectorRecord._id,
+      await sectorRecordController.put({
         ...data,
+        id: targetSectorRecord?.id,
       });
       setSectorRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
     };

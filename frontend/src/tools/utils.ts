@@ -1,7 +1,7 @@
 import { ParticipantType } from "model/Participant";
 import { filterParticipantList } from "tools/filterTargetList";
 
-export function isEmptyObject(target: object) {
+export function isEmptyObject(target: any): boolean {
   try {
     if (!(typeof target === "object")) {
       return true;
@@ -29,37 +29,41 @@ export function isEmptyArray(src: any): boolean {
   }
 }
 
-export function findTargetBy_id(_id: string, objectList: any[]): any {
+export function findTargetById(
+  id: string | undefined,
+  objectList: any[] | undefined
+): any | undefined {
   try {
+    if (!id || !objectList) return undefined;
     for (let object of objectList) {
-      if (object._id === _id) return JSON.parse(JSON.stringify(object));
+      if (object.id === id) return JSON.parse(JSON.stringify(object));
     }
-    return {};
+    return undefined;
   } catch (e) {
-    return {};
+    return undefined;
   }
 }
 
 export function getNextParticipant(
-  curSector: string,
-  curParticipantId: string,
-  participantList: Partial<ParticipantType>[]
-): any {
+  curSector: string | undefined,
+  curParticipantId: string | undefined,
+  participantList: ParticipantType[]
+): ParticipantType | undefined {
   try {
     const sortedParticipantList = filterParticipantList(participantList, {
       sectorRecordBy: "contestSector",
       sectorRecordValue: curSector,
     });
     for (let i = 0; i < sortedParticipantList.length; i++) {
-      if (sortedParticipantList[i]._id === curParticipantId) {
+      if (sortedParticipantList[i].id === curParticipantId) {
         if (i + 1 >= sortedParticipantList.length) {
           return JSON.parse(JSON.stringify(sortedParticipantList[i]));
         }
         return JSON.parse(JSON.stringify(sortedParticipantList[i + 1]));
       }
     }
-    return {};
+    return undefined;
   } catch (e) {
-    return {};
+    return undefined;
   }
 }

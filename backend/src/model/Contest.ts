@@ -1,43 +1,46 @@
 import { ParticipantType } from "@model/Participant";
+import { UserParticipantType } from "@model/service/user/Participant";
+import { SectorRecordType } from "@model/SectorRecord";
+import { UserSectorRecordType } from "@model/service/user/SectorRecord";
 
 export interface ContestType {
-  _id: any;
+  _id: string;
   id: string;
   title: string;
 
-  curContestingSection: string;
-  curParticipant: object;
-  nextParticipant: object;
-  curSectorRecord: object;
+  curContestingSection?: string;
+  curParticipant?: ParticipantType | UserParticipantType | string;
+  nextParticipant?: ParticipantType | UserParticipantType | string;
+  curSectorRecord?: SectorRecordType | UserSectorRecordType | string;
 
-  contestTimerStartTime: number;
-  isContestTimerRunning: boolean;
+  contestTimerStartTime?: number;
+  isContestTimerRunning?: boolean;
 
-  driveStartTime: number;
-  isDriveTimerRunning: boolean;
-  latestDriveRecordTime: number;
+  driveStartTime?: number;
+  isDriveTimerRunning?: boolean;
+  latestDriveRecordTime?: number;
 
-  participantList: any;
+  participantList: ParticipantType[] | UserParticipantType[] | string[];
 }
 
 export default class Contest implements ContestType {
-  _id: any;
+  _id: string;
   id: string;
   title: string;
 
-  curContestingSection: string;
-  curParticipant: object;
-  nextParticipant: object;
-  curSectorRecord: object;
+  curContestingSection?: string;
+  curParticipant?: ParticipantType | UserParticipantType | string;
+  nextParticipant?: ParticipantType | UserParticipantType | string;
+  curSectorRecord?: SectorRecordType | UserSectorRecordType | string;
 
-  contestTimerStartTime: number;
-  isContestTimerRunning: boolean;
+  contestTimerStartTime?: number;
+  isContestTimerRunning?: boolean;
 
-  driveStartTime: number;
-  isDriveTimerRunning: boolean;
-  latestDriveRecordTime: number;
+  driveStartTime?: number;
+  isDriveTimerRunning?: boolean;
+  latestDriveRecordTime?: number;
 
-  participantList: Partial<ParticipantType>[];
+  participantList: ParticipantType[] | UserParticipantType[] | string[];
 
   constructor(data: ContestType) {
     this._id = data._id;

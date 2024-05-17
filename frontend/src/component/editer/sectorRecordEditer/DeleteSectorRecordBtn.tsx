@@ -8,10 +8,10 @@ export default function DeleteSectorRecordBtn({
   targetSectorRecord,
 }: {
   setSectorRecordUpdateSignal: Function;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetSectorRecord: SectorRecordType | undefined;
 }) {
   const deleteSectorRecord = async () => {
-    await sectorRecordController.delete(targetSectorRecord._id);
+    await sectorRecordController.delete(targetSectorRecord?.id);
     setSectorRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
   };
 

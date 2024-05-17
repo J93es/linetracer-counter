@@ -3,32 +3,32 @@ import { SectorRecordType } from "model/SectorRecord";
 import { robotTamplate } from "model/Robot";
 
 export interface ParticipantType {
-  _id: any;
-  hostId: any;
+  id: string;
+  hostId: string;
 
   name: string;
-  association: string;
-  speech: string;
+  association?: string;
+  speech?: string;
 
-  robot: RobotType;
+  robot?: RobotType;
 
-  sectorRecordList: any;
+  sectorRecordList: SectorRecordType[];
 }
 
 export default class Participant implements ParticipantType {
-  _id: any;
-  hostId: any;
+  id: string;
+  hostId: string;
 
   name: string;
-  association: string;
-  speech: string;
+  association?: string;
+  speech?: string;
 
-  robot: RobotType;
+  robot?: RobotType;
 
   sectorRecordList: SectorRecordType[];
 
   constructor(data: ParticipantType) {
-    this._id = data._id;
+    this.id = data.id;
     this.hostId = data.hostId;
 
     this.name = data.name;
@@ -42,7 +42,7 @@ export default class Participant implements ParticipantType {
 }
 
 export const participantTamplate: ParticipantType = new Participant({
-  _id: "",
+  id: "",
   hostId: "",
   name: "",
   association: "",

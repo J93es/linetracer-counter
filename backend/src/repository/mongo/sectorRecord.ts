@@ -1,14 +1,12 @@
+import { SectorRecordSchema } from "@model/repository/mongo/SectorRecordSchema";
+import { SectorRecordRepository } from "@core/repository/sectorRecord";
+
 import { SectorRecordType } from "@model/SectorRecord";
 import { DriveRecordType } from "@model/DriveRecord";
 
-import { SectorRecordSchema } from "@model/repository/SectorRecordSchema";
+import { participantRepository } from "@repository/index";
 
-import { ParticipantRepository } from "@core/repository/participant";
-import { ParticipantMongoRepo } from "@repository/mongo/participant";
-
-import { SectorRecordRepository } from "@core/repository/sectorRecord";
-
-const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
+import { idController } from "@core/main";
 
 let instance: SectorRecordMongoRepo | null = null;
 export class SectorRecordMongoRepo implements SectorRecordRepository {
@@ -17,25 +15,28 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     instance = this;
   }
 
-  private readonlyFilter(data: any) {
+  private readonlyFilter(data: Partial<SectorRecordType>) {
     const filteredData = JSON.parse(JSON.stringify(data));
 
     delete filteredData._id;
+    delete filteredData.id;
     delete filteredData.hostId;
 
     return filteredData;
   }
 
-  async isExist(_id: any): Promise<Boolean> {
-    if (await SectorRecordSchema.exists({ _id: _id })) {
+  async isExist(id: string): Promise<Boolean> {
+    if (await SectorRecordSchema.exists({ id: id })) {
       return true;
     } else {
       return false;
     }
   }
 
-  async create(data: Partial<SectorRecordType>): Promise<any> {
-    delete data._id;
+  async create(data: Partial<SectorRecordType>): Promise<SectorRecordType> {
+    if (!data.hostId) {
+      throw new Error("hostId is required");
+    }
 
     if (!(await participantRepository.isExist(data.hostId))) {
       throw new Error(
@@ -43,15 +44,20 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
       );
     }
 
-    const sectorRecord = await SectorRecordSchema.create(data);
+    const newId = idController.generateId();
+    const sectorRecord: SectorRecordType = await SectorRecordSchema.create({
+      ...data,
+      id: newId,
+      _id: newId,
+    });
     if (!sectorRecord) {
       throw new Error("Failed to create SectorRecord");
     }
 
     try {
       await participantRepository.appendSectorRecordList(
-        data.hostId,
-        sectorRecord._id
+        sectorRecord.hostId,
+        sectorRecord.id
       );
     } catch (err) {
       throw new Error(
@@ -62,20 +68,9 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async readEvery(participant_Id: any): Promise<any> {
-    const sectorRecordIndex = await SectorRecordSchema.find({
-      hostId: participant_Id,
-    }).lean();
-    if (!sectorRecordIndex) {
-      throw new Error("SectorRecord list not found");
-    }
-
-    return sectorRecordIndex;
-  }
-
-  async read(_id: any): Promise<any> {
+  async read(id: string): Promise<SectorRecordType> {
     const sectorRecord = await SectorRecordSchema.findOne({
-      _id: _id,
+      id: id,
     }).lean();
     if (!sectorRecord) {
       throw new Error("SectorRecord not found");
@@ -87,9 +82,14 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
   async update(
     data: Partial<SectorRecordType>,
     replace: boolean = false
-  ): Promise<any> {
+  ): Promise<SectorRecordType> {
+    if (!data.id) {
+      throw new Error("SectorRecord id is required");
+    }
+
+    const id = data.id;
+    const originSectorRecord = this.readonlyFilter(await this.read(id));
     const target = this.readonlyFilter(data);
-    const originSectorRecord = this.readonlyFilter(await this.read(data._id));
 
     const srcDriveRecordList = target.driveRecordList;
     const originDriveRecordList = originSectorRecord.driveRecordList;
@@ -102,7 +102,7 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     }
 
     const sectorRecord = await SectorRecordSchema.findOneAndUpdate(
-      { _id: data._id },
+      { id: id },
       target,
       {
         returnDocument: "after",
@@ -115,18 +115,18 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async delete(_id: any): Promise<any> {
+  async delete(id: string): Promise<any> {
     const sectorRecord = await SectorRecordSchema.findOneAndDelete({
-      _id: _id,
+      id: id,
     }).lean();
     if (!sectorRecord) {
-      throw new Error("Failed to delete SectorRecord, check SectorRecord _id");
+      throw new Error("Failed to delete SectorRecord, check SectorRecord id");
     }
 
     try {
       await participantRepository.popSectorRecordList(
         sectorRecord.hostId,
-        sectorRecord._id
+        sectorRecord.id
       );
     } catch (err) {
       throw new Error(
@@ -140,15 +140,13 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
   private async updateDriveRecord(
     srcDriveRecord: Partial<DriveRecordType>[],
     originDriveRecord: Partial<DriveRecordType>[]
-  ): Promise<any> {
+  ): Promise<SectorRecordType> {
     const targetDriveRecord = JSON.parse(JSON.stringify(originDriveRecord));
 
     for (let i = 0; i < srcDriveRecord.length; i++) {
       let isExist = false;
       for (let j = 0; j < originDriveRecord.length; j++) {
-        if (
-          String(srcDriveRecord[i]._id) === String(originDriveRecord[j]._id)
-        ) {
+        if (String(srcDriveRecord[i].id) === String(originDriveRecord[j].id)) {
           targetDriveRecord[j] = {
             ...originDriveRecord[j],
             ...srcDriveRecord[i],
@@ -166,11 +164,11 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
   }
 
   async appendDriveRecordList(
-    _id: any,
+    id: string,
     driveRecord: DriveRecordType
-  ): Promise<any> {
+  ): Promise<SectorRecordType> {
     const sectorRecord = await SectorRecordSchema.findOneAndUpdate(
-      { _id: _id },
+      { id: id },
       {
         $addToSet: { driveRecordList: driveRecord },
       },
@@ -185,11 +183,14 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async popDriveRecordList(_id: any, driveRecord_Id: any): Promise<any> {
+  async popDriveRecordList(
+    id: string,
+    driveRecordId: string
+  ): Promise<SectorRecordType> {
     const sectorRecord = await SectorRecordSchema.findOneAndUpdate(
-      { _id: _id },
+      { id: id },
       {
-        $pull: { driveRecordList: { _id: driveRecord_Id } },
+        $pull: { driveRecordList: { id: driveRecordId } },
       },
       {
         returnDocument: "after",

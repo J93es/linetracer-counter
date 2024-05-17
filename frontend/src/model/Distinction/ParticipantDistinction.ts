@@ -3,7 +3,7 @@ import { ParticipantType } from "model/Participant";
 export interface ParticipantDistinctionType
   extends Omit<
     ParticipantType,
-    "_id" | "hostId" | "speech" | "robot" | "sectorRecordList"
+    "id" | "hostId" | "speech" | "robot" | "sectorRecordList"
   > {
   name: string;
   association: string;

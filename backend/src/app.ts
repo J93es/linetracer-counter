@@ -10,25 +10,34 @@ import express, {
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
-import corsOptions from "@src/utils/cors/index";
+import corsOptions from "@utils/cors/index";
 
-import indexRouter from "@src/routes/index";
-import contestRouter from "@src/routes/contest";
-import partipantRouter from "@src/routes/participant";
-import sectorRecordRouter from "@src/routes/sectorRecord";
-import driveRecordRouter from "@src/routes/driveRecord";
-import userRouter from "@src/routes/user";
+import JwtService from "@auth/service/jwt-service";
+
+import indexRouter from "@route/index";
+import adminRouter from "@auth/route/admin";
+import contestRouter from "@route/contest";
+import partipantRouter from "@route/participant";
+import sectorRecordRouter from "@route/sectorRecord";
+import driveRecordRouter from "@route/driveRecord";
+import userRouter from "@route/user";
 
 import { uri, PORT } from "@src/config";
 import mongoose from "mongoose";
 
 const app: Application = express();
 
-app.set("port", process.env.PORT || PORT || 8000);
+const tokenChecker = function (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const adminIdFromToken = JwtService.getAdminIdFromRequest(req);
+  req.adminId = adminIdFromToken;
+  next();
+};
 
-// // view engine setup
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "pug");
+app.set("port", process.env.PORT || PORT || 8000);
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -37,17 +46,15 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(tokenChecker);
 app.use("/", indexRouter);
+app.use("/admin", adminRouter);
 app.use("/contest", contestRouter);
 app.use("/participant", partipantRouter);
 app.use("/sector-record", sectorRecordRouter);
 app.use("/drive-record", driveRecordRouter);
 app.use("/user", userRouter);
-
-// // catch 404 and forward to error handler
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   next(createError(404));
-// });
 
 // error handler
 app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
@@ -59,10 +66,6 @@ app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
   res.status(500);
   res.render("error");
 });
-
-// app.listen(app.get("port"), () => {
-//   console.log(app.get("port"), "번에서 대기중");
-// });
 
 mongoose
   .connect(uri)

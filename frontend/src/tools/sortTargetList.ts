@@ -30,13 +30,13 @@ function sortTarget(targetList: any[], targetBy: string): any[] {
 }
 
 export function sortDriveRecordList(
-  targetDriveRecordList: Partial<DriveRecordType>[],
+  targetDriveRecordList: DriveRecordType[],
   by?: { driveRecordBy?: string }
-): Partial<DriveRecordType>[] {
+): DriveRecordType[] {
   const { driveRecordBy } = by ?? {};
 
   // sort할 배열
-  let list: Partial<DriveRecordType>[] = JSON.parse(
+  let list: DriveRecordType[] = JSON.parse(
     JSON.stringify(targetDriveRecordList)
   );
 
@@ -47,19 +47,18 @@ export function sortDriveRecordList(
 }
 
 export function sortSectorRecordList(
-  targetSectorRecordList: Partial<SectorRecordType>[],
+  targetSectorRecordList: SectorRecordType[],
   by?: { sectorRecordBy?: string; driveRecordBy?: string }
-): Partial<SectorRecordType>[] {
+): SectorRecordType[] {
   const { sectorRecordBy, ...otherBy } = by ?? {};
 
   // sort할 배열
-  let list: Partial<SectorRecordType>[] = JSON.parse(
+  let list: SectorRecordType[] = JSON.parse(
     JSON.stringify(targetSectorRecordList)
   );
 
   for (let i = 0; i < list.length; i++) {
-    let driveRecordList: Partial<DriveRecordType>[] =
-      list[i]?.driveRecordList ?? [];
+    let driveRecordList: DriveRecordType[] = list[i]?.driveRecordList ?? [];
 
     driveRecordList = sortDriveRecordList(driveRecordList, otherBy);
 
@@ -73,23 +72,22 @@ export function sortSectorRecordList(
 }
 
 export function sortParticipantList(
-  targetParticipantList: Partial<ParticipantType>[],
+  targetParticipantList: ParticipantType[],
   by?: {
     participantBy?: string;
     sectorRecordBy?: string;
     driveRecordBy?: string;
   }
-): Partial<ParticipantType>[] {
+): ParticipantType[] {
   const { participantBy, ...otherBy } = by ?? {};
 
   // sort할 배열
-  let list: Partial<ParticipantType>[] = JSON.parse(
+  let list: ParticipantType[] = JSON.parse(
     JSON.stringify(targetParticipantList)
   );
 
   for (let i = 0; i < list.length; i++) {
-    let sectorRecordList: Partial<SectorRecordType>[] =
-      list[i]?.sectorRecordList ?? [];
+    let sectorRecordList: SectorRecordType[] = list[i]?.sectorRecordList ?? [];
 
     sectorRecordList = sortSectorRecordList(sectorRecordList, otherBy);
 
@@ -104,15 +102,14 @@ export function sortParticipantList(
 
 export function sortSectorRecordByDriveRecordField(
   driveRecordBy: string,
-  targetSectorRecordList: Partial<SectorRecordType>[]
+  targetSectorRecordList: SectorRecordType[]
 ) {
-  let list: Partial<SectorRecordType>[] = JSON.parse(
+  let list: SectorRecordType[] = JSON.parse(
     JSON.stringify(targetSectorRecordList)
   );
 
   for (let i = 0; i < list.length; i++) {
-    let driveRecordList: Partial<DriveRecordType>[] =
-      list[i]?.driveRecordList ?? [];
+    let driveRecordList: DriveRecordType[] = list[i]?.driveRecordList ?? [];
 
     driveRecordList = sortDriveRecordList(driveRecordList, {
       driveRecordBy: driveRecordBy,
@@ -123,10 +120,10 @@ export function sortSectorRecordByDriveRecordField(
 
   // 임시 배열은 위치 및 정렬 값이있는 객체를 보유합니다.
   let mapped = list.map(function (
-    targetSectorRecord: Partial<SectorRecordType>,
+    targetSectorRecord: SectorRecordType,
     i: number
   ) {
-    const driveRecordList: Partial<DriveRecordType>[] =
+    const driveRecordList: DriveRecordType[] =
       targetSectorRecord?.driveRecordList ?? [];
 
     return {
@@ -152,17 +149,16 @@ export function sortSectorRecordByDriveRecordField(
 
 export function sortParticipantListBySectorRecordField(
   sectorRecordBy: string,
-  targetParticipantList: Partial<ParticipantType>[],
+  targetParticipantList: ParticipantType[],
   by?: { driveRecordBy?: string }
-): Partial<ParticipantType>[] {
+): ParticipantType[] {
   // sort할 배열
-  let list: Partial<ParticipantType>[] = JSON.parse(
+  let list: ParticipantType[] = JSON.parse(
     JSON.stringify(targetParticipantList)
   );
 
   for (let i = 0; i < list.length; i++) {
-    let sectorRecordList: Partial<SectorRecordType>[] =
-      list[i]?.sectorRecordList ?? [];
+    let sectorRecordList: SectorRecordType[] = list[i]?.sectorRecordList ?? [];
 
     sectorRecordList = sortSectorRecordList(sectorRecordList, {
       sectorRecordBy: sectorRecordBy,
@@ -174,10 +170,10 @@ export function sortParticipantListBySectorRecordField(
 
   // 임시 배열은 위치 및 정렬 값이있는 객체를 보유합니다.
   let mapped = list.map(function (
-    targetParticipant: Partial<ParticipantType>,
+    targetParticipant: ParticipantType,
     i: number
   ) {
-    const sectorRecordList: Partial<SectorRecordType>[] =
+    const sectorRecordList: SectorRecordType[] =
       targetParticipant?.sectorRecordList ?? [];
 
     return {
@@ -203,39 +199,38 @@ export function sortParticipantListBySectorRecordField(
 
 export function sortParticipantListByDriveRecordField(
   driveRecordBy: string,
-  targetParticipantList: Partial<ParticipantType>[]
-): Partial<ParticipantType>[] {
+  targetParticipantList: ParticipantType[]
+): ParticipantType[] {
   // sort할 배열
-  let list: Partial<ParticipantType>[] = JSON.parse(
+  let list: ParticipantType[] = JSON.parse(
     JSON.stringify(targetParticipantList)
   );
 
   for (let i = 0; i < list.length; i++) {
-    let sectorRecordList: Partial<SectorRecordType>[] =
-      list[i]?.sectorRecordList ?? [];
+    let sectorRecordList: SectorRecordType[] = list[i]?.sectorRecordList ?? [];
 
     sectorRecordList = sortSectorRecordByDriveRecordField(
       driveRecordBy,
       sectorRecordList
     );
 
-    list[i].sectorRecordList = sectorRecordList as SectorRecordType[];
+    list[i].sectorRecordList = sectorRecordList;
   }
 
   // 임시 배열은 위치 및 정렬 값이있는 객체를 보유합니다.
   let mapped = list.map(function (
-    targetParticipant: Partial<ParticipantType>,
+    targetParticipant: ParticipantType,
     i: number
   ) {
-    const sectorRecordList: Partial<SectorRecordType>[] =
+    const sectorRecordList: SectorRecordType[] =
       targetParticipant?.sectorRecordList ?? [];
+
+    const driveRecord: DriveRecordType = sectorRecordList[0].driveRecordList[0];
 
     return {
       index: i,
       value:
-        sectorRecordList[0].driveRecordList[0][
-          (driveRecordBy as keyof DriveRecordType) ?? ""
-        ] ?? defaultSortValue,
+        driveRecord[driveRecordBy as keyof DriveRecordType] ?? defaultSortValue,
     };
   });
 

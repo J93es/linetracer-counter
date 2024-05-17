@@ -1,18 +1,10 @@
-import express, {
-  Router,
-  Request,
-  Response,
-  NextFunction,
-  Errback,
-} from "express";
+import express, { Router, Request, Response, NextFunction } from "express";
 
 import { ContestType } from "@model/Contest";
 
-import { ContestServiceInterface } from "@core/service/contest";
-import { ContestService } from "@service/contest-service";
+import { contestService } from "@service/index";
 
 const router: Router = express.Router();
-const contestService: ContestServiceInterface = new ContestService();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -27,11 +19,11 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const _id: string = req.params._id;
+    const id: string = req.params.id;
 
-    const contest: Partial<ContestType> = await contestService.get(_id);
+    const contest: Partial<ContestType> = await contestService.get(id);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -57,46 +49,41 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.post(
-  "/:_id",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const data = req.body;
-      const _id: string = req.params._id;
-      if (!data._id) {
-        data._id = _id;
-      }
-      if (_id !== data._id) {
-        throw new Error(
-          "id is not matched : query id and body id is different"
-        );
-      }
-
-      const contest: Partial<ContestType> = await contestService.post(data);
-
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send(contest).status(200);
-    } catch (err: any) {
-      console.error(err);
-      res.header("Content-Type", "application/json; charset=utf-8");
-      res.send({ message: err.toString() }).status(404);
+router.post("/:id", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = req.body;
+    const id: string = req.params.id;
+    if (!data.id) {
+      data.id = id;
     }
+    if (id !== data.id) {
+      throw new Error("id is not matched : query id and body id is different");
+    }
+
+    const contest: Partial<ContestType> = await contestService.post(data);
+
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(contest).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
   }
-);
+});
 
 router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello patch");
 });
 
 router.patch(
-  "/:_id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      const _id: string = req.params._id;
+      const id: string = req.params.id;
 
       const contest: Partial<ContestType> = await contestService.patch(
-        _id,
+        id,
         data
       );
 
@@ -115,12 +102,12 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   res.send("hello put");
 });
 
-router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const _id: string = req.params._id;
+    const id: string = req.params.id;
 
-    const contest: Partial<ContestType> = await contestService.put(_id, data);
+    const contest: Partial<ContestType> = await contestService.put(id, data);
 
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(contest).status(200);
@@ -137,12 +124,12 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.delete(
-  "/:_id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const _id: string = req.params._id;
+      const id: string = req.params.id;
 
-      const contest: Partial<ContestType> = await contestService.remove(_id);
+      const contest: Partial<ContestType> = await contestService.remove(id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

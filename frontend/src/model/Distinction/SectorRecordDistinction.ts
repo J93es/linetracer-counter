@@ -2,11 +2,7 @@ import { SectorRecordType } from "model/SectorRecord";
 export interface SectorRecordDistinctionType
   extends Omit<
     SectorRecordType,
-    | "_id"
-    | "hostId"
-    | "remainingContestTime"
-    | "sectorState"
-    | "driveRecordList"
+    "id" | "hostId" | "remainingContestTime" | "sectorState" | "driveRecordList"
   > {
   contestSector: string;
   order: number;

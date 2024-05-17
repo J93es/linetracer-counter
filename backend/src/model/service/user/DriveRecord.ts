@@ -1,6 +1,7 @@
 import { DriveRecordType } from "@model/DriveRecord";
 
-export interface UserDriveRecordType extends Omit<DriveRecordType, "_id"> {
+export interface UserDriveRecordType
+  extends Omit<DriveRecordType, "_id" | "id" | "hostId"> {
   type: string;
   recordTime: number;
   writeTime: number;

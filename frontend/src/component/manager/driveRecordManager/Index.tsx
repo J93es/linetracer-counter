@@ -4,38 +4,32 @@ import RetouchDriveRecord from "component/manager/driveRecordManager/RetouchDriv
 
 import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
 import { DriveRecordType } from "model/DriveRecord";
-import { SectorRecordType } from "model/SectorRecord";
-
-import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function DriveRecordManager({
   setDriveRecordUpdateSignal,
   targetDriveRecord,
   setTargetDriveRecord,
   driveRecordList,
-  targetSectorRecord,
   isBlocked,
 }: {
   setDriveRecordUpdateSignal: Function;
-  targetDriveRecord: Partial<DriveRecordType>;
+  targetDriveRecord: DriveRecordType | undefined;
   setTargetDriveRecord: Function;
-  driveRecordList: object[];
-  targetSectorRecord: Partial<SectorRecordType>;
+  driveRecordList: object[] | undefined;
   isBlocked: boolean;
 }) {
   let retouchHtml = null;
   if (isBlocked) {
     retouchHtml = <p>수정이 불가능 합니다.</p>;
-  } else if (isEmptyArray(driveRecordList)) {
+  } else if (!driveRecordList) {
     retouchHtml = <p>주행 기록이 없습니다.</p>;
-  } else if (isEmptyObject(targetDriveRecord)) {
+  } else if (!targetDriveRecord) {
     retouchHtml = <p>주행 기록을 선택하세요.</p>;
   } else {
     retouchHtml = (
       <RetouchDriveRecord
         setDriveRecordUpdateSignal={setDriveRecordUpdateSignal}
         targetDriveRecord={targetDriveRecord}
-        targetSectorRecordId={targetSectorRecord._id}
       />
     );
   }

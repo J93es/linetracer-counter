@@ -13,7 +13,7 @@ import {
   sortParticipantList,
   sortParticipantListBySectorRecordField,
 } from "tools/sortTargetList";
-import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
+import { findTargetById, isEmptyArray, isEmptyObject } from "tools/utils";
 import { filterParticipantList } from "tools/filterTargetList";
 
 import "component/editer/Index.css";
@@ -27,39 +27,40 @@ export default function Editer({
 }: {
   setContestListRefreshSignal: Function;
   setUpdateSignal: Function;
-  contestList: Partial<ContestType>[];
-  targetContest: Partial<ContestType>;
+  contestList: ContestType[] | undefined;
+  targetContest: ContestType | undefined;
   setTargetContest: Function;
 }) {
-  const [participantList, setParticipantList] = useState<
-    Partial<ParticipantType>[]
-  >([]);
   const [filterStringBySector, setFilterStringBySector] =
     useState<string>("all");
+
+  const [participantList, setParticipantList] = useState<
+    ParticipantType[] | undefined
+  >();
   const [targetParticipant, setTargetParticipant] = useState<
-    Partial<ParticipantType>
-  >({});
+    ParticipantType | undefined
+  >();
 
   const [sectorRecordList, setSectorRecordList] = useState<
-    Partial<SectorRecordType>[]
-  >([]);
+    SectorRecordType[] | undefined
+  >();
   const [targetSectorRecord, setTargetSectorRecord] = useState<
-    Partial<SectorRecordType>
-  >({});
+    SectorRecordType | undefined
+  >();
 
   const [driveRecordList, setDriveRecordList] = useState<
-    Partial<DriveRecordType>[]
-  >([]);
+    DriveRecordType[] | undefined
+  >();
   const [targetDriveRecord, setTargetDriveRecord] = useState<
-    Partial<DriveRecordType>
-  >({});
+    DriveRecordType | undefined
+  >();
 
   // set participantList when targetContest is updated
   useEffect(() => {
-    let participantList: Partial<ParticipantType>[] =
-      targetContest.participantList ?? [];
-    if (isEmptyArray(participantList)) {
-      setParticipantList([]);
+    let participantList: ParticipantType[] | undefined =
+      targetContest?.participantList;
+    if (!participantList || isEmptyArray(participantList)) {
+      setParticipantList(undefined);
       return;
     }
 
@@ -89,73 +90,61 @@ export default function Editer({
 
   // set targetParticipant when participantList is updated
   useEffect(() => {
-    if (isEmptyArray(participantList)) {
-      setTargetParticipant({});
+    if (!participantList || isEmptyArray(participantList)) {
+      setTargetParticipant(undefined);
       return;
     }
 
-    let participant = findTargetBy_id(targetParticipant._id, participantList);
-    if (isEmptyObject(participant)) {
+    let participant: ParticipantType | undefined = findTargetById(
+      targetParticipant?.id,
+      participantList
+    );
+    if (!participant || isEmptyObject(participant)) {
       setTargetParticipant(participantList[participantList.length - 1]);
       return;
     }
     setTargetParticipant(participant);
-  }, [participantList, targetParticipant._id]);
+  }, [participantList, targetParticipant?.id]);
 
   // set SectorRecordList when targetParticipant is updated
   useEffect(() => {
-    const sectorRecordList = targetParticipant.sectorRecordList ?? [];
-    if (isEmptyArray(sectorRecordList)) {
-      setSectorRecordList([]);
-      return;
-    }
-
-    setSectorRecordList(sectorRecordList);
+    setSectorRecordList(targetParticipant?.sectorRecordList);
   }, [targetParticipant]);
 
   // set targetSectorRecord when SectorRecordList is updated
   useEffect(() => {
-    if (isEmptyArray(sectorRecordList)) {
-      setTargetSectorRecord({});
+    if (!sectorRecordList || isEmptyArray(sectorRecordList)) {
+      setTargetSectorRecord(undefined);
       return;
     }
 
-    let sectorRecord = findTargetBy_id(
-      targetSectorRecord._id,
-      sectorRecordList
-    );
-    if (isEmptyObject(sectorRecord)) {
+    let sectorRecord = findTargetById(targetSectorRecord?.id, sectorRecordList);
+    if (!sectorRecord || isEmptyObject(sectorRecord)) {
       setTargetSectorRecord(sectorRecordList[sectorRecordList.length - 1]);
       return;
     }
     setTargetSectorRecord(sectorRecord);
-  }, [sectorRecordList, targetSectorRecord._id]);
+  }, [sectorRecordList, targetSectorRecord?.id]);
 
   // set driveRecordList when targetSectorRecord is updated
   useEffect(() => {
-    const driveRecordList = targetSectorRecord.driveRecordList ?? [];
-    if (isEmptyArray(driveRecordList)) {
-      setDriveRecordList([]);
-      return;
-    }
-
-    setDriveRecordList(driveRecordList);
+    setDriveRecordList(targetSectorRecord?.driveRecordList);
   }, [targetSectorRecord]);
 
   // set targetDriveRecord when driveRecordList is updated
   useEffect(() => {
-    if (isEmptyArray(driveRecordList)) {
-      setTargetDriveRecord({});
+    if (!driveRecordList || isEmptyArray(driveRecordList)) {
+      setTargetDriveRecord(undefined);
       return;
     }
 
-    let driveRecord = findTargetBy_id(targetDriveRecord._id, driveRecordList);
-    if (isEmptyObject(driveRecord)) {
+    let driveRecord = findTargetById(targetDriveRecord?.id, driveRecordList);
+    if (!driveRecord || isEmptyObject(driveRecord)) {
       setTargetDriveRecord(driveRecordList[driveRecordList.length - 1]);
       return;
     }
     setTargetDriveRecord(driveRecord);
-  }, [driveRecordList, targetDriveRecord._id]);
+  }, [driveRecordList, targetDriveRecord?.id]);
 
   return (
     <div className="editer">

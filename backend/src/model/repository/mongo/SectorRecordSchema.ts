@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
 import { SectorRecordType } from "@model/SectorRecord";
-import { driveRecordSchema } from "@model/repository/DriveRecordSchema";
+import { driveRecordSchema } from "@model/repository/mongo/DriveRecordSchema";
 
 const { Schema } = mongoose;
 
 const sectorRecordSchema = new Schema<SectorRecordType>({
+  _id: { type: String, readonly: true },
+  id: { type: String, unique: true, required: true, readonly: true },
   hostId: { type: String, required: true, readonly: true },
 
   contestSector: {
@@ -30,7 +32,7 @@ const sectorRecordSchema = new Schema<SectorRecordType>({
   },
 
   driveRecordList: {
-    type: [driveRecordSchema],
+    type: [],
     ref: "DriveRecordSchema",
     required: true,
   },

@@ -1,27 +1,22 @@
-import { DriveRecordServiceInterface } from "@core/service/driveRecord";
+import { DriveRecordService } from "@core/service/driveRecord";
 
 import DriveRecord, { DriveRecordType } from "@model/DriveRecord";
 
-import { DriveRecordRepository } from "@core/repository/driveRecord";
-import { DriveRecordMongoRepo } from "@repository/mongo/driveRecord";
+import { driveRecordRepository } from "@repository/index";
 
-const driveRecordRepository: DriveRecordRepository = new DriveRecordMongoRepo();
-
-let instance: DriveRecordService | null = null;
-export class DriveRecordService implements DriveRecordServiceInterface {
+let instance: DriveRecordServ | null = null;
+export class DriveRecordServ implements DriveRecordService {
   constructor() {
     if (instance) return instance;
     instance = this;
   }
 
-  private _idFilter(_id: string, srcData: Partial<DriveRecordType>): void {
-    if (!srcData._id) {
-      throw new Error("_id is required");
+  private idFilter(id: string, srcData: Partial<DriveRecordType>): void {
+    if (!srcData.id) {
+      throw new Error("id is required");
     }
-    if (String(_id) !== String(srcData._id)) {
-      throw new Error(
-        "_id is not matched : query _id and body _id is different"
-      );
+    if (String(id) !== String(srcData.id)) {
+      throw new Error("id is not matched : query id and body id is different");
     }
   }
 
@@ -35,68 +30,60 @@ export class DriveRecordService implements DriveRecordServiceInterface {
     return filteredDriveRecord;
   }
 
-  async post(
-    hostId: string,
-    data: Partial<DriveRecordType>
-  ): Promise<DriveRecordType> {
+  async post(data: Partial<DriveRecordType>): Promise<DriveRecordType> {
     const srcDriveRecord: Partial<DriveRecordType> = new DriveRecord(
       data as DriveRecordType
     );
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordRepository.create(
-        hostId,
-        srcDriveRecord as DriveRecordType
-      );
+      await driveRecordRepository.create(srcDriveRecord as DriveRecordType);
 
     return new DriveRecord(driveRecord as DriveRecordType);
   }
 
   async patch(
-    hostId: string,
-    _id: string,
+    id: string,
     data: Partial<DriveRecordType>
   ): Promise<DriveRecordType> {
     let srcDriveRecord: Partial<DriveRecordType> = new DriveRecord(
       data as DriveRecordType
     );
 
-    this._idFilter(_id, srcDriveRecord);
+    this.idFilter(id, srcDriveRecord);
 
     srcDriveRecord = this.patchReadonlyFilter(srcDriveRecord);
 
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordRepository.update(hostId, srcDriveRecord);
+      await driveRecordRepository.update(srcDriveRecord);
 
     return new DriveRecord(driveRecord as DriveRecordType);
   }
 
   async put(
-    hostId: string,
-    _id: string,
+    id: string,
     data: Partial<DriveRecordType>
   ): Promise<DriveRecordType> {
     const srcDriveRecord: Partial<DriveRecordType> = new DriveRecord(
       data as DriveRecordType
     );
 
-    this._idFilter(_id, srcDriveRecord);
+    this.idFilter(id, srcDriveRecord);
 
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordRepository.update(hostId, srcDriveRecord);
+      await driveRecordRepository.update(srcDriveRecord);
 
     return new DriveRecord(driveRecord as DriveRecordType);
   }
 
-  async get(_id: string): Promise<DriveRecordType> {
+  async get(id: string): Promise<DriveRecordType> {
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordRepository.read(_id);
+      await driveRecordRepository.read(id);
 
     return new DriveRecord(driveRecord as DriveRecordType);
   }
 
-  async remove(hostId: string, _id: string): Promise<DriveRecordType> {
+  async remove(id: string): Promise<DriveRecordType> {
     const driveRecord: Partial<DriveRecordType> =
-      await driveRecordRepository.delete(hostId, _id);
+      await driveRecordRepository.delete(id);
 
     return new DriveRecord(driveRecord as DriveRecordType);
   }

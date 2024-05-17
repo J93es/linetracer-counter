@@ -4,7 +4,7 @@ import { DriveRecordType } from "model/DriveRecord";
 import { driveRecord_typeEnum } from "model/enums/index";
 
 export interface FormDriveRecordType
-  extends Omit<DriveRecordType, "_id" | "writeTime"> {
+  extends Omit<DriveRecordType, "id" | "hostId" | "writeTime"> {
   type: string;
   recordTime: number;
 }

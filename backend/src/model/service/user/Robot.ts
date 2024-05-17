@@ -1,25 +1,25 @@
 import { RobotType } from "@model/Robot";
 
-export interface UserRobotType extends Omit<RobotType, "_id"> {
+export interface UserRobotType extends Omit<RobotType, "hostId"> {
   name: string;
-  cpu: string;
-  rom: string;
-  ram: string;
-  motorDriver: string;
-  motor: string;
-  adc: string;
-  sensor: string;
+  cpu?: string;
+  rom?: string;
+  ram?: string;
+  motorDriver?: string;
+  motor?: string;
+  adc?: string;
+  sensor?: string;
 }
 
 export default class UserRobot {
   name: string;
-  cpu: string;
-  rom: string;
-  ram: string;
-  motorDriver: string;
-  motor: string;
-  adc: string;
-  sensor: string;
+  cpu?: string;
+  rom?: string;
+  ram?: string;
+  motorDriver?: string;
+  motor?: string;
+  adc?: string;
+  sensor?: string;
 
   constructor(data: UserRobotType) {
     this.name = data.name;

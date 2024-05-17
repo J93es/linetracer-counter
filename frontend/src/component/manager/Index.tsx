@@ -12,7 +12,7 @@ import OperationMenu from "component/manager/operationMenu/Index";
 
 import { filterParticipantList } from "tools/filterTargetList";
 import { sortParticipantListBySectorRecordField } from "tools/sortTargetList";
-import { isEmptyArray, isEmptyObject, findTargetBy_id } from "tools/utils";
+import { findTargetById, isEmptyArray, isEmptyObject } from "tools/utils";
 
 import "component/manager/Index.css";
 
@@ -27,8 +27,8 @@ export default function Manager({
 }: {
   setContestListRefreshSignal: Function;
   setUpdateSignal: Function;
-  contestList: Partial<ContestType>[];
-  targetContest: Partial<ContestType>;
+  contestList: ContestType[] | undefined;
+  targetContest: ContestType | undefined;
   setTargetContest: Function;
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
@@ -40,43 +40,33 @@ export default function Manager({
 
   const [isParticipantBlocked, setIsParticipantBlocked] =
     useState<boolean>(false);
-  const [participantList, setParticipantList] = useState<
-    Partial<ParticipantType>[]
-  >([]);
-  const [targetParticipant, setTargetParticipant] = useState<
-    Partial<ParticipantType>
-  >({});
+  const [participantList, setParticipantList] = useState<ParticipantType[]>();
+  const [targetParticipant, setTargetParticipant] = useState<ParticipantType>();
 
   const [isSectorRecordBlocked, setIsSectorRecordBlocked] =
     useState<boolean>(false);
-  const [sectorRecordList, setSectorRecordList] = useState<
-    Partial<SectorRecordType>[]
-  >([]);
-  const [targetSectorRecord, setTargetSectorRecord] = useState<
-    Partial<SectorRecordType>
-  >({});
+  const [sectorRecordList, setSectorRecordList] =
+    useState<SectorRecordType[]>();
+  const [targetSectorRecord, setTargetSectorRecord] =
+    useState<SectorRecordType>();
 
   const [isDriveRecordBlocked] = useState<boolean>(false);
-  const [driveRecordList, setDriveRecordList] = useState<
-    Partial<DriveRecordType>[]
-  >([]);
-  const [targetDriveRecord, setTargetDriveRecord] = useState<
-    Partial<DriveRecordType>
-  >({});
+  const [driveRecordList, setDriveRecordList] = useState<DriveRecordType[]>();
+  const [targetDriveRecord, setTargetDriveRecord] = useState<DriveRecordType>();
 
   // set participantList when targetContest is updated
   useEffect(() => {
-    let participantList: Partial<ParticipantType>[] =
-      targetContest.participantList || [];
-    if (isEmptyArray(participantList)) {
-      setParticipantList([]);
+    let participantList: ParticipantType[] | undefined =
+      targetContest?.participantList;
+    if (!participantList || isEmptyArray(participantList)) {
+      setParticipantList(undefined);
       return;
     }
 
     // curSector에 해당하는 참가자 목록, 부문 기록 만을 추출.
     participantList = filterParticipantList(participantList, {
       sectorRecordBy: "contestSector",
-      sectorRecordValue: targetContest.curContestingSection,
+      sectorRecordValue: targetContest?.curContestingSection,
     });
     participantList = sortParticipantListBySectorRecordField(
       "order",
@@ -89,79 +79,64 @@ export default function Manager({
 
   // set targetParticipant when participantList is updated
   useEffect(() => {
-    if (isEmptyArray(participantList)) {
-      setTargetParticipant({});
+    if (!participantList || isEmptyArray(participantList)) {
+      setTargetParticipant(undefined);
       return;
     }
 
-    let participant = findTargetBy_id(targetParticipant._id, participantList);
-    if (isEmptyObject(participant)) {
+    let participant = findTargetById(targetParticipant?.id, participantList);
+    if (!participant || isEmptyObject(participant)) {
       setTargetParticipant(participantList[participantList.length - 1]);
       return;
     }
 
     setTargetParticipant(participant);
-  }, [participantList, targetParticipant._id]);
+  }, [participantList, targetParticipant?.id]);
 
   // set SectorRecordList when targetParticipant is updated
   useEffect(() => {
-    const sectorRecordList = targetParticipant.sectorRecordList || [];
-    if (isEmptyArray(sectorRecordList)) {
-      setSectorRecordList([]);
-      return;
-    }
-
-    setSectorRecordList(sectorRecordList);
+    setSectorRecordList(targetParticipant?.sectorRecordList);
   }, [targetParticipant]);
 
   // set targetSectorRecord when SectorRecordList is updated
   useEffect(() => {
-    if (isEmptyArray(sectorRecordList)) {
-      setTargetSectorRecord({});
+    if (!sectorRecordList || isEmptyArray(sectorRecordList)) {
+      setTargetSectorRecord(undefined);
       return;
     }
 
-    let sectorRecord = findTargetBy_id(
-      targetSectorRecord._id,
-      sectorRecordList
-    );
-    if (isEmptyObject(sectorRecord)) {
+    let sectorRecord = findTargetById(targetSectorRecord?.id, sectorRecordList);
+    if (!sectorRecord || isEmptyObject(sectorRecord)) {
       setTargetSectorRecord(sectorRecordList[sectorRecordList.length - 1]);
       return;
     }
 
     setTargetSectorRecord(sectorRecord);
-  }, [sectorRecordList, targetSectorRecord._id]);
+  }, [sectorRecordList, targetSectorRecord?.id]);
 
   // set driveRecordList when targetSectorRecord is updated
   useEffect(() => {
-    const driveRecordList = targetSectorRecord.driveRecordList || [];
-    if (isEmptyArray(driveRecordList)) {
-      setDriveRecordList([]);
-      return;
-    }
-
-    setDriveRecordList(driveRecordList);
+    setDriveRecordList(targetSectorRecord?.driveRecordList);
   }, [targetSectorRecord]);
 
   // set targetDriveRecord when driveRecordList is updated
   useEffect(() => {
-    if (isEmptyArray(driveRecordList)) {
-      setTargetDriveRecord({});
+    if (!driveRecordList || isEmptyArray(driveRecordList)) {
+      setTargetDriveRecord(undefined);
       return;
     }
 
-    let driveRecord = findTargetBy_id(targetDriveRecord._id, driveRecordList);
-    if (isEmptyObject(driveRecord)) {
+    let driveRecord = findTargetById(targetDriveRecord?.id, driveRecordList);
+    if (!driveRecord || isEmptyObject(driveRecord)) {
       setTargetDriveRecord(driveRecordList[driveRecordList.length - 1]);
       return;
     }
     setTargetDriveRecord(driveRecord);
-  }, [driveRecordList, targetDriveRecord._id]);
+  }, [driveRecordList, targetDriveRecord?.id]);
 
   // set isSectorRecordLaunched when targetSectorRecord is updated
   useEffect(() => {
-    if (isEmptyObject(targetSectorRecord)) {
+    if (!targetSectorRecord || isEmptyObject(targetSectorRecord)) {
       setIsSectorRecordLaunched(false);
       return;
     }
@@ -228,7 +203,6 @@ export default function Manager({
         targetDriveRecord={targetDriveRecord}
         setTargetDriveRecord={setTargetDriveRecord}
         driveRecordList={driveRecordList}
-        targetSectorRecord={targetSectorRecord}
         isBlocked={isDriveRecordBlocked}
       />
     </div>

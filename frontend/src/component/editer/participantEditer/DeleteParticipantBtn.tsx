@@ -8,10 +8,10 @@ export default function DeleteParticipantBtn({
   targetParticipant,
 }: {
   setParticipantUpdateSignal: Function;
-  targetParticipant: Partial<ParticipantType>;
+  targetParticipant: ParticipantType | undefined;
 }) {
   const deleteParticipant = async () => {
-    await participantController.delete(targetParticipant._id);
+    await participantController.delete(targetParticipant?.id);
     setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
   };
   return (

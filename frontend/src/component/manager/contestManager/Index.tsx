@@ -12,8 +12,8 @@ export default function ContestManager({
   isBlocked,
 }: {
   setContestListRefreshSignal: Function;
-  contestList: Partial<ContestType>[];
-  targetContest: Partial<ContestType>;
+  contestList: ContestType[] | undefined;
+  targetContest: ContestType | undefined;
   setTargetContest: Function;
   isBlocked: boolean;
 }) {

@@ -8,10 +8,10 @@ export default function DeleteContestBtn({
   targetContest,
 }: {
   setContestUpdateSignal: Function;
-  targetContest: Partial<ContestType>;
+  targetContest: ContestType | undefined;
 }) {
   const deleteContest = async () => {
-    await contestController.delete(targetContest._id);
+    await contestController.delete(targetContest?.id);
     setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
   };
 

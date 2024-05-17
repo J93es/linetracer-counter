@@ -10,8 +10,6 @@ import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
 import { DriveRecordType } from "model/DriveRecord";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { isEmptyArray, isEmptyObject } from "tools/utils";
-
 import { driveRecordEditMenuEnum } from "model/enums/index";
 
 export default function DriveRecordEditer({
@@ -22,34 +20,33 @@ export default function DriveRecordEditer({
   targetSectorRecord,
 }: {
   setDriveRecordUpdateSignal: Function;
-  targetDriveRecord: Partial<DriveRecordType>;
+  targetDriveRecord: DriveRecordType | undefined;
   setTargetDriveRecord: Function;
-  driveRecordList: object[];
-  targetSectorRecord: Partial<SectorRecordType>;
+  driveRecordList: DriveRecordType[] | undefined;
+  targetSectorRecord: SectorRecordType | undefined;
 }) {
   const [editMenu, setEditMenu] = useState<string>(driveRecordEditMenuEnum[0]);
 
   let editMenuHtml = null;
-  if (isEmptyObject(targetSectorRecord)) {
+  if (!targetSectorRecord) {
     editMenuHtml = <p>부문 기록을 선택하세요.</p>;
   } else if (editMenu === "주행 기록 추가") {
     editMenuHtml = (
       <PostDriveRecord
         targetDriveRecord={targetDriveRecord}
         setDriveRecordUpdateSignal={setDriveRecordUpdateSignal}
-        targetSectorRecordId={targetSectorRecord._id}
+        targetSectorRecordId={targetSectorRecord?.id}
       />
     );
-  } else if (isEmptyArray(driveRecordList)) {
+  } else if (!driveRecordList) {
     editMenuHtml = <p>주행 기록이 없습니다.</p>;
-  } else if (isEmptyObject(targetDriveRecord)) {
+  } else if (!targetDriveRecord) {
     editMenuHtml = <p>주행 기록을 선택하세요.</p>;
   } else if (editMenu === "주행 기록 수정") {
     editMenuHtml = (
       <PutDriveRecord
         setDriveRecordUpdateSignal={setDriveRecordUpdateSignal}
         targetDriveRecord={targetDriveRecord}
-        targetSectorRecordId={targetSectorRecord._id}
       />
     );
   } else if (editMenu === "주행 기록 삭제") {
@@ -57,7 +54,6 @@ export default function DriveRecordEditer({
       <DeleteDriveRecordBtn
         setDriveRecordUpdateSignal={setDriveRecordUpdateSignal}
         targetDriveRecord={targetDriveRecord}
-        targetSectorRecordId={targetSectorRecord._id}
       />
     );
   }

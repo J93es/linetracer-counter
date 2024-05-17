@@ -6,22 +6,22 @@ import {
 } from "@model/service/user/SectorRecord";
 
 export interface UserParticipantType
-  extends Omit<ParticipantType, "_id" | "hostId"> {
+  extends Omit<ParticipantType, "_id" | "id" | "hostId" | "robot"> {
   name: string;
-  association: string;
-  speech: string;
+  association?: string;
+  speech?: string;
 
-  robot: UserRobotType;
+  robot?: UserRobotType;
 
   sectorRecordList: UserSectorRecordType[];
 }
 
 export default class UserParticipant {
   name: string;
-  association: string;
-  speech: string;
+  association?: string;
+  speech?: string;
 
-  robot: UserRobotType;
+  robot?: UserRobotType;
 
   sectorRecordList: UserSectorRecordType[];
 

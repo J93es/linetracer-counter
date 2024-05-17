@@ -4,8 +4,6 @@ import Accordion from "component/utils/Accordion";
 
 import { ParticipantType } from "model/Participant";
 
-import { isEmptyArray, isEmptyObject } from "tools/utils";
-
 export default function ParticipantManager({
   setParticipantUpdateSignal,
   participantList,
@@ -14,22 +12,22 @@ export default function ParticipantManager({
   isBlocked,
 }: {
   setParticipantUpdateSignal: Function;
-  participantList: object[];
-  targetParticipant: Partial<ParticipantType>;
+  participantList: object[] | undefined;
+  targetParticipant: ParticipantType | undefined;
   setTargetParticipant: Function;
   isBlocked: boolean;
 }) {
   let messageHtml = null;
   if (isBlocked) {
     messageHtml = <p>선택이 불가능 합니다.</p>;
-  } else if (isEmptyArray(participantList)) {
+  } else if (!participantList) {
     messageHtml = (
       <p>
         현재 진행 부문에 속한 <br />
         참가자가 없습니다.
       </p>
     );
-  } else if (isEmptyObject(targetParticipant)) {
+  } else if (!targetParticipant) {
     messageHtml = <p>참가자를 선택하세요.</p>;
   }
 

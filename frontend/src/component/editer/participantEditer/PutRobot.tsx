@@ -18,7 +18,7 @@ export default function PutParticipant({
   targetParticipant,
 }: {
   setParticipantUpdateSignal: Function;
-  targetParticipant: Partial<ParticipantType>;
+  targetParticipant: ParticipantType | undefined;
 }) {
   const {
     register,
@@ -27,25 +27,25 @@ export default function PutParticipant({
     formState: { errors },
   } = useForm<RobotType>({
     resolver: zodResolver(FormRobotSchema),
-    defaultValues: targetParticipant.robot,
+    defaultValues: targetParticipant?.robot,
   });
 
   useEffect(() => {
-    setValue("name", targetParticipant.robot?.name ?? "");
-    setValue("cpu", targetParticipant.robot?.cpu ?? "");
-    setValue("rom", targetParticipant.robot?.rom ?? "");
-    setValue("ram", targetParticipant.robot?.ram ?? "");
-    setValue("motorDriver", targetParticipant.robot?.motorDriver ?? "");
-    setValue("motor", targetParticipant.robot?.motor ?? "");
-    setValue("adc", targetParticipant.robot?.adc ?? "");
-    setValue("sensor", targetParticipant.robot?.sensor ?? "");
-  }, [setValue, targetParticipant.robot]);
+    setValue("name", targetParticipant?.robot?.name ?? "");
+    setValue("cpu", targetParticipant?.robot?.cpu ?? "");
+    setValue("rom", targetParticipant?.robot?.rom ?? "");
+    setValue("ram", targetParticipant?.robot?.ram ?? "");
+    setValue("motorDriver", targetParticipant?.robot?.motorDriver ?? "");
+    setValue("motor", targetParticipant?.robot?.motor ?? "");
+    setValue("adc", targetParticipant?.robot?.adc ?? "");
+    setValue("sensor", targetParticipant?.robot?.sensor ?? "");
+  }, [setValue, targetParticipant?.robot]);
 
   const onSubmit = (data: Partial<RobotType>) => {
     const func = async () => {
-      await participantController.put(targetParticipant._id, {
-        _id: targetParticipant._id,
+      await participantController.put({
         robot: data,
+        id: targetParticipant?.id,
       } as Partial<ParticipantType>);
       setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
     };

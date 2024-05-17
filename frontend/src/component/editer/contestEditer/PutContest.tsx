@@ -18,7 +18,7 @@ export default function PutContest({
   targetContest,
 }: {
   setContestUpdateSignal: Function;
-  targetContest: Partial<ContestType>;
+  targetContest: ContestType | undefined;
 }) {
   const {
     register,
@@ -28,19 +28,19 @@ export default function PutContest({
   } = useForm<ContestType>({ resolver: zodResolver(FormContestSchema) });
 
   useEffect(() => {
-    setValue("id", targetContest.id ?? "");
-    setValue("title", targetContest.title ?? "");
+    setValue("id", targetContest?.id ?? "");
+    setValue("title", targetContest?.title ?? "");
     setValue(
       "curContestingSection",
-      targetContest.curContestingSection ?? sectorEnum[0]
+      targetContest?.curContestingSection ?? sectorEnum[0]
     );
   }, [setValue, targetContest]);
 
   const onSubmit = (data: Partial<ContestType>) => {
     const func = async () => {
-      await contestController.put(targetContest._id, {
-        _id: targetContest._id,
+      await contestController.put({
         ...data,
+        id: targetContest?.id,
       });
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };

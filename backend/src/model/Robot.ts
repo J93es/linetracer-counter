@@ -1,28 +1,28 @@
 export interface RobotType {
-  _id: any;
-  name: string;
-  cpu: string;
-  rom: string;
-  ram: string;
-  motorDriver: string;
-  motor: string;
-  adc: string;
-  sensor: string;
+  hostId: string;
+  name?: string;
+  cpu?: string;
+  rom?: string;
+  ram?: string;
+  motorDriver?: string;
+  motor?: string;
+  adc?: string;
+  sensor?: string;
 }
 
 export default class Robot implements RobotType {
-  _id: any;
-  name: string;
-  cpu: string;
-  rom: string;
-  ram: string;
-  motorDriver: string;
-  motor: string;
-  adc: string;
-  sensor: string;
+  hostId: string;
+  name?: string;
+  cpu?: string;
+  rom?: string;
+  ram?: string;
+  motorDriver?: string;
+  motor?: string;
+  adc?: string;
+  sensor?: string;
 
   constructor(data: RobotType) {
-    this._id = data._id;
+    this.hostId = data.hostId;
     this.name = data.name;
     this.cpu = data.cpu;
     this.rom = data.rom;

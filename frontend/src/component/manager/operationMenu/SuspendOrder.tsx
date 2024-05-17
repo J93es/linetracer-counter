@@ -11,19 +11,19 @@ export default function SuspendOrder({
   disabled,
 }: {
   setContestUpdateSignal: Function;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetSectorRecord: SectorRecordType | undefined;
   disabled: boolean;
 }) {
   const onClick = () => {
     const func = async () => {
-      await sectorRecordController.patch(targetSectorRecord._id, {
-        _id: targetSectorRecord._id,
-        hostId: targetSectorRecord.hostId,
+      await sectorRecordController.patch({
+        id: targetSectorRecord?.id,
+        hostId: targetSectorRecord?.hostId,
         remainingContestTime:
-          (targetSectorRecord.remainingContestTime ??
+          (targetSectorRecord?.remainingContestTime ??
             defaultRemainingContestTime) - 60000,
         sectorState: "suspend",
-        order: (targetSectorRecord.order ?? 1) + 500,
+        order: (targetSectorRecord?.order ?? 1) + 500,
       });
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };

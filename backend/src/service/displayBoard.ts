@@ -1,9 +1,6 @@
 import UserContest, { UserContestType } from "@model/service/user/Contest";
 
-import { ContestRepository } from "@core/repository/contest";
-import { ContestMongoRepo } from "@repository/mongo/contest";
-
-const contestRepository: ContestRepository = new ContestMongoRepo();
+import { contestRepository } from "@repository/index";
 
 let instance: DisplayBoardMongoService | null = null;
 export class DisplayBoardMongoService {
@@ -14,15 +11,15 @@ export class DisplayBoardMongoService {
 
   async getData(year: string): Promise<UserContestType> {
     try {
-      const data = await contestRepository.readWithJoinById(
+      const data = await contestRepository.readWithJoinByQuery(
         year,
         "curParticipant curSectorRecord",
         {
-          _id: 0,
+          id: 0,
           hostId: 0,
         },
         {
-          _id: 0,
+          id: 0,
           hostId: 0,
         }
       );

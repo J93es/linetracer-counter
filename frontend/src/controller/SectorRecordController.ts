@@ -1,6 +1,8 @@
 import SectorRecord, { SectorRecordType } from "model/SectorRecord";
 import { uri } from "../config";
 
+import { isEmptyObject } from "tools/utils";
+
 let instance: SectorRecordController | null = null;
 export class SectorRecordController {
   constructor() {
@@ -10,35 +12,18 @@ export class SectorRecordController {
     return instance;
   }
 
-  async getEvery(sectorId: string): Promise<SectorRecordType[]> {
+  async get(id: string | undefined): Promise<SectorRecordType | undefined> {
     try {
-      const response = await fetch(
-        `${uri}/sector-record/?sector_Id=${sectorId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      const resDataList = await response.json();
-      const resSectorRecordList = resDataList.map(
-        (data: any) => new SectorRecord(data)
-      );
-
-      return resSectorRecordList;
-    } catch (error) {
-      console.error("Failed to get EverySectorRecord data", error);
-      throw error;
-    }
-  }
-
-  async get(_id: string): Promise<SectorRecordType> {
-    try {
-      const response = await fetch(`${uri}/sector-record/${_id}`, {
+      const response = await fetch(`${uri}/sector-record/${id}`, {
         method: "GET",
         credentials: "include",
       });
       const resData = await response.json();
       const resSectorRecord = new SectorRecord(resData);
+
+      if (isEmptyObject(resSectorRecord)) {
+        return undefined;
+      }
 
       return resSectorRecord;
     } catch (error) {
@@ -49,7 +34,7 @@ export class SectorRecordController {
 
   async post(
     srcData: Partial<SectorRecordType>
-  ): Promise<Partial<SectorRecordType>> {
+  ): Promise<SectorRecordType | undefined> {
     try {
       const sectorRecord = new SectorRecord(srcData as SectorRecordType);
       const response = await fetch(`${uri}/Sector-record`, {
@@ -63,6 +48,10 @@ export class SectorRecordController {
       const resData = await response.json();
       const resSectorRecord = new SectorRecord(resData);
 
+      if (isEmptyObject(resSectorRecord)) {
+        return undefined;
+      }
+
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to post SectorRecord data", error);
@@ -71,12 +60,11 @@ export class SectorRecordController {
   }
 
   async patch(
-    _id: string,
     srcData: Partial<SectorRecordType>
-  ): Promise<Partial<SectorRecordType>> {
+  ): Promise<SectorRecordType | undefined> {
     try {
       const sectorRecord = new SectorRecord(srcData as SectorRecordType);
-      const response = await fetch(`${uri}/Sector-record/${_id}`, {
+      const response = await fetch(`${uri}/Sector-record/${srcData.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -87,6 +75,10 @@ export class SectorRecordController {
       const resData = await response.json();
       const resSectorRecord = new SectorRecord(resData);
 
+      if (isEmptyObject(resSectorRecord)) {
+        return undefined;
+      }
+
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to patch SectorRecord data", error);
@@ -95,12 +87,11 @@ export class SectorRecordController {
   }
 
   async put(
-    _id: string,
     srcData: Partial<SectorRecordType>
-  ): Promise<Partial<SectorRecordType>> {
+  ): Promise<SectorRecordType | undefined> {
     try {
       const sectorRecord = new SectorRecord(srcData as SectorRecordType);
-      const response = await fetch(`${uri}/Sector-record/${_id}`, {
+      const response = await fetch(`${uri}/Sector-record/${srcData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -111,6 +102,10 @@ export class SectorRecordController {
       const resData = await response.json();
       const resSectorRecord = new SectorRecord(resData);
 
+      if (isEmptyObject(resSectorRecord)) {
+        return undefined;
+      }
+
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to put SectorRecord data", error);
@@ -118,9 +113,9 @@ export class SectorRecordController {
     }
   }
 
-  async delete(_id: string): Promise<Partial<SectorRecordType>> {
+  async delete(id: string | undefined): Promise<SectorRecordType | undefined> {
     try {
-      const response = await fetch(`${uri}/sector-record/${_id}`, {
+      const response = await fetch(`${uri}/sector-record/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -129,6 +124,10 @@ export class SectorRecordController {
       });
       const resData = await response.json();
       const resSectorRecord = new SectorRecord(resData);
+
+      if (isEmptyObject(resSectorRecord)) {
+        return undefined;
+      }
 
       return resSectorRecord;
     } catch (error) {

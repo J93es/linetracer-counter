@@ -16,13 +16,11 @@ import { defaultRemainingContestTime, defaultOrder } from "model/SectorRecord";
 const sectorRecordController = new SectorRecordController();
 
 export default function PostSectorRecord({
-  targetSectorRecord,
   setSectorRecordUpdateSignal,
   targetParticipantId,
 }: {
-  targetSectorRecord: Partial<SectorRecordType>;
   setSectorRecordUpdateSignal: Function;
-  targetParticipantId: string;
+  targetParticipantId: string | undefined;
 }) {
   const {
     register,
@@ -38,12 +36,14 @@ export default function PostSectorRecord({
     setValue("order", defaultOrder);
     setValue("remainingContestTime", defaultRemainingContestTime);
     setValue("sectorState", sectorRecord_sectorStateEnum[0]);
-  }, [setValue, targetSectorRecord]);
+  }, [setValue]);
 
   const onSubmit = (data: Partial<SectorRecordType>) => {
     const func = async () => {
-      data.hostId = targetParticipantId;
-      await sectorRecordController.post(data);
+      await sectorRecordController.post({
+        ...data,
+        hostId: targetParticipantId,
+      });
       setSectorRecordUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

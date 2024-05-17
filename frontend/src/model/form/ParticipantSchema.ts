@@ -5,7 +5,7 @@ import { ParticipantType } from "model/Participant";
 export interface FormDriveRecordType
   extends Omit<
     ParticipantType,
-    "_id" | "hostId" | "robot" | "sectorRecordList"
+    "id" | "hostId" | "robot" | "sectorRecordList"
   > {
   name: string;
   association: string;

@@ -10,7 +10,6 @@ import Accordion from "component/utils/Accordion";
 import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 import { sectorRecordEditMenuEnum } from "model/enums/index";
-import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 import { filterStringBySectorEnum } from "model/enums";
 
@@ -24,29 +23,28 @@ export default function SectorRecordEditer({
   setFilterStringBySector,
 }: {
   setSectorRecordUpdateSignal: Function;
-  sectorRecordList: object[];
-  targetSectorRecord: Partial<SectorRecordType>;
+  sectorRecordList: object[] | undefined;
+  targetSectorRecord: SectorRecordType | undefined;
   setTargetSectorRecord: Function;
-  targetParticipant: Partial<ParticipantType>;
+  targetParticipant: ParticipantType | undefined;
   filterStringBySector: string;
   setFilterStringBySector: Function;
 }) {
   const [editMenu, setEditMenu] = useState<string>(sectorRecordEditMenuEnum[0]);
 
   let editMenuHtml = null;
-  if (isEmptyObject(targetParticipant)) {
+  if (!targetParticipant) {
     editMenuHtml = <p>참가자를 선택하세요.</p>;
   } else if (editMenu === "부문 기록 추가") {
     editMenuHtml = (
       <PostSectorRecord
-        targetSectorRecord={targetSectorRecord}
         setSectorRecordUpdateSignal={setSectorRecordUpdateSignal}
-        targetParticipantId={targetParticipant._id}
+        targetParticipantId={targetParticipant?.id}
       />
     );
-  } else if (isEmptyArray(sectorRecordList)) {
+  } else if (!sectorRecordList) {
     editMenuHtml = <p>부문 기록이 없습니다.</p>;
-  } else if (isEmptyObject(targetSectorRecord)) {
+  } else if (!targetSectorRecord) {
     editMenuHtml = <p>부문 기록을 선택하세요.</p>;
   } else if (editMenu === "부문 기록 수정") {
     editMenuHtml = (

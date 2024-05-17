@@ -1,40 +1,16 @@
-import express, {
-  Router,
-  Request,
-  Response,
-  NextFunction,
-  Errback,
-} from "express";
+import express, { Router, Request, Response, NextFunction } from "express";
 
 import { ParticipantType } from "@model/Participant";
 
-import { ParticipantServiceInterface } from "@core/service/participant";
-import { ParticipantService } from "@service/participant-service";
+import { participantService } from "@service/index";
 
 const router: Router = express.Router();
-const participantService: ParticipantServiceInterface =
-  new ParticipantService();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const contest_Id: string = req.query.contest_Id as string;
-    const participant: Partial<ParticipantType[]> =
-      await participantService.getEvery(contest_Id);
-
-    res.header("Content-Type", "application/json; charset=utf-8");
-    res.send(participant).status(200);
-  } catch (err: any) {
-    console.error(err);
-    res.header("Content-Type", "application/json; charset=utf-8");
-    res.send({ message: err.toString() }).status(404);
-  }
-});
-
-router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const _id: string = req.params._id;
+    const id: string = req.params.id;
     const participant: Partial<ParticipantType> = await participantService.get(
-      _id
+      id
     );
 
     res.header("Content-Type", "application/json; charset=utf-8");
@@ -63,19 +39,15 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello patch");
-});
-
 router.patch(
-  "/:_id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      const _id: string = req.params._id;
+      const id: string = req.params.id;
 
       const participant: Partial<ParticipantType> =
-        await participantService.patch(_id, data);
+        await participantService.patch(id, data);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);
@@ -89,17 +61,13 @@ router.patch(
   }
 );
 
-router.put("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello patch");
-});
-
-router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const _id: string = req.params._id;
+    const id: string = req.params.id;
 
     const participant: Partial<ParticipantType> = await participantService.put(
-      _id,
+      id,
       data
     );
 
@@ -114,18 +82,14 @@ router.put("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello delete");
-});
-
 router.delete(
-  "/:_id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const _id: string = req.params._id;
+      const id: string = req.params.id;
 
       const participant: Partial<ParticipantType> =
-        await participantService.remove(_id);
+        await participantService.remove(id);
 
       res.header("Content-Type", "application/json; charset=utf-8");
       res.status(200);

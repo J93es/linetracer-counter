@@ -11,7 +11,7 @@ export default function ManageRemainingContestTime({
   disabled,
 }: {
   setContestUpdateSignal: Function;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetSectorRecord: SectorRecordType | undefined;
   disabled: boolean;
 }) {
   return (
@@ -36,7 +36,7 @@ export default function ManageRemainingContestTime({
           setContestUpdateSignal={setContestUpdateSignal}
           targetSectorRecord={targetSectorRecord}
           remainingContestTime={
-            (targetSectorRecord.remainingContestTime ??
+            (targetSectorRecord?.remainingContestTime ??
               defaultRemainingContestTime) - 60000
           }
           label="1분 삭감"
@@ -48,7 +48,7 @@ export default function ManageRemainingContestTime({
           setContestUpdateSignal={setContestUpdateSignal}
           targetSectorRecord={targetSectorRecord}
           remainingContestTime={
-            (targetSectorRecord.remainingContestTime ??
+            (targetSectorRecord?.remainingContestTime ??
               defaultRemainingContestTime) + 60000
           }
           label="1분 증가"
@@ -62,7 +62,7 @@ export default function ManageRemainingContestTime({
           setContestUpdateSignal={setContestUpdateSignal}
           targetSectorRecord={targetSectorRecord}
           remainingContestTime={
-            (targetSectorRecord.remainingContestTime ??
+            (targetSectorRecord?.remainingContestTime ??
               defaultRemainingContestTime) - 30000
           }
           label="30초 삭감"
@@ -74,7 +74,7 @@ export default function ManageRemainingContestTime({
           setContestUpdateSignal={setContestUpdateSignal}
           targetSectorRecord={targetSectorRecord}
           remainingContestTime={
-            (targetSectorRecord.remainingContestTime ??
+            (targetSectorRecord?.remainingContestTime ??
               defaultRemainingContestTime) + 30000
           }
           label="30초 증가"

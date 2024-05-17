@@ -1,27 +1,22 @@
-import { ParticipantServiceInterface } from "@core/service/participant";
+import { ParticipantService } from "@core/service/participant";
 
 import Participant, { ParticipantType } from "@model/Participant";
 
-import { ParticipantRepository } from "@core/repository/participant";
-import { ParticipantMongoRepo } from "@repository/mongo/participant";
+import { participantRepository } from "@repository/index";
 
-const participantRepository: ParticipantRepository = new ParticipantMongoRepo();
-
-let instance: ParticipantService | null = null;
-export class ParticipantService implements ParticipantServiceInterface {
+let instance: ParticipantServ | null = null;
+export class ParticipantServ implements ParticipantService {
   constructor() {
     if (instance) return instance;
     instance = this;
   }
 
-  private _idFilter(_id: string, srcData: Partial<ParticipantType>): void {
-    if (!srcData._id) {
-      throw new Error("_id is required");
+  private idFilter(id: string, srcData: Partial<ParticipantType>): void {
+    if (!srcData.id) {
+      throw new Error("id is required");
     }
-    if (String(_id) !== String(srcData._id)) {
-      throw new Error(
-        "_id is not matched : query _id and body _id is different"
-      );
+    if (String(id) !== String(srcData.id)) {
+      throw new Error("id is not matched : query id and body id is different");
     }
   }
 
@@ -51,14 +46,14 @@ export class ParticipantService implements ParticipantServiceInterface {
   }
 
   async patch(
-    _id: string,
+    id: string,
     data: Partial<ParticipantType>
   ): Promise<ParticipantType> {
     let srcParticipant: Partial<ParticipantType> = new Participant(
       data as ParticipantType
     );
 
-    this._idFilter(_id, srcParticipant);
+    this.idFilter(id, srcParticipant);
 
     srcParticipant = this.patchReadonlyFilter(srcParticipant);
 
@@ -69,14 +64,14 @@ export class ParticipantService implements ParticipantServiceInterface {
   }
 
   async put(
-    _id: string,
+    id: string,
     data: Partial<ParticipantType>
   ): Promise<ParticipantType> {
     const srcParticipant: Partial<ParticipantType> = new Participant(
       data as ParticipantType
     );
 
-    this._idFilter(_id, srcParticipant);
+    this.idFilter(id, srcParticipant);
 
     const participant: Partial<ParticipantType> =
       await participantRepository.update(srcParticipant);
@@ -84,25 +79,16 @@ export class ParticipantService implements ParticipantServiceInterface {
     return new Participant(participant as ParticipantType);
   }
 
-  async get(_id: string): Promise<ParticipantType> {
+  async get(id: string): Promise<ParticipantType> {
     const participant: Partial<ParticipantType> =
-      await participantRepository.readWithJoin(_id, {});
+      await participantRepository.readWithJoin(id, {});
 
     return new Participant(participant as ParticipantType);
   }
 
-  async getEvery(contest_Id: string): Promise<ParticipantType[]> {
-    const participantList: Partial<ParticipantType>[] =
-      await participantRepository.readEvery(contest_Id);
-
-    return participantList.map(
-      (participant) => new Participant(participant as ParticipantType)
-    );
-  }
-
-  async remove(_id: string): Promise<ParticipantType> {
+  async remove(id: string): Promise<ParticipantType> {
     const participant: Partial<ParticipantType> =
-      await participantRepository.delete(_id);
+      await participantRepository.delete(id);
 
     return new Participant(participant as ParticipantType);
   }

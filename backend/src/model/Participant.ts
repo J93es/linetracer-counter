@@ -1,33 +1,38 @@
 import { RobotType } from "@model/Robot";
+import { UserRobotType } from "@model/service/user/Robot";
 import { SectorRecordType } from "@model/SectorRecord";
+import { UserSectorRecordType } from "@model/service/user/SectorRecord";
 
 export interface ParticipantType {
-  _id: any;
-  hostId: any;
+  _id: string;
+  id: string;
+  hostId: string;
 
   name: string;
-  association: string;
-  speech: string;
+  association?: string;
+  speech?: string;
 
-  robot: any;
+  robot?: RobotType | UserRobotType;
 
-  sectorRecordList: any;
+  sectorRecordList: SectorRecordType[] | UserSectorRecordType[] | string[];
 }
 
 export default class Participant implements ParticipantType {
-  _id: any;
-  hostId: any;
+  _id: string;
+  id: string;
+  hostId: string;
 
   name: string;
-  association: string;
-  speech: string;
+  association?: string;
+  speech?: string;
 
-  robot: RobotType;
+  robot?: RobotType | UserRobotType;
 
-  sectorRecordList: SectorRecordType[];
+  sectorRecordList: SectorRecordType[] | UserSectorRecordType[] | string[];
 
   constructor(data: ParticipantType) {
     this._id = data._id;
+    this.id = data.id;
     this.hostId = data.hostId;
 
     this.name = data.name;

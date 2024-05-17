@@ -1,12 +1,9 @@
-import { ParticipantType } from "@model/Participant";
-
 import { ParticipantRepository } from "@core/repository/participant";
-import { ParticipantSchema } from "@model/repository/ParticipantSchema";
+import { ParticipantSchema } from "@model/repository/mongo/ParticipantSchema";
 
-import { ContestRepository } from "@core/repository/contest";
-import { ContestMongoRepo } from "@repository/mongo/contest";
-
-const contestRepository: ContestRepository = new ContestMongoRepo();
+import { ParticipantType } from "@model/Participant";
+import { contestRepository } from "@repository/index";
+import { idController } from "@core/main";
 
 let instance: ParticipantMongoRepo | null = null;
 export class ParticipantMongoRepo implements ParticipantRepository {
@@ -19,63 +16,56 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     const filteredData = JSON.parse(JSON.stringify(data));
 
     delete filteredData._id;
+    delete filteredData.id;
     delete filteredData.hostId;
     delete filteredData.sectorRecordList;
 
     return filteredData;
   }
 
-  async isExist(_id: any): Promise<Boolean> {
-    if (await ParticipantSchema.exists({ _id: _id })) {
+  async isExist(id: any): Promise<Boolean> {
+    if (await ParticipantSchema.exists({ id: id })) {
       return true;
     } else {
       return false;
     }
   }
 
-  async create(data: Partial<ParticipantType>): Promise<any> {
-    delete data._id;
-
+  async create(data: ParticipantType): Promise<ParticipantType> {
     if (!(await contestRepository.isExist(data.hostId))) {
       throw new Error(
         "Contest data is not founded by hostId, check hostId field in Participant data"
       );
     }
 
-    const participant = await ParticipantSchema.create(data);
+    const newId = idController.generateId();
+    const participant: ParticipantType | null = (await ParticipantSchema.create(
+      {
+        ...data,
+        id: newId,
+        _id: newId,
+      }
+    )) as ParticipantType;
     if (!participant) {
       throw new Error("Failed to create participant");
     }
 
     try {
       await contestRepository.appendParticipantList(
-        data.hostId,
-        participant._id
+        participant.hostId,
+        participant.id
       );
     } catch (err) {
       throw new Error("Failed to append participant to contest, check hostId");
     }
 
-    return participant;
+    return { ...participant, id: participant.id };
   }
 
-  async readEvery(contest_Id: any): Promise<any> {
-    const participantIndex = await ParticipantSchema.find({
-      hostId: contest_Id,
-    })
-      .populate({
-        path: "sectorRecordList",
-      })
-      .lean();
-    if (!participantIndex) {
-      throw new Error("Participant list not found");
-    }
-
-    return participantIndex;
-  }
-
-  async read(_id: any): Promise<any> {
-    const participant = await ParticipantSchema.findOne({ _id: _id }).lean();
+  async read(id: string): Promise<ParticipantType> {
+    const participant: ParticipantType | null = await ParticipantSchema.findOne(
+      { id: id }
+    ).lean();
     if (!participant) {
       throw new Error("Participant not found");
     }
@@ -83,27 +73,30 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async readWithJoin(_id: any, selectField: object): Promise<any> {
-    const contest = await ParticipantSchema.findOne({ _id: _id })
+  async readWithJoin(
+    id: string,
+    selectField: object
+  ): Promise<ParticipantType> {
+    const participant: ParticipantType | null = await ParticipantSchema.findOne(
+      { id: id }
+    )
       .populate("sectorRecordList", selectField)
       .lean();
-    if (!contest) {
+    if (!participant) {
       throw new Error("Participant not found");
     }
 
-    return contest;
+    return participant;
   }
 
-  async update(data: Partial<ParticipantType>): Promise<any> {
+  async update(data: Partial<ParticipantType>): Promise<ParticipantType> {
+    const id = data.id;
     const filteredData = this.readonlyFilter(data);
 
-    const participant = await ParticipantSchema.findOneAndUpdate(
-      { _id: data._id },
-      filteredData,
-      {
+    const participant: ParticipantType | null =
+      await ParticipantSchema.findOneAndUpdate({ id: id }, filteredData, {
         returnDocument: "after",
-      }
-    ).lean();
+      }).lean();
     if (!participant) {
       throw new Error("Failed to update participant");
     }
@@ -111,12 +104,13 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async delete(_id: any): Promise<any> {
-    const participant = await ParticipantSchema.findOneAndDelete({
-      _id: _id,
-    }).lean();
+  async delete(id: string): Promise<ParticipantType> {
+    const participant: ParticipantType | null =
+      await ParticipantSchema.findOneAndDelete({
+        id: id,
+      }).lean();
     if (!participant) {
-      throw new Error("Failed to delete participant, check participant _id");
+      throw new Error("Failed to delete participant, check participant id");
     }
 
     if (JSON.stringify(participant.sectorRecordList) !== "[]") {
@@ -127,7 +121,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     try {
       await contestRepository.popParticipantList(
         participant.hostId,
-        participant._id
+        participant.id
       );
     } catch (err) {
       throw new Error("Failed to pop participant from contest, check hostId");
@@ -136,37 +130,45 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     return participant;
   }
 
-  async appendSectorRecordList(_id: any, sectorRecord_Id: any): Promise<any> {
-    const contest = await ParticipantSchema.findOneAndUpdate(
-      { _id: _id },
-      {
-        $addToSet: { sectorRecordList: sectorRecord_Id },
-      },
-      {
-        returnDocument: "after",
-      }
-    ).lean();
-    if (!contest) {
-      throw new Error("Failed to append participant list");
+  async appendSectorRecordList(
+    id: string,
+    sectorRecordId: string
+  ): Promise<ParticipantType> {
+    const participant: ParticipantType | null =
+      await ParticipantSchema.findOneAndUpdate(
+        { id: id },
+        {
+          $addToSet: { sectorRecordList: sectorRecordId },
+        },
+        {
+          returnDocument: "after",
+        }
+      ).lean();
+    if (!participant) {
+      throw new Error("Failed to append sector record list");
     }
 
-    return sectorRecord_Id;
+    return participant;
   }
 
-  async popSectorRecordList(_id: any, sectorRecord_Id: any): Promise<any> {
-    const contest = await ParticipantSchema.findOneAndUpdate(
-      { _id: _id },
-      {
-        $pull: { sectorRecordList: sectorRecord_Id },
-      },
-      {
-        returnDocument: "after",
-      }
-    ).lean();
-    if (!contest) {
-      throw new Error("Failed to remove participant list");
+  async popSectorRecordList(
+    id: string,
+    sectorRecordId: string
+  ): Promise<ParticipantType> {
+    const participant: ParticipantType | null =
+      await ParticipantSchema.findOneAndUpdate(
+        { id: id },
+        {
+          $pull: { sectorRecordList: sectorRecordId },
+        },
+        {
+          returnDocument: "after",
+        }
+      ).lean();
+    if (!participant) {
+      throw new Error("Failed to remove sector record list");
     }
 
-    return sectorRecord_Id;
+    return participant;
   }
 }

@@ -19,40 +19,40 @@ export default function ContestTimerBtn({
   disabled,
 }: {
   setContestUpdateSignal: Function;
-  targetContest: Partial<ContestType>;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetContest: ContestType | undefined;
+  targetSectorRecord: SectorRecordType | undefined;
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
   disabled: boolean;
 }) {
   const contestTimerStart = (curTime: number) => {
-    const targetParticipantId = targetSectorRecord.hostId;
+    const targetParticipantId = targetSectorRecord?.hostId;
 
     const nextParticipant = getNextParticipant(
-      targetContest.curContestingSection || "",
-      targetParticipantId,
-      targetContest.participantList ?? []
+      targetContest?.curContestingSection ?? "",
+      targetParticipantId ?? "",
+      targetContest?.participantList ?? []
     );
 
     const func = async () => {
       const contest: Partial<ContestType> = {
-        _id: targetContest._id,
+        id: targetContest?.id,
 
         curParticipant: targetParticipantId,
-        curSectorRecord: targetSectorRecord._id,
-        nextParticipant: nextParticipant._id,
+        curSectorRecord: targetSectorRecord?.id,
+        nextParticipant: nextParticipant?.id,
         contestTimerStartTime: curTime,
         isContestTimerRunning: true,
       };
       const sectorRecord: Partial<SectorRecordType> = {
-        _id: targetSectorRecord._id,
-        hostId: targetSectorRecord.hostId,
+        id: targetSectorRecord?.id,
+        hostId: targetSectorRecord?.hostId,
 
         sectorState: "running",
       };
 
-      await contestController.patch(contest._id, contest);
-      await sectorRecordController.patch(sectorRecord._id, sectorRecord);
+      await contestController.patch(contest);
+      await sectorRecordController.patch(sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();
@@ -61,25 +61,25 @@ export default function ContestTimerBtn({
   const contestTimerStop = (curTime: number) => {
     const func = async () => {
       const remainingContestTime = getRemainingTime(
-        targetSectorRecord.remainingContestTime,
-        targetContest.contestTimerStartTime,
+        targetSectorRecord?.remainingContestTime,
+        targetContest?.contestTimerStartTime,
         curTime
       );
 
       const contest: Partial<ContestType> = {
-        _id: targetContest._id,
+        id: targetContest?.id,
         contestTimerStartTime: -1,
         isContestTimerRunning: false,
       };
       const sectorRecord: Partial<SectorRecordType> = {
-        _id: targetSectorRecord._id,
-        hostId: targetSectorRecord.hostId,
+        id: targetSectorRecord?.id,
+        hostId: targetSectorRecord?.hostId,
 
         remainingContestTime: remainingContestTime,
       };
 
-      await contestController.patch(contest._id, contest);
-      await sectorRecordController.patch(sectorRecord._id, sectorRecord);
+      await contestController.patch(contest);
+      await sectorRecordController.patch(sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

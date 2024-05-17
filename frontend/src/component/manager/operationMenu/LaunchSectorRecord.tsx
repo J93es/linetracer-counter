@@ -18,37 +18,37 @@ export default function LaunchSectorRecord({
   disabled,
 }: {
   setContestUpdateSignal: Function;
-  targetContest: Partial<ContestType>;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetContest: ContestType | undefined;
+  targetSectorRecord: SectorRecordType | undefined;
   isSectorRecordLaunched: boolean;
   setIsSectorRecordLaunched: Function;
   disabled: boolean;
 }) {
   const startProgress = () => {
     const func = async () => {
-      const targetParticipantId = targetSectorRecord.hostId;
+      const targetParticipantId = targetSectorRecord?.hostId;
 
       const nextParticipant = getNextParticipant(
-        targetContest.curContestingSection || "",
+        targetContest?.curContestingSection || "",
         targetParticipantId,
-        targetContest.participantList ?? []
+        targetContest?.participantList ?? []
       );
 
       const contest: Partial<ContestType> = {
-        _id: targetContest._id,
+        id: targetContest?.id,
         curParticipant: targetParticipantId,
-        nextParticipant: nextParticipant._id,
-        curSectorRecord: targetSectorRecord._id,
+        nextParticipant: nextParticipant?.id,
+        curSectorRecord: targetSectorRecord?.id,
       };
 
       const sectorRecord: Partial<SectorRecordType> = {
-        _id: targetSectorRecord._id,
-        hostId: targetSectorRecord.hostId,
+        id: targetSectorRecord?.id,
+        hostId: targetSectorRecord?.hostId,
         sectorState: "running",
       };
 
-      await contestController.patch(targetContest._id, contest);
-      await sectorRecordController.patch(targetSectorRecord._id, sectorRecord);
+      await contestController.patch(contest);
+      await sectorRecordController.patch(sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();
@@ -56,12 +56,12 @@ export default function LaunchSectorRecord({
 
   const stopProgress = async () => {
     const sectorRecord: Partial<SectorRecordType> = {
-      _id: targetSectorRecord._id,
-      hostId: targetSectorRecord.hostId,
+      id: targetSectorRecord?.id,
+      hostId: targetSectorRecord?.hostId,
       sectorState: "end",
     };
 
-    await sectorRecordController.patch(targetSectorRecord._id, sectorRecord);
+    await sectorRecordController.patch(sectorRecord);
     setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
   };
 

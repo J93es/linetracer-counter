@@ -1,11 +1,7 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
+import { userService } from "@service/index";
 const router: Router = express.Router();
-
-import { UserService } from "@core/service/user";
-import { UserMongoService } from "@service/user-service";
-
-const userService: UserService = new UserMongoService();
 
 /* GET home page. */
 router.get("/", (req: Request, res: Response, next: NextFunction) => {

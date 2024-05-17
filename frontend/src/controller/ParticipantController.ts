@@ -1,6 +1,8 @@
 import Participant, { ParticipantType } from "model/Participant";
 import { uri } from "../config";
 
+import { isEmptyObject } from "tools/utils";
+
 let instance: ParticipantController | null = null;
 export class ParticipantController {
   constructor() {
@@ -10,32 +12,18 @@ export class ParticipantController {
     return instance;
   }
 
-  async getEvery(hostId: string): Promise<ParticipantType[]> {
+  async get(id: string | undefined): Promise<ParticipantType | undefined> {
     try {
-      const response = await fetch(`${uri}/participant/?contest_Id=${hostId}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      const resDataList = await response.json();
-      const resParticipantList = resDataList.map(
-        (data: any) => new Participant(data)
-      );
-
-      return resParticipantList;
-    } catch (error) {
-      console.error("Failed to get EveryParticipant data", error);
-      throw error;
-    }
-  }
-
-  async get(_id: string): Promise<ParticipantType> {
-    try {
-      const response = await fetch(`${uri}/participant/${_id}`, {
+      const response = await fetch(`${uri}/participant/${id}`, {
         method: "GET",
         credentials: "include",
       });
       const resData = await response.json();
       const resParticipant = new Participant(resData);
+
+      if (isEmptyObject(resParticipant)) {
+        return undefined;
+      }
 
       return resParticipant;
     } catch (error) {
@@ -46,7 +34,7 @@ export class ParticipantController {
 
   async post(
     srcData: Partial<ParticipantType>
-  ): Promise<Partial<ParticipantType>> {
+  ): Promise<ParticipantType | undefined> {
     try {
       const participant = new Participant(srcData as ParticipantType);
       const response = await fetch(`${uri}/participant`, {
@@ -60,6 +48,10 @@ export class ParticipantController {
       const resData = await response.json();
       const resParticipant = new Participant(resData);
 
+      if (isEmptyObject(resParticipant)) {
+        return undefined;
+      }
+
       return resParticipant;
     } catch (error) {
       console.error("Failed to post Participant data", error);
@@ -68,12 +60,11 @@ export class ParticipantController {
   }
 
   async patch(
-    _id: string,
     srcData: Partial<ParticipantType>
-  ): Promise<Partial<ParticipantType>> {
+  ): Promise<ParticipantType | undefined> {
     try {
       const participant = new Participant(srcData as ParticipantType);
-      const response = await fetch(`${uri}/participant/${_id}`, {
+      const response = await fetch(`${uri}/participant/${srcData.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -84,6 +75,10 @@ export class ParticipantController {
       const resData = await response.json();
       const resParticipant = new Participant(resData);
 
+      if (isEmptyObject(resParticipant)) {
+        return undefined;
+      }
+
       return resParticipant;
     } catch (error) {
       console.error("Failed to patch Participant data", error);
@@ -92,12 +87,11 @@ export class ParticipantController {
   }
 
   async put(
-    _id: string,
     srcData: Partial<ParticipantType>
-  ): Promise<Partial<ParticipantType>> {
+  ): Promise<ParticipantType | undefined> {
     try {
       const participant = new Participant(srcData as ParticipantType);
-      const response = await fetch(`${uri}/participant/${_id}`, {
+      const response = await fetch(`${uri}/participant/${srcData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -108,6 +102,10 @@ export class ParticipantController {
       const resData = await response.json();
       const resParticipant = new Participant(resData);
 
+      if (isEmptyObject(resParticipant)) {
+        return undefined;
+      }
+
       return resParticipant;
     } catch (error) {
       console.error("Failed to put Participant data", error);
@@ -115,9 +113,9 @@ export class ParticipantController {
     }
   }
 
-  async delete(_id: string): Promise<Partial<ParticipantType>> {
+  async delete(id: string | undefined): Promise<ParticipantType | undefined> {
     try {
-      const response = await fetch(`${uri}/participant/${_id}`, {
+      const response = await fetch(`${uri}/participant/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -126,6 +124,10 @@ export class ParticipantController {
       });
       const resData = await response.json();
       const resParticipant = new Participant(resData);
+
+      if (isEmptyObject(resParticipant)) {
+        return undefined;
+      }
 
       return resParticipant;
     } catch (error) {

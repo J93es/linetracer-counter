@@ -11,12 +11,12 @@ export default function SelectContestSection({
   targetContest,
 }: {
   setContestUpdateSignal: Function;
-  targetContest: Partial<ContestType>;
+  targetContest: ContestType | undefined;
 }) {
   const onClick = (target: string) => {
     const func = async () => {
-      await contestController.patch(targetContest._id, {
-        _id: targetContest._id,
+      await contestController.patch({
+        id: targetContest?.id,
         curContestingSection: target,
       });
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
@@ -28,7 +28,7 @@ export default function SelectContestSection({
     <div className="select-contest-section">
       <h5>현재 경연 부문 선택</h5>
       <DropDown
-        target={targetContest.curContestingSection ?? sectorEnum[0]}
+        target={targetContest?.curContestingSection ?? sectorEnum[0]}
         onClick={onClick}
         menuList={sectorEnum}
       />

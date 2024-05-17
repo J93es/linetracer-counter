@@ -1,10 +1,9 @@
 import { ParticipantType } from "@model/Participant";
 
-export interface ParticipantServiceInterface {
-  post(data: Partial<ParticipantType>): Promise<ParticipantType>;
-  patch(_id: string, data: Partial<ParticipantType>): Promise<ParticipantType>;
-  put(_id: string, data: Partial<ParticipantType>): Promise<ParticipantType>;
-  getEvery(contest_Id: string): Promise<ParticipantType[]>;
-  get(_id: string): Promise<ParticipantType>;
-  remove(_id: string): Promise<ParticipantType>;
+export interface ParticipantService {
+  post(data: ParticipantType): Promise<ParticipantType>;
+  patch(id: string, data: Partial<ParticipantType>): Promise<ParticipantType>;
+  put(id: string, data: Partial<ParticipantType>): Promise<ParticipantType>;
+  get(id: string): Promise<ParticipantType>;
+  remove(id: string): Promise<ParticipantType>;
 }

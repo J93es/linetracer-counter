@@ -5,6 +5,7 @@ import { ContestType } from "@model/Contest";
 const { Schema } = mongoose;
 
 const contestSchema = new Schema<ContestType>({
+  _id: { type: String, readonly: true },
   id: { type: String, unique: true, required: true, readonly: true },
   title: { type: String, required: true },
 
@@ -23,19 +24,16 @@ const contestSchema = new Schema<ContestType>({
     ],
   },
   curParticipant: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "ParticipantSchema",
-    required: true,
   },
   nextParticipant: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "ParticipantSchema",
-    required: true,
   },
   curSectorRecord: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "SectorRecordSchema",
-    required: true,
   },
 
   contestTimerStartTime: { type: Number },
@@ -46,7 +44,7 @@ const contestSchema = new Schema<ContestType>({
   latestDriveRecordTime: { type: Number },
 
   participantList: {
-    type: [Schema.Types.ObjectId],
+    type: [String],
     ref: "ParticipantSchema",
     required: true,
   },

@@ -17,7 +17,7 @@ export default function PutParticipant({
   targetParticipant,
 }: {
   setParticipantUpdateSignal: Function;
-  targetParticipant: Partial<ParticipantType>;
+  targetParticipant: ParticipantType | undefined;
 }) {
   const {
     register,
@@ -29,17 +29,16 @@ export default function PutParticipant({
   });
 
   useEffect(() => {
-    setValue("name", targetParticipant.name ?? "");
-    setValue("association", targetParticipant.association ?? "");
-    setValue("speech", targetParticipant.speech ?? "");
+    setValue("name", targetParticipant?.name ?? "");
+    setValue("association", targetParticipant?.association ?? "");
+    setValue("speech", targetParticipant?.speech ?? "");
   }, [setValue, targetParticipant]);
 
   const onSubmit = (data: Partial<ParticipantType>) => {
     const func = async () => {
-      data._id = targetParticipant._id;
-      await participantController.put(targetParticipant._id, {
-        _id: targetParticipant._id,
+      await participantController.put({
         ...data,
+        id: targetParticipant?.id,
       });
       setParticipantUpdateSignal((prev: number) => (prev + 1) % 1000);
     };

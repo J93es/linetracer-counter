@@ -1,28 +1,22 @@
-import { SectorRecordServiceInterface } from "@core/service/sectorRecord";
+import { SectorRecordService } from "@core/service/sectorRecord";
 
 import SectorRecord, { SectorRecordType } from "@model/SectorRecord";
 
-import { SectorRecordRepository } from "@core/repository/sectorRecord";
-import { SectorRecordMongoRepo } from "@repository/mongo/sectorRecord";
+import { sectorRecordRepository } from "@repository/index";
 
-const sectorRecordRepository: SectorRecordRepository =
-  new SectorRecordMongoRepo();
-
-let instance: SectorRecordService | null = null;
-export class SectorRecordService implements SectorRecordServiceInterface {
+let instance: SectorRecordServ | null = null;
+export class SectorRecordServ implements SectorRecordService {
   constructor() {
     if (instance) return instance;
     instance = this;
   }
 
-  private _idFilter(_id: string, srcData: Partial<SectorRecordType>): void {
-    if (!srcData._id) {
-      throw new Error("_id is required");
+  private idFilter(id: string, srcData: Partial<SectorRecordType>): void {
+    if (!srcData.id) {
+      throw new Error("id is required");
     }
-    if (String(_id) !== String(srcData._id)) {
-      throw new Error(
-        "_id is not matched : query _id and body _id is different"
-      );
+    if (String(id) !== String(srcData.id)) {
+      throw new Error("id is not matched : query id and body id is different");
     }
   }
 
@@ -47,14 +41,14 @@ export class SectorRecordService implements SectorRecordServiceInterface {
   }
 
   async patch(
-    _id: string,
+    id: string,
     data: Partial<SectorRecordType>
   ): Promise<SectorRecordType> {
     let srcSectorRecord: Partial<SectorRecordType> = new SectorRecord(
       data as SectorRecordType
     );
 
-    this._idFilter(_id, srcSectorRecord);
+    this.idFilter(id, srcSectorRecord);
 
     srcSectorRecord = this.patchReadonlyFilter(srcSectorRecord);
 
@@ -65,14 +59,14 @@ export class SectorRecordService implements SectorRecordServiceInterface {
   }
 
   async put(
-    _id: string,
+    id: string,
     data: Partial<SectorRecordType>
   ): Promise<SectorRecordType> {
     const srcSectorRecord: Partial<SectorRecordType> = new SectorRecord(
       data as SectorRecordType
     );
 
-    this._idFilter(_id, srcSectorRecord);
+    this.idFilter(id, srcSectorRecord);
 
     const sectorRecord: Partial<SectorRecordType> =
       await sectorRecordRepository.update(srcSectorRecord, true);
@@ -80,25 +74,16 @@ export class SectorRecordService implements SectorRecordServiceInterface {
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
 
-  async getEvery(participant_Id: string): Promise<SectorRecordType[]> {
-    const sectorRecordList: Partial<SectorRecordType>[] =
-      await sectorRecordRepository.readEvery(participant_Id);
-
-    return sectorRecordList.map(
-      (sectorRecord) => new SectorRecord(sectorRecord as SectorRecordType)
-    );
-  }
-
-  async get(_id: string): Promise<SectorRecordType> {
+  async get(id: string): Promise<SectorRecordType> {
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.read(_id);
+      await sectorRecordRepository.read(id);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
 
-  async remove(_id: string): Promise<SectorRecordType> {
+  async remove(id: string): Promise<SectorRecordType> {
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.delete(_id);
+      await sectorRecordRepository.delete(id);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }

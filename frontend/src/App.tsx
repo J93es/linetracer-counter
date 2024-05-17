@@ -19,14 +19,14 @@ function App() {
   const [editerUpdateSignal, setEditerUpdateSignal] = useState<number>(0);
   const [managerUpdateSignal, setManagerUpdateSignal] = useState<number>(0);
 
-  const [contestList, setContestList] = useState<Partial<ContestType>[]>([]);
+  const [contestList, setContestList] = useState<ContestType[] | undefined>();
 
   const [editerTargetContest, setEditerTargetContest] = useState<
-    Partial<ContestType>
-  >({});
+    ContestType | undefined
+  >();
   const [managerTargetContest, setManagerTargetContest] = useState<
-    Partial<ContestType>
-  >({});
+    ContestType | undefined
+  >();
 
   const [isContestTimerRunning, setIsContestTimerRunning] =
     useState<boolean>(false);
@@ -35,8 +35,8 @@ function App() {
   useEffect(() => {
     const func = async () => {
       const contestList = await contestController.getEvery();
-      if (isEmptyArray(contestList)) {
-        setContestList([]);
+      if (!contestList || isEmptyArray(contestList)) {
+        setContestList(undefined);
         return;
       }
       setContestList(contestList);
@@ -49,45 +49,41 @@ function App() {
   // set targetContest when updateSignal, id is updated
   useEffect(() => {
     const func = async () => {
-      const contest = await contestController.get(editerTargetContest._id);
-      if (isEmptyObject(contest)) {
-        setEditerTargetContest({});
+      const contest = await contestController.get(editerTargetContest?.id);
+      if (!contest || isEmptyObject(contest)) {
+        setEditerTargetContest(undefined);
         return;
       }
 
-      if (editerTargetContest._id === managerTargetContest._id) {
+      if (contest.id === managerTargetContest?.id) {
         setManagerTargetContest(JSON.parse(JSON.stringify(contest)));
       }
       setEditerTargetContest(contest);
     };
     func();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editerUpdateSignal, editerTargetContest._id]);
+  }, [editerUpdateSignal, editerTargetContest?.id]);
 
   // set targetContest when managerUpdateSignal, id is updated
   useEffect(() => {
     const func = async () => {
-      const contest = await contestController.get(managerTargetContest._id);
-      if (isEmptyObject(contest)) {
-        setEditerTargetContest({});
+      const contest = await contestController.get(managerTargetContest?.id);
+      if (!contest || isEmptyObject(contest)) {
+        setEditerTargetContest(undefined);
         return;
       }
-      if (editerTargetContest._id === managerTargetContest._id) {
+      if (editerTargetContest?.id === contest.id) {
         setEditerTargetContest(JSON.parse(JSON.stringify(contest)));
       }
       setManagerTargetContest(contest);
     };
     func();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [managerUpdateSignal, managerTargetContest._id]);
+  }, [managerUpdateSignal, managerTargetContest?.id]);
 
   // set isContestTimerRunning when targetContest is updated
   useEffect(() => {
-    if (isEmptyObject(managerTargetContest)) {
-      setIsContestTimerRunning(false);
-      return;
-    }
-    if (managerTargetContest.isContestTimerRunning) {
+    if (managerTargetContest?.isContestTimerRunning) {
       setIsContestTimerRunning(true);
       return;
     }

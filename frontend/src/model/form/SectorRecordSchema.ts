@@ -4,7 +4,7 @@ import { SectorRecordType } from "model/SectorRecord";
 import { sectorEnum, sectorRecord_sectorStateEnum } from "model/enums/index";
 
 export interface FormDriveRecordType
-  extends Omit<SectorRecordType, "_id" | "hostId" | "driveRecordList"> {
+  extends Omit<SectorRecordType, "id" | "hostId" | "driveRecordList"> {
   contestSector: string;
   order: number;
   remainingContestTime: number;

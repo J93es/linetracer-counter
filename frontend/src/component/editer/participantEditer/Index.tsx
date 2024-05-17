@@ -11,7 +11,6 @@ import Accordion from "component/utils/Accordion";
 import { ContestType } from "model/Contest";
 import { ParticipantType } from "model/Participant";
 import { participantEditMenuEnum } from "model/enums/index";
-import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 export default function ParticipantEditer({
   setParticipantUpdateSignal,
@@ -21,28 +20,28 @@ export default function ParticipantEditer({
   targetContest,
 }: {
   setParticipantUpdateSignal: Function;
-  participantList: object[];
-  targetParticipant: Partial<ParticipantType>;
+  participantList: ParticipantType[] | undefined;
+  targetParticipant: ParticipantType | undefined;
   setTargetParticipant: Function;
-  targetContest: Partial<ContestType>;
+  targetContest: ContestType | undefined;
 }) {
   const [editMenu, setEditMenu] = useState<string>(participantEditMenuEnum[0]);
 
   let editMenuHtml = null;
 
-  if (isEmptyObject(targetContest)) {
+  if (!targetContest) {
     editMenuHtml = <p>경연을 선택하세요.</p>;
   } else if (editMenu === "참가자 추가") {
     editMenuHtml = (
       <PostParticipant
         targetParticipant={targetParticipant}
         setParticipantUpdateSignal={setParticipantUpdateSignal}
-        targetContestId={targetContest._id}
+        targetContestId={targetContest?.id}
       />
     );
-  } else if (isEmptyArray(participantList)) {
+  } else if (!participantList) {
     editMenuHtml = <p>참가자가 없습니다.</p>;
-  } else if (isEmptyObject(targetParticipant)) {
+  } else if (!targetParticipant) {
     editMenuHtml = <p>참가자를 선택하세요.</p>;
   } else if (editMenu === "참가자 수정") {
     editMenuHtml = (

@@ -2,7 +2,7 @@ import { SectorRecordType } from "@model/SectorRecord";
 import { UserDriveRecordType } from "@model/service/user/DriveRecord";
 
 export interface UserSectorRecordType
-  extends Omit<SectorRecordType, "_id" | "hostId"> {
+  extends Omit<SectorRecordType, "_id" | "id" | "hostId"> {
   contestSector: string;
   order: number;
   remainingContestTime: number;

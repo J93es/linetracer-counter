@@ -10,7 +10,6 @@ import "component/manager/operationMenu/Index.css";
 import { ContestType } from "model/Contest";
 import { SectorRecordType } from "model/SectorRecord";
 
-import { isEmptyObject } from "tools/utils";
 import { useEffect, useState } from "react";
 
 export default function OperationMenu({
@@ -23,8 +22,8 @@ export default function OperationMenu({
   setIsSectorRecordLaunched,
 }: {
   setContestUpdateSignal: Function;
-  targetContest: Partial<ContestType>;
-  targetSectorRecord: Partial<SectorRecordType>;
+  targetContest: ContestType | undefined;
+  targetSectorRecord: SectorRecordType | undefined;
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
   isSectorRecordLaunched: boolean;
@@ -41,10 +40,7 @@ export default function OperationMenu({
 
   // set contestLaunchBtnDisabled
   useEffect(() => {
-    if (
-      isEmptyObject(targetSectorRecord) ||
-      targetContest.isContestTimerRunning
-    ) {
+    if (targetContest?.isContestTimerRunning) {
       setcontestLaunchBtnDisabled(true);
       return;
     }
@@ -53,7 +49,7 @@ export default function OperationMenu({
 
   // set contestTimerBtnDisabled
   useEffect(() => {
-    if (isEmptyObject(targetSectorRecord)) {
+    if (!targetSectorRecord) {
       setContestTimerBtnDisabled(true);
 
       return;
@@ -67,7 +63,7 @@ export default function OperationMenu({
 
   // set suspendOrderBtnDisabled
   useEffect(() => {
-    if (isEmptyObject(targetSectorRecord)) {
+    if (!targetSectorRecord) {
       setSuspendOrderBtnDisabled(true);
       return;
     }
@@ -80,7 +76,7 @@ export default function OperationMenu({
 
   // set manageRemainingContestTimeBtnDisabled
   useEffect(() => {
-    if (isEmptyObject(targetSectorRecord)) {
+    if (!targetSectorRecord) {
       setManageRemainingContestTimeBtnDisabled(true);
       return;
     }

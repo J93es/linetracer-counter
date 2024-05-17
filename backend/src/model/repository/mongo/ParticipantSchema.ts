@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 import { RobotType } from "@model/Robot";
 
 const robotSchema = new Schema<RobotType>({
+  hostId: { type: String, required: true, readonly: true },
   name: { type: String },
   cpu: { type: String },
   rom: { type: String },
@@ -16,16 +17,18 @@ const robotSchema = new Schema<RobotType>({
 });
 
 const participantSchema = new Schema({
+  _id: { type: String, readonly: true },
+  id: { type: String, unique: true, required: true, readonly: true },
   hostId: { type: String, required: true, readonly: true },
 
   name: { type: String, required: true },
-  association: { type: String },
+  association: { type: String, default: "" },
   speech: { type: String },
 
   robot: { type: robotSchema },
 
   sectorRecordList: {
-    type: [Schema.Types.ObjectId],
+    type: [String],
     ref: "SectorRecordSchema",
     required: true,
   },
