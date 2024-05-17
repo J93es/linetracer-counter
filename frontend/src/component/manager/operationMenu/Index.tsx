@@ -40,6 +40,10 @@ export default function OperationMenu({
 
   // set contestLaunchBtnDisabled
   useEffect(() => {
+    if (!targetSectorRecord) {
+      setcontestLaunchBtnDisabled(true);
+      return;
+    }
     if (targetContest?.isContestTimerRunning) {
       setcontestLaunchBtnDisabled(true);
       return;
