@@ -1,0 +1,40 @@
+.cur-ranking {
+  word-break: break-all;
+  overflow-wrap: break-word;
+  width: 510px;
+}
+
+.cur-ranking-cont {
+  width: 460px;
+}
+
+.cur-ranking-title {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.cur-ranking-list {
+  margin: 0 auto;
+}
+
+.cur-ranking-list-header-row {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.5;
+  color: #828282;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-gap: 20px;
+}
+
+.cur-ranking-list-body-row {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.5;
+
+  border-top: 1px solid #e0e0e0;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-gap: 20px;
+}

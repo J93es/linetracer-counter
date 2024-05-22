@@ -8,7 +8,7 @@ import { ContestController } from "controller/ContestController";
 
 import Editer from "component/editer/Index";
 import Manager from "component/manager/Index";
-import Display from "component/display/Index";
+import DisplayBoard from "component/displayBoard/Index";
 
 import { isEmptyArray, isEmptyObject } from "tools/utils";
 
@@ -49,6 +49,9 @@ function App() {
   // set targetContest when updateSignal, id is updated
   useEffect(() => {
     const func = async () => {
+      if (!editerTargetContest?.id) {
+        return;
+      }
       const contest = await contestController.get(editerTargetContest?.id);
       if (!contest || isEmptyObject(contest)) {
         setEditerTargetContest(undefined);
@@ -67,6 +70,9 @@ function App() {
   // set targetContest when managerUpdateSignal, id is updated
   useEffect(() => {
     const func = async () => {
+      if (!managerTargetContest?.id) {
+        return;
+      }
       const contest = await contestController.get(managerTargetContest?.id);
       if (!contest || isEmptyObject(contest)) {
         setEditerTargetContest(undefined);
@@ -93,7 +99,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Display
+        <DisplayBoard
           targetContest={managerTargetContest}
           isContestTimerRunning={isContestTimerRunning}
         />

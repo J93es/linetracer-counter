@@ -2,18 +2,25 @@ import { ParticipantType, participantTamplate } from "model/Participant";
 import { SectorRecordType, sectorRecordTamplate } from "model/SectorRecord";
 import { DriveRecordType, driveRecordTamplate } from "model/DriveRecord";
 
-const defaultSortValue = -1;
+const defaultSortValue = Infinity;
 
-function sortTarget(targetList: any[], targetBy: string): any[] {
+export function sortTarget(targetList: any[], targetBy: string): any[] {
   // sort할 배열
   let list: any[] = JSON.parse(JSON.stringify(targetList));
 
   // 임시 배열은 위치 및 정렬 값이있는 객체를 보유합니다.
   let mapped = list.map(function (target: any, i: number) {
-    return {
-      index: i,
-      value: target[targetBy as keyof any] ?? defaultSortValue,
-    };
+    try {
+      return {
+        index: i,
+        value: target[targetBy as keyof any] ?? defaultSortValue,
+      };
+    } catch (error) {
+      return {
+        index: i,
+        value: defaultSortValue,
+      };
+    }
   });
 
   // 축소 치를 포함한 매핑 된 배열의 소트
@@ -100,7 +107,7 @@ export function sortParticipantList(
   return list;
 }
 
-export function sortSectorRecordByDriveRecordField(
+export function sortSectorRecordListByDriveRecordField(
   driveRecordBy: string,
   targetSectorRecordList: SectorRecordType[]
 ) {
@@ -126,12 +133,19 @@ export function sortSectorRecordByDriveRecordField(
     const driveRecordList: DriveRecordType[] =
       targetSectorRecord?.driveRecordList ?? [];
 
-    return {
-      index: i,
-      value:
-        driveRecordList[0][(driveRecordBy as keyof DriveRecordType) ?? ""] ??
-        defaultSortValue,
-    };
+    try {
+      return {
+        index: i,
+        value:
+          driveRecordList[0][(driveRecordBy as keyof DriveRecordType) ?? ""] ??
+          defaultSortValue,
+      };
+    } catch (error) {
+      return {
+        index: i,
+        value: defaultSortValue,
+      };
+    }
   });
 
   // 축소 치를 포함한 매핑 된 배열의 소트
@@ -176,12 +190,20 @@ export function sortParticipantListBySectorRecordField(
     const sectorRecordList: SectorRecordType[] =
       targetParticipant?.sectorRecordList ?? [];
 
-    return {
-      index: i,
-      value:
-        sectorRecordList[0][(sectorRecordBy as keyof SectorRecordType) ?? ""] ??
-        defaultSortValue,
-    };
+    try {
+      return {
+        index: i,
+        value:
+          sectorRecordList[0][
+            (sectorRecordBy as keyof SectorRecordType) ?? ""
+          ] ?? defaultSortValue,
+      };
+    } catch (error) {
+      return {
+        index: i,
+        value: defaultSortValue,
+      };
+    }
   });
 
   // 축소 치를 포함한 매핑 된 배열의 소트
@@ -209,7 +231,7 @@ export function sortParticipantListByDriveRecordField(
   for (let i = 0; i < list.length; i++) {
     let sectorRecordList: SectorRecordType[] = list[i]?.sectorRecordList ?? [];
 
-    sectorRecordList = sortSectorRecordByDriveRecordField(
+    sectorRecordList = sortSectorRecordListByDriveRecordField(
       driveRecordBy,
       sectorRecordList
     );
@@ -225,13 +247,20 @@ export function sortParticipantListByDriveRecordField(
     const sectorRecordList: SectorRecordType[] =
       targetParticipant?.sectorRecordList ?? [];
 
-    const driveRecord: DriveRecordType = sectorRecordList[0].driveRecordList[0];
-
-    return {
-      index: i,
-      value:
-        driveRecord[driveRecordBy as keyof DriveRecordType] ?? defaultSortValue,
-    };
+    try {
+      return {
+        index: i,
+        value:
+          sectorRecordList[0].driveRecordList[0][
+            driveRecordBy as keyof DriveRecordType
+          ] ?? defaultSortValue,
+      };
+    } catch (error) {
+      return {
+        index: i,
+        value: defaultSortValue,
+      };
+    }
   });
 
   // 축소 치를 포함한 매핑 된 배열의 소트

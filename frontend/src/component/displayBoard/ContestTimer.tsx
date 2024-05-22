@@ -5,8 +5,9 @@ import { ContestType } from "model/Contest";
 import { getRemainingTime } from "tools/getRemainingTime";
 
 import { SectorRecordType } from "model/SectorRecord";
+import DisplayCard from "component/displayBoard/DisplayCard";
 
-import "component/display/ContestTimer.css";
+import "component/displayBoard/ContestTimer.css";
 
 export default function ContestTimer({
   targetContest,
@@ -66,33 +67,36 @@ export default function ContestTimer({
   }, [isContestTimerRunning]);
 
   return (
-    <div className="remaining-time-card shadow">
-      <h4 className="remaining-time-message">남은 경연 시간</h4>
-      <div className="remaining-time">
-        <div className="remaining-minute">
-          <div className="remaining-minute-num">
-            {Math.floor(remainingTime / 60000)}
-          </div>
-          <div className="remaining-minute-str">분</div>
-        </div>
+    <div className="contest-timer shadow">
+      <DisplayCard
+        htmlElement={
+          <>
+            <h4 className="remaining-time-title">남은 경연 시간</h4>
+            <div className="remaining-time-item">
+              <div className="remaining-minute">
+                <div className="remaining-minute-num">
+                  {Math.floor(remainingTime / 60000)}
+                </div>
+                <div className="remaining-minute-str">분</div>
+              </div>
 
-        <div className="remaining-second">
-          <div className="remaining-second-num">
-            {String(Math.floor((remainingTime % 60000) / 1000)).padStart(
-              2,
-              "0"
-            )}
-          </div>
-          <div className="remaining-second-str">초</div>
-        </div>
+              <div className="remaining-second">
+                <div className="remaining-second-num">
+                  {String(Math.floor((remainingTime % 60000) / 1000)).padStart(
+                    2,
+                    "0"
+                  )}
+                </div>
+                <div className="remaining-second-str">초</div>
+              </div>
 
-        <div className="remaining-ms">
-          <div className="remaining-ms-num">
-            {String(Math.floor(remainingTime % 1000)).padStart(3, "0")}
-          </div>
-          <div className="remaining-ms-str">(ms)</div>
-        </div>
-      </div>
+              <div className="remaining-ms">
+                {String(Math.floor(remainingTime % 1000)).padStart(3, "0")}
+              </div>
+            </div>
+          </>
+        }
+      />
     </div>
   );
 }

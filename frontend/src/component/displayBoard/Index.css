@@ -1,12 +1,13 @@
-.display {
-  width: 1500px;
-  height: 1000px;
+.display-board {
   background: #eff6fd;
 
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
+  width: fit-content;
+
+  display: grid;
+  grid-template-columns: 520px 520px 440px;
+  grid-gap: 40px;
+
+  padding: 20px;
 
   font-size: 40px;
   font-family: "Public Sans", sans-serif;

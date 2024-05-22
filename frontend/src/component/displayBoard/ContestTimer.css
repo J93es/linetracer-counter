@@ -1,0 +1,29 @@
+.contest-timer {
+  align-items: center;
+  justify-content: center;
+}
+
+.remaining-time-title {
+  margin: 0 6px 20px 0;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.remaining-time-item {
+  display: grid;
+  font-size: 70px;
+  grid-template-columns: 110px 160px 130px;
+  grid-gap: 30px;
+}
+
+.remaining-minute {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.remaining-second {
+  display: grid;
+  grid-template-columns: 100px 60px;
+}
