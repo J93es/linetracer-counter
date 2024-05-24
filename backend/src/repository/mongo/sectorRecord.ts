@@ -1,8 +1,8 @@
-import { SectorRecordSchema } from "@model/repository/mongo/SectorRecordSchema";
-import { SectorRecordRepository } from "@core/repository/sectorRecord";
-
 import { SectorRecordType } from "@model/SectorRecord";
 import { DriveRecordType } from "@model/DriveRecord";
+
+import { SectorRecordSchema } from "@model/repository/mongo/index";
+import { SectorRecordRepository } from "@core/repository/sectorRecord";
 
 import { participantRepository } from "@repository/index";
 

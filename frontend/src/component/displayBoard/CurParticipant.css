@@ -1,6 +1,11 @@
 .cur-participant {
   word-break: break-all;
   overflow-wrap: break-word;
+  width: 420px;
+}
+
+.cur-participant-cont {
+  width: 380px;
 }
 
 .cur-participant-title {

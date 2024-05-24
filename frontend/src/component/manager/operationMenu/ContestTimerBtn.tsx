@@ -51,8 +51,13 @@ export default function ContestTimerBtn({
         sectorState: "running",
       };
 
-      await contestController.patch(contest);
-      await sectorRecordController.patch(sectorRecord);
+      await Promise.all([
+        contestController.patch(contest),
+        sectorRecordController.patch(sectorRecord),
+      ]);
+
+      // await contestController.patch(contest);
+      // await sectorRecordController.patch(sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();
@@ -78,8 +83,12 @@ export default function ContestTimerBtn({
         remainingContestTime: remainingContestTime,
       };
 
-      await contestController.patch(contest);
-      await sectorRecordController.patch(sectorRecord);
+      await Promise.all([
+        contestController.patch(contest),
+        sectorRecordController.patch(sectorRecord),
+      ]);
+      // await contestController.patch(contest);
+      // await sectorRecordController.patch(sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

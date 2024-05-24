@@ -29,7 +29,7 @@ export default function PostContest({
   } = useForm<ContestType>({ resolver: zodResolver(FormContestSchema) });
 
   useEffect(() => {
-    setValue("id", "");
+    setValue("queryId", "");
     setValue("title", "");
     setValue("curContestingSection", sectorEnum[0]);
   }, [setValue, targetContest]);
@@ -45,7 +45,7 @@ export default function PostContest({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextForm
-        id="id"
+        id="queryId"
         placeholder="ex) 2024"
         label="경연 id"
         register={register}

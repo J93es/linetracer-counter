@@ -1,6 +1,6 @@
 import { ContestType } from "@model/Contest";
 import { ContestRepository } from "@core/repository/contest";
-import { ContestSchema } from "@model/repository/mongo/ContestSchema";
+import { ContestSchema } from "@model/repository/mongo/index";
 
 import { idController } from "@core/main";
 
@@ -92,14 +92,14 @@ export class ContestMongoRepo implements ContestRepository {
     return contest;
   }
 
-  async readWithJoinByQuery(
-    query: string,
+  async readWithJoinByQueryId(
+    queryId: string,
     participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object
   ): Promise<ContestType> {
     const contest: ContestType | null = await ContestSchema.findOne({
-      id: query,
+      queryId: queryId,
     })
       .populate({
         path: participantJoinTarget,

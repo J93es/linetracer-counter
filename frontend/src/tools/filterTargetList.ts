@@ -17,7 +17,7 @@ export function filterTargetList(
     return data[filterBy] === filterValue;
   });
 
-  if (option?.ifValueInTarget_returnOrigin) {
+  if (!isEmptyArray(filteredList) && option?.ifValueInTarget_returnOrigin) {
     return JSON.parse(JSON.stringify(targetList));
   }
 

@@ -20,6 +20,7 @@ import contestRouter from "@route/contest";
 import partipantRouter from "@route/participant";
 import sectorRecordRouter from "@route/sectorRecord";
 import driveRecordRouter from "@route/driveRecord";
+import counterDeviceLogRouter from "@route/counterDeviceLog";
 import userRouter from "@route/user";
 
 import { uri, PORT } from "@src/config";
@@ -54,6 +55,7 @@ app.use("/contest", contestRouter);
 app.use("/participant", partipantRouter);
 app.use("/sector-record", sectorRecordRouter);
 app.use("/drive-record", driveRecordRouter);
+app.use("/counterDeviceLog", counterDeviceLogRouter);
 app.use("/user", userRouter);
 
 // error handler

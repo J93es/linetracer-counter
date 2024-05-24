@@ -5,6 +5,7 @@ import { ParticipantType } from "model/Participant";
 import ParticipantInfo, { ParticipantInfoType } from "model/ParticipantInfo";
 
 import { findTargetById } from "tools/utils";
+import { filterParticipantList } from "tools/filterTargetList";
 
 import { SectorRecordType } from "model/SectorRecord";
 
@@ -12,6 +13,7 @@ import ContestTimer from "component/displayBoard/ContestTimer";
 import CurRanking from "component/displayBoard/CurRanking";
 import CurParticipant from "component/displayBoard/CurParticipant";
 import CurRobot from "component/displayBoard/CurRobot";
+import NextParticipant from "component/displayBoard/NextParticipant";
 
 import "component/displayBoard/Index.css";
 
@@ -52,8 +54,15 @@ export default function DisplayBoard({
       targetContest?.nextParticipant,
       targetContest?.participantList
     );
+    const participantList = filterParticipantList(
+      targetContest?.participantList ?? [],
+      {
+        sectorRecordBy: "contestSector",
+        sectorRecordValue: curSection,
+      }
+    );
     const participantInfoList: ParticipantInfoType[] | undefined =
-      targetContest?.participantList.map((participant) => {
+      participantList.map((participant) => {
         return new ParticipantInfo(participant, curSection);
       });
 
@@ -105,6 +114,7 @@ export default function DisplayBoard({
       </div>
       <div className="display-board-col-3">
         <CurRobot curParticipantInfo={curParticipantInfo} />
+        <NextParticipant nextParticipantInfo={nextParticipantInfo} />
       </div>
     </div>
   );

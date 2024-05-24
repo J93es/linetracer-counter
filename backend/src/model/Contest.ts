@@ -6,6 +6,7 @@ import { UserSectorRecordType } from "@model/service/user/SectorRecord";
 export interface ContestType {
   _id: string;
   id: string;
+  queryId: string;
   title: string;
 
   curContestingSection?: string;
@@ -26,6 +27,7 @@ export interface ContestType {
 export default class Contest implements ContestType {
   _id: string;
   id: string;
+  queryId: string;
   title: string;
 
   curContestingSection?: string;
@@ -45,6 +47,7 @@ export default class Contest implements ContestType {
   constructor(data: ContestType) {
     this._id = data._id;
     this.id = data.id;
+    this.queryId = data.queryId;
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;

@@ -2,6 +2,7 @@ import { ParticipantType, participantTamplate } from "model/Participant";
 
 export interface ContestType {
   id: string;
+  queryId: string;
   title: string;
 
   curContestingSection?: string;
@@ -21,6 +22,7 @@ export interface ContestType {
 
 export default class Contest implements ContestType {
   id: string;
+  queryId: string;
   title: string;
 
   curContestingSection?: string;
@@ -39,6 +41,7 @@ export default class Contest implements ContestType {
 
   constructor(data: ContestType) {
     this.id = data.id;
+    this.queryId = data.queryId;
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
@@ -61,6 +64,7 @@ export const timerStopValue = -1;
 
 export const contestTamplate: ContestType = new Contest({
   id: "",
+  queryId: "",
   title: "",
 
   curContestingSection: "",

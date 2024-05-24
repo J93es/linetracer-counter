@@ -4,7 +4,7 @@
   width: fit-content;
 
   display: grid;
-  grid-template-columns: 520px 520px 440px;
+  grid-template-columns: 520px 440px 440px;
   grid-gap: 40px;
 
   padding: 20px;

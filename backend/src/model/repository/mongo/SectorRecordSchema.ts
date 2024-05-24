@@ -5,7 +5,7 @@ import { driveRecordSchema } from "@model/repository/mongo/DriveRecordSchema";
 
 const { Schema } = mongoose;
 
-const sectorRecordSchema = new Schema<SectorRecordType>({
+export const sectorRecordSchema = new Schema<SectorRecordType>({
   _id: { type: String, readonly: true },
   id: { type: String, unique: true, required: true, readonly: true },
   hostId: { type: String, required: true, readonly: true },
@@ -37,8 +37,3 @@ const sectorRecordSchema = new Schema<SectorRecordType>({
     required: true,
   },
 });
-
-export const SectorRecordSchema = mongoose.model(
-  "SectorRecordSchema",
-  sectorRecordSchema
-);

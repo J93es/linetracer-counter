@@ -87,6 +87,6 @@ const getFastestLapTime = (driveRecordList: DriveRecordType[] | undefined) => {
       driveRecordBy: "recordTime",
     }
   );
-  const fastestLapTime = sortedDriveRecordList[0]?.recordTime ?? 0;
+  const fastestLapTime = sortedDriveRecordList[0]?.recordTime ?? Infinity;
   return fastestLapTime;
 };

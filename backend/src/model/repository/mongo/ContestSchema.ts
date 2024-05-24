@@ -4,9 +4,10 @@ import { ContestType } from "@model/Contest";
 
 const { Schema } = mongoose;
 
-const contestSchema = new Schema<ContestType>({
+export const contestSchema = new Schema<ContestType>({
   _id: { type: String, readonly: true },
   id: { type: String, unique: true, required: true, readonly: true },
+  queryId: { type: String, required: true },
   title: { type: String, required: true },
 
   curContestingSection: {
@@ -49,5 +50,3 @@ const contestSchema = new Schema<ContestType>({
     required: true,
   },
 });
-
-export const ContestSchema = mongoose.model("ContestSchema", contestSchema);

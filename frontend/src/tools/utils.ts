@@ -1,5 +1,6 @@
 import { ParticipantType } from "model/Participant";
 import { filterParticipantList } from "tools/filterTargetList";
+import { sortParticipantListBySectorRecordField } from "tools/sortTargetList";
 
 export function isEmptyObject(target: any): boolean {
   try {
@@ -50,14 +51,18 @@ export function getNextParticipant(
   participantList: ParticipantType[]
 ): ParticipantType | undefined {
   try {
-    const sortedParticipantList = filterParticipantList(participantList, {
+    const filteredParticipantList = filterParticipantList(participantList, {
       sectorRecordBy: "contestSector",
       sectorRecordValue: curSector,
     });
+    const sortedParticipantList = sortParticipantListBySectorRecordField(
+      "order",
+      filteredParticipantList
+    );
     for (let i = 0; i < sortedParticipantList.length; i++) {
       if (sortedParticipantList[i].id === curParticipantId) {
         if (i + 1 >= sortedParticipantList.length) {
-          return JSON.parse(JSON.stringify(sortedParticipantList[i]));
+          return undefined;
         }
         return JSON.parse(JSON.stringify(sortedParticipantList[i + 1]));
       }

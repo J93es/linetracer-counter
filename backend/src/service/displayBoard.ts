@@ -11,7 +11,7 @@ export class DisplayBoardMongoService {
 
   async getData(year: string): Promise<UserContestType> {
     try {
-      const data = await contestRepository.readWithJoinByQuery(
+      const data = await contestRepository.readWithJoinByQueryId(
         year,
         "curParticipant curSectorRecord",
         {

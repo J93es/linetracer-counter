@@ -14,6 +14,7 @@ export interface UserContestType
     | "isDriveTimerRunning"
     | "latestDriveRecordTime"
   > {
+  queryId: string;
   title: string;
 
   curContestingSection?: string;
@@ -25,6 +26,7 @@ export interface UserContestType
 }
 
 export default class UserContest implements UserContestType {
+  queryId: string;
   title: string;
 
   curContestingSection?: string;
@@ -35,6 +37,7 @@ export default class UserContest implements UserContestType {
   participantList: UserParticipantType[];
 
   constructor(data: UserContestType) {
+    this.queryId = data.queryId;
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
@@ -47,6 +50,7 @@ export default class UserContest implements UserContestType {
 }
 
 export const userContestTamplate: UserContestType = new UserContest({
+  queryId: "",
   title: "",
 
   curContestingSection: "",

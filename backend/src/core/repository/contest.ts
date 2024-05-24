@@ -14,8 +14,8 @@ export interface ContestRepository {
     selectSectorRecordField: object
   ): Promise<ContestType>;
 
-  readWithJoinByQuery(
-    query: string,
+  readWithJoinByQueryId(
+    queryId: string,
     participantJoinTarget: string,
     selectParticipantField: object,
     selectSectorRecordField: object

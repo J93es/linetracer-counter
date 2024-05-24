@@ -1,12 +1,18 @@
 import { DriveRecordType } from "@model/DriveRecord";
 import { DriveRecordRepository } from "@core/repository/driveRecord";
-import { DriveRecordSchema } from "@model/repository/mongo/DriveRecordSchema";
+import { DriveRecordSchema } from "@model/repository/mongo/index";
 
 import { sectorRecordRepository } from "@repository/index";
 
 import { idController } from "@core/main";
 
+let instance: DriveRecordMongoRepo | null = null;
 export class DriveRecordMongoRepo implements DriveRecordRepository {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
+
   async isExist(id: string): Promise<Boolean> {
     if (await DriveRecordSchema.exists({ id: id })) {
       return true;

@@ -28,7 +28,7 @@ export default function PutContest({
   } = useForm<ContestType>({ resolver: zodResolver(FormContestSchema) });
 
   useEffect(() => {
-    setValue("id", targetContest?.id ?? "");
+    setValue("queryId", targetContest?.queryId ?? "");
     setValue("title", targetContest?.title ?? "");
     setValue(
       "curContestingSection",
@@ -50,7 +50,7 @@ export default function PutContest({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextForm
-        id="id"
+        id="queryId"
         placeholder="ex) 2024"
         label="경연 id"
         register={register}

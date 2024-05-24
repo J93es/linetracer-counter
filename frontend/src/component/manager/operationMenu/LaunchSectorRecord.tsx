@@ -37,7 +37,7 @@ export default function LaunchSectorRecord({
       const contest: Partial<ContestType> = {
         id: targetContest?.id,
         curParticipant: targetParticipantId,
-        nextParticipant: nextParticipant?.id,
+        nextParticipant: nextParticipant?.id ?? "",
         curSectorRecord: targetSectorRecord?.id,
       };
 
@@ -47,8 +47,13 @@ export default function LaunchSectorRecord({
         sectorState: "running",
       };
 
-      await contestController.patch(contest);
-      await sectorRecordController.patch(sectorRecord);
+      await Promise.all([
+        contestController.patch(contest),
+        sectorRecordController.patch(sectorRecord),
+      ]);
+
+      // await contestController.patch(contest);
+      // await sectorRecordController.patch(sectorRecord);
       setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func();

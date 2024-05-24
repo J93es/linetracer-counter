@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 import { RobotType } from "@model/Robot";
 
-const robotSchema = new Schema<RobotType>({
+export const robotSchema = new Schema<RobotType>({
   hostId: { type: String, required: true, readonly: true },
   name: { type: String },
   cpu: { type: String },
@@ -16,7 +16,7 @@ const robotSchema = new Schema<RobotType>({
   sensor: { type: String },
 });
 
-const participantSchema = new Schema({
+export const participantSchema = new Schema({
   _id: { type: String, readonly: true },
   id: { type: String, unique: true, required: true, readonly: true },
   hostId: { type: String, required: true, readonly: true },
@@ -33,8 +33,3 @@ const participantSchema = new Schema({
     required: true,
   },
 });
-
-export const ParticipantSchema = mongoose.model(
-  "ParticipantSchema",
-  participantSchema
-);

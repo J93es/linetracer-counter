@@ -12,20 +12,18 @@ export class UserServ implements UserService {
     instance = this;
   }
 
-  async getData(year: string): Promise<UserContestType> {
+  async getData(queryId: string): Promise<UserContestType> {
     try {
-      const data: ContestType = await contestRepository.readWithJoinByQuery(
-        year,
-        "participantList curParticipant",
+      const data: ContestType = await contestRepository.readWithJoinByQueryId(
+        queryId,
+        "participantList curParticipant nextParticipant",
         {
-          id: 0,
           name: 1,
           association: 1,
           speech: 1,
-          SectorRecordList: 1,
+          sectorRecordList: 1,
         },
         {
-          id: 0,
           contestSector: 1,
           order: 1,
           remainingContestTime: 1,
