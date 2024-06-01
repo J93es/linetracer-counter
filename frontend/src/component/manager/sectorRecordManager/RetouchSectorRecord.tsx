@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SectorRecordType } from "model/SectorRecord";
 import { FormSectorRecordSchema } from "model/form/SectorRecordSchema";
 
-import { SectorRecordController } from "controller/SectorRecordController";
+import { SectorRecordController } from "controller/fetch/SectorRecordController";
 
 import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";

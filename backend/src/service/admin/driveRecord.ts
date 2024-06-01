@@ -23,9 +23,7 @@ export class DriveRecordServ implements DriveRecordService {
   private patchReadonlyFilter(
     srcDriveRecord: Partial<DriveRecordType>
   ): Partial<DriveRecordType> {
-    const filteredDriveRecord = JSON.parse(JSON.stringify(srcDriveRecord));
-
-    delete filteredDriveRecord.recordTime;
+    const { recordTime, ...filteredDriveRecord } = srcDriveRecord;
 
     return filteredDriveRecord;
   }

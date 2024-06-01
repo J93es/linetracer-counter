@@ -23,9 +23,7 @@ export class ContestServ implements ContestService {
   private patchReadonlyFilter(
     srcContest: Partial<ContestType>
   ): Partial<ContestType> {
-    const filteredContest = JSON.parse(JSON.stringify(srcContest));
-
-    delete filteredContest.title;
+    const { title, ...filteredContest } = srcContest;
 
     return filteredContest;
   }

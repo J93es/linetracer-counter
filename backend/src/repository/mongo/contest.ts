@@ -12,10 +12,7 @@ export class ContestMongoRepo implements ContestRepository {
   }
 
   readonlyFilter(data: Partial<ContestType>) {
-    const filteredData = JSON.parse(JSON.stringify(data));
-    delete filteredData._id;
-    delete filteredData.id;
-    delete filteredData.participantList;
+    const { _id, id, participantList, ...filteredData } = data;
 
     return filteredData;
   }

@@ -11,7 +11,7 @@ export interface UserContestType
     | "contestTimerStartTime"
     | "isContestTimerRunning"
     | "driveStartTime"
-    | "isDriveTimerRunning"
+    | "isDriveStopWatchRunning"
     | "latestDriveRecordTime"
   > {
   queryId: string;

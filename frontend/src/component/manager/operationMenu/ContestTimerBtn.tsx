@@ -1,7 +1,7 @@
 import { ContestType } from "model/Contest";
 import { SectorRecordType } from "model/SectorRecord";
-import { ContestController } from "controller/ContestController";
-import { SectorRecordController } from "controller/SectorRecordController";
+import { ContestController } from "controller/fetch/ContestController";
+import { SectorRecordController } from "controller/fetch/SectorRecordController";
 
 import { getRemainingTime } from "tools/getRemainingTime";
 

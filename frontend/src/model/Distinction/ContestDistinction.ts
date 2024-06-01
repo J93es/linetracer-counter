@@ -11,7 +11,7 @@ export interface ContestDistinctionType
     | "contestTimerStartTime"
     | "isContestTimerRunning"
     | "driveStartTime"
-    | "isDriveTimerRunning"
+    | "isDriveStopWatchRunning"
     | "latestDriveRecordTime"
     | "participantList"
   > {

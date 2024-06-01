@@ -3,12 +3,14 @@ import { ContestType } from "model/Contest";
 import { ParticipantType } from "model/Participant";
 import { SectorRecordType } from "model/SectorRecord";
 import { DriveRecordType } from "model/DriveRecord";
+import { CounterDeviceLogType } from "model/CounterDeviceLog";
 
 import ContestManager from "component/manager/contestManager/Index";
 import ParticipantManager from "component/manager/participantManager/Index";
 import SectorRecordManager from "component/manager/sectorRecordManager/Index";
 import DriveRecordManager from "component/manager/driveRecordManager/Index";
 import OperationMenu from "component/manager/operationMenu/Index";
+import CounterDeviceLogManager from "component/manager/counterDeviceLogManager/Index";
 
 import { filterParticipantList } from "tools/filterTargetList";
 import { sortParticipantListBySectorRecordField } from "tools/sortTargetList";
@@ -24,6 +26,8 @@ export default function Manager({
   setTargetContest,
   isContestTimerRunning,
   setIsContestTimerRunning,
+  counterDeviceLogList,
+  setCounterDeviceLogListUpdateSignal,
 }: {
   setContestListRefreshSignal: Function;
   setUpdateSignal: Function;
@@ -32,6 +36,8 @@ export default function Manager({
   setTargetContest: Function;
   isContestTimerRunning: boolean;
   setIsContestTimerRunning: Function;
+  counterDeviceLogList: CounterDeviceLogType[] | undefined;
+  setCounterDeviceLogListUpdateSignal: Function;
 }) {
   const [isSectorRecordLaunched, setIsSectorRecordLaunched] =
     useState<boolean>(false);
@@ -182,13 +188,25 @@ export default function Manager({
         />
       </div>
 
-      <ParticipantManager
-        setParticipantUpdateSignal={setUpdateSignal}
-        participantList={participantList}
-        targetParticipant={targetParticipant}
-        setTargetParticipant={setTargetParticipant}
-        isBlocked={isParticipantBlocked}
-      />
+      <div>
+        <ParticipantManager
+          setParticipantUpdateSignal={setUpdateSignal}
+          participantList={participantList}
+          targetParticipant={targetParticipant}
+          setTargetParticipant={setTargetParticipant}
+          isBlocked={isParticipantBlocked}
+        />
+
+        <CounterDeviceLogManager
+          counterDeviceLogList={counterDeviceLogList}
+          setContestUpdateSignal={setContestListRefreshSignal}
+          setCounterDeviceLogListUpdateSignal={
+            setCounterDeviceLogListUpdateSignal
+          }
+          isBlocked={isDriveRecordBlocked}
+          hostId={targetContest?.id}
+        />
+      </div>
 
       <SectorRecordManager
         setSectorRecordUpdateSignal={setUpdateSignal}

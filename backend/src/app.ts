@@ -55,7 +55,7 @@ app.use("/contest", contestRouter);
 app.use("/participant", partipantRouter);
 app.use("/sector-record", sectorRecordRouter);
 app.use("/drive-record", driveRecordRouter);
-app.use("/counterDeviceLog", counterDeviceLogRouter);
+app.use("/counter-device-log", counterDeviceLogRouter);
 app.use("/user", userRouter);
 
 // error handler

@@ -1,5 +1,5 @@
 import DriveRecord, { DriveRecordType } from "model/DriveRecord";
-import { uri } from "../config";
+import { uri } from "config";
 
 import { isEmptyObject } from "tools/utils";
 

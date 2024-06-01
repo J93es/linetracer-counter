@@ -23,14 +23,8 @@ export class ParticipantServ implements ParticipantService {
   private patchReadonlyFilter(
     srcParticipant: Partial<ParticipantType>
   ): Partial<ParticipantType> {
-    const filteredParticipant = JSON.parse(JSON.stringify(srcParticipant));
-
-    delete filteredParticipant.name;
-    delete filteredParticipant.association;
-    delete filteredParticipant.speech;
-    delete filteredParticipant.robot;
-
-    // const {name, association, speech, robot, ...filteredParticipant} = JSON.parse(JSON.stringify(srcParticipant));
+    const { name, association, speech, robot, ...filteredParticipant } =
+      srcParticipant;
 
     return filteredParticipant;
   }

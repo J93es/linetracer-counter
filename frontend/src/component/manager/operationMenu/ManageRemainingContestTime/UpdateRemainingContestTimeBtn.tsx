@@ -1,5 +1,5 @@
 import { SectorRecordType } from "model/SectorRecord";
-import { SectorRecordController } from "controller/SectorRecordController";
+import { SectorRecordController } from "controller/fetch/SectorRecordController";
 
 const sectorRecordController = new SectorRecordController();
 

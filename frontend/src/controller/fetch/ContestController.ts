@@ -1,5 +1,5 @@
 import Contest, { ContestType } from "model/Contest";
-import { uri } from "../config";
+import { uri } from "config";
 
 import { isEmptyArray, isEmptyObject } from "tools/utils";
 

@@ -41,7 +41,7 @@ export const contestSchema = new Schema<ContestType>({
   isContestTimerRunning: { type: Boolean },
 
   driveStartTime: { type: Number },
-  isDriveTimerRunning: { type: Boolean },
+  isDriveStopWatchRunning: { type: Boolean },
   latestDriveRecordTime: { type: Number },
 
   participantList: {

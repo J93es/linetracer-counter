@@ -10,6 +10,7 @@ import { filterParticipantList } from "tools/filterTargetList";
 import { SectorRecordType } from "model/SectorRecord";
 
 import ContestTimer from "component/displayBoard/ContestTimer";
+import DriveStopWatch from "component/displayBoard/DriveStopWatch";
 import CurRanking from "component/displayBoard/CurRanking";
 import CurParticipant from "component/displayBoard/CurParticipant";
 import CurRobot from "component/displayBoard/CurRobot";
@@ -24,9 +25,6 @@ export default function DisplayBoard({
   targetContest: ContestType | undefined;
   isContestTimerRunning: boolean;
 }) {
-  const [curSection, setCurSection] = useState<string>(
-    targetContest?.curContestingSection ?? ""
-  );
   const [curSectorRecord, setCurSectorRecord] = useState<
     SectorRecordType | undefined
   >();
@@ -101,11 +99,7 @@ export default function DisplayBoard({
           isContestTimerRunning={isContestTimerRunning}
         />
 
-        <ContestTimer
-          targetContest={targetContest}
-          curSectorRecord={curSectorRecord}
-          isContestTimerRunning={isContestTimerRunning}
-        />
+        <DriveStopWatch targetContest={targetContest} />
 
         <CurRanking participantInfoList={participantInfoList} />
       </div>

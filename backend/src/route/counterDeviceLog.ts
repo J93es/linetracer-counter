@@ -6,6 +6,21 @@ import { counterDeviceLogService } from "@service/index";
 
 const router: Router = express.Router();
 
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const hostId: string = req.query.hostId as string;
+    const counterDeviceLogList: Partial<CounterDeviceLogType[]> =
+      await counterDeviceLogService.getEvery(hostId);
+
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send(counterDeviceLogList).status(200);
+  } catch (err: any) {
+    console.error(err);
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.send({ message: err.toString() }).status(404);
+  }
+});
+
 router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id: string = req.params.id;
@@ -35,10 +50,6 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ message: err.toString() }).status(404);
   }
-});
-
-router.patch("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("hello patch");
 });
 
 router.patch(

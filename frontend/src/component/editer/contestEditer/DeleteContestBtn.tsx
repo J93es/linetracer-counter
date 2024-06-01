@@ -1,5 +1,5 @@
 import { ContestType } from "model/Contest";
-import { ContestController } from "controller/ContestController";
+import { ContestController } from "controller/fetch/ContestController";
 
 const contestController = new ContestController();
 

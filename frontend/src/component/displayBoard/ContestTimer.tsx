@@ -40,15 +40,16 @@ export default function ContestTimer({
       curTime
     );
 
+    if (!isContestTimerRunning || remainingTime <= 0) {
+      cancelAnimationFrame(requestRef.current);
+      return;
+    }
+
     if (curTime - prevTime > 20) {
       setRemainingTime(remainingTime);
       timeStemp = curTime;
     }
 
-    if (!isContestTimerRunning || remainingTime <= 0) {
-      cancelAnimationFrame(requestRef.current);
-      return;
-    }
     requestRef.current = requestAnimationFrame(() => {
       timerAnimation(timeStemp);
     });

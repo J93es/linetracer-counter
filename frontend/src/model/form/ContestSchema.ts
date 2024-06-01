@@ -12,7 +12,7 @@ export interface FormContestType
     | "contestTimerStartTime"
     | "isContestTimerRunning"
     | "driveStartTime"
-    | "isDriveTimerRunning"
+    | "isDriveStopWatchRunning"
     | "latestDriveRecordTime"
     | "participantList"
   > {

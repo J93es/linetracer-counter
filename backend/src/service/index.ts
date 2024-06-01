@@ -20,5 +20,5 @@ export const counterDeviceLogService: CounterDeviceLogService =
 
 // user
 import { UserService } from "@src/core/service/user";
-import { UserServ } from "@service/user";
+import { UserServ } from "@service/user/user";
 export const userService: UserService = new UserServ();

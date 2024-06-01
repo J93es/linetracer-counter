@@ -1,5 +1,5 @@
 import SectorRecord, { SectorRecordType } from "model/SectorRecord";
-import { uri } from "../config";
+import { uri } from "config";
 
 import { isEmptyObject } from "tools/utils";
 

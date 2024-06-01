@@ -11,7 +11,7 @@ import SubmitBtn from "component/utils/SubmitBtn";
 
 import { driveRecord_typeEnum } from "model/enums/index";
 
-import { DriveRecordController } from "controller/DriveRecordController";
+import { DriveRecordController } from "controller/fetch/DriveRecordController";
 
 const driveRecordController = new DriveRecordController();
 

@@ -9,7 +9,7 @@ import SubmitBtn from "component/utils/SubmitBtn";
 import { ContestType } from "model/Contest";
 import { FormContestSchema } from "model/form/ContestSchema";
 import { sectorEnum } from "model/enums/index";
-import { ContestController } from "controller/ContestController";
+import { ContestController } from "controller/fetch/ContestController";
 
 const contestController = new ContestController();
 

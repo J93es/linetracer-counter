@@ -13,12 +13,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
   }
 
   private readonlyFilter(data: Partial<ParticipantType>) {
-    const filteredData = JSON.parse(JSON.stringify(data));
-
-    delete filteredData._id;
-    delete filteredData.id;
-    delete filteredData.hostId;
-    delete filteredData.sectorRecordList;
+    const { _id, id, hostId, sectorRecordList, ...filteredData } = data;
 
     return filteredData;
   }
@@ -32,7 +27,10 @@ export class ParticipantMongoRepo implements ParticipantRepository {
   }
 
   async create(data: Partial<ParticipantType>): Promise<ParticipantType> {
-    if (!(await contestRepository.isExist(data.hostId ?? ""))) {
+    if (!data.hostId) {
+      throw new Error("hostId is required");
+    }
+    if (!(await contestRepository.isExist(data.hostId))) {
       throw new Error(
         "Contest data is not founded by hostId, check hostId field in Participant data"
       );

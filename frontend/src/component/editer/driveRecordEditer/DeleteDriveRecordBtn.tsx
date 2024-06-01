@@ -1,6 +1,6 @@
 import { DriveRecordType } from "model/DriveRecord";
 
-import { DriveRecordController } from "controller/DriveRecordController";
+import { DriveRecordController } from "controller/fetch/DriveRecordController";
 
 const driveRecordController = new DriveRecordController();
 

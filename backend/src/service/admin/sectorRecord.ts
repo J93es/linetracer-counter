@@ -23,9 +23,7 @@ export class SectorRecordServ implements SectorRecordService {
   private patchReadonlyFilter(
     srcSectorRecord: Partial<SectorRecordType>
   ): Partial<SectorRecordType> {
-    const filteredSectorRecord = JSON.parse(JSON.stringify(srcSectorRecord));
-
-    delete filteredSectorRecord.contestSector;
+    const { contestSector, ...filteredSectorRecord } = srcSectorRecord;
 
     return filteredSectorRecord;
   }
@@ -53,7 +51,7 @@ export class SectorRecordServ implements SectorRecordService {
     srcSectorRecord = this.patchReadonlyFilter(srcSectorRecord);
 
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.update(srcSectorRecord, false);
+      await sectorRecordRepository.update(srcSectorRecord);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }
@@ -69,7 +67,7 @@ export class SectorRecordServ implements SectorRecordService {
     this.idFilter(id, srcSectorRecord);
 
     const sectorRecord: Partial<SectorRecordType> =
-      await sectorRecordRepository.update(srcSectorRecord, true);
+      await sectorRecordRepository.update(srcSectorRecord);
 
     return new SectorRecord(sectorRecord as SectorRecordType);
   }

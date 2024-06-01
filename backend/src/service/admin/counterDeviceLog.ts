@@ -25,11 +25,7 @@ export class CounterDeviceLogServ implements CounterDeviceLogService {
   private patchReadonlyFilter(
     srccounterDeviceLog: Partial<CounterDeviceLogType>
   ): Partial<CounterDeviceLogType> {
-    const filteredcounterDeviceLog = JSON.parse(
-      JSON.stringify(srccounterDeviceLog)
-    );
-
-    delete filteredcounterDeviceLog.recordTime;
+    const { recordTime, ...filteredcounterDeviceLog } = srccounterDeviceLog;
 
     return filteredcounterDeviceLog;
   }
@@ -79,7 +75,7 @@ export class CounterDeviceLogServ implements CounterDeviceLogService {
     return new CounterDeviceLog(counterDeviceLog as CounterDeviceLogType);
   }
 
-  async getAll(hostId: string): Promise<CounterDeviceLogType[]> {
+  async getEvery(hostId: string): Promise<CounterDeviceLogType[]> {
     const counterDeviceLogList: Partial<CounterDeviceLogType[]> =
       await counterDeviceLogRepository.readAll(hostId);
 

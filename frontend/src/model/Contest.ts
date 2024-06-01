@@ -14,7 +14,7 @@ export interface ContestType {
   isContestTimerRunning?: boolean;
 
   driveStartTime?: number;
-  isDriveTimerRunning?: boolean;
+  isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
   participantList: ParticipantType[];
@@ -34,7 +34,7 @@ export default class Contest implements ContestType {
   isContestTimerRunning?: boolean;
 
   driveStartTime?: number;
-  isDriveTimerRunning?: boolean;
+  isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
   participantList: ParticipantType[];
@@ -53,7 +53,7 @@ export default class Contest implements ContestType {
     this.isContestTimerRunning = data.isContestTimerRunning;
 
     this.driveStartTime = data.driveStartTime;
-    this.isDriveTimerRunning = data.isDriveTimerRunning;
+    this.isDriveStopWatchRunning = data.isDriveStopWatchRunning;
     this.latestDriveRecordTime = data.latestDriveRecordTime;
 
     this.participantList = data.participantList;
@@ -76,7 +76,7 @@ export const contestTamplate: ContestType = new Contest({
   isContestTimerRunning: false,
 
   driveStartTime: timerStopValue,
-  isDriveTimerRunning: false,
+  isDriveStopWatchRunning: false,
   latestDriveRecordTime: 0,
 
   participantList: [participantTamplate],

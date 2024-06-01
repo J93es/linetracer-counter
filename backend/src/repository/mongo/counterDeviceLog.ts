@@ -12,6 +12,12 @@ export class CounterDeviceLogMongoRepo implements CounterDeviceLogRepository {
     if (instance) return instance;
     instance = this;
   }
+
+  private readonlyFilter(data: Partial<CounterDeviceLogType>) {
+    const { _id, id, hostId, writeTime, ...filteredData } = data;
+    return filteredData;
+  }
+
   async isExist(id: string): Promise<Boolean> {
     if (await CounterDeviceLogSchema.exists({ id: id })) {
       return true;
@@ -23,68 +29,73 @@ export class CounterDeviceLogMongoRepo implements CounterDeviceLogRepository {
   async create(
     data: Partial<CounterDeviceLogType>
   ): Promise<CounterDeviceLogType> {
-    if (!(await contestRepository.isExist(data.hostId ?? ""))) {
+    if (!data.hostId) {
+      throw new Error("hostId is required");
+    }
+    if (!(await contestRepository.isExist(data.hostId))) {
       throw new Error("host(SectorRecord) not found by hostId");
     }
 
     const newId = idController.generateId();
-    const driveRecord: CounterDeviceLogType | null =
+    const counterDeviceLog: CounterDeviceLogType | null =
       await CounterDeviceLogSchema.create({
         ...data,
         id: newId,
         _id: newId,
       });
-    if (!driveRecord) {
-      throw new Error("Failed to create driveRecord");
+    if (!counterDeviceLog) {
+      throw new Error("Failed to create counterDeviceLog");
     }
 
-    return driveRecord;
+    return counterDeviceLog;
   }
 
   async readAll(hostId: string): Promise<CounterDeviceLogType[]> {
-    const driveRecords: CounterDeviceLogType[] =
+    const counterDeviceLogs: CounterDeviceLogType[] =
       await CounterDeviceLogSchema.find({ hostId: hostId }).lean();
-    if (!driveRecords) {
-      throw new Error("Failed to get driveRecords");
+    if (!counterDeviceLogs) {
+      throw new Error("Failed to get counterDeviceLogs");
     }
 
-    return driveRecords;
+    return counterDeviceLogs;
   }
 
   async read(id: string): Promise<CounterDeviceLogType> {
-    const driveRecord: CounterDeviceLogType | null =
+    const counterDeviceLog: CounterDeviceLogType | null =
       await CounterDeviceLogSchema.findOne({
         id: id,
       }).lean();
-    if (!driveRecord) {
-      throw new Error("Failed to get driveRecord");
+    if (!counterDeviceLog) {
+      throw new Error("Failed to get counterDeviceLog");
     }
 
-    return driveRecord;
+    return counterDeviceLog;
   }
 
   async update(
     data: Partial<CounterDeviceLogType>
   ): Promise<CounterDeviceLogType> {
-    const driveRecord: CounterDeviceLogType | null =
-      await CounterDeviceLogSchema.findOneAndUpdate({ id: data.id }, data, {
+    const id = data.id;
+    const filteredData = this.readonlyFilter(data);
+    const counterDeviceLog: CounterDeviceLogType | null =
+      await CounterDeviceLogSchema.findOneAndUpdate({ id: id }, filteredData, {
         returnDocument: "after",
       }).lean();
-    if (!driveRecord) {
-      throw new Error("Failed to update driveRecord");
+    if (!counterDeviceLog) {
+      throw new Error("Failed to update counterDeviceLog");
     }
 
-    return driveRecord;
+    return counterDeviceLog;
   }
 
-  async delete(driveRecordId: string): Promise<CounterDeviceLogType> {
-    const driveRecord = await CounterDeviceLogSchema.findOneAndDelete({
-      id: driveRecordId,
+  async delete(counterDeviceLogId: string): Promise<CounterDeviceLogType> {
+    const counterDeviceLog = await CounterDeviceLogSchema.findOneAndDelete({
+      id: counterDeviceLogId,
     }).lean();
-    if (!driveRecord) {
-      throw new Error("Failed to delete driveRecord");
+    if (!counterDeviceLog) {
+      throw new Error("Failed to delete counterDeviceLog");
     }
 
-    return driveRecord;
+    return counterDeviceLog;
   }
 }

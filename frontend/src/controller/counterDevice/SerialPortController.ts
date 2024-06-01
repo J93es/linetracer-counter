@@ -1,7 +1,7 @@
-let instance: SerialPortControler | null = null;
-export default class SerialPortControler {
-  devicePort: any;
-  value: any;
+let instance: SerialPortController | null = null;
+export class SerialPortController {
+  private devicePort: any;
+  private value: Uint8Array | null = null;
 
   constructor() {
     if (!instance) {
@@ -13,11 +13,14 @@ export default class SerialPortControler {
 
       instance = this;
       this.devicePort = null;
-      this.value = 0;
+      this.value = null;
     }
     return instance;
   }
 
+  isPortOpen() {
+    return this.devicePort !== null;
+  }
   async setDevice() {
     // Prompt user to select an Arduino Uno device.
     try {
@@ -48,7 +51,7 @@ export default class SerialPortControler {
     }
   }
 
-  async read() {
+  async read(): Promise<Uint8Array | undefined> {
     try {
       const reader = this.devicePort.readable.getReader();
 
@@ -63,10 +66,12 @@ export default class SerialPortControler {
         if (value) {
           this.value = new Uint8Array([value]);
           console.log(`read: ${this.getReadData()}`);
+          return this.getReadData();
         }
       }
     } catch (error: any) {
       console.log("error: serial_read_data:", error.message);
+      return undefined;
     }
   }
 

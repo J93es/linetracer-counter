@@ -16,11 +16,7 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
   }
 
   private readonlyFilter(data: Partial<SectorRecordType>) {
-    const filteredData = JSON.parse(JSON.stringify(data));
-
-    delete filteredData._id;
-    delete filteredData.id;
-    delete filteredData.hostId;
+    const { _id, id, hostId, driveRecordList, ...filteredData } = data;
 
     return filteredData;
   }
@@ -79,31 +75,17 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     return sectorRecord;
   }
 
-  async update(
-    data: Partial<SectorRecordType>,
-    replace: boolean = false
-  ): Promise<SectorRecordType> {
+  async update(data: Partial<SectorRecordType>): Promise<SectorRecordType> {
     if (!data.id) {
       throw new Error("SectorRecord id is required");
     }
 
     const id = data.id;
-    const originSectorRecord = this.readonlyFilter(await this.read(id));
-    const target = this.readonlyFilter(data);
-
-    const srcDriveRecordList = target.driveRecordList;
-    const originDriveRecordList = originSectorRecord.driveRecordList;
-
-    if (!replace && srcDriveRecordList !== undefined) {
-      target.driveRecordList = await this.updateDriveRecord(
-        srcDriveRecordList,
-        originDriveRecordList
-      );
-    }
+    const filteredData = this.readonlyFilter(data);
 
     const sectorRecord = await SectorRecordSchema.findOneAndUpdate(
       { id: id },
-      target,
+      filteredData,
       {
         returnDocument: "after",
       }
@@ -135,32 +117,6 @@ export class SectorRecordMongoRepo implements SectorRecordRepository {
     }
 
     return sectorRecord;
-  }
-
-  private async updateDriveRecord(
-    srcDriveRecord: Partial<DriveRecordType>[],
-    originDriveRecord: Partial<DriveRecordType>[]
-  ): Promise<SectorRecordType> {
-    const targetDriveRecord = JSON.parse(JSON.stringify(originDriveRecord));
-
-    for (let i = 0; i < srcDriveRecord.length; i++) {
-      let isExist = false;
-      for (let j = 0; j < originDriveRecord.length; j++) {
-        if (String(srcDriveRecord[i].id) === String(originDriveRecord[j].id)) {
-          targetDriveRecord[j] = {
-            ...originDriveRecord[j],
-            ...srcDriveRecord[i],
-          };
-          isExist = true;
-          break;
-        }
-      }
-      if (!isExist) {
-        targetDriveRecord.push(srcDriveRecord[i]);
-      }
-    }
-
-    return targetDriveRecord;
   }
 
   async appendDriveRecordList(

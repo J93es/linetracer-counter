@@ -1,5 +1,5 @@
 import Participant, { ParticipantType } from "model/Participant";
-import { uri } from "../config";
+import { uri } from "config";
 
 import { isEmptyObject } from "tools/utils";
 

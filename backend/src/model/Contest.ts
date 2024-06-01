@@ -18,7 +18,7 @@ export interface ContestType {
   isContestTimerRunning?: boolean;
 
   driveStartTime?: number;
-  isDriveTimerRunning?: boolean;
+  isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
   participantList: ParticipantType[] | UserParticipantType[] | string[];
@@ -39,7 +39,7 @@ export default class Contest implements ContestType {
   isContestTimerRunning?: boolean;
 
   driveStartTime?: number;
-  isDriveTimerRunning?: boolean;
+  isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
   participantList: ParticipantType[] | UserParticipantType[] | string[];
@@ -59,7 +59,7 @@ export default class Contest implements ContestType {
     this.isContestTimerRunning = data.isContestTimerRunning;
 
     this.driveStartTime = data.driveStartTime;
-    this.isDriveTimerRunning = data.isDriveTimerRunning;
+    this.isDriveStopWatchRunning = data.isDriveStopWatchRunning;
     this.latestDriveRecordTime = data.latestDriveRecordTime;
 
     this.participantList = data.participantList;

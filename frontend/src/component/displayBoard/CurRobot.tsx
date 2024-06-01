@@ -42,12 +42,8 @@ export default function CurRobot({
             <div className="cur-robot-info-list">
               <div className="cur-robot-info-list-header">
                 <div className="cur-robot-info-list-header-row">
-                  <div className="cur-robot-info-list-header-col">
-                    부품 분류
-                  </div>
-                  <div className="cur-robot-info-list-header-col">
-                    사용 부품
-                  </div>
+                  <div className="cur-robot-info-list-header-col">분류</div>
+                  <div className="cur-robot-info-list-header-col">정보</div>
                 </div>
               </div>
               <div className="cur-robot-info-list-body">{robotHtmlElem}</div>

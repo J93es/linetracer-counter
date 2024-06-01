@@ -3,8 +3,10 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 import { ContestType } from "model/Contest";
+import { CounterDeviceLogType } from "model/CounterDeviceLog";
 
-import { ContestController } from "controller/ContestController";
+import { ContestController } from "controller/fetch/ContestController";
+import { CounterDeviceLogController } from "controller/fetch/CounterDeviceLogController";
 
 import Editer from "component/editer/Index";
 import Manager from "component/manager/Index";
@@ -13,6 +15,8 @@ import DisplayBoard from "component/displayBoard/Index";
 import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 const contestController = new ContestController();
+const counterDeviceLogController = new CounterDeviceLogController();
+
 function App() {
   const [contestListRefreshSignal, setContestListRefreshSignal] =
     useState<number>(0);
@@ -30,6 +34,14 @@ function App() {
 
   const [isContestTimerRunning, setIsContestTimerRunning] =
     useState<boolean>(false);
+
+  const [
+    counterDeviceLogListUpdateSignal,
+    setCounterDeviceLogListUpdateSignal,
+  ] = useState<number>(0);
+  const [counterDeviceLogList, setCounterDeviceLogList] = useState<
+    CounterDeviceLogType[] | undefined
+  >();
 
   // set contestList when contestListRefreshSignal is updated
   useEffect(() => {
@@ -73,7 +85,11 @@ function App() {
       if (!managerTargetContest?.id) {
         return;
       }
-      const contest = await contestController.get(managerTargetContest?.id);
+      const [contest, counterDeviceLogList] = await Promise.all([
+        await contestController.get(managerTargetContest?.id),
+        await counterDeviceLogController.getEvery(managerTargetContest?.id),
+      ]);
+
       if (!contest || isEmptyObject(contest)) {
         setEditerTargetContest(undefined);
         return;
@@ -82,10 +98,35 @@ function App() {
         setEditerTargetContest(JSON.parse(JSON.stringify(contest)));
       }
       setManagerTargetContest(contest);
+
+      if (!counterDeviceLogList || isEmptyArray(counterDeviceLogList)) {
+        setCounterDeviceLogList(undefined);
+        return;
+      }
+      setCounterDeviceLogList(counterDeviceLogList);
     };
     func();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [managerUpdateSignal, managerTargetContest?.id]);
+
+  // fetch counterDeviceLogList
+  useEffect(() => {
+    const func = async () => {
+      if (!managerTargetContest?.id) {
+        return;
+      }
+      const counterDeviceLogList = await counterDeviceLogController.getEvery(
+        managerTargetContest?.id
+      );
+      if (!counterDeviceLogList || isEmptyArray(counterDeviceLogList)) {
+        setCounterDeviceLogList(undefined);
+        return;
+      }
+      setCounterDeviceLogList(counterDeviceLogList);
+    };
+    func();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [counterDeviceLogListUpdateSignal]);
 
   // set isContestTimerRunning when targetContest is updated
   useEffect(() => {
@@ -111,6 +152,10 @@ function App() {
           setTargetContest={setManagerTargetContest}
           isContestTimerRunning={isContestTimerRunning}
           setIsContestTimerRunning={setIsContestTimerRunning}
+          counterDeviceLogList={counterDeviceLogList}
+          setCounterDeviceLogListUpdateSignal={
+            setCounterDeviceLogListUpdateSignal
+          }
         />
         <Editer
           setContestListRefreshSignal={setContestListRefreshSignal}
