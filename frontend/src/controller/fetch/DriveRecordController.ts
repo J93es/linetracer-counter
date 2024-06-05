@@ -14,6 +14,9 @@ export class DriveRecordController {
 
   async get(id: string | undefined): Promise<DriveRecordType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/drive-record/${id}`, {
         method: "GET",
         credentials: "include",
@@ -36,6 +39,9 @@ export class DriveRecordController {
     srcData: Partial<DriveRecordType>
   ): Promise<DriveRecordType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(`${uri}/drive-record`, {
         method: "POST",
@@ -63,6 +69,9 @@ export class DriveRecordController {
     srcData: Partial<DriveRecordType>
   ): Promise<DriveRecordType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(`${uri}/drive-record/${srcData.id}`, {
         method: "PATCH",
@@ -90,6 +99,9 @@ export class DriveRecordController {
     srcData: Partial<DriveRecordType>
   ): Promise<DriveRecordType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(`${uri}/drive-record/${srcData.id}`, {
         method: "PUT",
@@ -115,6 +127,9 @@ export class DriveRecordController {
 
   async delete(id: string | undefined): Promise<DriveRecordType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/drive-record/${id}`, {
         method: "DELETE",
         headers: {

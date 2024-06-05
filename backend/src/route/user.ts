@@ -1,5 +1,7 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
+import { sendSuccessResponse, sendErrorResponse } from "@route/utils/response";
+
 import { userService } from "@service/index";
 const router: Router = express.Router();
 
@@ -12,10 +14,12 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const data = await userService.getData(id);
-    res.send(data).status(200);
-  } catch (e) {
-    console.error(e);
-    res.send(e).status(404);
+
+    sendSuccessResponse(res, data);
+    next();
+  } catch (err) {
+    sendErrorResponse(res, err);
+    next();
   }
 });
 

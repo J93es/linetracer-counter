@@ -1,4 +1,4 @@
-import { ParticipantService } from "@core/service/participant";
+import { ParticipantService } from "@src/core/service/admin/participant";
 
 import Participant, { ParticipantType } from "@model/Participant";
 

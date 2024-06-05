@@ -14,6 +14,9 @@ export class SectorRecordController {
 
   async get(id: string | undefined): Promise<SectorRecordType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/sector-record/${id}`, {
         method: "GET",
         credentials: "include",
@@ -36,6 +39,9 @@ export class SectorRecordController {
     srcData: Partial<SectorRecordType>
   ): Promise<SectorRecordType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const sectorRecord = new SectorRecord(srcData as SectorRecordType);
       const response = await fetch(`${uri}/Sector-record`, {
         method: "POST",
@@ -63,6 +69,9 @@ export class SectorRecordController {
     srcData: Partial<SectorRecordType>
   ): Promise<SectorRecordType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const sectorRecord = new SectorRecord(srcData as SectorRecordType);
       const response = await fetch(`${uri}/Sector-record/${srcData.id}`, {
         method: "PATCH",
@@ -90,6 +99,9 @@ export class SectorRecordController {
     srcData: Partial<SectorRecordType>
   ): Promise<SectorRecordType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const sectorRecord = new SectorRecord(srcData as SectorRecordType);
       const response = await fetch(`${uri}/Sector-record/${srcData.id}`, {
         method: "PUT",
@@ -115,6 +127,9 @@ export class SectorRecordController {
 
   async delete(id: string | undefined): Promise<SectorRecordType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/sector-record/${id}`, {
         method: "DELETE",
         headers: {

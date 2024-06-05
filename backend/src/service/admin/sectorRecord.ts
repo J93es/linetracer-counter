@@ -1,4 +1,4 @@
-import { SectorRecordService } from "@core/service/sectorRecord";
+import { SectorRecordService } from "@src/core/service/admin/sectorRecord";
 
 import SectorRecord, { SectorRecordType } from "@model/SectorRecord";
 

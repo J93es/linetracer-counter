@@ -23,6 +23,12 @@ export const driveRecordEditMenuEnum: [string, ...string[]] = [
   "주행 기록 삭제",
 ];
 
+export const counterDeviceLogEditMenuEnum: [string, ...string[]] = [
+  "주행 기록에 추가",
+  "계수기 로그 수정",
+  "계수기 로그 삭제",
+];
+
 export const filterStringBySectorEnum: [string, ...string[]] = [
   "all",
   "freshman",

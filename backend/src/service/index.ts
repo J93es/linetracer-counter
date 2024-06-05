@@ -1,9 +1,9 @@
 // admin
-import { ContestService } from "@core/service/contest";
-import { ParticipantService } from "@core/service/participant";
-import { SectorRecordService } from "@core/service/sectorRecord";
-import { DriveRecordService } from "@core/service/driveRecord";
-import { CounterDeviceLogService } from "@core/service/counterDeviceLog";
+import { ContestService } from "@core/service/admin/contest";
+import { ParticipantService } from "@src/core/service/admin/participant";
+import { SectorRecordService } from "@src/core/service/admin/sectorRecord";
+import { DriveRecordService } from "@src/core/service/admin/driveRecord";
+import { CounterDeviceLogService } from "@src/core/service/admin/counterDeviceLog";
 
 import { ContestServ } from "@service/admin/contest";
 import { ParticipantServ } from "@src/service/admin/participant";
@@ -20,5 +20,10 @@ export const counterDeviceLogService: CounterDeviceLogService =
 
 // user
 import { UserService } from "@src/core/service/user";
-import { UserServ } from "@service/user/user";
+import { UserServ } from "@src/service/user";
 export const userService: UserService = new UserServ();
+
+//display-board
+import { DisplayBoardService } from "@src/core/service/displayBoard";
+import { DisplayBoardServ } from "@src/service/displayBoard";
+export const displayBoardService: DisplayBoardService = new DisplayBoardServ();

@@ -14,6 +14,9 @@ export class ParticipantController {
 
   async get(id: string | undefined): Promise<ParticipantType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/participant/${id}`, {
         method: "GET",
         credentials: "include",
@@ -36,6 +39,9 @@ export class ParticipantController {
     srcData: Partial<ParticipantType>
   ): Promise<ParticipantType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const participant = new Participant(srcData as ParticipantType);
       const response = await fetch(`${uri}/participant`, {
         method: "POST",
@@ -63,6 +69,9 @@ export class ParticipantController {
     srcData: Partial<ParticipantType>
   ): Promise<ParticipantType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const participant = new Participant(srcData as ParticipantType);
       const response = await fetch(`${uri}/participant/${srcData.id}`, {
         method: "PATCH",
@@ -90,6 +99,9 @@ export class ParticipantController {
     srcData: Partial<ParticipantType>
   ): Promise<ParticipantType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const participant = new Participant(srcData as ParticipantType);
       const response = await fetch(`${uri}/participant/${srcData.id}`, {
         method: "PUT",
@@ -115,6 +127,9 @@ export class ParticipantController {
 
   async delete(id: string | undefined): Promise<ParticipantType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/participant/${id}`, {
         method: "DELETE",
         headers: {

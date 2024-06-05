@@ -1,29 +1,23 @@
-import UserContest, { UserContestType } from "@model/service/user/Contest";
+import { ContestType } from "@model/Contest";
+import { DisplayBoardService } from "@core/service/displayBoard";
 
 import { contestRepository } from "@repository/index";
 
-let instance: DisplayBoardMongoService | null = null;
-export class DisplayBoardMongoService {
+let instance: DisplayBoardServ | null = null;
+export class DisplayBoardServ implements DisplayBoardService {
   constructor() {
     if (instance) return instance;
     instance = this;
   }
 
-  async getData(year: string): Promise<UserContestType> {
+  async getCurrentContest(): Promise<ContestType> {
     try {
-      const data = await contestRepository.readWithJoinByQueryId(
-        year,
-        "curParticipant curSectorRecord",
-        {
-          id: 0,
-          hostId: 0,
-        },
-        {
-          id: 0,
-          hostId: 0,
-        }
+      const contest = await contestRepository.readWithJoinByQueryId(
+        "current-contest",
+        "participantList",
+        {},
+        {}
       );
-      const contest = new UserContest(data);
 
       return contest;
     } catch (e) {

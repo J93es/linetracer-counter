@@ -1,4 +1,4 @@
-import { DriveRecordService } from "@core/service/driveRecord";
+import { DriveRecordService } from "@src/core/service/admin/driveRecord";
 
 import DriveRecord, { DriveRecordType } from "@model/DriveRecord";
 

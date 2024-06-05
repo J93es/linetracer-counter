@@ -1,7 +1,7 @@
 import CounterDeviceLog, { CounterDeviceLogType } from "model/CounterDeviceLog";
 import { uri } from "config";
 
-import { isEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "tools/utils";
 
 let instance: CounterDeviceLogController | null = null;
 export class CounterDeviceLogController {
@@ -16,6 +16,9 @@ export class CounterDeviceLogController {
     hostId: string | undefined
   ): Promise<CounterDeviceLogType[] | undefined> {
     try {
+      if (!hostId) {
+        return undefined;
+      }
       const response = await fetch(
         `${uri}/counter-device-log/?hostId=${hostId}`,
         {
@@ -28,7 +31,7 @@ export class CounterDeviceLogController {
         (data: any) => new CounterDeviceLog(data)
       );
 
-      if (isEmptyObject(resCounterDeviceLogList)) {
+      if (isEmptyArray(resCounterDeviceLogList)) {
         return undefined;
       }
 
@@ -41,6 +44,9 @@ export class CounterDeviceLogController {
 
   async get(id: string | undefined): Promise<CounterDeviceLogType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/counter-device-log/${id}`, {
         method: "GET",
         credentials: "include",
@@ -63,6 +69,9 @@ export class CounterDeviceLogController {
     srcData: Partial<CounterDeviceLogType>
   ): Promise<CounterDeviceLogType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const counterDeviceLog = new CounterDeviceLog(
         srcData as CounterDeviceLogType
       );
@@ -92,6 +101,9 @@ export class CounterDeviceLogController {
     srcData: Partial<CounterDeviceLogType>
   ): Promise<CounterDeviceLogType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const counterDeviceLog = new CounterDeviceLog(
         srcData as CounterDeviceLogType
       );
@@ -121,6 +133,9 @@ export class CounterDeviceLogController {
     srcData: Partial<CounterDeviceLogType>
   ): Promise<CounterDeviceLogType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const counterDeviceLog = new CounterDeviceLog(
         srcData as CounterDeviceLogType
       );
@@ -150,6 +165,9 @@ export class CounterDeviceLogController {
     id: string | undefined
   ): Promise<CounterDeviceLogType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/counter-device-log/${id}`, {
         method: "DELETE",
         headers: {

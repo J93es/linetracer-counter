@@ -1,6 +1,6 @@
 import Contest, { ContestType } from "@model/Contest";
 
-import { ContestService } from "@core/service/contest";
+import { ContestService } from "@core/service/admin/contest";
 
 import { contestRepository } from "@repository/index";
 

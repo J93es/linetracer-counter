@@ -34,6 +34,9 @@ export class ContestController {
 
   async get(id: string | undefined): Promise<ContestType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/contest/${id}`, {
         method: "GET",
         credentials: "include",
@@ -54,6 +57,9 @@ export class ContestController {
 
   async post(srcData: Partial<ContestType>): Promise<ContestType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/Contest`, {
         method: "POST",
@@ -79,6 +85,9 @@ export class ContestController {
 
   async patch(srcData: Partial<ContestType>): Promise<ContestType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/contest/${srcData.id}`, {
         method: "PATCH",
@@ -104,6 +113,9 @@ export class ContestController {
 
   async put(srcData: Partial<ContestType>): Promise<ContestType | undefined> {
     try {
+      if (!srcData) {
+        return undefined;
+      }
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/Contest/${srcData.id}`, {
         method: "PUT",
@@ -129,6 +141,9 @@ export class ContestController {
 
   async delete(id: string | undefined): Promise<ContestType | undefined> {
     try {
+      if (!id) {
+        return undefined;
+      }
       const response = await fetch(`${uri}/Contest/${id}`, {
         method: "DELETE",
         headers: {

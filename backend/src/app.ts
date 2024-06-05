@@ -16,11 +16,12 @@ import JwtService from "@auth/service/jwt-service";
 
 import indexRouter from "@route/index";
 import adminRouter from "@auth/route/admin";
-import contestRouter from "@route/contest";
-import partipantRouter from "@route/participant";
-import sectorRecordRouter from "@route/sectorRecord";
-import driveRecordRouter from "@route/driveRecord";
-import counterDeviceLogRouter from "@route/counterDeviceLog";
+import contestRouter from "@route/admin/contest";
+import partipantRouter from "@src/route/admin/participant";
+import sectorRecordRouter from "@src/route/admin/sectorRecord";
+import driveRecordRouter from "@src/route/admin/driveRecord";
+import counterDeviceLogRouter from "@src/route/admin/counterDeviceLog";
+import displayBoardRouter from "@src/route/displayBoard/sse";
 import userRouter from "@route/user";
 
 import { uri, PORT } from "@src/config";
@@ -56,6 +57,7 @@ app.use("/participant", partipantRouter);
 app.use("/sector-record", sectorRecordRouter);
 app.use("/drive-record", driveRecordRouter);
 app.use("/counter-device-log", counterDeviceLogRouter);
+app.use("/display-board", displayBoardRouter);
 app.use("/user", userRouter);
 
 // error handler
