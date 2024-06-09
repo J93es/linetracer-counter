@@ -1,8 +1,8 @@
 import { CounterDeviceLogType } from "model/CounterDeviceLog";
 import { ContestType } from "model/Contest";
 
-import { ContestController } from "controller/fetch/ContestController";
-import { CounterDeviceLogController } from "controller/fetch/CounterDeviceLogController";
+import { ContestController } from "component/admin/controller/fetch/ContestController";
+import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
 
 const contestController = new ContestController();
 const counterDeviceLogController = new CounterDeviceLogController();

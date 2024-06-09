@@ -1,5 +1,5 @@
 import { SectorRecordType } from "model/SectorRecord";
-import { SectorRecordController } from "controller/fetch/SectorRecordController";
+import { SectorRecordController } from "component/admin/controller/fetch/SectorRecordController";
 
 import { defaultRemainingContestTime } from "model/SectorRecord";
 

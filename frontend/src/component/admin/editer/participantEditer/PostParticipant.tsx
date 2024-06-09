@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ParticipantType } from "model/Participant";
 import { FormParticipantSchema } from "model/form/ParticipantSchema";
-import { ParticipantController } from "controller/fetch/ParticipantController";
+import { ParticipantController } from "component/admin/controller/fetch/ParticipantController";
 
 import TextForm from "component/utils/TextForm";
 import SubmitBtn from "component/utils/SubmitBtn";

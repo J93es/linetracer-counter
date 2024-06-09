@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import { ContestType } from "model/Contest";
 import { CounterDeviceLogType } from "model/CounterDeviceLog";
 
-import { ContestController } from "controller/fetch/ContestController";
-import { CounterDeviceLogController } from "controller/fetch/CounterDeviceLogController";
+import { ContestController } from "component/admin/controller/fetch/ContestController";
+import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
 
 import Editer from "component/admin/editer/Index";
 import Manager from "component/admin/manager/Index";

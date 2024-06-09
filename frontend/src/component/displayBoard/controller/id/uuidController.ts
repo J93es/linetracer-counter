@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-
-import { IdController } from "@core/util/idController";
+import { IdController } from "component/displayBoard/controller/core/id";
 
 let instance: UuidController | null = null;
 export class UuidController implements IdController {

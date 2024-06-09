@@ -9,7 +9,7 @@ import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
-import { ContestController } from "controller/fetch/ContestController";
+import { ContestController } from "component/admin/controller/fetch/ContestController";
 import { sectorEnum } from "model/enums/index";
 
 const contestController = new ContestController();

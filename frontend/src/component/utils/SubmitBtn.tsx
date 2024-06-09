@@ -1,6 +1,6 @@
 import "component/utils/SubmitBtn.css";
 
-export default function SubmitBtn({}) {
+export default function SubmitBtn() {
   return (
     <div className="submit-btn">
       <button type="submit" className="btn btn-primary">

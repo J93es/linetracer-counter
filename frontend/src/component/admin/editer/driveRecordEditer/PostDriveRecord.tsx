@@ -10,7 +10,7 @@ import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
-import { DriveRecordController } from "controller/fetch/DriveRecordController";
+import { DriveRecordController } from "component/admin/controller/fetch/DriveRecordController";
 
 const driveRecordController = new DriveRecordController();
 

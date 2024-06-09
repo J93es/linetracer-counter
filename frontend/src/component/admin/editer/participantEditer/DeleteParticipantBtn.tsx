@@ -1,4 +1,4 @@
-import { ParticipantController } from "controller/fetch/ParticipantController";
+import { ParticipantController } from "component/admin/controller/fetch/ParticipantController";
 import { ParticipantType } from "model/Participant";
 
 const participantController = new ParticipantController();

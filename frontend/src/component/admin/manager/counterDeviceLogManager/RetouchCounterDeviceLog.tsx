@@ -9,7 +9,7 @@ import SubmitBtn from "component/utils/SubmitBtn";
 
 import { driveRecord_typeEnum } from "model/enums/index";
 
-import { CounterDeviceLogController } from "controller/fetch/CounterDeviceLogController";
+import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
 
 import { CounterDeviceLogType } from "model/CounterDeviceLog";
 

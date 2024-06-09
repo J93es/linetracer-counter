@@ -17,7 +17,6 @@ export default function CounterDevice({
   >;
   hostId: string | undefined;
 }) {
-  const [, _setRender] = useState(0);
   const [isReading, setIsReading] = useState(false);
   const [isPortOpened, setIsPortOpened] = useState(false);
   const [serialReadSignal, setSerialReadSignal] = useState(0);

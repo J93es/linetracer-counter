@@ -1,6 +1,6 @@
 import { CounterDeviceLogType } from "model/CounterDeviceLog";
 
-import { CounterDeviceLogController } from "controller/fetch/CounterDeviceLogController";
+import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
 
 const counterDeviceLogController = new CounterDeviceLogController();
 

@@ -24,9 +24,14 @@ export const sseNotifyDisplayBoard = async (
 ) => {
   try {
     const payload = await displayBoardService.getCurrentContest();
-    console.log(Object.keys(clients));
+
     Object.keys(clients).forEach((key: string) => {
-      clients[key].res.write(`data: ${JSON.stringify(payload)}\n\n`);
+      console.log(key);
+      try {
+        clients[key].res.write(`data: ${JSON.stringify(payload)}\n\n`);
+      } catch (err) {
+        console.error(err);
+      }
     });
     next();
   } catch (err) {
@@ -37,9 +42,14 @@ export const sseNotifyDisplayBoard = async (
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const clientId = req?.headers["x-request-id"] as string;
+
+    if (clientId === undefined) {
+      throw new Error("request.body.id is empty");
+    }
+
     res.writeHead(200, sseHeaders);
 
-    const clientId: string = idController.generateId();
     clients[clientId] = {
       res,
     };
@@ -48,9 +58,11 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
       delete clients[clientId];
     });
     sseNotifyDisplayBoard(req, res, next);
-  } catch (err) {
+    next();
+  } catch (err: any) {
     sendErrorResponse(res, err);
     next();
+  } finally {
   }
 });
 

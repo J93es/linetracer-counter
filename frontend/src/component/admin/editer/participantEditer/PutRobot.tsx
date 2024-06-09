@@ -6,7 +6,7 @@ import { ParticipantType } from "model/Participant";
 import { RobotType } from "model/Robot";
 import { FormRobotSchema } from "model/form/RobotSchema";
 
-import { ParticipantController } from "controller/fetch/ParticipantController";
+import { ParticipantController } from "component/admin/controller/fetch/ParticipantController";
 
 import TextForm from "component/utils/TextForm";
 import SubmitBtn from "component/utils/SubmitBtn";
