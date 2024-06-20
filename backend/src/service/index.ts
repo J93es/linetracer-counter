@@ -20,8 +20,8 @@ export const counterDeviceLogService: CounterDeviceLogService =
 
 // user
 import { UserService } from "@src/core/service/user";
-import { UserServ } from "@src/service/user";
-export const userService: UserService = new UserServ();
+// import { UserServ } from "@src/service/user";
+// export const userService: UserService = new UserServ();
 
 //display-board
 import { DisplayBoardService } from "@src/core/service/displayBoard";

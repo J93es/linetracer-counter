@@ -37,7 +37,8 @@
       "@repository/*": ["src/repository/*"],
       "@service/*": ["src/service/*"],
       "@route/*": ["src/route/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@tools/*": ["src/tools/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": [

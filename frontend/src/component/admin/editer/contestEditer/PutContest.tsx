@@ -6,9 +6,9 @@ import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
-import { ContestType } from "model/Contest";
-import { FormContestSchema } from "model/form/ContestSchema";
-import { sectorEnum } from "model/enums/index";
+import { ContestType } from "component/admin/model/Contest";
+import { FormContestSchema } from "component/admin/model/form/ContestSchema";
+import { sectorEnum } from "component/admin/model/enums/index";
 import { ContestController } from "component/admin/controller/fetch/ContestController";
 
 const contestController = new ContestController();

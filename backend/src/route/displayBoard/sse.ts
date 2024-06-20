@@ -2,8 +2,6 @@ import express, { Router, Request, Response, NextFunction } from "express";
 
 import { sendErrorResponse } from "@route/utils/response";
 
-import { idController } from "@core/main";
-
 import { displayBoardService } from "@service/index";
 
 const router: Router = express.Router();
@@ -23,7 +21,7 @@ export const sseNotifyDisplayBoard = async (
   next: NextFunction
 ) => {
   try {
-    const payload = await displayBoardService.getCurrentContest();
+    const payload = await displayBoardService.getCurrentContestInfo();
 
     Object.keys(clients).forEach((key: string) => {
       console.log(key);

@@ -1,8 +1,8 @@
 import SelectTarget from "component/utils/selectTarget/Index";
-import ParticipantDistintion from "model/distinction/ParticipantDistinction";
+import ParticipantDistintion from "component/admin/model/distinction/ParticipantDistinction";
 import Accordion from "component/utils/Accordion";
 
-import { ParticipantType } from "model/Participant";
+import { ParticipantType } from "component/admin/model/Participant";
 
 export default function ParticipantManager({
   setParticipantUpdateSignal,

@@ -1,5 +1,5 @@
 import { ParticipantController } from "component/admin/controller/fetch/ParticipantController";
-import { ParticipantType } from "model/Participant";
+import { ParticipantType } from "component/admin/model/Participant";
 
 const participantController = new ParticipantController();
 

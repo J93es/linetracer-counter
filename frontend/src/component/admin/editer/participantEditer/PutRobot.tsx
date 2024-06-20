@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { ParticipantType } from "model/Participant";
-import { RobotType } from "model/Robot";
-import { FormRobotSchema } from "model/form/RobotSchema";
+import { ParticipantType } from "component/admin/model/Participant";
+import { RobotType } from "component/admin/model/Robot";
+import { FormRobotSchema } from "component/admin/model/form/RobotSchema";
 
 import { ParticipantController } from "component/admin/controller/fetch/ParticipantController";
 

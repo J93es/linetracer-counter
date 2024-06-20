@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SelectTarget from "component/utils/selectTarget/Index";
-import ParticipantDistintion from "model/distinction/ParticipantDistinction";
+import ParticipantDistintion from "component/admin/model/distinction/ParticipantDistinction";
 import PostParticipant from "component/admin/editer/participantEditer/PostParticipant";
 import PutParticipant from "component/admin/editer/participantEditer/PutParticipant";
 import PutRobot from "component/admin/editer/participantEditer/PutRobot";
@@ -8,9 +8,9 @@ import DeleteParticipantBtn from "component/admin/editer/participantEditer/Delet
 import DropDown from "component/utils/DropDown";
 import Accordion from "component/utils/Accordion";
 
-import { ContestType } from "model/Contest";
-import { ParticipantType } from "model/Participant";
-import { participantEditMenuEnum } from "model/enums/index";
+import { ContestType } from "component/admin/model/Contest";
+import { ParticipantType } from "component/admin/model/Participant";
+import { participantEditMenuEnum } from "component/admin/model/enums/index";
 
 export default function ParticipantEditer({
   setParticipantUpdateSignal,

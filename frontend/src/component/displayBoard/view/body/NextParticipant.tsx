@@ -1,4 +1,4 @@
-import { ParticipantInfoType } from "model/ParticipantInfo";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
 import DisplayCard from "component/displayBoard/view/body/DisplayCard";
 
 import "component/displayBoard/view/body/NextParticipant.css";

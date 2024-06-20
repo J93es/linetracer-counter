@@ -1,5 +1,5 @@
-import { ParticipantInfoType } from "model/ParticipantInfo";
-import { RobotType } from "model/Robot";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
+import { RobotType } from "component/displayBoard/model/Robot";
 import DisplayCard from "component/displayBoard/view/body/DisplayCard";
 
 import "component/displayBoard/view/body/CurRobot.css";

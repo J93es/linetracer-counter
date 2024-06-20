@@ -1,7 +1,7 @@
-import Contest, { ContestType } from "model/Contest";
+import Contest, { ContestType } from "component/admin/model/Contest";
 import { uri } from "config";
 
-import { isEmptyArray, isEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "component/admin/tools/utils";
 
 let instance: ContestController | null = null;
 export class ContestController {

@@ -1,7 +1,9 @@
-import SectorRecord, { SectorRecordType } from "model/SectorRecord";
+import SectorRecord, {
+  SectorRecordType,
+} from "component/admin/model/SectorRecord";
 import { uri } from "config";
 
-import { isEmptyObject } from "tools/utils";
+import { isEmptyObject } from "component/admin/tools/utils";
 
 let instance: SectorRecordController | null = null;
 export class SectorRecordController {

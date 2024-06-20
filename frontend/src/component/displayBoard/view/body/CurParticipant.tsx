@@ -1,4 +1,4 @@
-import { ParticipantInfoType } from "model/ParticipantInfo";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
 import DisplayCard from "component/displayBoard/view/body/DisplayCard";
 
 import { timeToString } from "component/displayBoard/tools/timeToString";

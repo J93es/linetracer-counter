@@ -1,4 +1,4 @@
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
 
 import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
 

@@ -2,8 +2,8 @@ import SelectTarget from "component/utils/selectTarget/Index";
 import Accordion from "component/utils/Accordion";
 import RetouchDriveRecord from "component/admin/manager/driveRecordManager/RetouchDriveRecord";
 
-import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
-import { DriveRecordType } from "model/DriveRecord";
+import DriveRecordDistinction from "component/admin/model/distinction/DriveRecordDistinction";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
 
 export default function DriveRecordManager({
   setDriveRecordUpdateSignal,

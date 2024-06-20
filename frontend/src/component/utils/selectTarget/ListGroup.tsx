@@ -1,4 +1,4 @@
-import { isEmptyObject } from "tools/utils";
+import { isEmptyObject } from "component/admin/tools/utils";
 
 export default function ListGroup({
   listOfObject,

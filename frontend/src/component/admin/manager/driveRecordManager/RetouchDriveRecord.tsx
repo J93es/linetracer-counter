@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DriveRecordType } from "model/DriveRecord";
-import { FormDriveRecordSchema } from "model/form/DriveRecordSchema";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
+import { FormDriveRecordSchema } from "component/admin/model/form/DriveRecordSchema";
 
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
-import { driveRecord_typeEnum } from "model/enums/index";
+import { driveRecord_typeEnum } from "component/admin/model/enums/index";
 
 import { DriveRecordController } from "component/admin/controller/fetch/DriveRecordController";
 

@@ -5,7 +5,7 @@ import PaginationBar from "component/utils/selectTarget/PaginationBar";
 
 import "component/utils/selectTarget/Index.css";
 
-import { isEmptyArray } from "tools/utils";
+import { isEmptyArray } from "component/admin/tools/utils";
 
 export default function SelectTarget({
   target,

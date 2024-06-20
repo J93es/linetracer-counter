@@ -1,11 +1,11 @@
-import { ContestType } from "model/Contest";
-import { SectorRecordType } from "model/SectorRecord";
+import { ContestType } from "component/admin/model/Contest";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 import { ContestController } from "component/admin/controller/fetch/ContestController";
 import { SectorRecordController } from "component/admin/controller/fetch/SectorRecordController";
 
-import { getRemainingTime } from "tools/getRemainingTime";
+import { getRemainingTime } from "component/admin/tools/getRemainingTime";
 
-import { getNextParticipant } from "tools/utils";
+import { getNextParticipant } from "component/admin/tools/utils";
 
 const contestController = new ContestController();
 const sectorRecordController = new SectorRecordController();
@@ -38,9 +38,9 @@ export default function ContestTimerBtn({
       const contest: Partial<ContestType> = {
         id: targetContest?.id,
 
-        curParticipant: targetParticipantId,
-        curSectorRecord: targetSectorRecord?.id,
-        nextParticipant: nextParticipant?.id,
+        curParticipantId: targetParticipantId,
+        curSectorRecordId: targetSectorRecord?.id,
+        nextParticipantId: nextParticipant?.id,
         contestTimerStartTime: curTime,
         isContestTimerRunning: true,
       };

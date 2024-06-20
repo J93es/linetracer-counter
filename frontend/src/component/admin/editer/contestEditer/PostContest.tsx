@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { ContestType } from "model/Contest";
-import { FormContestSchema } from "model/form/ContestSchema";
+import { ContestType } from "component/admin/model/Contest";
+import { FormContestSchema } from "component/admin/model/form/ContestSchema";
 
 import TextForm from "component/utils/TextForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
 import { ContestController } from "component/admin/controller/fetch/ContestController";
-import { sectorEnum } from "model/enums/index";
+import { sectorEnum } from "component/admin/model/enums/index";
 
 const contestController = new ContestController();
 

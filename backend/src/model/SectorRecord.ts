@@ -1,5 +1,4 @@
-import { DriveRecordType } from "@model/DriveRecord";
-import { UserDriveRecordType } from "@model/service/user/DriveRecord";
+import { DriveRecordType, driveRecordTamplate } from "@model/DriveRecord";
 
 export interface SectorRecordType {
   _id: string;
@@ -11,7 +10,7 @@ export interface SectorRecordType {
   remainingContestTime: number;
   sectorState: string;
 
-  driveRecordList: DriveRecordType[] | UserDriveRecordType[] | string[];
+  driveRecordList: DriveRecordType[];
 }
 
 export default class SectorRecord implements SectorRecordType {
@@ -24,7 +23,7 @@ export default class SectorRecord implements SectorRecordType {
   remainingContestTime: number;
   sectorState: string;
 
-  driveRecordList: DriveRecordType[] | UserDriveRecordType[] | string[];
+  driveRecordList: DriveRecordType[];
 
   constructor(data: SectorRecordType) {
     this._id = data._id;
@@ -39,3 +38,17 @@ export default class SectorRecord implements SectorRecordType {
     this.driveRecordList = data.driveRecordList;
   }
 }
+
+export const defaultOrder = 501;
+export const defaultRemainingContestTime = 300000;
+
+export const sectorRecordTamplate: SectorRecordType = new SectorRecord({
+  _id: "",
+  id: "",
+  hostId: "",
+  contestSector: "",
+  order: defaultOrder,
+  remainingContestTime: defaultRemainingContestTime,
+  sectorState: "ready",
+  driveRecordList: [driveRecordTamplate],
+});

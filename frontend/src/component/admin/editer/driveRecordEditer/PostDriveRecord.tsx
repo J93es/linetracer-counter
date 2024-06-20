@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DriveRecordType } from "model/DriveRecord";
-import { FormDriveRecordSchema } from "model/form/DriveRecordSchema";
-import { driveRecord_typeEnum } from "model/enums/index";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
+import { FormDriveRecordSchema } from "component/admin/model/form/DriveRecordSchema";
+import { driveRecord_typeEnum } from "component/admin/model/enums/index";
 
 import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";

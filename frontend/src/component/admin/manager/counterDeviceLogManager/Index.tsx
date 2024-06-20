@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 
 import SelectTarget from "component/utils/selectTarget/Index";
 import Accordion from "component/utils/Accordion";
@@ -10,11 +10,11 @@ import DeleteCounterDeviceLogBtn from "component/admin/manager/counterDeviceLogM
 import AddDriveRecord from "component/admin/manager/counterDeviceLogManager/AddDriveRecord";
 import CounterDevice from "component/admin/manager/counterDeviceLogManager/CounterDevice";
 
-import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
+import DriveRecordDistinction from "component/admin/model/distinction/DriveRecordDistinction";
 
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
-import { counterDeviceLogEditMenuEnum } from "model/enums/index";
-import { isEmptyArray } from "tools/utils";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
+import { counterDeviceLogEditMenuEnum } from "component/admin/model/enums/index";
+import { isEmptyArray } from "component/admin/tools/utils";
 
 export default function CounterDeviceLogManager({
   counterDeviceLogList,

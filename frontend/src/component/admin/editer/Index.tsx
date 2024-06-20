@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { ContestType } from "model/Contest";
-import { ParticipantType } from "model/Participant";
-import { SectorRecordType } from "model/SectorRecord";
-import { DriveRecordType } from "model/DriveRecord";
+import { ContestType } from "component/admin/model/Contest";
+import { ParticipantType } from "component/admin/model/Participant";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
 
 import ContestEditer from "component/admin/editer/contestEditer/Index";
 import ParticipantEditer from "component/admin/editer/participantEditer/Index";
@@ -12,9 +12,13 @@ import DriveRecordEditer from "component/admin/editer/driveRecordEditer/Index";
 import {
   sortParticipantList,
   sortParticipantListBySectorRecordField,
-} from "tools/sortTargetList";
-import { findTargetById, isEmptyArray, isEmptyObject } from "tools/utils";
-import { filterParticipantList } from "tools/filterTargetList";
+} from "component/admin/tools/sortTargetList";
+import {
+  findTargetById,
+  isEmptyArray,
+  isEmptyObject,
+} from "component/admin/tools/utils";
+import { filterParticipantList } from "component/admin/tools/filterTargetList";
 
 import "component/admin/editer/Index.css";
 

@@ -1,5 +1,5 @@
-import { SectorRecordType } from "model/SectorRecord";
-import { defaultRemainingContestTime } from "model/SectorRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
+import { defaultRemainingContestTime } from "component/admin/model/SectorRecord";
 
 import UpdateRemainingContestTimeBtn from "component/admin/manager/operationMenu/ManageRemainingContestTime/UpdateRemainingContestTimeBtn";
 

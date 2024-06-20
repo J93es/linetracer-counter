@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { FormCounterDeviceLogSchema } from "model/form/CounterDeviceLogSchema";
+import { FormCounterDeviceLogSchema } from "component/admin/model/form/CounterDeviceLogSchema";
 
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
-import { driveRecord_typeEnum } from "model/enums/index";
+import { driveRecord_typeEnum } from "component/admin/model/enums/index";
 
 import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
 
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
 
 const counterDeviceLogController = new CounterDeviceLogController();
 

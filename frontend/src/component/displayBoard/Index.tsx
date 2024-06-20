@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { ContestType } from "model/Contest";
-import { ParticipantType } from "model/Participant";
-import ParticipantInfo, { ParticipantInfoType } from "model/ParticipantInfo";
+import ContestType from "component/displayBoard/model/Contest";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
 
-import { findTargetById } from "tools/utils";
-import { filterParticipantList } from "tools/filterTargetList";
-
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/displayBoard/model/SectorRecord";
 
 import View from "component/displayBoard/view/Index";
 
@@ -41,55 +37,18 @@ export default function DisplayBoard() {
 
   useEffect(() => {
     const isContestTimerRunning = targetContest?.isContestTimerRunning ?? false;
+
     const curSection = targetContest?.curContestingSection ?? "";
-    const curParticipant: ParticipantType = findTargetById(
-      targetContest?.curParticipant,
-      targetContest?.participantList
-    );
-    const sectorRecord: SectorRecordType = findTargetById(
-      targetContest?.curSectorRecord,
-      curParticipant?.sectorRecordList
-    );
-    const nextParticipant: ParticipantType = findTargetById(
-      targetContest?.nextParticipant,
-      targetContest?.participantList
-    );
-    const participantList = filterParticipantList(
-      targetContest?.participantList ?? [],
-      {
-        sectorRecordBy: "contestSector",
-        sectorRecordValue: curSection,
-      }
-    );
-    const participantInfoList: ParticipantInfoType[] | undefined =
-      participantList.map((participant) => {
-        return new ParticipantInfo(participant, curSection);
-      });
 
     setIsContestTimerRunning(isContestTimerRunning);
 
-    if (!curParticipant) {
-      setCurParticipantInfo(undefined);
-    } else {
-      setCurParticipantInfo(new ParticipantInfo(curParticipant, curSection));
-    }
+    setCurParticipantInfo(targetContest?.curParticipant);
 
-    if (!nextParticipant) {
-      setNextParticipantInfo(undefined);
-    } else {
-      setNextParticipantInfo(new ParticipantInfo(nextParticipant, curSection));
-    }
-    if (!sectorRecord) {
-      setCurSectorRecord(undefined);
-    } else {
-      setCurSectorRecord(sectorRecord);
-    }
+    setNextParticipantInfo(targetContest?.nextParticipant);
 
-    if (!participantInfoList) {
-      setParticipantInfoList(undefined);
-    } else {
-      setParticipantInfoList(participantInfoList);
-    }
+    setCurSectorRecord(targetContest?.curSectorRecord);
+
+    setParticipantInfoList(targetContest?.participantInfoList);
   }, [targetContest]);
 
   return (

@@ -1,4 +1,4 @@
-import { ContestType } from "model/Contest";
+import { ContestType } from "component/admin/model/Contest";
 import { ContestController } from "component/admin/controller/fetch/ContestController";
 
 const contestController = new ContestController();

@@ -33,3 +33,15 @@ export default class Robot implements RobotType {
     this.sensor = data.sensor;
   }
 }
+
+export const robotTamplate: RobotType = {
+  hostId: "",
+  name: "",
+  cpu: "",
+  rom: "",
+  ram: "",
+  motorDriver: "",
+  motor: "",
+  adc: "",
+  sensor: "",
+};

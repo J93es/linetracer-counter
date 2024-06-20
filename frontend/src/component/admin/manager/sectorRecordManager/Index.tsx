@@ -1,9 +1,9 @@
 import SelectTarget from "component/utils/selectTarget/Index";
-import SectorRecordDistintion from "model/distinction/SectorRecordDistinction";
+import SectorRecordDistintion from "component/admin/model/distinction/SectorRecordDistinction";
 import Accordion from "component/utils/Accordion";
 import RetouchSectorRecord from "component/admin/manager/sectorRecordManager/RetouchSectorRecord";
 
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 
 export default function SectorRecordManager({
   setSectorRecordUpdateSignal,

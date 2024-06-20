@@ -1,4 +1,4 @@
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
 import { DriveRecordController } from "component/admin/controller/fetch/DriveRecordController";
 
 const driveRecordController = new DriveRecordController();

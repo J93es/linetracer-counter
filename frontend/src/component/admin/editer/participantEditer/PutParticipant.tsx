@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { ParticipantType } from "model/Participant";
-import { FormParticipantSchema } from "model/form/ParticipantSchema";
+import { ParticipantType } from "component/admin/model/Participant";
+import { FormParticipantSchema } from "component/admin/model/form/ParticipantSchema";
 
 import { ParticipantController } from "component/admin/controller/fetch/ParticipantController";
 

@@ -1,7 +1,9 @@
-import DriveRecord, { DriveRecordType } from "model/DriveRecord";
+import DriveRecord, {
+  DriveRecordType,
+} from "component/admin/model/DriveRecord";
 import { uri } from "config";
 
-import { isEmptyObject } from "tools/utils";
+import { isEmptyObject } from "component/admin/tools/utils";
 
 let instance: DriveRecordController | null = null;
 export class DriveRecordController {

@@ -1,7 +1,9 @@
-import CounterDeviceLog, { CounterDeviceLogType } from "model/CounterDeviceLog";
+import CounterDeviceLog, {
+  CounterDeviceLogType,
+} from "component/admin/model/CounterDeviceLog";
 import { uri } from "config";
 
-import { isEmptyArray, isEmptyObject } from "tools/utils";
+import { isEmptyArray, isEmptyObject } from "component/admin/tools/utils";
 
 let instance: CounterDeviceLogController | null = null;
 export class CounterDeviceLogController {

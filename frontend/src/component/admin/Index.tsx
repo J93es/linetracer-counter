@@ -2,8 +2,8 @@ import "component/admin/Index.css";
 
 import { useState, useEffect } from "react";
 
-import { ContestType } from "model/Contest";
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
+import { ContestType } from "component/admin/model/Contest";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
 
 import { ContestController } from "component/admin/controller/fetch/ContestController";
 import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";
@@ -11,8 +11,8 @@ import { CounterDeviceLogController } from "component/admin/controller/fetch/Cou
 import Editer from "component/admin/editer/Index";
 import Manager from "component/admin/manager/Index";
 
-import { isEmptyArray } from "tools/utils";
-import { sortTarget } from "tools/sortTargetList";
+import { isEmptyArray } from "component/admin/tools/utils";
+import { sortTarget } from "component/admin/tools/sortTargetList";
 
 const contestController = new ContestController();
 const counterDeviceLogController = new CounterDeviceLogController();

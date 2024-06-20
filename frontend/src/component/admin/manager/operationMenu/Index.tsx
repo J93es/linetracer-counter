@@ -7,8 +7,8 @@ import LaunchSectorRecord from "component/admin/manager/operationMenu/LaunchSect
 
 import "component/admin/manager/operationMenu/Index.css";
 
-import { ContestType } from "model/Contest";
-import { SectorRecordType } from "model/SectorRecord";
+import { ContestType } from "component/admin/model/Contest";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 
 import { useEffect, useState } from "react";
 
@@ -84,12 +84,16 @@ export default function OperationMenu({
       setManageRemainingContestTimeBtnDisabled(true);
       return;
     }
+    if (!isSectorRecordLaunched) {
+      setManageRemainingContestTimeBtnDisabled(true);
+      return;
+    }
     if (isContestTimerRunning) {
       setManageRemainingContestTimeBtnDisabled(true);
       return;
     }
     setManageRemainingContestTimeBtnDisabled(false);
-  }, [targetSectorRecord, isContestTimerRunning]);
+  }, [targetSectorRecord, isSectorRecordLaunched, isContestTimerRunning]);
 
   return (
     <Accordion

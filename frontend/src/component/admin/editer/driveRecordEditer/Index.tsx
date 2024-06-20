@@ -6,11 +6,11 @@ import SelectTarget from "component/utils/selectTarget/Index";
 import DropDown from "component/utils/DropDown";
 import Accordion from "component/utils/Accordion";
 
-import DriveRecordDistinction from "model/distinction/DriveRecordDistinction";
-import { DriveRecordType } from "model/DriveRecord";
-import { SectorRecordType } from "model/SectorRecord";
+import DriveRecordDistinction from "component/admin/model/distinction/DriveRecordDistinction";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 
-import { driveRecordEditMenuEnum } from "model/enums/index";
+import { driveRecordEditMenuEnum } from "component/admin/model/enums/index";
 
 export default function DriveRecordEditer({
   setDriveRecordUpdateSignal,

@@ -1,7 +1,7 @@
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 import { SectorRecordController } from "component/admin/controller/fetch/SectorRecordController";
 
-import { defaultRemainingContestTime } from "model/SectorRecord";
+import { defaultRemainingContestTime } from "component/admin/model/SectorRecord";
 
 const sectorRecordController = new SectorRecordController();
 

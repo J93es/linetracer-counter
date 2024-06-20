@@ -1,14 +1,14 @@
 import { useState } from "react";
 import SelectTarget from "component/utils/selectTarget/Index";
-import ContestDistintion from "model/distinction/ContestDistinction";
+import ContestDistintion from "component/admin/model/distinction/ContestDistinction";
 import PostContest from "component/admin/editer/contestEditer/PostContest";
 import PutContest from "component/admin/editer/contestEditer/PutContest";
 import DeleteContestBtn from "component/admin/editer/contestEditer/DeleteContestBtn";
 import DropDown from "component/utils/DropDown";
 import Accordion from "component/utils/Accordion";
 
-import { ContestType } from "model/Contest";
-import { contestEditMenuEnum } from "model/enums/index";
+import { ContestType } from "component/admin/model/Contest";
+import { contestEditMenuEnum } from "component/admin/model/enums/index";
 
 export default function ContestEditer({
   setContestListRefreshSignal,

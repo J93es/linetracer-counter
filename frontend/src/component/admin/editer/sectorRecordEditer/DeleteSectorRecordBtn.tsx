@@ -1,5 +1,5 @@
 import { SectorRecordController } from "component/admin/controller/fetch/SectorRecordController";
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 
 const sectorRecordController = new SectorRecordController();
 

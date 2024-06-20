@@ -1,5 +1,5 @@
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
-import { ContestType } from "model/Contest";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
+import { ContestType } from "component/admin/model/Contest";
 
 import { ContestController } from "component/admin/controller/fetch/ContestController";
 import { CounterDeviceLogController } from "component/admin/controller/fetch/CounterDeviceLogController";

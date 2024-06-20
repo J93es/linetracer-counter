@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { ContestType } from "model/Contest";
-import { ParticipantType } from "model/Participant";
-import { SectorRecordType } from "model/SectorRecord";
-import { DriveRecordType } from "model/DriveRecord";
-import { CounterDeviceLogType } from "model/CounterDeviceLog";
+import { ContestType } from "component/admin/model/Contest";
+import { ParticipantType } from "component/admin/model/Participant";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
+import { CounterDeviceLogType } from "component/admin/model/CounterDeviceLog";
 
 import ContestManager from "component/admin/manager/contestManager/Index";
 import ParticipantManager from "component/admin/manager/participantManager/Index";
@@ -12,9 +12,13 @@ import DriveRecordManager from "component/admin/manager/driveRecordManager/Index
 import OperationMenu from "component/admin/manager/operationMenu/Index";
 import CounterDeviceLogManager from "component/admin/manager/counterDeviceLogManager/Index";
 
-import { filterParticipantList } from "tools/filterTargetList";
-import { sortParticipantListBySectorRecordField } from "tools/sortTargetList";
-import { findTargetById, isEmptyArray, isEmptyObject } from "tools/utils";
+import { filterParticipantList } from "component/admin/tools/filterTargetList";
+import { sortParticipantListBySectorRecordField } from "component/admin/tools/sortTargetList";
+import {
+  findTargetById,
+  isEmptyArray,
+  isEmptyObject,
+} from "component/admin/tools/utils";
 
 import "component/admin/manager/Index.css";
 

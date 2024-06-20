@@ -1,5 +1,5 @@
 import { ParticipantRepository } from "@core/repository/participant";
-import { ParticipantSchema } from "@model/repository/mongo/index";
+import { ParticipantSchema } from "@src/repository/mongo/schema/index";
 
 import { ParticipantType } from "@model/Participant";
 import { contestRepository } from "@repository/index";
@@ -26,7 +26,7 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     }
   }
 
-  async create(data: Partial<ParticipantType>): Promise<ParticipantType> {
+  async create(data: Partial<ParticipantType>): Promise<any> {
     if (!data.hostId) {
       throw new Error("hostId is required");
     }
@@ -37,13 +37,11 @@ export class ParticipantMongoRepo implements ParticipantRepository {
     }
 
     const newId = idController.generateId();
-    const participant: ParticipantType | null = (await ParticipantSchema.create(
-      {
-        ...data,
-        id: newId,
-        _id: newId,
-      }
-    )) as ParticipantType;
+    const participant = await ParticipantSchema.create({
+      ...data,
+      id: newId,
+      _id: newId,
+    });
     if (!participant) {
       throw new Error("Failed to create participant");
     }

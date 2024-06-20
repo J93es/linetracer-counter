@@ -1,6 +1,6 @@
 import { ContestType } from "@model/Contest";
 import { ContestRepository } from "@core/repository/contest";
-import { ContestSchema } from "@model/repository/mongo/index";
+import { ContestSchema } from "@repository/mongo/schema/index";
 
 import { idController } from "@core/main";
 

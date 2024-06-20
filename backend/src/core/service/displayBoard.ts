@@ -1,5 +1,5 @@
-import { ContestType } from "@model/Contest";
+import { DisplayBoardContestInfoType } from "@model/adaptor/DisplayBoardContestInfo";
 
 export interface DisplayBoardService {
-  getCurrentContest(): Promise<ContestType>;
+  getCurrentContestInfo(): Promise<DisplayBoardContestInfoType>;
 }

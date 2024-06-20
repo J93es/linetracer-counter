@@ -24,3 +24,12 @@ export default class DriveRecord implements DriveRecordType {
     this.writeTime = data.writeTime;
   }
 }
+
+export const driveRecordTamplate: DriveRecordType = new DriveRecord({
+  _id: "",
+  id: "",
+  hostId: "",
+  type: "",
+  recordTime: 0,
+  writeTime: 0,
+});

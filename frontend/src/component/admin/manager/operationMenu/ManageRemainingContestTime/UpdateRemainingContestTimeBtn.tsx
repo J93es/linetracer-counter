@@ -1,4 +1,4 @@
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
 import { SectorRecordController } from "component/admin/controller/fetch/SectorRecordController";
 
 const sectorRecordController = new SectorRecordController();
@@ -33,6 +33,7 @@ export default function UpdateRemainingContestTimeBtn({
             remainingContestTime:
               remainingContestTime < 0 ? 0 : remainingContestTime,
           });
+
           setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
         };
         func();

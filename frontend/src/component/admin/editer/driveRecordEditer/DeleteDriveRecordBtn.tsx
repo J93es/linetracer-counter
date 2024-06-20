@@ -1,4 +1,4 @@
-import { DriveRecordType } from "model/DriveRecord";
+import { DriveRecordType } from "component/admin/model/DriveRecord";
 
 import { DriveRecordController } from "component/admin/controller/fetch/DriveRecordController";
 

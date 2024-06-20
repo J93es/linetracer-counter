@@ -1,6 +1,6 @@
-import { ContestType } from "model/Contest";
-import { ParticipantInfoType } from "model/ParticipantInfo";
-import { SectorRecordType } from "model/SectorRecord";
+import { ContestType } from "component/displayBoard/model/Contest";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
+import { SectorRecordType } from "component/displayBoard/model/SectorRecord";
 
 import ContestTimer from "component/displayBoard/view/body/ContestTimer";
 import DriveStopWatch from "component/displayBoard/view/body/DriveStopWatch";

@@ -1,7 +1,9 @@
-import Participant, { ParticipantType } from "model/Participant";
+import Participant, {
+  ParticipantType,
+} from "component/admin/model/Participant";
 import { uri } from "config";
 
-import { isEmptyObject } from "tools/utils";
+import { isEmptyObject } from "component/admin/tools/utils";
 
 let instance: ParticipantController | null = null;
 export class ParticipantController {

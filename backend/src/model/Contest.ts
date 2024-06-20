@@ -1,7 +1,4 @@
-import { ParticipantType } from "@model/Participant";
-import { UserParticipantType } from "@model/service/user/Participant";
-import { SectorRecordType } from "@model/SectorRecord";
-import { UserSectorRecordType } from "@model/service/user/SectorRecord";
+import { ParticipantType, participantTamplate } from "@model/Participant";
 
 export interface ContestType {
   _id: string;
@@ -10,9 +7,9 @@ export interface ContestType {
   title: string;
 
   curContestingSection?: string;
-  curParticipant?: ParticipantType | UserParticipantType | string;
-  nextParticipant?: ParticipantType | UserParticipantType | string;
-  curSectorRecord?: SectorRecordType | UserSectorRecordType | string;
+  curParticipantId?: string;
+  nextParticipantId?: string;
+  curSectorRecordId?: string;
 
   contestTimerStartTime?: number;
   isContestTimerRunning?: boolean;
@@ -21,7 +18,7 @@ export interface ContestType {
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantList: ParticipantType[] | UserParticipantType[] | string[];
+  participantList: ParticipantType[];
 }
 
 export default class Contest implements ContestType {
@@ -31,9 +28,9 @@ export default class Contest implements ContestType {
   title: string;
 
   curContestingSection?: string;
-  curParticipant?: ParticipantType | UserParticipantType | string;
-  nextParticipant?: ParticipantType | UserParticipantType | string;
-  curSectorRecord?: SectorRecordType | UserSectorRecordType | string;
+  curParticipantId?: string;
+  nextParticipantId?: string;
+  curSectorRecordId?: string;
 
   contestTimerStartTime?: number;
   isContestTimerRunning?: boolean;
@@ -42,7 +39,7 @@ export default class Contest implements ContestType {
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantList: ParticipantType[] | UserParticipantType[] | string[];
+  participantList: ParticipantType[];
 
   constructor(data: ContestType) {
     this._id = data._id;
@@ -51,9 +48,9 @@ export default class Contest implements ContestType {
     this.title = data.title;
 
     this.curContestingSection = data.curContestingSection;
-    this.curParticipant = data.curParticipant;
-    this.nextParticipant = data.nextParticipant;
-    this.curSectorRecord = data.curSectorRecord;
+    this.curParticipantId = data.curParticipantId;
+    this.nextParticipantId = data.nextParticipantId;
+    this.curSectorRecordId = data.curSectorRecordId;
 
     this.contestTimerStartTime = data.contestTimerStartTime;
     this.isContestTimerRunning = data.isContestTimerRunning;
@@ -65,3 +62,26 @@ export default class Contest implements ContestType {
     this.participantList = data.participantList;
   }
 }
+
+export const timerStopValue = -1;
+
+export const contestTamplate: ContestType = new Contest({
+  _id: "",
+  id: "",
+  queryId: "",
+  title: "",
+
+  curContestingSection: "",
+  curParticipantId: "",
+  nextParticipantId: "",
+  curSectorRecordId: "",
+
+  contestTimerStartTime: timerStopValue,
+  isContestTimerRunning: false,
+
+  driveStartTime: timerStopValue,
+  isDriveStopWatchRunning: false,
+  latestDriveRecordTime: 0,
+
+  participantList: [participantTamplate],
+});

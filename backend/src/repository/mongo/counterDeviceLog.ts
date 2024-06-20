@@ -1,6 +1,6 @@
 import { CounterDeviceLogType } from "@model/CounterDeviceLog";
 import { CounterDeviceLogRepository } from "@core/repository/counterDeviceLog";
-import { CounterDeviceLogSchema } from "@model/repository/mongo/index";
+import { CounterDeviceLogSchema } from "@src/repository/mongo/schema/index";
 
 import { contestRepository } from "@repository/index";
 

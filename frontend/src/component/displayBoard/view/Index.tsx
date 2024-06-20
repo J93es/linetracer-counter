@@ -1,9 +1,9 @@
 import Body from "component/displayBoard/view/body/Index";
 
-import { ContestType } from "model/Contest";
-import { ParticipantInfoType } from "model/ParticipantInfo";
+import { ContestType } from "component/displayBoard/model/Contest";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
 
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/displayBoard/model/SectorRecord";
 
 import "component/displayBoard/view/Index.css";
 

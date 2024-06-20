@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 
-import { ContestType } from "model/Contest";
+import { ContestType } from "component/displayBoard/model/Contest";
 
-import { getRemainingTime } from "tools/getRemainingTime";
+import { getRemainingTime } from "component/admin/tools/getRemainingTime";
 
-import { SectorRecordType } from "model/SectorRecord";
+import { SectorRecordType } from "component/displayBoard/model/SectorRecord";
 import DisplayCard from "component/displayBoard/view/body/DisplayCard";
 
 import "component/displayBoard/view/body/ContestTimer.css";

@@ -1,8 +1,8 @@
 import DropDown from "component/utils/DropDown";
 
-import { ContestType } from "model/Contest";
+import { ContestType } from "component/admin/model/Contest";
 import { ContestController } from "component/admin/controller/fetch/ContestController";
-import { sectorEnum } from "model/enums/index";
+import { sectorEnum } from "component/admin/model/enums/index";
 
 const contestController = new ContestController();
 

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-import { ContestType } from "model/Contest";
+import { ContestType } from "component/displayBoard/model/Contest";
 
 import DisplayCard from "component/displayBoard/view/body/DisplayCard";
 

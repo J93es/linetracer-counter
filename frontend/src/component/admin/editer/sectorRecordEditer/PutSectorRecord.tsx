@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { SectorRecordType } from "model/SectorRecord";
-import { FormSectorRecordSchema } from "model/form/SectorRecordSchema";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
+import { FormSectorRecordSchema } from "component/admin/model/form/SectorRecordSchema";
 
 import { SectorRecordController } from "component/admin/controller/fetch/SectorRecordController";
 
@@ -11,9 +11,15 @@ import NumberForm from "component/utils/NumberForm";
 import SelectForm from "component/utils/SelectForm";
 import SubmitBtn from "component/utils/SubmitBtn";
 
-import { sectorRecord_sectorStateEnum, sectorEnum } from "model/enums";
+import {
+  sectorRecord_sectorStateEnum,
+  sectorEnum,
+} from "component/admin/model/enums";
 
-import { defaultRemainingContestTime, defaultOrder } from "model/SectorRecord";
+import {
+  defaultRemainingContestTime,
+  defaultOrder,
+} from "component/admin/model/SectorRecord";
 
 const sectorRecordController = new SectorRecordController();
 

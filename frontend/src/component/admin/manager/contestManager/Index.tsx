@@ -1,8 +1,8 @@
 import SelectTarget from "component/utils/selectTarget/Index";
-import ContestDistintion from "model/distinction/ContestDistinction";
+import ContestDistintion from "component/admin/model/distinction/ContestDistinction";
 import Accordion from "component/utils/Accordion";
 
-import { ContestType } from "model/Contest";
+import { ContestType } from "component/admin/model/Contest";
 
 export default function ContestManager({
   setContestListRefreshSignal,

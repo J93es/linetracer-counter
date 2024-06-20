@@ -1,17 +1,17 @@
 import { useState } from "react";
 import SelectTarget from "component/utils/selectTarget/Index";
-import SectorRecordDistintion from "model/distinction/SectorRecordDistinction";
+import SectorRecordDistintion from "component/admin/model/distinction/SectorRecordDistinction";
 import PostSectorRecord from "component/admin/editer/sectorRecordEditer/PostSectorRecord";
 import PutSectorRecord from "component/admin/editer/sectorRecordEditer/PutSectorRecord";
 import DeleteSectorRecordBtn from "component/admin/editer/sectorRecordEditer/DeleteSectorRecordBtn";
 import DropDown from "component/utils/DropDown";
 import Accordion from "component/utils/Accordion";
 
-import { ParticipantType } from "model/Participant";
-import { SectorRecordType } from "model/SectorRecord";
-import { sectorRecordEditMenuEnum } from "model/enums/index";
+import { ParticipantType } from "component/admin/model/Participant";
+import { SectorRecordType } from "component/admin/model/SectorRecord";
+import { sectorRecordEditMenuEnum } from "component/admin/model/enums/index";
 
-import { filterStringBySectorEnum } from "model/enums";
+import { filterStringBySectorEnum } from "component/admin/model/enums";
 
 export default function SectorRecordEditer({
   setSectorRecordUpdateSignal,

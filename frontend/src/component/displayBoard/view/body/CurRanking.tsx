@@ -1,5 +1,5 @@
-import { ParticipantInfoType } from "model/ParticipantInfo";
-import { sortTarget } from "tools/sortTargetList";
+import { ParticipantInfoType } from "component/displayBoard/model/ParticipantInfo";
+import { sortTarget } from "component/admin/tools/sortTargetList";
 import { timeToString } from "component/displayBoard/tools/timeToString";
 
 import DisplayCard from "component/displayBoard/view/body/DisplayCard";
@@ -13,6 +13,7 @@ export default function CurRanking({
 }: {
   participantInfoList: ParticipantInfoType[] | undefined;
 }) {
+  console.log("participantInfoList", participantInfoList);
   const copyedList = JSON.parse(JSON.stringify(participantInfoList ?? []));
   const sortedList: ParticipantInfoType[] = sortTarget(
     copyedList,
