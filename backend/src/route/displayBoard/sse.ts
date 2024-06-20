@@ -60,7 +60,6 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   } catch (err: any) {
     sendErrorResponse(res, err);
     next();
-  } finally {
   }
 });
 

@@ -4,6 +4,7 @@ import ParticipantInfo, {
   ParticipantInfoType,
 } from "@model/adaptor/ParticipantInfo";
 import { findTargetById } from "@tools/utils";
+import { filterParticipantList } from "@tools/filterTargetList";
 
 import { sectorEnum } from "@model/enums/index";
 
@@ -51,7 +52,14 @@ export default class UserContestInfo implements UserContestInfoType {
     this.participantListContainer = {};
 
     sectorEnum.map((sector) => {
-      this.participantListContainer[sector] = data.participantList.map(
+      const filteredParticipantList = filterParticipantList(
+        data.participantList,
+        {
+          sectorRecordBy: "contestSector",
+          sectorRecordValue: sector,
+        }
+      );
+      this.participantListContainer[sector] = filteredParticipantList.map(
         (participant: ParticipantType) => {
           return new ParticipantInfo(participant, sector);
         }

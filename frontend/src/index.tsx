@@ -3,8 +3,8 @@ import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
-import Admin from "component/admin/Index";
-import DisplayBoard from "component/displayBoard/Index";
+import Admin from "pages/admin/Index";
+import DisplayBoard from "pages/displayBoard/Index";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(

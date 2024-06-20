@@ -1,4 +1,3 @@
-import { ContestType } from "@model/Contest";
 import DisplayBoardContestInfo, {
   DisplayBoardContestInfoType,
 } from "@model/adaptor/DisplayBoardContestInfo";
@@ -14,17 +13,13 @@ export class DisplayBoardServ implements DisplayBoardService {
   }
 
   async getCurrentContestInfo(): Promise<DisplayBoardContestInfoType> {
-    try {
-      const contest = await contestRepository.readWithJoinByQueryId(
-        "current-contest",
-        "participantList",
-        {},
-        {}
-      );
+    const contest = await contestRepository.readWithJoinByQueryId(
+      "current-contest",
+      "participantList",
+      {},
+      {}
+    );
 
-      return new DisplayBoardContestInfo(contest);
-    } catch (e) {
-      throw e;
-    }
+    return new DisplayBoardContestInfo(contest);
   }
 }

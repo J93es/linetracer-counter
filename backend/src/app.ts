@@ -14,7 +14,6 @@ import corsOptions from "@utils/cors/index";
 
 import JwtService from "@auth/service/jwt-service";
 
-import indexRouter from "@route/index";
 import adminRouter from "@auth/route/admin";
 import contestRouter from "@route/admin/contest";
 import partipantRouter from "@src/route/admin/participant";
@@ -50,7 +49,7 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(tokenChecker);
-app.use("/", indexRouter);
+app.use("/", userRouter);
 app.use("/admin", adminRouter);
 app.use("/contest", contestRouter);
 app.use("/participant", partipantRouter);
@@ -58,7 +57,6 @@ app.use("/sector-record", sectorRecordRouter);
 app.use("/drive-record", driveRecordRouter);
 app.use("/counter-device-log", counterDeviceLogRouter);
 app.use("/display-board", displayBoardRouter);
-app.use("/user", userRouter);
 
 // error handler
 app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {

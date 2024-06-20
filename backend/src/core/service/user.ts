@@ -1,5 +1,5 @@
-import { UserContestType } from "@model/service/user/Contest";
+import { UserContestInfoType } from "@model/adaptor/UserContestInfo";
 
 export interface UserService {
-  getData(year: string): Promise<UserContestType>;
+  getData(): Promise<UserContestInfoType>;
 }

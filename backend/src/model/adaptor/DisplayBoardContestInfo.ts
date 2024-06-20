@@ -7,6 +7,7 @@ import SectorRecordInfo, {
   SectorRecordInfoType,
 } from "@model/adaptor/SectorRecordInfo";
 
+import { filterParticipantList } from "@tools/filterTargetList";
 import { findTargetById } from "@tools/utils";
 
 export interface DisplayBoardContestInfoType {
@@ -81,7 +82,15 @@ export default class DisplayBoardContestInfo
     this.isDriveStopWatchRunning = data.isDriveStopWatchRunning;
     this.latestDriveRecordTime = data.latestDriveRecordTime;
 
-    this.participantInfoList = data.participantList.map(
+    const filteredParticipantList = filterParticipantList(
+      data.participantList,
+      {
+        sectorRecordBy: "contestSector",
+        sectorRecordValue: this.curContestingSection ?? "",
+      }
+    );
+
+    this.participantInfoList = filteredParticipantList.map(
       (participant: ParticipantType) => {
         return new ParticipantInfo(
           participant,
