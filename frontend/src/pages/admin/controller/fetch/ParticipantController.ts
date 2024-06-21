@@ -31,7 +31,7 @@ export class ParticipantController {
       return resParticipant;
     } catch (error) {
       console.error("Failed to get Participant data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -61,7 +61,7 @@ export class ParticipantController {
       return resParticipant;
     } catch (error) {
       console.error("Failed to post Participant data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -91,7 +91,7 @@ export class ParticipantController {
       return resParticipant;
     } catch (error) {
       console.error("Failed to patch Participant data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -121,7 +121,7 @@ export class ParticipantController {
       return resParticipant;
     } catch (error) {
       console.error("Failed to put Participant data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -147,7 +147,7 @@ export class ParticipantController {
       return resParticipant;
     } catch (error) {
       console.error("Failed to delete Participant data", error);
-      throw error;
+      return undefined;
     }
   }
 }

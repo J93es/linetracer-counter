@@ -1,10 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
-import Admin from "pages/admin/Index";
-import DisplayBoard from "pages/displayBoard/Index";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
@@ -13,14 +11,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<div>Hello world!</div>}></Route>
-        <Route path="/login" element={<div>Hello login!</div>}></Route>
-        <Route path="/admin" element={<Admin />}></Route>
-        <Route path="/display-board" element={<DisplayBoard />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
 

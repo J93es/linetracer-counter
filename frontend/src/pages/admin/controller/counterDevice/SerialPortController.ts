@@ -8,12 +8,6 @@ export class SerialPortController {
 
   constructor() {
     if (!instance) {
-      if ("serial" in navigator) {
-        console.log("This browser supports web serial api");
-      } else {
-        alert("This browser does not supports web serial api: Use Chrome");
-      }
-
       instance = this;
       this.port = null;
     }

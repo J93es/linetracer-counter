@@ -31,7 +31,7 @@ export class DriveRecordController {
       return resDriveRecord;
     } catch (error) {
       console.error("Failed to get DriveRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -61,7 +61,7 @@ export class DriveRecordController {
       return resDriveRecord;
     } catch (error) {
       console.error("Failed to post DriveRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -91,7 +91,7 @@ export class DriveRecordController {
       return resDriveRecord;
     } catch (error) {
       console.error("Failed to patch DriveRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -121,7 +121,7 @@ export class DriveRecordController {
       return resDriveRecord;
     } catch (error) {
       console.error("Failed to put DriveRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -147,7 +147,7 @@ export class DriveRecordController {
       return resDriveRecord;
     } catch (error) {
       console.error("Failed to delete DriveRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 }

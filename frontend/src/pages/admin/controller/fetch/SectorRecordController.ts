@@ -31,7 +31,7 @@ export class SectorRecordController {
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to get SectorRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -61,7 +61,7 @@ export class SectorRecordController {
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to post SectorRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -91,7 +91,7 @@ export class SectorRecordController {
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to patch SectorRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -121,7 +121,7 @@ export class SectorRecordController {
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to put SectorRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -147,7 +147,7 @@ export class SectorRecordController {
       return resSectorRecord;
     } catch (error) {
       console.error("Failed to delete SectorRecord data", error);
-      throw error;
+      return undefined;
     }
   }
 }

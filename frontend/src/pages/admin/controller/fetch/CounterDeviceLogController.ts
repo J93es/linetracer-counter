@@ -40,7 +40,7 @@ export class CounterDeviceLogController {
       return resCounterDeviceLogList;
     } catch (error) {
       console.error("Failed to get every CounterDeviceLog data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -63,7 +63,7 @@ export class CounterDeviceLogController {
       return resCounterDeviceLog;
     } catch (error) {
       console.error("Failed to get CounterDeviceLog data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -95,7 +95,7 @@ export class CounterDeviceLogController {
       return resCounterDeviceLog;
     } catch (error) {
       console.error("Failed to post CounterDeviceLog data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -127,7 +127,7 @@ export class CounterDeviceLogController {
       return resCounterDeviceLog;
     } catch (error) {
       console.error("Failed to patch CounterDeviceLog data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -159,7 +159,7 @@ export class CounterDeviceLogController {
       return resCounterDeviceLog;
     } catch (error) {
       console.error("Failed to put CounterDeviceLog data", error);
-      throw error;
+      return undefined;
     }
   }
 
@@ -187,7 +187,7 @@ export class CounterDeviceLogController {
       return resCounterDeviceLog;
     } catch (error) {
       console.error("Failed to delete CounterDeviceLog data", error);
-      throw error;
+      return undefined;
     }
   }
 }
