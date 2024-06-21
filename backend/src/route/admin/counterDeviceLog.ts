@@ -2,7 +2,7 @@ import express, { Router, Request, Response, NextFunction } from "express";
 
 import { CounterDeviceLogType } from "@model/CounterDeviceLog";
 
-import { sendSuccessResponse, sendErrorResponse } from "@route/utils/response";
+import { sendSuccessResponse, sendErrorResponse } from "@utils/response";
 
 import { counterDeviceLogService } from "@service/index";
 

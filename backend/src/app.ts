@@ -28,17 +28,8 @@ import mongoose from "mongoose";
 
 const app: Application = express();
 
-const tokenChecker = function (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const adminIdFromToken = JwtService.getAdminIdFromRequest(req);
-  req.adminId = adminIdFromToken;
-  next();
-};
-
 app.set("port", process.env.PORT || PORT || 8000);
+app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -48,10 +39,9 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(tokenChecker);
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
-app.use("/contest", contestRouter);
+app.use("/contest", JwtService.tokenChecker, contestRouter);
 app.use("/participant", partipantRouter);
 app.use("/sector-record", sectorRecordRouter);
 app.use("/drive-record", driveRecordRouter);

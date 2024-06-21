@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendSuccessResponse, sendErrorResponse } from "@route/utils/response";
+import { sendSuccessResponse, sendErrorResponse } from "@utils/response";
 
 import { ParticipantType } from "@model/Participant";
 

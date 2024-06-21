@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 
-import { sendErrorResponse } from "@route/utils/response";
+import { sendErrorResponse } from "@utils/response";
 
 import { displayBoardService } from "@service/index";
 
@@ -24,7 +24,6 @@ export const sseNotifyDisplayBoard = async (
     const payload = await displayBoardService.getCurrentContestInfo();
 
     Object.keys(clients).forEach((key: string) => {
-      console.log(key);
       try {
         clients[key].res.write(`data: ${JSON.stringify(payload)}\n\n`);
       } catch (err) {
