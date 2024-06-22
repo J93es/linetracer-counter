@@ -20,7 +20,7 @@ import partipantRouter from "@src/route/admin/participant";
 import sectorRecordRouter from "@src/route/admin/sectorRecord";
 import driveRecordRouter from "@src/route/admin/driveRecord";
 import counterDeviceLogRouter from "@src/route/admin/counterDeviceLog";
-import displayBoardRouter from "@src/route/displayBoard/sse";
+import displayBoardRouter from "@src/route/display_board/sse";
 import userRouter from "@route/user";
 
 import { uri, PORT } from "@src/config";

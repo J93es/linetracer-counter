@@ -6,7 +6,7 @@ import { SectorRecordType } from "@model/SectorRecord";
 
 import { sectorRecordService } from "@service/index";
 
-import { notifyDisplayBoard } from "@route/displayBoard/index";
+import { notifyDisplayBoard } from "@src/route/display_board/index";
 
 const router: Router = express.Router();
 

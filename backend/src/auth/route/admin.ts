@@ -2,6 +2,8 @@ import express, { Router, Request, Response, NextFunction } from "express";
 import JwtService from "@auth/service/jwt-service";
 import { ADMIN_DATA } from "@src/config";
 
+import { sendErrorResponse } from "@utils/response";
+
 const router: Router = express.Router();
 
 router.get("/check-auth", (req: Request, res: Response, next: NextFunction) => {
@@ -14,6 +16,7 @@ router.get("/check-auth", (req: Request, res: Response, next: NextFunction) => {
     });
   } catch (e) {
     console.log(e);
+    return sendErrorResponse(res, e);
   }
 });
 
@@ -50,6 +53,7 @@ router.post(
         .status(200);
     } catch (e) {
       console.log(e);
+      return sendErrorResponse(res, e);
     }
   }
 );
@@ -57,18 +61,23 @@ router.post(
 router.post(
   "/logout",
   async (req: Request, res: Response, next: NextFunction) => {
-    res
-      .cookie("zetinCounterAccessToken", "", {
-        maxAge: 0,
-        httpOnly: true,
-        sameSite: "none",
-        secure: true,
-      })
-      .send({
-        code: 200,
-        message: "ok",
-      })
-      .status(200);
+    try {
+      res
+        .cookie("zetinCounterAccessToken", "", {
+          maxAge: 0,
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .send({
+          code: 200,
+          message: "ok",
+        })
+        .status(200);
+    } catch (e) {
+      console.log(e);
+      return sendErrorResponse(res, e);
+    }
   }
 );
 
