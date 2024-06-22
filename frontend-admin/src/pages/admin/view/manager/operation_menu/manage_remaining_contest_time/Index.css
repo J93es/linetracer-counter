@@ -1,0 +1,17 @@
+.manage-remaining-contest-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.manage-remaining-contest-time-row-3 {
+  display: flex;
+  grid-gap: 5px;
+  margin-top: 5px;
+}
+
+.manage-remaining-contest-time-row-4 {
+  display: flex;
+  grid-gap: 5px;
+  margin-top: 5px;
+}

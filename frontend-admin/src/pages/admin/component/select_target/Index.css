@@ -1,0 +1,30 @@
+.select-target {
+  margin: 10px 10px 30px 10px;
+  word-wrap: break-word;
+}
+
+.select-target-header {
+  box-sizing: border-box;
+  height: 40px;
+  margin: 5px;
+}
+
+.select-target-header-left {
+  box-sizing: border-box;
+  float: left;
+}
+
+.select-target-header-right {
+  box-sizing: border-box;
+  float: right;
+}
+
+.select-target-body {
+  box-sizing: border-box;
+  margin: 5px;
+}
+
+.select-target-footer {
+  box-sizing: border-box;
+  margin: 5px;
+}
