@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import ContestType from "pages/display_board/model/Contest";
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 
 import { SectorRecordType } from "pages/display_board/model/SectorRecord";
 
@@ -18,14 +18,14 @@ export default function DisplayBoard() {
   const [curSectorRecord, setCurSectorRecord] = useState<
     SectorRecordType | undefined
   >();
-  const [curParticipantInfo, setCurParticipantInfo] = useState<
-    ParticipantInfoType | undefined
+  const [curParticipant, setCurParticipant] = useState<
+    ParticipantType | undefined
   >();
-  const [nextParticipantInfo, setNextParticipantInfo] = useState<
-    ParticipantInfoType | undefined
+  const [nextParticipant, setNextParticipant] = useState<
+    ParticipantType | undefined
   >();
-  const [participantInfoList, setParticipantInfoList] = useState<
-    ParticipantInfoType[] | undefined
+  const [participantList, setParticipantList] = useState<
+    ParticipantType[] | undefined
   >([]);
 
   // listen to server
@@ -42,13 +42,13 @@ export default function DisplayBoard() {
 
     setIsContestTimerRunning(isContestTimerRunning);
 
-    setCurParticipantInfo(targetContest?.curParticipant);
+    setCurParticipant(targetContest?.curParticipant);
 
-    setNextParticipantInfo(targetContest?.nextParticipant);
+    setNextParticipant(targetContest?.nextParticipant);
 
     setCurSectorRecord(targetContest?.curSectorRecord);
 
-    setParticipantInfoList(targetContest?.participantInfoList);
+    setParticipantList(targetContest?.participantList);
   }, [targetContest]);
 
   return (
@@ -56,9 +56,9 @@ export default function DisplayBoard() {
       targetContest={targetContest}
       isContestTimerRunning={isContestTimerRunning}
       curSectorRecord={curSectorRecord}
-      curParticipantInfo={curParticipantInfo}
-      nextParticipantInfo={nextParticipantInfo}
-      participantInfoList={participantInfoList}
+      curParticipant={curParticipant}
+      nextParticipant={nextParticipant}
+      participantList={participantList}
     />
   );
 }

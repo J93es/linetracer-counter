@@ -1,12 +1,12 @@
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 import { SectorRecordType } from "pages/display_board/model/SectorRecord";
 
 export interface ContestType {
   title: string;
 
   curContestingSection?: string;
-  curParticipant?: ParticipantInfoType;
-  nextParticipant?: ParticipantInfoType;
+  curParticipant?: ParticipantType;
+  nextParticipant?: ParticipantType;
   curSectorRecord?: SectorRecordType;
 
   contestTimerStartTime?: number;
@@ -16,15 +16,15 @@ export interface ContestType {
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantInfoList: ParticipantInfoType[];
+  participantList: ParticipantType[];
 }
 
 export default class Contest implements ContestType {
   title: string;
 
   curContestingSection?: string;
-  curParticipant?: ParticipantInfoType;
-  nextParticipant?: ParticipantInfoType;
+  curParticipant?: ParticipantType;
+  nextParticipant?: ParticipantType;
   curSectorRecord?: SectorRecordType;
 
   contestTimerStartTime?: number;
@@ -34,7 +34,7 @@ export default class Contest implements ContestType {
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantInfoList: ParticipantInfoType[];
+  participantList: ParticipantType[];
 
   constructor(data: ContestType) {
     this.title = data.title;
@@ -52,6 +52,6 @@ export default class Contest implements ContestType {
     this.isDriveStopWatchRunning = data.isDriveStopWatchRunning;
     this.latestDriveRecordTime = data.latestDriveRecordTime;
 
-    this.participantInfoList = data.participantInfoList;
+    this.participantList = data.participantList;
   }
 }

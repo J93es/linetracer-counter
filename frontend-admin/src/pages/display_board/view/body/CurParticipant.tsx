@@ -1,4 +1,4 @@
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 import DisplayCard from "pages/display_board/component/DisplayCard";
 
 import { timeToString } from "pages/tools/timeToString";
@@ -8,11 +8,11 @@ import "pages/display_board/view/body/CurParticipant.css";
 const showLen = 5;
 
 export default function CurParticipant({
-  curParticipantInfo,
+  curParticipant,
 }: {
-  curParticipantInfo: ParticipantInfoType | undefined;
+  curParticipant: ParticipantType | undefined;
 }) {
-  const slicedList = curParticipantInfo?.driveRecordList.slice(-showLen);
+  const slicedList = curParticipant?.driveRecordList.slice(-showLen);
   for (let i = slicedList?.length ?? 0; i < showLen; i++) {
     slicedList?.push({ recordTime: 0, type: "" });
   }
@@ -38,11 +38,11 @@ export default function CurParticipant({
             <h4 className="cur-participant-title">현재 참가자</h4>
 
             <div className="cur-particiapnt-name">
-              {curParticipantInfo?.name ?? "--"}
+              {curParticipant?.name ?? "--"}
             </div>
 
             <div className="cur-particiapnt-association">
-              {curParticipantInfo?.association ?? "--"}
+              {curParticipant?.association ?? "--"}
             </div>
 
             <div className="cur-particiapnt-drive-record-list">
@@ -65,7 +65,7 @@ export default function CurParticipant({
             <div className="cur-particiapnt-speech">
               <div className="cur-particiapnt-speech-title">하고 싶은 말</div>
               <div className="cur-particiapnt-speech-item">
-                "{curParticipantInfo?.speech ?? ""}"
+                "{curParticipant?.speech ?? ""}"
               </div>
             </div>
           </div>

@@ -16,6 +16,7 @@ export interface ParticipantInfoType {
 
   sector: string;
   order: number;
+  sectorState: string;
 
   fastestLapTime?: number;
 
@@ -31,6 +32,7 @@ export default class ParticipantInfo implements ParticipantInfoType {
 
   sector: string;
   order: number;
+  sectorState: string;
 
   fastestLapTime?: number;
 
@@ -51,6 +53,7 @@ export default class ParticipantInfo implements ParticipantInfoType {
 
     this.sector = sectorRecord.contestSector;
     this.order = sectorRecord.order;
+    this.sectorState = sectorRecord.sectorState;
 
     this.robot = new RobotInfo(data?.robot);
 

@@ -25,7 +25,7 @@ export interface DisplayBoardContestInfoType {
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantInfoList: ParticipantInfoType[];
+  participantList: ParticipantInfoType[];
 }
 
 export default class DisplayBoardContestInfo
@@ -45,7 +45,7 @@ export default class DisplayBoardContestInfo
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantInfoList: ParticipantInfoType[];
+  participantList: ParticipantInfoType[];
 
   constructor(data: ContestType) {
     this.title = data.title;
@@ -90,7 +90,7 @@ export default class DisplayBoardContestInfo
       }
     );
 
-    this.participantInfoList = filteredParticipantList.map(
+    this.participantList = filteredParticipantList.map(
       (participant: ParticipantType) => {
         return new ParticipantInfo(
           participant,

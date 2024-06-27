@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { uri } from "config";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Live from "pages/body/live/Index";
+
+import { ContestType } from "pages/body/live/model/Contest";
 
 function App() {
+  const [liveData, setLiveData] = useState<ContestType | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`${uri}/`)
+      .then((response) => response.json())
+      .then((data) => {
+        setLiveData(data);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Live</h1>
       </header>
+      <body className="App-body">
+        <Live data={liveData} isLoading={isLoading} />
+      </body>
     </div>
   );
 }

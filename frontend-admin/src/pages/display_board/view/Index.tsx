@@ -1,7 +1,7 @@
 import Body from "pages/display_board/view/body/Index";
 
 import { ContestType } from "pages/display_board/model/Contest";
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 
 import { SectorRecordType } from "pages/display_board/model/SectorRecord";
 
@@ -11,16 +11,16 @@ export default function View({
   targetContest,
   isContestTimerRunning,
   curSectorRecord,
-  curParticipantInfo,
-  nextParticipantInfo,
-  participantInfoList,
+  curParticipant,
+  nextParticipant,
+  participantList,
 }: {
   targetContest: ContestType | undefined;
   isContestTimerRunning: boolean;
   curSectorRecord: SectorRecordType | undefined;
-  curParticipantInfo: ParticipantInfoType | undefined;
-  nextParticipantInfo: ParticipantInfoType | undefined;
-  participantInfoList: ParticipantInfoType[] | undefined;
+  curParticipant: ParticipantType | undefined;
+  nextParticipant: ParticipantType | undefined;
+  participantList: ParticipantType[] | undefined;
 }) {
   return (
     <div className="display-board-view">
@@ -28,9 +28,9 @@ export default function View({
         targetContest={targetContest}
         isContestTimerRunning={isContestTimerRunning}
         curSectorRecord={curSectorRecord}
-        curParticipantInfo={curParticipantInfo}
-        nextParticipantInfo={nextParticipantInfo}
-        participantInfoList={participantInfoList}
+        curParticipant={curParticipant}
+        nextParticipant={nextParticipant}
+        participantList={participantList}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { RobotType } from "pages/display_board/model/Robot";
 
-export interface ParticipantInfoType {
+export interface ParticipantType {
   name: string;
   association: string;
   speech: string;
@@ -15,7 +15,7 @@ export interface ParticipantInfoType {
   driveRecordList: { type: string; recordTime: number }[];
 }
 
-export default class ParticipantInfo implements ParticipantInfoType {
+export default class Participant implements ParticipantType {
   name: string;
   association: string;
   speech: string;
@@ -29,7 +29,7 @@ export default class ParticipantInfo implements ParticipantInfoType {
 
   driveRecordList: { type: string; recordTime: number }[];
 
-  constructor(data: ParticipantInfoType) {
+  constructor(data: ParticipantType) {
     this.name = data.name;
     this.association = data.association ?? "--";
     this.speech = data.speech ?? "--";

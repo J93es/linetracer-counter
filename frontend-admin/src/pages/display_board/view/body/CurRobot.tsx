@@ -1,4 +1,4 @@
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 import { RobotType } from "pages/display_board/model/Robot";
 import DisplayCard from "pages/display_board/component/DisplayCard";
 
@@ -16,11 +16,11 @@ const showKeys = [
 ];
 
 export default function CurRobot({
-  curParticipantInfo,
+  curParticipant,
 }: {
-  curParticipantInfo: ParticipantInfoType | undefined;
+  curParticipant: ParticipantType | undefined;
 }) {
-  const curRobotInfo: RobotType | undefined = curParticipantInfo?.robot;
+  const curRobotInfo: RobotType | undefined = curParticipant?.robot;
 
   const robotHtmlElem = showKeys.map((key, index) => {
     return (

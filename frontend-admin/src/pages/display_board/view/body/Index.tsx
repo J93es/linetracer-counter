@@ -1,5 +1,5 @@
 import { ContestType } from "pages/display_board/model/Contest";
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 import { SectorRecordType } from "pages/display_board/model/SectorRecord";
 
 import ContestTimer from "pages/display_board/view/body/ContestTimer";
@@ -15,16 +15,16 @@ export default function Body({
   targetContest,
   isContestTimerRunning,
   curSectorRecord,
-  curParticipantInfo,
-  nextParticipantInfo,
-  participantInfoList,
+  curParticipant,
+  nextParticipant,
+  participantList,
 }: {
   targetContest: ContestType | undefined;
   isContestTimerRunning: boolean;
   curSectorRecord: SectorRecordType | undefined;
-  curParticipantInfo: ParticipantInfoType | undefined;
-  nextParticipantInfo: ParticipantInfoType | undefined;
-  participantInfoList: ParticipantInfoType[] | undefined;
+  curParticipant: ParticipantType | undefined;
+  nextParticipant: ParticipantType | undefined;
+  participantList: ParticipantType[] | undefined;
 }) {
   return (
     <div className="display-board-body">
@@ -37,14 +37,14 @@ export default function Body({
 
         <DriveStopWatch targetContest={targetContest} />
 
-        <CurRanking participantInfoList={participantInfoList} />
+        <CurRanking participantList={participantList} />
       </div>
       <div className="display-board-body-col-2">
-        <CurParticipant curParticipantInfo={curParticipantInfo} />
+        <CurParticipant curParticipant={curParticipant} />
       </div>
       <div className="display-board-body-col-3">
-        <CurRobot curParticipantInfo={curParticipantInfo} />
-        <NextParticipant nextParticipantInfo={nextParticipantInfo} />
+        <CurRobot curParticipant={curParticipant} />
+        <NextParticipant nextParticipant={nextParticipant} />
       </div>
     </div>
   );

@@ -25,8 +25,13 @@ class ListenServerSseRepo implements ListenServerRepository {
         "x-request-id": this.id,
       },
     });
+
     this.eventSource.onmessage = (event) => {
       callback(JSON.parse(event.data));
+    };
+
+    this.eventSource.onerror = (err) => {
+      console.error(err);
     };
   }
 

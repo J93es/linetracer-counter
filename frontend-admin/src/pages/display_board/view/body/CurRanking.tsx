@@ -1,4 +1,4 @@
-import { ParticipantInfoType } from "pages/display_board/model/ParticipantInfo";
+import { ParticipantType } from "pages/display_board/model/Participant";
 import { sortTarget } from "pages/tools/sortTargetList";
 import { timeToString } from "pages/tools/timeToString";
 
@@ -9,27 +9,25 @@ import "pages/display_board/view/body/CurRanking.css";
 const showLen = 5;
 
 export default function CurRanking({
-  participantInfoList,
+  participantList,
 }: {
-  participantInfoList: ParticipantInfoType[] | undefined;
+  participantList: ParticipantType[] | undefined;
 }) {
-  console.log("participantInfoList", participantInfoList);
-  const copyedList = JSON.parse(JSON.stringify(participantInfoList ?? []));
-  const sortedList: ParticipantInfoType[] = sortTarget(
+  console.log("participantList", participantList);
+  const copyedList = JSON.parse(JSON.stringify(participantList ?? []));
+  const sortedList: ParticipantType[] = sortTarget(
     copyedList,
     "fastestLapTime"
   );
   const slicedList = sortedList.slice(0, showLen);
 
-  const listBodyHtml = slicedList.map((participantInfo, index) => {
+  const listBodyHtml = slicedList.map((participant, index) => {
     return (
       <div className="cur-ranking-list-body-row" key={index}>
         <div className={`cur-ranking-list-body-col`}>{index + 1}</div>
-        <div className={`cur-ranking-list-body-col`}>
-          {participantInfo?.name}
-        </div>
+        <div className={`cur-ranking-list-body-col`}>{participant?.name}</div>
         <div className={`cur-ranking-list-body-item-col-3`}>
-          {timeToString(participantInfo.fastestLapTime)}
+          {timeToString(participant.fastestLapTime)}
         </div>
       </div>
     );
