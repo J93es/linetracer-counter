@@ -10,11 +10,13 @@ import express, {
 import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
+import apicache from "apicache";
+
 import corsOptions from "@utils/cors/index";
 
 import JwtService from "@auth/service/jwt-service";
 
-import adminRouter from "@auth/route/admin";
+import authRouter from "@auth/route/auth";
 import contestRouter from "@route/admin/contest";
 import partipantRouter from "@src/route/admin/participant";
 import sectorRecordRouter from "@src/route/admin/sectorRecord";
@@ -28,6 +30,8 @@ import mongoose from "mongoose";
 
 const app: Application = express();
 
+const cache = apicache.middleware;
+
 app.set("port", process.env.PORT || PORT || 8000);
 app.set("view engine", "ejs");
 
@@ -39,14 +43,14 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", userRouter);
-app.use("/admin", adminRouter);
+app.use("/", cache("30 seconds"), userRouter);
+app.use("/admin", authRouter);
 app.use("/contest", JwtService.tokenChecker, contestRouter);
-app.use("/participant", partipantRouter);
-app.use("/sector-record", sectorRecordRouter);
-app.use("/drive-record", driveRecordRouter);
-app.use("/counter-device-log", counterDeviceLogRouter);
-app.use("/display-board", displayBoardRouter);
+app.use("/participant", JwtService.tokenChecker, partipantRouter);
+app.use("/sector-record", JwtService.tokenChecker, sectorRecordRouter);
+app.use("/drive-record", JwtService.tokenChecker, driveRecordRouter);
+app.use("/counter-device-log", JwtService.tokenChecker, counterDeviceLogRouter);
+app.use("/display-board", JwtService.tokenChecker, displayBoardRouter);
 
 // error handler
 app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
