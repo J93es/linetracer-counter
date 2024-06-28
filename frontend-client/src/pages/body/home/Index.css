@@ -1,0 +1,65 @@
+.home-container {
+  margin: 20px;
+  color: white;
+}
+
+.home-index {
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+table,
+th,
+td {
+  font-size: medium;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+th {
+  background-color: black;
+}
+
+td {
+  background-color: #1b1f29;
+}
+
+.greetings,
+.contest-schedule,
+.contest-information-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-break: keep-all;
+  min-width: 350px;
+  max-width: 500px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 80px;
+  font-size: medium;
+}
+
+.greetings {
+  padding: 40px;
+  background-image: linear-gradient(315deg, #3c3968 0%, black 74%);
+
+  border: 1px floralwhite solid;
+  border-radius: 20px;
+}
+
+.greetings-author {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.outer-link {
+  font-size: medium;
+  color: #bebfc5;
+  margin-bottom: 10px;
+}
+
+.outer-link:hover {
+  color: rgb(186, 66, 255);
+}

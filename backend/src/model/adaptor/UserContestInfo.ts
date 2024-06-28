@@ -59,12 +59,14 @@ export default class UserContestInfo implements UserContestInfoType {
           sectorRecordValue: sector,
         }
       );
+
       const participantInfo = filteredParticipantList.map(
         (participant: ParticipantType) => {
           return new ParticipantInfo(participant, sector);
         }
       );
-      if (Object.keys(participantInfo).length > 0) {
+
+      if (participantInfo.length > 0) {
         this.participantListContainer[sector] = participantInfo;
       }
     });

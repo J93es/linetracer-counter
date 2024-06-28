@@ -1,0 +1,33 @@
+const defaultSortValue = Infinity;
+
+export function sortTarget(targetList: any[], targetBy: string): any[] {
+  // sort할 배열
+  let list: any[] = JSON.parse(JSON.stringify(targetList));
+
+  // 임시 배열은 위치 및 정렬 값이있는 객체를 보유합니다.
+  let mapped = list.map(function (target: any, i: number) {
+    try {
+      return {
+        index: i,
+        value: target[targetBy as keyof any] ?? defaultSortValue,
+      };
+    } catch (error) {
+      return {
+        index: i,
+        value: defaultSortValue,
+      };
+    }
+  });
+
+  // 축소 치를 포함한 매핑 된 배열의 소트
+  mapped.sort(function (a: any, b: any) {
+    return +(a.value > b.value) || +(a.value === b.value) - 1;
+  });
+
+  // 결과 순서를 위한 컨테이너
+  var result = mapped.map(function (el) {
+    return list[el.index];
+  });
+
+  return result;
+}

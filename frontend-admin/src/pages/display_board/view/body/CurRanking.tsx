@@ -13,7 +13,6 @@ export default function CurRanking({
 }: {
   participantList: ParticipantType[] | undefined;
 }) {
-  console.log("participantList", participantList);
   const copyedList = JSON.parse(JSON.stringify(participantList ?? []));
   const sortedList: ParticipantType[] = sortTarget(
     copyedList,
@@ -26,7 +25,7 @@ export default function CurRanking({
       <div className="cur-ranking-list-body-row" key={index}>
         <div className={`cur-ranking-list-body-col`}>{index + 1}</div>
         <div className={`cur-ranking-list-body-col`}>{participant?.name}</div>
-        <div className={`cur-ranking-list-body-item-col-3`}>
+        <div className={`cur-ranking-list-body-col`}>
           {timeToString(participant.fastestLapTime)}
         </div>
       </div>

@@ -1,7 +1,12 @@
 import { uri } from "config";
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+
+import Header from "pages/header/Index";
+import Home from "pages/body/home/Index";
 import Live from "pages/body/live/Index";
+import Sponser from "pages/body/sponser/Index";
 
 import { ContestType } from "pages/body/live/model/Contest";
 
@@ -21,11 +26,22 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Live</h1>
+        <Header title={liveData?.title} isLoading={isLoading} />
       </header>
-      <body className="App-body">
-        <Live data={liveData} isLoading={isLoading} />
-      </body>
+      <div className="App-body">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+
+            <Route
+              path="/live"
+              element={<Live data={liveData} isLoading={isLoading} />}
+            ></Route>
+
+            <Route path="/sponser" element={<Sponser />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   );
 }

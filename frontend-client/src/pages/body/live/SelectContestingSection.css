@@ -16,12 +16,13 @@
   justify-content: center;
   box-shadow: 4px 4px var(--main-color);
   margin-right: 5px;
+  margin-bottom: 20px;
 }
 
 .option {
   margin-right: 5px;
   width: 330px;
-  height: 62px;
+  height: 58px;
   position: relative;
   top: 3px;
   left: 2px;
