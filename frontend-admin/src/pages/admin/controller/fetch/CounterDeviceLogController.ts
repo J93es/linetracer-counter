@@ -79,11 +79,11 @@ export class CounterDeviceLogController {
       );
       const response = await fetch(`${uri}/counter-device-log`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(counterDeviceLog),
-        credentials: "include",
       });
       const resData = await response.json();
       const resCounterDeviceLog = new CounterDeviceLog(resData);
@@ -111,11 +111,11 @@ export class CounterDeviceLogController {
       );
       const response = await fetch(`${uri}/counter-device-log/${srcData.id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(counterDeviceLog),
-        credentials: "include",
       });
       const resData = await response.json();
       const resCounterDeviceLog = new CounterDeviceLog(resData);
@@ -143,11 +143,11 @@ export class CounterDeviceLogController {
       );
       const response = await fetch(`${uri}/counter-device-log/${srcData.id}`, {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(counterDeviceLog),
-        credentials: "include",
       });
       const resData = await response.json();
       const resCounterDeviceLog = new CounterDeviceLog(resData);
@@ -172,10 +172,10 @@ export class CounterDeviceLogController {
       }
       const response = await fetch(`${uri}/counter-device-log/${id}`, {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
       });
       const resData = await response.json();
       const resCounterDeviceLog = new CounterDeviceLog(resData);

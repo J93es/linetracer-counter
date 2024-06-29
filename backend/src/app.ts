@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import cors from "cors";
 import apicache from "apicache";
+import expressRateLimit from "express-rate-limit";
 
 import corsOptions from "@utils/cors/index";
 
@@ -43,8 +44,25 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", cache("30 seconds"), userRouter);
-app.use("/admin", authRouter);
+app.use(
+  "/user",
+  expressRateLimit({
+    windowMs: 5 * 1000,
+    max: 200,
+  }),
+  cache("5 seconds"),
+  userRouter
+);
+
+app.use(
+  "/admin",
+  expressRateLimit({
+    windowMs: 60 * 1000,
+    max: 100,
+  }),
+  authRouter
+);
+
 app.use("/contest", JwtService.tokenChecker, contestRouter);
 app.use("/participant", JwtService.tokenChecker, partipantRouter);
 app.use("/sector-record", JwtService.tokenChecker, sectorRecordRouter);

@@ -23,6 +23,7 @@ class ListenServerSseRepo implements ListenServerRepository {
     this.eventSource = new EventSourcePolyfill(`${uri}/display-board`, {
       headers: {
         "x-request-id": this.id,
+        credentials: "include",
       },
     });
 

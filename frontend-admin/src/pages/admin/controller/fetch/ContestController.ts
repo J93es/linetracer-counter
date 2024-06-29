@@ -63,11 +63,11 @@ export class ContestController {
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/Contest`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(contest),
-        credentials: "include",
       });
       const resData = await response.json();
       const resContest = new Contest(resData);
@@ -91,11 +91,11 @@ export class ContestController {
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/contest/${srcData.id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(contest),
-        credentials: "include",
       });
       const resData = await response.json();
       const resContest = new Contest(resData);
@@ -119,11 +119,11 @@ export class ContestController {
       const contest = new Contest(srcData as ContestType);
       const response = await fetch(`${uri}/Contest/${srcData.id}`, {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(contest),
-        credentials: "include",
       });
       const resData = await response.json();
       const resContest = new Contest(resData);
@@ -146,10 +146,10 @@ export class ContestController {
       }
       const response = await fetch(`${uri}/Contest/${id}`, {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
       });
       const resData = await response.json();
       const resContest = new Contest(resData);

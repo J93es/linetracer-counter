@@ -33,16 +33,14 @@ function App() {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>; // 로딩 상태 표시
+    return <div>Loading...</div>;
   }
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<div>Hello login!</div>}></Route>
-
         <Route
-          path="/login"
+          path="/"
           element={
             <Login
               redirectUrl="/admin"

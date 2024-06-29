@@ -13,14 +13,26 @@ import { ContestType } from "pages/body/live/model/Contest";
 function App() {
   const [liveData, setLiveData] = useState<ContestType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const func = async () => {
+    try {
+      const response = await fetch(`${uri}/`);
+      if (response.status !== 200) {
+        throw new Error(`code: ${response.status} Failed to fetch`);
+      }
+      const data = await response.json();
+      setLiveData(data);
+      setTimeout(func, 5 * 1000);
+    } catch (e) {
+      console.error(e);
+      setTimeout(func, 5 * 1000);
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${uri}/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setLiveData(data);
-        setIsLoading(false);
-      });
+    func();
+    setIsLoading(false);
   }, []);
 
   return (

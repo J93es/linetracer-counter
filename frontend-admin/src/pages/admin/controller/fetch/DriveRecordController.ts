@@ -45,11 +45,11 @@ export class DriveRecordController {
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(`${uri}/drive-record`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(driveRecord),
-        credentials: "include",
       });
       const resData = await response.json();
       const resDriveRecord = new DriveRecord(resData);
@@ -75,11 +75,11 @@ export class DriveRecordController {
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(`${uri}/drive-record/${srcData.id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(driveRecord),
-        credentials: "include",
       });
       const resData = await response.json();
       const resDriveRecord = new DriveRecord(resData);
@@ -105,11 +105,11 @@ export class DriveRecordController {
       const driveRecord = new DriveRecord(srcData as DriveRecordType);
       const response = await fetch(`${uri}/drive-record/${srcData.id}`, {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(driveRecord),
-        credentials: "include",
       });
       const resData = await response.json();
       const resDriveRecord = new DriveRecord(resData);
