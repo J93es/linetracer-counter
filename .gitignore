@@ -3,6 +3,7 @@ config.ts
 .vscode/
 .backup/
 build/
+config/
 
 ### ExpressionEngine ###
 .DS_Store
