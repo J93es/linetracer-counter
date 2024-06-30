@@ -43,7 +43,7 @@ function App() {
           path="/"
           element={
             <Login
-              redirectUrl="/admin"
+              redirectUrl="/display-board"
               setIsAuthenticated={setIsAuthenticated}
             />
           }
