@@ -50,7 +50,7 @@
   },
   "scripts": {
     "dev": "nodemon ./src/app.ts",
-    "build": "tsc",
+    "build": "tsc && node -r tsconfig-paths/register ./dist/src/app.js",
     "start": "node -r tsconfig-paths/register ./dist/src/app.js"
   }
 }

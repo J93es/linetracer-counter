@@ -16,8 +16,9 @@
     "zod": "^3.23.6"
   },
   "scripts": {
-    "start": "export PORT=3002 && react-scripts start",
-    "build": "react-scripts build",
+    "dev": "export PORT=3002 && react-scripts start",
+    "start": "serve -s build -l 3002",
+    "build": "react-scripts build && serve -s build -l 3002",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
