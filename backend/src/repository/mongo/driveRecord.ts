@@ -1,6 +1,6 @@
 import { DriveRecordType } from "@model/DriveRecord";
 import { DriveRecordRepository } from "@core/repository/driveRecord";
-import { DriveRecordSchema } from "@src/repository/mongo/schema/index";
+import { DriveRecordSchema } from "@repository/mongo/schema/index";
 
 import { sectorRecordRepository } from "@repository/index";
 

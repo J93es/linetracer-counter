@@ -6,7 +6,7 @@ import { ContestType } from "@model/Contest";
 
 import { contestService } from "@service/index";
 
-import { notifyDisplayBoard } from "@src/route/display_board/index";
+import { notifyDisplayBoard } from "@route/display_board/index";
 
 const router: Router = express.Router();
 

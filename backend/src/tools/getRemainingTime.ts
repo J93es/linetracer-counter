@@ -1,4 +1,4 @@
-import { defaultRemainingContestTime } from "model/SectorRecord";
+import { defaultRemainingContestTime } from "@model/SectorRecord";
 
 export function getRemainingTime(
   originRemainingTime: number | undefined,

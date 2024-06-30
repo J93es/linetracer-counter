@@ -1,5 +1,5 @@
 import { ParticipantRepository } from "@core/repository/participant";
-import { ParticipantSchema } from "@src/repository/mongo/schema/index";
+import { ParticipantSchema } from "@repository/mongo/schema/index";
 
 import { ParticipantType } from "@model/Participant";
 import { contestRepository } from "@repository/index";

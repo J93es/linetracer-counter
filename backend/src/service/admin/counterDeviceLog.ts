@@ -1,4 +1,4 @@
-import { CounterDeviceLogService } from "@src/core/service/admin/counterDeviceLog";
+import { CounterDeviceLogService } from "@core/service/admin/counterDeviceLog";
 
 import CounterDeviceLog, {
   CounterDeviceLogType,

@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 import JwtService from "@auth/service/jwt-service";
-import { ADMIN_DATA } from "@src/config";
+import { ADMIN_DATA } from "@config/index";
 
 import { sendErrorResponse } from "@utils/response";
 

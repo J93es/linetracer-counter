@@ -1,3 +1,5 @@
+import "module-alias/register";
+import "tsconfig-paths/register";
 import logger from "morgan";
 import createError from "http-errors";
 import express, {
@@ -19,14 +21,14 @@ import JwtService from "@auth/service/jwt-service";
 
 import authRouter from "@auth/route/auth";
 import contestRouter from "@route/admin/contest";
-import partipantRouter from "@src/route/admin/participant";
-import sectorRecordRouter from "@src/route/admin/sectorRecord";
-import driveRecordRouter from "@src/route/admin/driveRecord";
-import counterDeviceLogRouter from "@src/route/admin/counterDeviceLog";
-import displayBoardRouter from "@src/route/display_board/sse";
+import partipantRouter from "@route/admin/participant";
+import sectorRecordRouter from "@route/admin/sectorRecord";
+import driveRecordRouter from "@route/admin/driveRecord";
+import counterDeviceLogRouter from "@route/admin/counterDeviceLog";
+import displayBoardRouter from "@route/display_board/sse";
 import userRouter from "@route/user";
 
-import { uri, PORT } from "@src/config";
+import { uri, PORT } from "@config/index";
 import mongoose from "mongoose";
 
 const app: Application = express();

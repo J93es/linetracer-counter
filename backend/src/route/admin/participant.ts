@@ -6,7 +6,7 @@ import { ParticipantType } from "@model/Participant";
 
 import { participantService } from "@service/index";
 
-import { notifyDisplayBoard } from "@src/route/display_board/index";
+import { notifyDisplayBoard } from "@route/display_board/index";
 
 const router: Router = express.Router();
 
