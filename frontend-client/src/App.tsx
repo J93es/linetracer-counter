@@ -33,6 +33,7 @@ function App() {
     setIsLoading(true);
     func();
     setIsLoading(false);
+    // eslint-disable-next-line
   }, []);
 
   return (
