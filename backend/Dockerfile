@@ -1,7 +1,13 @@
 FROM node:14
 WORKDIR /app
-COPY package*.json ./
+
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
+
 RUN npm install
-COPY . .
+
+COPY . ./app
+
 EXPOSE 8080
+
 CMD ["npm", "run", "build"]

@@ -1,8 +1,21 @@
+# Dockerfile for second-project
 FROM node:14 as build
-WORKDIR /usr/src/app
-COPY package*.json ./
+
+WORKDIR /app
+
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
+
 RUN npm install
-COPY . .
+
+COPY . /app
+
 RUN npm run build
+
+FROM nginx:alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
+
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
