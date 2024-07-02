@@ -1,4 +1,4 @@
-import { uri } from "config";
+import { uri, publicUrl } from "config";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -42,7 +42,7 @@ function App() {
         <Header title={liveData?.title} isLoading={isLoading} />
       </header>
       <div className="App-body">
-        <BrowserRouter>
+        <BrowserRouter basename={publicUrl}>
           <Routes>
             <Route path="/" element={<Home />}></Route>
 
