@@ -1,5 +1,5 @@
-import "module-alias/register";
-import "tsconfig-paths/register";
+// import "module-alias/register";
+// import "tsconfig-paths/register";
 import logger from "morgan";
 import createError from "http-errors";
 import express, {
@@ -57,7 +57,7 @@ app.use(
 );
 
 app.use(
-  "/admin",
+  "/auth",
   expressRateLimit({
     windowMs: 60 * 1000,
     max: 100,
