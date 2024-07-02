@@ -12,7 +12,7 @@ export class AuthController {
 
   async isAuthenticated(): Promise<boolean> {
     try {
-      const response = await fetch(`${uri}/admin/check-auth`, {
+      const response = await fetch(`${uri}/auth/check-auth`, {
         method: "GET",
         credentials: "include",
       });
@@ -30,7 +30,7 @@ export class AuthController {
 
   async logout(): Promise<void> {
     try {
-      await fetch(`${uri}/admin/logout`, {
+      await fetch(`${uri}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -41,7 +41,7 @@ export class AuthController {
 
   async login(data: LoginType): Promise<{ message: string; code: number }> {
     try {
-      const response = await fetch(`${uri}/admin/login`, {
+      const response = await fetch(`${uri}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: {

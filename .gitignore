@@ -1,9 +1,10 @@
 node_modules/
-config.ts
+# config/
+# config.ts
 .vscode/
 .backup/
 build/
-config/
+secret.ts
 
 ### ExpressionEngine ###
 .DS_Store
