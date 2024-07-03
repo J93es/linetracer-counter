@@ -15,6 +15,9 @@ FROM nginx:alpine
 
 COPY --from=build /app/build /usr/share/nginx/linetracer-counter/frontend-admin
 
+RUN rm /etc/nginx/conf.d/default.conf
+COPY /etc/nginx/nginx.conf /etc/nginx/conf.d
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
