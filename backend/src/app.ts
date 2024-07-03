@@ -1,5 +1,11 @@
 import "module-alias/register";
 import "tsconfig-paths/register";
+
+import dotenv from "dotenv";
+dotenv.config();
+
+console.log(process.env.DB_URI);
+
 import logger from "morgan";
 import createError from "http-errors";
 import express, {
