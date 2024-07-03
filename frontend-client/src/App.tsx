@@ -16,7 +16,7 @@ function App() {
 
   const func = async () => {
     try {
-      const response = await fetch(`${uri}/`);
+      const response = await fetch(`${uri}/user/`);
       if (response.status !== 200) {
         throw new Error(`code: ${response.status} Failed to fetch`);
       }

@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 
+ENV SERVER_URI=https://j93.es/api/
+
 RUN npm install
 
 COPY . /app
