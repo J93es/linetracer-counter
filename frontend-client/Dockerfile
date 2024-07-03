@@ -19,4 +19,6 @@ COPY --from=build /app/build /usr/share/nginx/linetracer-counter/frontend-client
 
 EXPOSE 80
 
+RUN npm run start
+
 CMD ["nginx", "-g", "daemon off;"]
