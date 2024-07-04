@@ -37,25 +37,51 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Header title={liveData?.title} isLoading={isLoading} />
-      </header>
-      <div className="App-body">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="App">
+              <header className="App-header">
+                <Header title={liveData?.title} isLoading={isLoading} />
+              </header>
+              <div className="App-body">
+                <Home />
+              </div>
+            </div>
+          }
+        ></Route>
 
-            <Route
-              path="/live"
-              element={<Live data={liveData} isLoading={isLoading} />}
-            ></Route>
+        <Route
+          path="/live"
+          element={
+            <div className="App">
+              <header className="App-header">
+                <Header title={liveData?.title} isLoading={isLoading} />
+              </header>
+              <div className="App-body">
+                <Live data={liveData} isLoading={isLoading} />
+              </div>
+            </div>
+          }
+        ></Route>
 
-            <Route path="/sponser" element={<Sponser />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </div>
+        <Route
+          path="/sponser"
+          element={
+            <div className="App">
+              <header className="App-header">
+                <Header title={liveData?.title} isLoading={isLoading} />
+              </header>
+              <div className="App-body">
+                <Sponser />
+              </div>
+            </div>
+          }
+        ></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

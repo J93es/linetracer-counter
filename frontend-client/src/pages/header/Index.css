@@ -33,6 +33,9 @@
   background-color: #191c23;
   outline: 0;
   transition: all 0.2s ease;
+
+  border: 0;
+  background-color: transparent;
 }
 
 .header-title:hover,
