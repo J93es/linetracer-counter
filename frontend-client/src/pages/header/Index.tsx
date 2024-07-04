@@ -1,4 +1,5 @@
 import "pages/header/Index.css";
+import { Link } from "react-router-dom";
 
 export default function Header({
   title,
@@ -11,19 +12,19 @@ export default function Header({
   return (
     <div className="header-container">
       <div className="header-title-container">
-        <a href="/" className="header-title">
+        <Link to="/" className="header-title">
           <span className="header-title-text">{titleStr}</span>
-        </a>
+        </Link>
       </div>
       <div className="header-live-container">
-        <a href="/live" className="header-live">
+        <Link to="/live" className="header-live">
           <span className="header-live-text">실시간 경연 정보</span>
-        </a>
+        </Link>
       </div>
       <div className="header-sponser-container">
-        <a href="/sponser" className="header-sponser">
+        <Link to="/sponser" className="header-sponser">
           <span className="header-sponser-text">후원</span>
-        </a>
+        </Link>
       </div>
     </div>
   );
