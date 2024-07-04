@@ -1,0 +1,55 @@
+version: "3"
+services:
+  frontend-client:
+    build:
+      context: ./frontend-client
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    restart: always
+    environment:
+      - REACT_APP_SERVER_URI=https://j93.es/api
+
+  frontend-admin:
+    build:
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+    ports:
+      - "3002:80"
+    restart: always
+    environment:
+      - REACT_APP_SERVER_URI=https://j93.es/api
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:8080"
+    restart: always
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydatabase
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "5000:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend-client
+      - frontend-admin
+      - backend
+    restart: always
+
+volumes:
+  mongo-data:
