@@ -1,8 +1,8 @@
 import { ContestType } from "@model/Contest";
 import { ParticipantType } from "@model/Participant";
-import ParticipantInfo, {
-  ParticipantInfoType,
-} from "@model/adaptor/ParticipantInfo";
+import DisplayBoardParticipantInfo, {
+  DisplayBoardParticipantInfoType,
+} from "@model/adaptor/DisplayBoardParticipantInfo";
 import SectorRecordInfo, {
   SectorRecordInfoType,
 } from "@model/adaptor/SectorRecordInfo";
@@ -14,8 +14,8 @@ export interface DisplayBoardContestInfoType {
   title: string;
 
   curContestingSection?: string;
-  curParticipant?: ParticipantInfoType;
-  nextParticipant?: ParticipantInfoType;
+  curParticipant?: DisplayBoardParticipantInfoType;
+  nextParticipant?: DisplayBoardParticipantInfoType;
   curSectorRecord?: SectorRecordInfoType;
 
   contestTimerStartTime?: number;
@@ -25,7 +25,7 @@ export interface DisplayBoardContestInfoType {
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantList: ParticipantInfoType[];
+  participantList: DisplayBoardParticipantInfoType[];
 }
 
 export default class DisplayBoardContestInfo
@@ -34,8 +34,8 @@ export default class DisplayBoardContestInfo
   title: string;
 
   curContestingSection?: string;
-  curParticipant?: ParticipantInfoType;
-  nextParticipant?: ParticipantInfoType;
+  curParticipant?: DisplayBoardParticipantInfoType;
+  nextParticipant?: DisplayBoardParticipantInfoType;
   curSectorRecord?: SectorRecordInfoType;
 
   contestTimerStartTime?: number;
@@ -45,7 +45,7 @@ export default class DisplayBoardContestInfo
   isDriveStopWatchRunning?: boolean;
   latestDriveRecordTime?: number;
 
-  participantList: ParticipantInfoType[];
+  participantList: DisplayBoardParticipantInfoType[];
 
   constructor(data: ContestType) {
     this.title = data.title;
@@ -65,11 +65,11 @@ export default class DisplayBoardContestInfo
       originCurParticipant?.sectorRecordList
     );
 
-    this.curParticipant = new ParticipantInfo(
+    this.curParticipant = new DisplayBoardParticipantInfo(
       originCurParticipant,
       this.curContestingSection ?? ""
     );
-    this.nextParticipant = new ParticipantInfo(
+    this.nextParticipant = new DisplayBoardParticipantInfo(
       originNextParticipant,
       this.curContestingSection ?? ""
     );
@@ -92,7 +92,7 @@ export default class DisplayBoardContestInfo
 
     this.participantList = filteredParticipantList.map(
       (participant: ParticipantType) => {
-        return new ParticipantInfo(
+        return new DisplayBoardParticipantInfo(
           participant,
           this.curContestingSection ?? ""
         );

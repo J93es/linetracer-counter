@@ -9,7 +9,7 @@ import {
 } from "@tools/filterTargetList";
 import RobotInfo, { RobotInfoType } from "@model/adaptor/RobotInfo";
 
-export interface ParticipantInfoType {
+export interface DisplayBoardParticipantInfoType {
   name: string;
   association: string;
   speech: string;
@@ -25,7 +25,9 @@ export interface ParticipantInfoType {
   driveRecordList: { type: string; recordTime: number }[];
 }
 
-export default class ParticipantInfo implements ParticipantInfoType {
+export default class DisplayBoardParticipantInfo
+  implements DisplayBoardParticipantInfoType
+{
   name: string;
   association: string;
   speech: string;

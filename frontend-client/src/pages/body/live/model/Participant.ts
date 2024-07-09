@@ -2,48 +2,24 @@ import { RobotType } from "pages/body/live/model/Robot";
 
 export interface ParticipantType {
   name: string;
-  association: string;
-  speech: string;
-
-  sector: string;
   order: number;
-  sectorState: string;
-
+  rank: number;
   fastestLapTime?: number;
-
-  robot?: RobotType;
-
-  driveRecordList: { type: string; recordTime: number }[];
+  robotName: string;
 }
 
 export default class Participant implements ParticipantType {
   name: string;
-  association: string;
-  speech: string;
-
-  sector: string;
   order: number;
-  sectorState: string;
-
+  rank: number;
   fastestLapTime?: number;
-
-  robot?: RobotType;
-
-  driveRecordList: { type: string; recordTime: number }[];
+  robotName: string;
 
   constructor(data: ParticipantType) {
     this.name = data.name;
-    this.association = data.association ?? "--";
-    this.speech = data.speech ?? "--";
-
-    this.sector = data.sector;
     this.order = data.order;
-    this.sectorState = data.sectorState;
-
-    this.robot = data.robot;
-
-    this.driveRecordList = data.driveRecordList;
-
+    this.rank = data.rank;
     this.fastestLapTime = data.fastestLapTime;
+    this.robotName = data.robotName;
   }
 }

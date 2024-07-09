@@ -13,6 +13,20 @@ export default function SectionInfo({
   selectedSectionSortOption: string;
   setSelectedSectionSortOption: React.Dispatch<React.SetStateAction<string>>;
 }) {
+  const getOrder = (order: number) => {
+    if (!order) {
+      return "--";
+    }
+    if (order > 500) {
+      return `${order % 500}*`;
+    }
+    return order;
+  };
+
+  const isSameParticipant = (participant: ParticipantType) => {
+    return JSON.stringify(participant) === JSON.stringify(curParticipant ?? "");
+  };
+
   return (
     <div className="section-info-container">
       <div className="list-sort-option-selector">
@@ -24,7 +38,7 @@ export default function SectionInfo({
             aria-expanded="false"
           >
             정렬 방식 :{" "}
-            {selectedSectionSortOption === "order" ? "순서" : "최고 기록"}
+            {selectedSectionSortOption === "order" ? "순서" : "순위"}
           </button>
           <ul className="dropdown-menu">
             <li>
@@ -38,9 +52,9 @@ export default function SectionInfo({
             <li>
               <button
                 className="dropdown-item"
-                onClick={() => setSelectedSectionSortOption("fastestLapTime")}
+                onClick={() => setSelectedSectionSortOption("rank")}
               >
-                최고 기록
+                순위
               </button>
             </li>
           </ul>
@@ -49,25 +63,24 @@ export default function SectionInfo({
 
       <div className="participant-table">
         <div className="participant-thead">
-          <div className="participant-thead-item">순서</div>
+          <div className="participant-thead-item">
+            {selectedSectionSortOption === "order" ? "순서" : "순위"}
+          </div>
           <div className="participant-thead-item">최고 기록</div>
           <div className="participant-thead-item">이름</div>
           <div className="participant-thead-item">로봇 이름</div>
         </div>
         {participantList?.map((participant, index) => (
           <div
-            key={`${index}-${participant.name}-${participant.association}-${participant.order}`}
+            key={`${index}-${participant.name}-${participant.order}-${participant.fastestLapTime}`}
             className={`participant-tbody ${
-              JSON.stringify(participant) ===
-              JSON.stringify(curParticipant ?? "")
-                ? "current-participant"
-                : ""
+              isSameParticipant(participant) ? "current-participant" : ""
             }`}
           >
             <div className="participant-tbody-item">
-              {(participant.order ?? 0) > 500
-                ? `${participant.order % 500}*`
-                : participant.order ?? "--"}
+              {selectedSectionSortOption === "order"
+                ? getOrder(participant.order)
+                : participant.rank}
             </div>
             <div className="participant-tbody-item">
               {timeToString(participant.fastestLapTime)}
@@ -76,7 +89,7 @@ export default function SectionInfo({
               {participant.name ?? "--"}
             </div>
             <div className="participant-tbody-item">
-              {participant.robot?.name ?? "--"}
+              {participant.robotName ?? "--"}
             </div>
           </div>
         ))}
