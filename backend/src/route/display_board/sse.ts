@@ -15,6 +15,18 @@ const sseHeaders = {
   "X-Accel-Buffering": "no",
 };
 
+setInterval(() => {
+  () => {
+    Object.keys(clients).forEach((key: string) => {
+      try {
+        clients[key].res.write(`data: heartbeatMsg\n\n`);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  };
+}, 10000);
+
 export const sseNotifyDisplayBoard = async (
   req: Request,
   res: Response,
@@ -36,6 +48,18 @@ export const sseNotifyDisplayBoard = async (
     next();
   }
 };
+
+setInterval(() => {
+  () => {
+    Object.keys(clients).forEach((key: string) => {
+      try {
+        clients[key].res.write(`data: heartbeatMsg\n\n`);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  };
+}, 10000);
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {

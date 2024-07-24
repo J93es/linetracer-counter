@@ -27,6 +27,7 @@ export const counterDeviceLogEditMenuEnum: [string, ...string[]] = [
   "주행 기록에 추가",
   "계수기 로그 수정",
   "계수기 로그 삭제",
+  "계수기 장치 관리",
 ];
 
 export const filterStringBySectorEnum: [string, ...string[]] = [

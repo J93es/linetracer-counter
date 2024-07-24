@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { SerialPortController } from "pages/admin/controller/counter_device/SerialPortController";
 import { CounterDeviceStateController } from "pages/admin/controller/counter_device/CounterDeviceStateController";
 
+import { counterDeviceCode } from "config";
+
 const serialPortController = new SerialPortController();
 const counterDeviceStateController = new CounterDeviceStateController();
 
@@ -21,6 +23,7 @@ export default function CounterDevice({
   const [isPortOpened, setIsPortOpened] = useState(false);
   const [serialReadSignal, setSerialReadSignal] = useState(0);
   const [msg, setMsg] = useState("");
+  const [isWriteDisabled, setIsWriteDisabled] = useState(false);
 
   const keepUntilNewValue = async (): Promise<number> => {
     if (!serialPortController.isPortOpened() || isReading) {
@@ -142,6 +145,29 @@ export default function CounterDevice({
           계수기 수동 읽기 시작
         </button>
       ) : null}
+
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={() => {
+          const func = async () => {
+            setIsWriteDisabled(true);
+            await serialPortController.write(
+              new Uint8Array([
+                counterDeviceCode.head.charCodeAt(0),
+                counterDeviceCode.driveReset.charCodeAt(0),
+              ])
+            );
+            setTimeout(() => {
+              setIsWriteDisabled(false);
+            }, 1000);
+          };
+          func();
+        }}
+        disabled={isWriteDisabled}
+      >
+        계수기 리셋
+      </button>
     </div>
   );
 }

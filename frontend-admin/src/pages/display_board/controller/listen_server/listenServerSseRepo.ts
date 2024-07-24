@@ -28,6 +28,9 @@ class ListenServerSseRepo implements ListenServerRepository {
     });
 
     this.eventSource.onmessage = (event) => {
+      if (event.data === "heartbeatMsg") {
+        return;
+      }
       callback(JSON.parse(event.data));
     };
 

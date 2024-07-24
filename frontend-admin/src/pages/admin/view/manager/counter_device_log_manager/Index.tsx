@@ -74,6 +74,16 @@ export default function CounterDeviceLogManager({
         targetCounterDeviceLog={targetCounterDeviceLog}
       />
     );
+  } else if (editMenu === "계수기 장치 관리") {
+    retouchHtml = (
+      <CounterDevice
+        setContestUpdateSignal={setContestUpdateSignal}
+        setCounterDeviceLogListUpdateSignal={
+          setCounterDeviceLogListUpdateSignal
+        }
+        hostId={hostId}
+      />
+    );
   } else if (editMenu === "주행 기록에 추가" && targetSectorRecord) {
     retouchHtml = (
       <AddDriveRecord
@@ -112,14 +122,6 @@ export default function CounterDeviceLogManager({
           />
 
           {retouchHtml}
-
-          <CounterDevice
-            setContestUpdateSignal={setContestUpdateSignal}
-            setCounterDeviceLogListUpdateSignal={
-              setCounterDeviceLogListUpdateSignal
-            }
-            hostId={hostId}
-          />
         </div>
       }
     />

@@ -67,10 +67,10 @@ export class SerialPortController {
     }
   }
 
-  async write(data: number) {
+  async write(data: Uint8Array) {
     try {
       this.writer = this.port.writable.getWriter();
-      const value = new Uint8Array([data]);
+      const value = new Uint8Array(data);
       await this.writer.write(value);
 
       // Allow the serial port to be closed later.
