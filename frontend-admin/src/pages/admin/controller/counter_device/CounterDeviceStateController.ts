@@ -173,6 +173,7 @@ export class CounterDeviceStateController {
       return "EMPTY_CONTEST_ID";
     }
 
+    let returnMsg = "";
     const commands = this.parsingValue(value);
     for (let i = 0; i < commands.length; i++) {
       const command = commands[i];
@@ -180,25 +181,27 @@ export class CounterDeviceStateController {
         continue;
       }
 
+      returnMsg += "  /" + command + ":";
       if (this.isStart(command)) {
         await this.driveStart(getTime, contestId);
-        return "DRIVE_START";
+        returnMsg += "DRIVE_START ";
       }
       if (this.isEnd(command)) {
         await this.driveEnd(getTime, contestId);
-        return "DRIVE_END";
+        returnMsg += "DRIVE_END ";
       }
       if (this.isReset(command)) {
         await this.sendReset(contestId);
-        return "DRIVE_RESET";
+        returnMsg += "DRIVE_RESET ";
       }
       if (this.isRecord(command)) {
         const recordTime = this.makeRecordTime(command);
         await this.sendRecord(recordTime, contestId);
-        return "ADD_RECORD";
+        returnMsg += "ADD_RECORD ";
       }
+      returnMsg = "!";
     }
 
-    return "IDLE";
+    return returnMsg;
   }
 }
