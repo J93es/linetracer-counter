@@ -11,8 +11,8 @@ cd      ${TMP_DIR}                                                          &&
 sudo    cp ${WORK_DIR}/env/backend-client-env ${TMP_DIR}/.env               &&
 sudo    npm install                                                         && 
 sudo    npm run build                                                       && 
-sudo    rm -rf ${BUILD_DIR}/*                                               &&
-sudo    mv ${TMP_DIR}/* ${BUILD_DIR}                                        &&
+sudo    rm -rf ${BUILD_DIR}/.[!.]*                                          &&
+sudo    mv ${TMP_DIR}/.[!.]* ${BUILD_DIR}                                   &&
 cd      ${BUILD_DIR}                                                        &&
 sudo    pm2 stop linetracer-counter-backend-client                          ;
 sudo    pm2 delete linetracer-counter-backend-client                        ;

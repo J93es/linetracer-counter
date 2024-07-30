@@ -30,7 +30,6 @@ import sectorRecordRouter from "@route/admin/sectorRecord";
 import driveRecordRouter from "@route/admin/driveRecord";
 import counterDeviceLogRouter from "@route/admin/counterDeviceLog";
 import displayBoardRouter from "@route/display_board/sse";
-import userRouter from "@route/user";
 
 import { uri, PORT } from "@config/index";
 import mongoose from "mongoose";
@@ -50,16 +49,6 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use(
-  "/user",
-  expressRateLimit({
-    windowMs: 5 * 1000,
-    max: 200,
-  }),
-  cache("5 seconds"),
-  userRouter
-);
 
 app.use(
   "/auth",

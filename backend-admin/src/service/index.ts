@@ -18,11 +18,6 @@ export const driveRecordService: DriveRecordService = new DriveRecordServ();
 export const counterDeviceLogService: CounterDeviceLogService =
   new CounterDeviceLogServ();
 
-// user
-import { UserService } from "@core/service/user";
-import { UserServ } from "@service/user";
-export const userService: UserService = new UserServ();
-
 //display-board
 import { DisplayBoardService } from "@core/service/displayBoard";
 import { DisplayBoardServ } from "@service/displayBoard";
