@@ -57,7 +57,6 @@ export default function CounterDevice({
       }
 
       const data = serialPortController.shiftBuffer();
-      console.log(data);
       setSerialReadSignal((prev: number) => (prev + 1) % 1000);
       if (!data) {
         return;
@@ -156,6 +155,7 @@ export default function CounterDevice({
               new Uint8Array([
                 counterDeviceCode.head.charCodeAt(0),
                 counterDeviceCode.driveReset.charCodeAt(0),
+                counterDeviceCode.tail.charCodeAt(0),
               ])
             );
             setTimeout(() => {

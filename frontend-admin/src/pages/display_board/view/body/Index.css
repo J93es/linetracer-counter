@@ -1,5 +1,5 @@
 .display-board-body {
-  width: fit-content;
+  width: 1520px;
 
   display: grid;
   grid-template-columns: 520px 440px 440px;

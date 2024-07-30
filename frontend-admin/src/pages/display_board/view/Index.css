@@ -1,5 +1,12 @@
 .display-board-view {
-  background: #eff6fd;
+  background: #4888d6;
 
-  width: fit-content;
+  /* width: fit-content; */
+  width: 100%;
+  height: 1700px;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

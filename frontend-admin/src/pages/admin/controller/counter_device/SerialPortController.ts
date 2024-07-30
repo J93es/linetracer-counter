@@ -2,6 +2,7 @@ let instance: SerialPortController | null = null;
 export class SerialPortController {
   private port: any;
   private buffer: { writeTime: number; value: Uint8Array }[] = [];
+
   private keepReading: boolean = false;
   private reader: any;
   private writer: any;
@@ -49,7 +50,7 @@ export class SerialPortController {
         filters,
       });
       const { usbProductId, usbVendorId } = this.port.getInfo();
-      await this.port.open({ baudRate: 115200 });
+      await this.port.open({ baudRate: 460800 });
       console.log(`usb product id: ${usbProductId}`);
       console.log(`usb vender id: ${usbVendorId}`);
     } catch (error: any) {
@@ -70,12 +71,11 @@ export class SerialPortController {
   async write(data: Uint8Array) {
     try {
       this.writer = this.port.writable.getWriter();
-      const value = new Uint8Array(data);
-      await this.writer.write(value);
+      await this.writer.write(data);
 
       // Allow the serial port to be closed later.
       this.writer.releaseLock();
-      console.log(`write: ${value}`);
+      console.log(`write: ${data}`);
     } catch (error: any) {
       console.log("error: serial_write_data:", error.message);
     }
@@ -96,6 +96,7 @@ export class SerialPortController {
         // value는 Uint8Array이다.
         if (value) {
           this.buffer.push({ writeTime: Date.now(), value: value });
+          console.log(`read: ${value}`);
         }
       }
 

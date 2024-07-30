@@ -27,12 +27,6 @@ export class CounterDeviceStateController {
       rawString += String.fromCharCode(value[i]);
     }
 
-    // const commands: string[] = rawString
-    //   .split(this.headCode)
-    //   .map((rawCommand: string) => {
-    //     return rawCommand.split(this.tailCode);
-    //   });
-
     let commandsBuffer: string[] = rawString.split(counterDeviceCode.head);
 
     let commands: string[] = [];
@@ -69,17 +63,28 @@ export class CounterDeviceStateController {
     return false;
   }
 
+  private isRecordTime(command: string) {
+    if (command[0] === counterDeviceCode.recordTime) {
+      if (!isNaN(this.makeRecordTime(command))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isLineout(command: string) {
+    if (command[0] === counterDeviceCode.recordTime) {
+      if (isNaN(this.makeRecordTime(command))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private makeRecordTime(command: string): number {
     let recordTime: number = parseInt(command);
 
     return recordTime;
-  }
-
-  private isRecord(command: string) {
-    if (isNaN(this.makeRecordTime(command))) {
-      return false;
-    }
-    return true;
   }
 
   private async driveStart(getTime: number, contestId: string) {
@@ -194,10 +199,13 @@ export class CounterDeviceStateController {
         await this.sendReset(contestId);
         returnMsg += "DRIVE_RESET ";
       }
-      if (this.isRecord(command)) {
+      if (this.isRecordTime(command)) {
         const recordTime = this.makeRecordTime(command);
         await this.sendRecord(recordTime, contestId);
         returnMsg += "ADD_RECORD ";
+      }
+      if (this.isLineout(command)) {
+        returnMsg += "LINEOUT ";
       }
       returnMsg = "!";
     }

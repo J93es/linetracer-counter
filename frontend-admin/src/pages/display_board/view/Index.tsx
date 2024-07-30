@@ -1,3 +1,4 @@
+import Header from "pages/display_board/view/header/Index";
 import Body from "pages/display_board/view/body/Index";
 
 import { ContestType } from "pages/display_board/model/Contest";
@@ -24,6 +25,7 @@ export default function View({
 }) {
   return (
     <div className="display-board-view">
+      <Header />
       <Body
         targetContest={targetContest}
         isContestTimerRunning={isContestTimerRunning}

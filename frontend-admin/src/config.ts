@@ -6,4 +6,5 @@ export const counterDeviceCode = {
   driveStart: "S",
   driveEnd: "E",
   driveReset: "R",
+  recordTime: "T",
 };
