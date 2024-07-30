@@ -7,13 +7,12 @@ BUILD_DIR=${WORK_DIR}/build/backend-client
 cd      ${WORK_DIR}                                                         &&
 sudo    rm -rf ${WORK_DIR}/_tmp                                             &&
 sudo    git clone https://github.com/J93es/linetracer-counter.git _tmp      && 
-cd      ${TMP_DIR}                                                          &&
-sudo    cp ${WORK_DIR}/env/backend-client-env ${TMP_DIR}/.env               &&
+sudo    rm -rf ${BUILD_DIR}/*                                               &&
+sudo    cp -r   ${TMP_DIR}/*    ${BUILD_DIR}                                &&
+sudo    cp ${WORK_DIR}/env/backend-client-env ${BUILD_DIR}/.env             &&
+cd      ${BUILD_DIR}                                                        &&
 sudo    npm install                                                         && 
 sudo    npm run build                                                       && 
-sudo    rm -rf ${BUILD_DIR}/.[!.]*                                          &&
-sudo    mv ${TMP_DIR}/.[!.]* ${BUILD_DIR}                                   &&
-cd      ${BUILD_DIR}                                                        &&
 sudo    pm2 stop linetracer-counter-backend-client                          ;
 sudo    pm2 delete linetracer-counter-backend-client                        ;
 sudo    pm2 start npm --name "linetracer-counter-backend-client" -- start   &&
