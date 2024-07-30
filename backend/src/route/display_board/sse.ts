@@ -15,18 +15,6 @@ const sseHeaders = {
   "X-Accel-Buffering": "no",
 };
 
-setInterval(() => {
-  () => {
-    Object.keys(clients).forEach((key: string) => {
-      try {
-        clients[key].res.write(`data: heartbeatMsg\n\n`);
-      } catch (err) {
-        console.error(err);
-      }
-    });
-  };
-}, 10000);
-
 export const sseNotifyDisplayBoard = async (
   req: Request,
   res: Response,
@@ -49,17 +37,13 @@ export const sseNotifyDisplayBoard = async (
   }
 };
 
-setInterval(() => {
-  () => {
-    Object.keys(clients).forEach((key: string) => {
-      try {
-        clients[key].res.write(`data: heartbeatMsg\n\n`);
-      } catch (err) {
-        console.error(err);
-      }
-    });
-  };
-}, 5000);
+const sseHeartbeat = (res: Response) => {
+  try {
+    res.write(`data: heartbeatMsg\n\n`);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -71,12 +55,21 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 
     res.writeHead(200, sseHeaders);
 
+    const sendHeartbeat = setInterval(() => {
+      try {
+        res.write(`data: heartbeatMsg\n\n`);
+      } catch (err) {
+        console.error(err);
+      }
+    }, 15000);
+
     clients[clientId] = {
       res,
     };
 
     req.on("close", () => {
       delete clients[clientId];
+      clearInterval(sendHeartbeat);
     });
     sseNotifyDisplayBoard(req, res, next);
     next();
