@@ -39,7 +39,7 @@ const app: Application = express();
 
 const cache = apicache.middleware;
 
-app.set("trust proxy", true);
+app.set("trust proxy", "loopback");
 app.set("port", process.env.PORT || PORT || 8000);
 app.set("view engine", "ejs");
 
