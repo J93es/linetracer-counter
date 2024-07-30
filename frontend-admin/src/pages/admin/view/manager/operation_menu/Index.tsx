@@ -84,6 +84,10 @@ export default function OperationMenu({
       setManageRemainingContestTimeBtnDisabled(true);
       return;
     }
+    if (isContestTimerRunning) {
+      setManageRemainingContestTimeBtnDisabled(true);
+      return;
+    }
     setManageRemainingContestTimeBtnDisabled(false);
   }, [targetSectorRecord, isSectorRecordLaunched]);
 
