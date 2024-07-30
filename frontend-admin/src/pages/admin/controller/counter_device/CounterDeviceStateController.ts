@@ -82,7 +82,9 @@ export class CounterDeviceStateController {
   }
 
   private makeRecordTime(command: string): number {
-    let recordTime: number = parseInt(command);
+    const regex = /[^0-9]/g;
+    const result = command.replace(regex, "");
+    const recordTime: number = parseInt(result);
 
     return recordTime;
   }
@@ -122,7 +124,7 @@ export class CounterDeviceStateController {
       endTime: this.endTime,
       type: "Ignored",
       recordTime: recordTime,
-      writeTime: this.endTime,
+      writeTime: Date.now(),
     };
     this.startTime = null;
 
@@ -145,7 +147,14 @@ export class CounterDeviceStateController {
     await contestController.patch(contest);
   }
 
-  private async sendRecord(recordTime: number, contestId: string) {
+  private async sendRecord(
+    recordTime: number,
+    contestId: string,
+    setCounterDeviceLogListUpdateSignal: React.Dispatch<
+      React.SetStateAction<number>
+    >
+  ) {
+    console.log("recordTime: ", recordTime);
     const contest: Partial<ContestType> = {
       id: contestId,
       driveStartTime: undefined,
@@ -156,20 +165,29 @@ export class CounterDeviceStateController {
     const counterDeviceLog: Partial<CounterDeviceLogType> = {
       hostId: contestId,
 
+      startTime: this.startTime ?? Date.now(),
+      endTime: this.endTime ?? Date.now(),
+
       type: "SUCCESS",
       recordTime: recordTime,
+      writeTime: Date.now(),
     };
 
     Promise.all([
       await contestController.patch(contest),
       await counterDeviceLogController.post(counterDeviceLog),
     ]);
+
+    setCounterDeviceLogListUpdateSignal((prev: number) => prev + 1);
   }
 
   async stateMachine(
     value: Uint8Array | undefined,
     getTime: number,
-    contestId: string | undefined
+    contestId: string | undefined,
+    setCounterDeviceLogListUpdateSignal: React.Dispatch<
+      React.SetStateAction<number>
+    >
   ): Promise<string> {
     if (!value) {
       return "EMPTY_VALUE";
@@ -201,13 +219,17 @@ export class CounterDeviceStateController {
       }
       if (this.isRecordTime(command)) {
         const recordTime = this.makeRecordTime(command);
-        await this.sendRecord(recordTime, contestId);
+        await this.sendRecord(
+          recordTime,
+          contestId,
+          setCounterDeviceLogListUpdateSignal
+        );
         returnMsg += "ADD_RECORD ";
       }
       if (this.isLineout(command)) {
         returnMsg += "LINEOUT ";
       }
-      returnMsg = "!";
+      returnMsg += "!";
     }
 
     return returnMsg;

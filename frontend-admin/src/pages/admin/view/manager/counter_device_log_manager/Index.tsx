@@ -52,13 +52,7 @@ export default function CounterDeviceLogManager({
   }, [counterDeviceLogList]);
 
   let retouchHtml = null;
-  if (isBlocked) {
-    retouchHtml = <p>수정이 불가능 합니다.</p>;
-  } else if (!counterDeviceLogList) {
-    retouchHtml = <p>계수기 로그가 없습니다.</p>;
-  } else if (!targetCounterDeviceLog) {
-    retouchHtml = <p>계수기 로그를 선택하세요.</p>;
-  } else if (editMenu === "계수기 로그 수정") {
+  if (editMenu === "계수기 로그 수정") {
     retouchHtml = (
       <RetouchCounterDeviceLog
         setCounterDeviceLogListUpdateSignal={

@@ -65,30 +65,13 @@ export default function CounterDevice({
       const signal = await counterDeviceStateController.stateMachine(
         data.value,
         data.writeTime,
-        hostId || ""
+        hostId || "",
+        setCounterDeviceLogListUpdateSignal
       );
 
-      if (signal === "EMPTY_VALUE") {
-        setMsg("EMPTY_VALUE");
-        return;
-      }
-      if (signal === "EMPTY_CONTEST_ID") {
-        setMsg("EMPTY_CONTEST_ID");
-        return;
-      }
-      if (signal === "DRIVE_START") {
-        setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
-        setMsg("DRIVE_START");
-        return;
-      }
-      if (signal === "DRIVE_END") {
-        setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
-        setCounterDeviceLogListUpdateSignal(
-          (prev: number) => (prev + 1) % 1000
-        );
-        setMsg("DRIVE_END");
-        return;
-      }
+      setMsg(signal);
+      setContestUpdateSignal((prev: number) => (prev + 1) % 1000);
+      setCounterDeviceLogListUpdateSignal((prev: number) => (prev + 1) % 1000);
     };
     func(hostId);
   };

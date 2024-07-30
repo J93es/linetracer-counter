@@ -15,6 +15,7 @@ export default function DriveStopWatch({
   const [isDriveStopWatchRunning, setIsDriveStopWatchRunning] =
     useState<boolean>(false);
   const [timerStartTime, setTimerStartTime] = useState<number>(-1);
+  const [timerResetSignal, setTimerResetSignal] = useState<number>(0);
   const requestRef = useRef<number>(0);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function DriveStopWatch({
     if (!targetContest?.isDriveStopWatchRunning) {
       setRecordTime(targetContest?.latestDriveRecordTime ?? 0);
     }
+    setTimerResetSignal((prev) => (prev + 1) % 1000);
   }, [targetContest]);
 
   const timerAnimation = (prevTime: number) => {
@@ -46,6 +48,7 @@ export default function DriveStopWatch({
   };
 
   useEffect(() => {
+    cancelAnimationFrame(requestRef.current);
     if (!isDriveStopWatchRunning || recordTime <= 0) {
       return;
     }
@@ -55,7 +58,7 @@ export default function DriveStopWatch({
 
     return () => cancelAnimationFrame(requestRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDriveStopWatchRunning]);
+  }, [isDriveStopWatchRunning, timerResetSignal]);
 
   return (
     <div className="drive-stopwatch shadow">
