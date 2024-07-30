@@ -59,7 +59,7 @@ setInterval(() => {
       }
     });
   };
-}, 10000);
+}, 5000);
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
