@@ -44,10 +44,6 @@ export default function OperationMenu({
       setcontestLaunchBtnDisabled(true);
       return;
     }
-    if (targetContest?.isContestTimerRunning) {
-      setcontestLaunchBtnDisabled(true);
-      return;
-    }
     setcontestLaunchBtnDisabled(false);
   }, [targetContest, targetSectorRecord]);
 
@@ -88,12 +84,8 @@ export default function OperationMenu({
       setManageRemainingContestTimeBtnDisabled(true);
       return;
     }
-    if (isContestTimerRunning) {
-      setManageRemainingContestTimeBtnDisabled(true);
-      return;
-    }
     setManageRemainingContestTimeBtnDisabled(false);
-  }, [targetSectorRecord, isSectorRecordLaunched, isContestTimerRunning]);
+  }, [targetSectorRecord, isSectorRecordLaunched]);
 
   return (
     <Accordion
