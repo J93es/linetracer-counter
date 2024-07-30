@@ -31,7 +31,7 @@ export default class SectorRecord implements SectorRecordType {
 }
 
 export const defaultOrder = 501;
-export const defaultRemainingContestTime = 300000;
+export const defaultRemainingContestTime = 240000;
 
 export const sectorRecordTamplate: SectorRecordType = new SectorRecord({
   contestSector: "",

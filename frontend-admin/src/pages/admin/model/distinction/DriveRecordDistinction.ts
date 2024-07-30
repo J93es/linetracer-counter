@@ -19,5 +19,5 @@ export default class DriveRecordDistinction {
 export const driveRecordTamplate: DriveRecordDistinctionType =
   new DriveRecordDistinction({
     type: "",
-    recordTime: 300000,
+    recordTime: 240000,
   });

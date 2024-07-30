@@ -79,7 +79,7 @@ export default function RetouchSectorRecord({
 
       <NumberForm
         id="remainingContestTime"
-        placeholder="ex) 300000(ms)"
+        placeholder="ex) 240000(ms)"
         label="남은 경연 시간(ms)"
         register={register}
         errorMessage={errors.remainingContestTime?.message ?? ""}

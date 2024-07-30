@@ -23,12 +23,14 @@ export default function ContestTimer({
     number | undefined
   >(0);
   const [timerStartTime, setTimerStartTime] = useState<number | undefined>(-1);
+  const [timerResetSignal, setTimerResetSignal] = useState<number>(0);
   const requestRef = useRef<number>(0);
 
   useEffect(() => {
     setRemainingTime(curSectorRecord?.remainingContestTime ?? 0);
     setOriginRemainingTime(curSectorRecord?.remainingContestTime);
     setTimerStartTime(targetContest?.contestTimerStartTime ?? -1);
+    setTimerResetSignal((prev) => (prev + 1) % 1000);
   }, [targetContest, curSectorRecord]);
 
   const timerAnimation = (prevTime: number) => {
@@ -56,6 +58,7 @@ export default function ContestTimer({
   };
 
   useEffect(() => {
+    cancelAnimationFrame(requestRef.current);
     if (!isContestTimerRunning || remainingTime <= 0) {
       return;
     }
@@ -65,7 +68,7 @@ export default function ContestTimer({
 
     return () => cancelAnimationFrame(requestRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isContestTimerRunning]);
+  }, [isContestTimerRunning, timerResetSignal]);
 
   return (
     <div className="contest-timer shadow">

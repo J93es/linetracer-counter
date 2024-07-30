@@ -44,7 +44,11 @@ function App() {
           element={
             <div className="App">
               <header className="App-header">
-                <Header title={liveData?.title} isLoading={isLoading} />
+                <Header
+                  title={liveData?.title}
+                  isLoading={isLoading}
+                  onClickedSection="home"
+                />
               </header>
               <div className="App-body">
                 <Home />
@@ -58,7 +62,11 @@ function App() {
           element={
             <div className="App">
               <header className="App-header">
-                <Header title={liveData?.title} isLoading={isLoading} />
+                <Header
+                  title={liveData?.title}
+                  isLoading={isLoading}
+                  onClickedSection="live"
+                />
               </header>
               <div className="App-body">
                 <Live data={liveData} isLoading={isLoading} />
@@ -72,7 +80,11 @@ function App() {
           element={
             <div className="App">
               <header className="App-header">
-                <Header title={liveData?.title} isLoading={isLoading} />
+                <Header
+                  title={liveData?.title}
+                  isLoading={isLoading}
+                  onClickedSection="sponser"
+                />
               </header>
               <div className="App-body">
                 <Sponser />

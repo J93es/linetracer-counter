@@ -22,7 +22,7 @@ export default class SectorRecord implements SectorRecordInfoType {
 }
 
 export const defaultOrder = 501;
-export const defaultRemainingContestTime = 300000;
+export const defaultRemainingContestTime = 240000;
 
 export const sectorRecordTamplate: SectorRecordInfoType = new SectorRecord({
   contestSector: "",

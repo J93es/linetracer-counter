@@ -30,7 +30,6 @@
   border-radius: 10px;
   text-decoration-line: none;
   color: white;
-  background-color: #191c23;
   outline: 0;
   transition: all 0.2s ease;
 
@@ -38,25 +37,20 @@
   background-color: transparent;
 }
 
-.header-title:hover,
-.header-live:hover,
-.header-sponser:hover {
-  background-color: white;
-  color: black;
+.header-title-text {
+  display: table-row;
+  font-size: 22px;
+  font-weight: 800;
 }
 
-.header-title-text,
 .header-live-text,
 .header-sponser-text {
   display: table-row;
+  font-size: 15px;
 }
-
-.header-title-text {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.header-live-text,
-.header-sponser-text {
+.header-live-text-onclicked,
+.header-sponser-text-onclicked {
+  font-weight: 700;
+  display: table-row;
   font-size: 15px;
 }
