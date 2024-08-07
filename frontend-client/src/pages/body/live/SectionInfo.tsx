@@ -13,15 +13,15 @@ export default function SectionInfo({
   selectedSectionSortOption: string;
   setSelectedSectionSortOption: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const getOrder = (order: number) => {
-    if (!order) {
-      return "--";
-    }
-    if (order > 500) {
-      return `${order % 500}*`;
-    }
-    return order;
-  };
+  // const getOrder = (order: number) => {
+  //   if (!order) {
+  //     return "--";
+  //   }
+  //   if (order > 500) {
+  //     return `${order % 500}*`;
+  //   }
+  //   return order;
+  // };
 
   const isSameParticipant = (participant: ParticipantType) => {
     return JSON.stringify(participant) === JSON.stringify(curParticipant ?? "");
@@ -79,7 +79,7 @@ export default function SectionInfo({
           >
             <div className="participant-tbody-item">
               {selectedSectionSortOption === "order"
-                ? getOrder(participant.order)
+                ? index + 1
                 : participant.rank}
             </div>
             <div className="participant-tbody-item">
