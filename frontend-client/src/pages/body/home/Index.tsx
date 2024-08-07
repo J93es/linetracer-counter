@@ -33,7 +33,7 @@ export default function Home() {
         <p>
           마지막으로, 유난히 무더운 여름에도 로봇공학에 대한 애정과 열정으로
           대회를 준비 해준 여러분들 각자에게 큰 박수와 격려의 말씀을 드리며, 본
-          대회에서의 경험을 바탕 으로 훗날 로봇 분야를 이끌어갈 공학자로
+          대회에서의 경험을 바탕으로 훗날 로봇 분야를 이끌어갈 공학자로
           성장하시기를 진심으로 바랍니다.
         </p>
         <div className="greetings-author">ZETIN 지도교수 박경훈</div>
@@ -100,6 +100,17 @@ export default function Home() {
           href="https://zetin.uos.ac.kr/index.php?mid=contest_limit"
         >
           규정집
+        </a>
+      </div>
+      <div className="survey">
+        <h3 className="home-index">만족도 조사</h3>
+        <p>본 웹페이지에 대한 설문을 진행하고 있습니다!</p>
+        <p>치킨, 커피 기프티콘을 제공할 예정이니 많은 참여 부탁드리겠습니다!</p>
+        <a
+          className="outer-link"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfIgAkTRM8ouHitzuBPkkQYBU3e8stgYq9inpqYRuAVBxcVZw/viewform?usp=share_link"
+        >
+          설문 참여하기
         </a>
       </div>
     </div>

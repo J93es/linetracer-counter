@@ -5,7 +5,7 @@
 
 .home-index {
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 table,
@@ -26,7 +26,8 @@ td {
 
 .greetings,
 .contest-schedule,
-.contest-information-link {
+.contest-information-link,
+.survey {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +58,7 @@ td {
 .outer-link {
   font-size: medium;
   color: #bebfc5;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .outer-link:hover {
