@@ -3,16 +3,17 @@ import { RobotType } from "pages/display_board/model/Robot";
 import DisplayCard from "pages/display_board/component/DisplayCard";
 
 import "pages/display_board/view/body/CurRobot.css";
+import { text } from "stream/consumers";
 
 const showKeys = [
-  "name",
-  "cpu",
-  "rom",
-  "ram",
-  "motorDriver",
-  "motor",
-  "adc",
-  "sensor",
+  { key: "name", text: "로봇 이름" },
+  { key: "cpu", text: "CPU" },
+  { key: "rom", text: "ROM" },
+  { key: "RAM", text: "RAM" },
+  { key: "motorDriver", text: "모터 드라이버" },
+  { key: "motor", text: "모터" },
+  { key: "adc", text: "ADC" },
+  { key: "sensor", text: "센서" },
 ];
 
 export default function CurRobot({
@@ -22,12 +23,12 @@ export default function CurRobot({
 }) {
   const curRobotInfo: RobotType | undefined = curParticipant?.robot;
 
-  const robotHtmlElem = showKeys.map((key, index) => {
+  const robotHtmlElem = showKeys.map((obj, index) => {
     return (
-      <div className="cur-robot-info-list-body-row" key={key}>
-        <div className="cur-robot-info-list-body-col">{key}</div>
+      <div className="cur-robot-info-list-body-row" key={obj.key}>
+        <div className="cur-robot-info-list-body-col">{obj.text}</div>
         <div className="cur-robot-info-list-body-col">
-          {(curRobotInfo && curRobotInfo[key as keyof RobotType]) ?? "--"}
+          {(curRobotInfo && curRobotInfo[obj.key as keyof RobotType]) ?? "--"}
         </div>
       </div>
     );
