@@ -50,7 +50,9 @@ export class SerialPortController {
         filters,
       });
       const { usbProductId, usbVendorId } = this.port.getInfo();
-      await this.port.open({ baudRate: 460800 });
+      // await this.port.open({ baudRate: 460800 });
+      // await this.port.open({ baudRate: 9600 });
+      await this.port.open({ baudRate: 115200 });
       console.log(`usb product id: ${usbProductId}`);
       console.log(`usb vender id: ${usbVendorId}`);
     } catch (error: any) {

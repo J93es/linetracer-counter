@@ -64,11 +64,11 @@ export class CounterDeviceStateController {
   }
 
   private isRecordTime(command: string) {
-    if (command[0] === counterDeviceCode.recordTime) {
-      if (!isNaN(this.makeRecordTime(command))) {
-        return true;
-      }
+    // if (command[0] === counterDeviceCode.recordTime) {
+    if (!isNaN(this.makeRecordTime(command))) {
+      return true;
     }
+    // }
     return false;
   }
 
