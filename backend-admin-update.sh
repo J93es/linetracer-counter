@@ -6,17 +6,17 @@ BUILD_DIR=${WORK_DIR}/build/backend-admin
 
 cd      ${WORK_DIR}                                                         &&
 sudo    rm -rf ${WORK_DIR}/_tmp                                             &&
-sudo    git clone https://github.com/J93es/linetracer-counter.git _tmp      && 
+sudo    git clone https://github.com/J93es/linetracer-counter.git _tmp      &&
 sudo    rm -rf ${BUILD_DIR}/*                                               &&
 sudo    cp -r   ${TMP_DIR}/*    ${BUILD_DIR}                                &&
 sudo    cp ${WORK_DIR}/env/backend-admin-env ${BUILD_DIR}/.env              &&
 cd      ${BUILD_DIR}                                                        &&
-sudo    npm install                                                         && 
-sudo    npm run build                                                       && 
-sudo    pm2 stop linetracer-counter-backend-admin                           ;
-sudo    pm2 delete linetracer-counter-backend-admin                         ;
-sudo    pm2 start npm --name "linetracer-counter-backend-admin" -- start -i max    &&
-sudo    pm2 save                                                            &&
-sudo    pm2 startup                                                         &&
+sudo    npm install                                                         &&
+sudo    npm run build                                                       &&
+pm2     stop linetracer-counter-backend-admin                               ;
+pm2     delete linetracer-counter-backend-admin                             ;
+pm2     start ecosystem.config.js                                           &&
+pm2     save                                                                &&
+pm2     startup                                                             &&
 sudo    rm -rf ${WORK_DIR}/_tmp                                             &&
 sudo    systemctl restart nginx
