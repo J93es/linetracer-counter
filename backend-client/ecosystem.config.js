@@ -4,8 +4,8 @@ module.exports = {
       name: "linetracer-counter-backend-client",
       script: "npm",
       args: "start",
-      instances: "5",
-      exec_mode: "cluster",
+      // instances: "5",
+      exec_mode: "fork",
     },
   ],
 };
