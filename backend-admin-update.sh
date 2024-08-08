@@ -15,7 +15,8 @@ sudo    npm install                                                         &&
 sudo    npm run build                                                       && 
 sudo    pm2 stop linetracer-counter-backend-admin                           ;
 sudo    pm2 delete linetracer-counter-backend-admin                         ;
-sudo    pm2 start npm --name "linetracer-counter-backend-admin" -- start    &&
+sudo    pm2 start npm --name "linetracer-counter-backend-admin" -- start -i max    &&
 sudo    pm2 save                                                            &&
+sudo    pm2 startup                                                         &&
 sudo    rm -rf ${WORK_DIR}/_tmp                                             &&
 sudo    systemctl restart nginx

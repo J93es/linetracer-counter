@@ -58,7 +58,7 @@ td {
 .outer-link {
   font-size: medium;
   color: #bebfc5;
-  /* margin-bottom: 10px; */
+  margin-bottom: 10px;
 }
 
 .outer-link:hover {
