@@ -97,9 +97,6 @@ export default function SectionInfo({
         <div className="extra-info">
           서버와 최대 10초의 delay가 발생할 수 있습니다.
         </div>
-        <div className="extra-info">
-          순서의 *표시는 참가자가 경연순서를 미루었음을 의미합니다.
-        </div>
       </div>
     </div>
   );
