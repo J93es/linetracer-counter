@@ -37,10 +37,16 @@ export class ContestController {
       if (!id) {
         return undefined;
       }
+
       const response = await fetch(`${uri}/contest/${id}`, {
         method: "GET",
         credentials: "include",
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to get Contest data");
+      }
+
       const resData = await response.json();
       const resContest = new Contest(resData);
 
@@ -69,6 +75,11 @@ export class ContestController {
         },
         body: JSON.stringify(contest),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to get Contest data");
+      }
+
       const resData = await response.json();
       const resContest = new Contest(resData);
 
@@ -97,6 +108,11 @@ export class ContestController {
         },
         body: JSON.stringify(contest),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to get Contest data");
+      }
+
       const resData = await response.json();
       const resContest = new Contest(resData);
 
@@ -125,6 +141,11 @@ export class ContestController {
         },
         body: JSON.stringify(contest),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to get Contest data");
+      }
+
       const resData = await response.json();
       const resContest = new Contest(resData);
 
@@ -151,6 +172,11 @@ export class ContestController {
           "Content-Type": "application/json",
         },
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to get Contest data");
+      }
+
       const resData = await response.json();
       const resContest = new Contest(resData);
 

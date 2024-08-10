@@ -97,6 +97,8 @@ export class CounterDeviceStateController {
       id: contestId,
       driveStartTime: getTime,
       isDriveStopWatchRunning: true,
+
+      latestDriveRecordTime: undefined,
     };
 
     await contestController.patch(contest);
