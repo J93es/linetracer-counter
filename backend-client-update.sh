@@ -13,10 +13,10 @@ sudo    cp ${WORK_DIR}/env/backend-client-env ${BUILD_DIR}/.env             &&
 cd      ${BUILD_DIR}                                                        &&
 sudo    npm install                                                         && 
 sudo    npm run build                                                       && 
-pm2     stop linetracer-counter-backend-client                              ;
-pm2     delete linetracer-counter-backend-client                            ;
-pm2     start ecosystem.config.js                                           &&
-pm2     save                                                                &&
-pm2     startup                                                             &&
+sudo    pm2 stop linetracer-counter-backend-client                          ;
+sudo    pm2 delete linetracer-counter-backend-client                        ;
+sudo    pm2 start ecosystem.config.js                                       &&
+sudo    pm2 save                                                            &&
+sudo    pm2 startup                                                         &&
 sudo    rm -rf ${WORK_DIR}/_tmp                                             &&
 sudo    systemctl restart nginx
