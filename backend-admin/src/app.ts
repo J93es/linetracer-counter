@@ -1,5 +1,5 @@
-// import "module-alias/register";
-// import "tsconfig-paths/register";
+import "module-alias/register";
+import "tsconfig-paths/register";
 
 import dotenv from "dotenv";
 dotenv.config();
